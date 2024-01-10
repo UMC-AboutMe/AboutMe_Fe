@@ -21,19 +21,20 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/say"
+                android:id="@+id/say_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="420dp"
                 android:src="@drawable/tutorial_say2"/>
 
+
             <ImageView
-                android:id="@+id/next_ib"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:id="@+id/next_iv"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/next"
-                android:layout_marginTop="250dp"
-                android:layout_toRightOf="@id/say"
-                android:layout_marginLeft="-150dp"/>
+                android:layout_marginTop="260dp"
+                android:layout_marginLeft="280dp"/>
+
 
 
         </RelativeLayout>

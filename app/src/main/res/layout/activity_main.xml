@@ -43,14 +43,14 @@
             android:layout_marginTop="10dp">
 
             <ImageView
-                android:id="@+id/login_google"
+                android:id="@+id/google_iv"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:src="@drawable/login_google"
                 android:layout_marginRight="30dp"/>
 
             <ImageView
-                android:id="@+id/login_kakao"
+                android:id="@+id/kakao_iv"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:src="@drawable/login_kakao"/>

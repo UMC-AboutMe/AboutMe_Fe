@@ -14,7 +14,7 @@ class TutorialActivity1 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding= DataBindingUtil.setContentView(this, R.layout.activity_tutorial1)
-        binding.nextIb.setOnClickListener {
+        binding.nextIv.setOnClickListener {
             val intent= Intent(this, TutorialActivity2::class.java)
             startActivity(intent)
         }

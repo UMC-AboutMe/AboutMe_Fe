@@ -16,7 +16,7 @@ class TutorialActivity2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_tutorial2)
-        binding.okIb.setOnClickListener {
+        binding.okIv.setOnClickListener {
 
             Toast.makeText(this, "okclicked", Toast.LENGTH_SHORT).show()
 

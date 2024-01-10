@@ -15,14 +15,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding= DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.loginKakao.setOnClickListener {
+        binding.kakaoIv.setOnClickListener {
             Toast.makeText(this, "kakaoclick", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, TutorialActivity1::class.java)
             startActivity(intent)
         }
 
-        binding.loginGoogle.setOnClickListener {
+        binding.googleIv.setOnClickListener {
             Toast.makeText(this, "googleclick", Toast.LENGTH_SHORT).show()
         }
     }
