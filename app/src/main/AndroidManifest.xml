@@ -13,6 +13,9 @@
         android:theme="@style/Theme.AboutMe"
         tools:targetApi="33">
         <activity
+            android:name=".bottomNavigationView"
+            android:exported="true" />
+        <activity
             android:name=".TutorialActivity2"
             android:exported="false" />
         <activity
