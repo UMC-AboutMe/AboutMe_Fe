@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/nav_bg"
+        android:fontFamily="@font/fontsytle"
         app:itemIconSize="35dp"
         app:itemActiveIndicatorStyle="@android:color/transparent"
         app:labelVisibilityMode="labeled"
