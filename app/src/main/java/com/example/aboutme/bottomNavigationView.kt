@@ -25,6 +25,7 @@ class bottomNavigationView : AppCompatActivity() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         val initialItemId = R.id.nav_home
         bottomNavigationView.selectedItemId = initialItemId
+
         //아이콘 색상 활성화
         bottomNavigationView.itemIconTintList = null
 
