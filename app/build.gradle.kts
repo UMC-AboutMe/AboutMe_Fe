@@ -58,4 +58,7 @@ dependencies {
 
     //뷰페이저2
     implementation("androidx.viewpager2:viewpager2:1.0.0")
+
+    //리사이클러뷰
+    implementation("androidx.recyclerview:recyclerview:1.1.0")
 }

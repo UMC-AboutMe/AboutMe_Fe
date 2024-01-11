@@ -55,12 +55,12 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/profile_frame"
-            android:layout_width="350dp"
+            android:layout_width="390dp"
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="150dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="33dp"/>
+            android:layout_marginLeft="15dp"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

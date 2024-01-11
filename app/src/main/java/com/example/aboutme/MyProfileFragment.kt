@@ -30,6 +30,10 @@ class MyProfileFragment : Fragment() {
             setFrag(1)
         }
 
+        binding.myprofileShareBtn.setOnClickListener {
+
+        }
+
 
         return view3
     }
