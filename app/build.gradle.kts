@@ -36,6 +36,11 @@ android {
     dataBinding{
         enable = true
     }
+
+    //뷰바인딩
+    viewBinding {
+        enable = true
+    }
 }
 
 dependencies {
@@ -47,4 +52,10 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    //프래그먼트
+    implementation("androidx.fragment:fragment-ktx:1.3.6")
+
+    //뷰페이저2
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
 }
