@@ -17,8 +17,6 @@ class MyProfileFragment : Fragment() {
 
         binding=FragmentMyprofileBinding.inflate(inflater,container,false)
 
-        val view3 = binding.root
-
 
         setFrag(0)
 
@@ -32,10 +30,13 @@ class MyProfileFragment : Fragment() {
 
         binding.myprofileShareBtn.setOnClickListener {
 
+            val bottomSheet = BottomSheet()
+
+            bottomSheet.show(childFragmentManager, bottomSheet.tag)
+
         }
 
-
-        return view3
+        return binding.root
     }
 
     private fun setFrag(fragNum : Int){

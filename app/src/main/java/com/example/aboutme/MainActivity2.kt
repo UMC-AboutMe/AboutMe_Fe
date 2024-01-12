@@ -12,7 +12,7 @@ class MainActivity2 : AppCompatActivity(R.layout.activity_main2) {
         if (savedInstanceState == null) {
             supportFragmentManager.commitNow {
                 setReorderingAllowed(true)
-                add(R.id.frame_container, MainProfileFragment())
+                add(R.id.frame_container, MyProfileFragment())
             }
         }
     }

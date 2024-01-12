@@ -15,6 +15,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -61,4 +62,14 @@ dependencies {
 
     //리사이클러뷰
     implementation("androidx.recyclerview:recyclerview:1.1.0")
+
+    //glide
+    implementation ("com.github.bumptech.glide:glide:4.13.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.0")
+
+    //둥근 이미지뷰
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
+
+    //바텀시트
+    implementation ("com.google.android.material:material:1.5.0-alpha02")
 }

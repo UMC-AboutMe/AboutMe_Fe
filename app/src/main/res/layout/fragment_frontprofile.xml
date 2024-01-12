@@ -16,15 +16,20 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="270dp" />
 
-        <ImageView
-            android:id="@+id/profile_iv"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:src="@drawable/myprofile_profile"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="130dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="90dp"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_iv"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                app:civ_border_width="1dp"
+                app:civ_border_color="@color/white"
+                android:src="@drawable/frontprofile"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="130dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="90dp"/>
+
+
 
         <EditText
             android:id="@+id/profile_name_et"
