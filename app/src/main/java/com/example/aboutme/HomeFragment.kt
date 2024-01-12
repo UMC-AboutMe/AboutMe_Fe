@@ -22,6 +22,9 @@ class HomeFragment : Fragment() {
         binding.myspaceBgIv.setOnClickListener{
             startActivity(Intent(requireActivity(), SearchSpaceActivity::class.java))
         }
+        binding.mypageBtn.setOnClickListener{
+            startActivity(Intent(requireActivity(), MypageActivity::class.java))
+        }
         return binding.root
     }
 

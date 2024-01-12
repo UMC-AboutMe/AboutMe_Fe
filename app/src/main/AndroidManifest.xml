@@ -13,6 +13,15 @@
         android:theme="@style/Theme.AboutMe"
         tools:targetApi="33">
         <activity
+            android:name=".MypageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CustomDialogSpace"
+            android:exported="false" />
+        <activity
+            android:name=".CustomDialogProf"
+            android:exported="false" />
+        <activity
             android:name=".SearchSpaceActivity"
             android:exported="false" />
         <activity

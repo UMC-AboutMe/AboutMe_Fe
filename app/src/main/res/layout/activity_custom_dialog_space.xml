@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/search_share_bg1"
-    tools:context=".CustomDialog">
+    tools:context=".CustomDialogSpace">
 
     <ImageView
         android:id="@+id/dialog_logo"
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="96dp"
-        android:layout_marginTop="132dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="80dp"
         android:layout_marginBottom="30dp"
         android:background="@android:color/transparent"
@@ -45,9 +45,8 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/yes_btn"
-        app:layout_constraintHorizontal_bias="0.446"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_tv" />
 
     <Button
         android:id="@+id/yes_btn"

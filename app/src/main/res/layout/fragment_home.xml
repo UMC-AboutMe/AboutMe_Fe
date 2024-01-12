@@ -12,14 +12,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="34dp" />
+        app:layout_constraintGuide_begin="20dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="34dp" />
+        app:layout_constraintGuide_end="20dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -47,12 +47,12 @@
         android:background="@android:color/transparent"
         android:scaleType="centerCrop"
         android:src="@drawable/home_alarm"
-        app:layout_constraintEnd_toStartOf="@+id/user_btn"
+        app:layout_constraintEnd_toStartOf="@+id/mypage_btn"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ImageButton
-        android:id="@+id/user_btn"
+        android:id="@+id/mypage_btn"
         android:layout_width="26dp"
         android:layout_height="34dp"
         android:layout_marginTop="2dp"
