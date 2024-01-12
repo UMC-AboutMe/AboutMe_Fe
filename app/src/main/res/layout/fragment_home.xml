@@ -1,15 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="34dp" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="34dp" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="41dp" />
 
-    <!-- TODO: Update blank fragment layout -->
+    <ImageButton
+        android:id="@+id/back_btn"
+        android:layout_width="34dp"
+        android:layout_height="30dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/home_back"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/guideline3"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <ImageButton
+        android:id="@+id/alarm_btn"
+        android:layout_width="42dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="10dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/home_alarm"
+        app:layout_constraintEnd_toStartOf="@+id/user_btn"
+        app:layout_constraintTop_toTopOf="@+id/guideline3"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <ImageButton
+        android:id="@+id/user_btn"
+        android:layout_width="26dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="2dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/home_user"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/guideline3"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <ImageView
+        android:id="@+id/home_logo"
+        android:layout_width="0dp"
+        android:layout_height="213dp"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/home_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+    <ImageView
+        android:id="@+id/myprof_iv"
+        android:layout_width="59dp"
+        android:layout_height="51dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/nav_myprof"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/home_logo" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Home"
-        android:textSize="96sp" />
+        android:id="@+id/myprof_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:text="프로필"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/myprof_iv"
+        app:layout_constraintStart_toEndOf="@+id/myprof_iv"
+        app:layout_constraintTop_toTopOf="@+id/myprof_iv" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/myprof_bg_iv"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="17dp"
+        android:src="@drawable/home_myprof_bg"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/myprof_iv" />
+
+    <ImageView
+        android:id="@+id/myspqce_iv"
+        android:layout_width="59dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="41dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/nav_myspace"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/myprof_bg_iv" />
+
+    <TextView
+        android:id="@+id/myspace_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:text="스페이스"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/myspqce_iv"
+        app:layout_constraintStart_toEndOf="@+id/myspqce_iv"
+        app:layout_constraintTop_toTopOf="@+id/myspqce_iv" />
+
+    <ImageView
+        android:id="@+id/myspace_bg_iv"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="17dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/home_myspace_bg"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/myspqce_iv"
+        app:srcCompat="@drawable/home_myspace_bg" />
+</androidx.constraintlayout.widget.ConstraintLayout>
