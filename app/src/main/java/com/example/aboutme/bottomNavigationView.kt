@@ -36,14 +36,14 @@ class bottomNavigationView : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(frame.id, Fragment())
                         .commit()
-                return@setOnItemSelectedListener true
+                    return@setOnItemSelectedListener true
                 }
 
                 R.id.nav_saveprof -> {
                     supportFragmentManager.beginTransaction()
                         .replace(frame.id, Fragment())
                         .commit()
-                return@setOnItemSelectedListener true
+                    return@setOnItemSelectedListener true
                 }
 
                 R.id.nav_home -> {
@@ -57,7 +57,7 @@ class bottomNavigationView : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(frame.id, Fragment())
                         .commit()
-                return@setOnItemSelectedListener true
+                    return@setOnItemSelectedListener true
                 }
 
                 R.id.nav_agit -> {

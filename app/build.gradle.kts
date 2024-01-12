@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId = "com.example.aboutme"
         minSdk = 28
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -34,6 +34,9 @@ android {
         jvmTarget = "1.8"
     }
     dataBinding{
+        enable = true
+    }
+    viewBinding{
         enable = true
     }
 }

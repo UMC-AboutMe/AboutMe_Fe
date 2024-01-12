@@ -2,21 +2,25 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="34dp" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="34dp" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
@@ -71,7 +75,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <ImageView
-        android:id="@+id/myprof_iv"
+        android:id="@+id/myspace_iv"
         android:layout_width="59dp"
         android:layout_height="51dp"
         android:scaleType="centerCrop"
@@ -80,15 +84,15 @@
         app:layout_constraintTop_toBottomOf="@+id/home_logo" />
 
     <TextView
-        android:id="@+id/myprof_tv"
+        android:id="@+id/myspace_tv2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/gmarketsansmedium"
         android:text="프로필"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/myprof_iv"
-        app:layout_constraintStart_toEndOf="@+id/myprof_iv"
-        app:layout_constraintTop_toTopOf="@+id/myprof_iv" />
+        app:layout_constraintBottom_toBottomOf="@+id/myspace_iv"
+        app:layout_constraintStart_toEndOf="@+id/myspace_iv"
+        app:layout_constraintTop_toTopOf="@+id/myspace_iv" />
 
     <ImageView
         android:id="@+id/myprof_bg_iv"
@@ -98,7 +102,7 @@
         android:src="@drawable/home_myprof_bg"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/myprof_iv" />
+        app:layout_constraintTop_toBottomOf="@+id/myspace_iv" />
 
     <ImageView
         android:id="@+id/myspqce_iv"
