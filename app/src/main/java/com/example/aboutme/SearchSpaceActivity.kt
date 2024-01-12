@@ -18,7 +18,8 @@ class SearchSpaceActivity : AppCompatActivity() {
 
         //Dialog
         binding.addBtn.setOnClickListener {
-            CustomDialog("내 스페이스도 공유 하시겠습니까?")
+            //이 부분 에러남. 다른 브랜치에서 checkout을 까먹고 안해서 오류가 난다. PR하면 괜찮을 예정..
+            CustomDialogSpace("내 스페이스도 공유 하시겠습니까?")
                 .show(supportFragmentManager, "SpaceDialog")
         }
     }
