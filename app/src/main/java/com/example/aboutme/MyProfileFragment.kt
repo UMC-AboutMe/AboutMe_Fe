@@ -28,13 +28,6 @@ class MyProfileFragment : Fragment() {
             setFrag(1)
         }
 
-        binding.myprofileShareBtn.setOnClickListener {
-
-            val bottomSheet = BottomSheet()
-
-            bottomSheet.show(childFragmentManager, bottomSheet.tag)
-
-        }
 
         return binding.root
     }

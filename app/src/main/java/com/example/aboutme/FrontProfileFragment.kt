@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,18 +16,28 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.aboutme.databinding.FragmentFrontprofileBinding
+import com.example.aboutme.databinding.FragmentSharebottomsheetBinding
 
 
 class FrontProfileFragment : Fragment() {
 
+    lateinit var binding: FragmentFrontprofileBinding
 
 
-    lateinit var binding : FragmentFrontprofileBinding
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        val frontProfileBinding = FragmentFrontprofileBinding.inflate(inflater, container, false)
+        val shareBottomSheetBinding =
+            FragmentSharebottomsheetBinding.inflate(inflater, container, false)
+
+        // 데이터 클래스에 담아서 반환
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        binding = FragmentFrontprofileBinding.inflate(inflater,container, false)
+        binding = FragmentFrontprofileBinding.inflate(inflater,container,false)
 
         binding.turnBtn.setOnClickListener {
             val ft = parentFragmentManager.beginTransaction()
@@ -34,34 +45,20 @@ class FrontProfileFragment : Fragment() {
             ft.replace(R.id.profile_frame, BackProfileFragment()).commit()
         }
 
+
         binding.profileIv.setOnClickListener {
 
-            //갤러리 호출
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            activityResult.launch(intent)
+            val bottomSheet = BottomSheet()
+
+            bottomSheet.show(childFragmentManager, bottomSheet.tag)
 
         }
+
 
 
         return binding.root
     }
 
-    //이미지 가져오기
-    private val activityResult : ActivityResultLauncher<Intent> = registerForActivityResult(
-
-        ActivityResultContracts.StartActivityForResult()){
-
-        //결과 코드 ok,결과 널 아닐때
-            if (it.resultCode == RESULT_OK && it.data != null){
-
-            //값 담기
-                val uri = it.data!!.data
-
-                Glide.with(requireContext()).load(uri) //이미지
-                    .into(binding.profileIv) //이미지 보여줄 위치
-        }
-    }
-
 
 }
+
