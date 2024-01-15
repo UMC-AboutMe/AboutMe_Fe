@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_myprof"
+        android:title="마이프로필"
+        android:enabled = "true"
+        android:icon="@drawable/nav_myprof" />
+
+    <item android:id="@+id/nav_saveprof"
+        android:title="프로필보관함"
+        android:enabled = "true"
+        android:icon="@drawable/nav_saveprof" />
+
+    <item
+        android:id="@+id/nav_home"
+        android:checkable="true"
+        android:enabled="true"
+        android:icon="@drawable/nav_home"
+        android:title="홈" />
+
+    <item android:id="@+id/nav_myspace"
+        android:title="마이스페이스"
+        android:enabled = "true"
+        android:icon="@drawable/nav_myspace" />
+
+    <item android:id="@+id/nav_agit"
+        android:title="아지트"
+        android:enabled = "true"
+        android:icon="@drawable/nav_agit" />
+</menu>
