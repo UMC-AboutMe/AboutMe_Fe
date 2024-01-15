@@ -1,5 +1,15 @@
 # AboutMe_Fe
 
+## 머지하는 방법
+깃허브에 브랜치 푸시하면 compare&...뜰거임
+그럼 그거 초록색 버튼 누르고 pr남기고 머지하기
+그 다음
+안드로이드 스튜디오 돌아와 터미널
+git checkout master
+git merge week000/000
+git pull
+master 브랜치로 병합되었음을 확인할 수 있음
+
 ## commit 규칙
 [커밋태그] : 내용 #이슈번호
 
