@@ -38,9 +38,13 @@ class MainProfileFragment : Fragment() {
 
         binding.mainProfileVp.setOnClickListener {
 
+            val ft = childFragmentManager.beginTransaction()
 
 
         }
+
+
+
 
 
         return binding.root
@@ -63,8 +67,6 @@ class MainProfileFragment : Fragment() {
 
 
     }
-
-
 
 }
 
