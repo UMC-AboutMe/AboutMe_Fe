@@ -15,7 +15,7 @@ import com.example.aboutme.databinding.FragmentFrontprofileBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class BottomSheet() : BottomSheetDialogFragment(){
+class BottomSheet() : BottomSheetDialogFragment() {
 
     lateinit var binding : FragmentFrontprofileBinding
 
@@ -58,4 +58,6 @@ class BottomSheet() : BottomSheetDialogFragment(){
             Log.d("Gallery", "shareBottomSheetImageBtn clicked")
         }
     }
+
+
 }

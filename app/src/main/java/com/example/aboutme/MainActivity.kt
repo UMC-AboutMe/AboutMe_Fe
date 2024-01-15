@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "kakaoclick", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, TutorialActivity1::class.java)
+
             startActivity(intent)
         }
 
@@ -26,4 +27,5 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "googleclick", Toast.LENGTH_SHORT).show()
         }
     }
+
 }
