@@ -23,10 +23,11 @@ class SearchSpaceActivity : AppCompatActivity() {
 //            CustomDialogSpace("내 스페이스도 공유 하시겠습니까?")
 //                .show(supportFragmentManager, "SpaceDialog")
         }
-
+        //뒤로가기
         binding.backBtn.setOnClickListener {
             finish()
         }
+        //제약 조건
         binding.searchBtn.setOnClickListener {
             if (binding.searchTv.text.toString() == "teddy") {
                 binding.profBg.visibility = View.VISIBLE
