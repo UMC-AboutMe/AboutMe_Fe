@@ -36,12 +36,13 @@
         app:layout_constraintGuide_end="71dp" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/prof_bg"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:scaleType="fitXY"
         android:src="@drawable/searchprof_bg"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -117,6 +118,7 @@
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         android:src="@drawable/searchprof_btn"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/example_iv"
@@ -127,8 +129,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/searprof_card"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/prof_bg"
         app:layout_constraintTop_toBottomOf="@+id/search_tv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
