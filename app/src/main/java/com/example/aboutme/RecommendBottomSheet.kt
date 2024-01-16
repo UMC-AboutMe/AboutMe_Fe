@@ -1,17 +1,25 @@
 package com.example.aboutme
 
 import android.app.Dialog
+import android.content.Context
+import android.graphics.Color
+import android.graphics.Point
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import com.example.aboutme.databinding.FragmentBackprofileBinding
 import com.example.aboutme.databinding.FragmentMyprofileBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class RecommendBottomSheet : BottomSheetDialogFragment() {
+
+class RecommendBottomSheet : DialogFragment() {
 
     lateinit var binding : FragmentBackprofileBinding
 
@@ -24,6 +32,12 @@ class RecommendBottomSheet : BottomSheetDialogFragment() {
 
         binding = FragmentBackprofileBinding.inflate(inflater,container,false)
 
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialog?.window?.setBackgroundDrawableResource(R.drawable.bottomsheetbox)
+
+
+
         return inflater.inflate(R.layout.fragment_recommendbottomsheet, container, false)
     }
 
@@ -33,6 +47,23 @@ class RecommendBottomSheet : BottomSheetDialogFragment() {
 
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val windowManager = context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val display = windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+
+        size.x // 디바이스 가로 길이
+        size.y // 디바이스 세로 길이
+
+        val params: ViewGroup.LayoutParams? = dialog?.window?.attributes
+        val deviceHeight = size.y
+        params?.height = (deviceHeight * 0.3).toInt()
+        dialog?.window?.attributes = params as WindowManager.LayoutParams
     }
 
 

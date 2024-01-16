@@ -2,6 +2,8 @@ package com.example.aboutme
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -27,6 +29,9 @@ class BottomSheet2 : BottomSheetDialogFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
 
         binding = FragmentMyprofileBinding.inflate(inflater,container,false)
+
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
 
         return inflater.inflate(R.layout.fragment_sharebottomsheet2, container, false)
     }

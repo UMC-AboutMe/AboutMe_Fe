@@ -1,12 +1,17 @@
 package com.example.aboutme
 
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Point
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ImageButton
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,6 +32,9 @@ class BottomSheet() : BottomSheetDialogFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
 
         binding = FragmentFrontprofileBinding.inflate(inflater,container,false)
+
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
 
         return inflater.inflate(R.layout.fragment_sharebottomsheet, container, false)
     }
@@ -58,6 +66,24 @@ class BottomSheet() : BottomSheetDialogFragment() {
             Log.d("Gallery", "shareBottomSheetImageBtn clicked")
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        val windowManager = context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val display = windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+
+        size.x // 디바이스 가로 길이
+        size.y // 디바이스 세로 길이
+
+        val params: ViewGroup.LayoutParams? = dialog?.window?.attributes
+        val deviceWidth = size.x
+        params?.width = (deviceWidth)
+        dialog?.window?.attributes = params as WindowManager.LayoutParams
+    }
+
 
 
 }
