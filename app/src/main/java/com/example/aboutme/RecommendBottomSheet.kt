@@ -7,6 +7,7 @@ import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,7 @@ class RecommendBottomSheet : DialogFragment() {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         dialog?.window?.setBackgroundDrawableResource(R.drawable.bottomsheetbox)
+        dialog?.window?.setGravity(Gravity.BOTTOM)
 
 
 
@@ -57,14 +59,15 @@ class RecommendBottomSheet : DialogFragment() {
         val size = Point()
         display.getSize(size)
 
-        size.x // 디바이스 가로 길이
-        size.y // 디바이스 세로 길이
-
         val params: ViewGroup.LayoutParams? = dialog?.window?.attributes
         val deviceHeight = size.y
+
+        // 다이얼로그의 높이를 디바이스 높이의 30%로 설정
         params?.height = (deviceHeight * 0.3).toInt()
+
         dialog?.window?.attributes = params as WindowManager.LayoutParams
     }
+
 
 
 

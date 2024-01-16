@@ -8,6 +8,7 @@ import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,12 +16,13 @@ import android.view.WindowManager
 import android.widget.ImageButton
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.example.aboutme.databinding.FragmentFrontprofileBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class BottomSheet() : BottomSheetDialogFragment() {
+class BottomSheet() : DialogFragment() {
 
     lateinit var binding : FragmentFrontprofileBinding
 
@@ -34,6 +36,9 @@ class BottomSheet() : BottomSheetDialogFragment() {
         binding = FragmentFrontprofileBinding.inflate(inflater,container,false)
 
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialog?.window?.setBackgroundDrawableResource(R.drawable.bottomsheetbox)
+        dialog?.window?.setGravity(Gravity.BOTTOM)
 
 
         return inflater.inflate(R.layout.fragment_sharebottomsheet, container, false)
@@ -75,12 +80,12 @@ class BottomSheet() : BottomSheetDialogFragment() {
         val size = Point()
         display.getSize(size)
 
-        size.x // 디바이스 가로 길이
-        size.y // 디바이스 세로 길이
-
         val params: ViewGroup.LayoutParams? = dialog?.window?.attributes
-        val deviceWidth = size.x
-        params?.width = (deviceWidth)
+        val deviceHeight = size.y
+
+        // 다이얼로그의 높이를 디바이스 높이의 30%로 설정
+        params?.height = (deviceHeight * 0.25).toInt()
+
         dialog?.window?.attributes = params as WindowManager.LayoutParams
     }
 
