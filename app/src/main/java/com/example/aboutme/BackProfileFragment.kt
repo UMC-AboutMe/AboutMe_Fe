@@ -21,6 +21,41 @@ class BackProfileFragment : Fragment() {
             ft.replace(R.id.profile_frame, FrontProfileFragment()).commit()
         }
 
+        binding.backProfileEt1.setOnClickListener {
+
+            val bottomSheet = RecommendBottomSheet()
+
+            bottomSheet.show(childFragmentManager, bottomSheet.tag)
+        }
+
+        binding.backProfileEt2.setOnClickListener {
+
+            val bottomSheet = RecommendBottomSheet()
+
+            bottomSheet.show(childFragmentManager, bottomSheet.tag)
+        }
+
+        binding.backProfileEt3.setOnClickListener {
+
+            val bottomSheet = RecommendBottomSheet()
+
+            bottomSheet.show(childFragmentManager, bottomSheet.tag)
+        }
+
+        binding.backProfileEt4.setOnClickListener {
+
+            val bottomSheet = RecommendBottomSheet()
+
+            bottomSheet.show(childFragmentManager, bottomSheet.tag)
+        }
+
+        binding.backProfileEt5.setOnClickListener {
+
+            val bottomSheet = RecommendBottomSheet()
+
+            bottomSheet.show(childFragmentManager, bottomSheet.tag)
+        }
+
 
 
         return binding.root

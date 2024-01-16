@@ -29,8 +29,8 @@
 
         <EditText
             android:id="@+id/backProfile_et1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
             android:layout_marginBottom="24dp"
             android:ems="12"
             android:hint="내용1"
@@ -42,8 +42,8 @@
 
         <EditText
             android:id="@+id/backProfile_et2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
             android:layout_marginBottom="24dp"
             android:ems="12"
             android:hint="내용2"
@@ -56,8 +56,8 @@
 
         <EditText
             android:id="@+id/backProfile_et3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
             android:layout_marginBottom="24dp"
             android:ems="12"
             android:hint="내용3"
@@ -69,8 +69,8 @@
 
         <EditText
             android:id="@+id/backProfile_et4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
             android:layout_marginBottom="24dp"
             android:ems="12"
             android:hint="내용4"
@@ -82,8 +82,8 @@
 
         <EditText
             android:id="@+id/backProfile_et5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
             android:layout_marginBottom="24dp"
             android:ems="12"
             android:hint="내용5"
