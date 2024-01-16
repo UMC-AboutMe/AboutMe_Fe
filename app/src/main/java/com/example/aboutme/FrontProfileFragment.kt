@@ -50,6 +50,7 @@ class FrontProfileFragment : Fragment() {
 
         }
 
+
         return binding.root
     }
 
