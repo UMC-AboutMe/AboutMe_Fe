@@ -20,13 +20,6 @@ class MyProfileFragment : Fragment() {
 
         setFrag(0)
 
-        binding.myprofileFrontBtn.setOnClickListener {
-            setFrag(0)
-        }
-
-        binding.myprofileBackBtn.setOnClickListener {
-            setFrag(1)
-        }
 
         binding.myprofileShareBtn.setOnClickListener {
 

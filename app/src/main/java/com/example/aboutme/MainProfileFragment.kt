@@ -25,16 +25,6 @@ class MainProfileFragment : Fragment() {
         initViewPager()
 
 
-        binding.mainProfileDeleteBtn.setOnClickListener {
-            Log.d("deletebtn", "click")
-
-            val positionToRemove = binding.mainProfileVp.currentItem
-            if (positionToRemove != -1 && positionToRemove < multiList.size) {
-                multiList.removeAt(positionToRemove)
-                // 어댑터에 변경된 데이터를 알림
-                vpadapter.submitList(multiList)
-            }
-        }
 
         binding.mainProfileVp.setOnClickListener {
 
