@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MypageInfoActivity">
-
+    tools:context=".MapageInsightActivity">
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
@@ -65,7 +64,7 @@
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/back_btn"
-        app:srcCompat="@drawable/mypage_info_logo" />
+        app:srcCompat="@drawable/mypage_insight_logo" />
 
     <TextView
         android:id="@+id/insight_tv"
@@ -73,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:fontFamily="@font/gmarketsansmedium"
-        android:text="내 정보"
+        android:text="인사이트"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/insight_logo"
         app:layout_constraintStart_toEndOf="@+id/insight_logo"
@@ -88,7 +87,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/insight_tv"
-        app:srcCompat="@drawable/info_name" />
+        app:srcCompat="@drawable/insight_profbg" />
 
     <TextView
         android:id="@+id/insight_prof_tv"
@@ -96,10 +95,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:fontFamily="@font/gmarketsansmedium"
-        android:text="유태연"
+        android:text="공유받은 사람 12명"
         android:textSize="22sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/insight_prof_iv" />
 
@@ -113,7 +112,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/insight_prof_iv"
-        app:srcCompat="@drawable/info_nickname" />
+        app:srcCompat="@drawable/insight_spacebg" />
 
     <TextView
         android:id="@+id/insight_space_tv"
@@ -121,49 +120,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:fontFamily="@font/gmarketsansmedium"
-        android:text="테디"
+        android:text="공유받은 사람 10명"
         android:textSize="22sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/insight_space_iv" />
-
-    <ImageButton
-        android:id="@+id/info_kakao_btn"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
-        android:background="@android:color/transparent"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/insight_prof_iv"
-        app:srcCompat="@drawable/info_kakao" />
-
-    <ImageButton
-        android:id="@+id/logout_btn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/info_kakao_btn"
-        app:srcCompat="@drawable/info_logout" />
-
-    <ImageButton
-        android:id="@+id/quit_btn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
-        android:background="@android:color/transparent"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/info_kakao_btn"
-        app:srcCompat="@drawable/info_quit" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
