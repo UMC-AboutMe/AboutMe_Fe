@@ -47,6 +47,7 @@ class RecommendBottomSheet : DialogFragment() {
         super.onActivityCreated(savedInstanceState)
         view?.findViewById<ImageButton>(R.id.mbti_btn)?.setOnClickListener {
 
+
         }
 
     }
