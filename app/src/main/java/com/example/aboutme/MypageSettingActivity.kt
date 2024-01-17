@@ -3,9 +3,9 @@ package com.example.aboutme
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
-class MapageInsightActivity : AppCompatActivity() {
+class MypageSettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mapage_insight)
+        setContentView(R.layout.activity_mypage_setting)
     }
 }

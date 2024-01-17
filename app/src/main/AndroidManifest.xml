@@ -13,10 +13,10 @@
         android:theme="@style/Theme.AboutMe"
         tools:targetApi="33">
         <activity
-            android:name=".MyapgeSettingActivity"
+            android:name=".MypageSettingActivity"
             android:exported="false" />
         <activity
-            android:name=".MapageInsightActivity"
+            android:name=".MypageInsightActivity"
             android:exported="false" />
         <activity
             android:name=".MypageInfoActivity"

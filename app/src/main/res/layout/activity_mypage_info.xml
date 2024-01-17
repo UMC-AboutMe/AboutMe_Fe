@@ -59,7 +59,7 @@
         app:layout_constraintTop_toTopOf="@+id/back_btn" />
 
     <ImageView
-        android:id="@+id/insight_logo"
+        android:id="@+id/logo"
         android:layout_width="20dp"
         android:layout_height="26dp"
         android:layout_marginTop="20dp"
@@ -68,52 +68,27 @@
         app:srcCompat="@drawable/mypage_info_logo" />
 
     <TextView
-        android:id="@+id/insight_tv"
+        android:id="@+id/info_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:fontFamily="@font/gmarketsansmedium"
         android:text="내 정보"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="@+id/insight_logo"
-        app:layout_constraintStart_toEndOf="@+id/insight_logo"
-        app:layout_constraintTop_toTopOf="@+id/insight_logo" />
+        app:layout_constraintBottom_toBottomOf="@+id/logo"
+        app:layout_constraintStart_toEndOf="@+id/logo"
+        app:layout_constraintTop_toTopOf="@+id/logo" />
 
     <ImageView
-        android:id="@+id/insight_prof_iv"
+        android:id="@+id/info_name_iv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/insight_tv"
+        app:layout_constraintTop_toTopOf="@+id/info_tv"
         app:srcCompat="@drawable/info_name" />
-
-    <TextView
-        android:id="@+id/insight_prof_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:fontFamily="@font/gmarketsansmedium"
-        android:text="유태연"
-        android:textSize="22sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.09"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/insight_prof_iv" />
-
-    <ImageView
-        android:id="@+id/insight_space_iv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/insight_prof_iv"
-        app:srcCompat="@drawable/info_nickname" />
 
     <TextView
         android:id="@+id/insight_space_tv"
@@ -126,7 +101,32 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/insight_space_iv" />
+        app:layout_constraintTop_toTopOf="@+id/info_name_iv" />
+
+    <ImageView
+        android:id="@+id/info_nick_iv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="128dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/info_name_iv"
+        app:srcCompat="@drawable/info_nickname" />
+
+    <TextView
+        android:id="@+id/info_nick_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:text="유태연"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/info_nick_iv" />
 
     <ImageButton
         android:id="@+id/info_kakao_btn"
@@ -138,7 +138,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/insight_prof_iv"
+        app:layout_constraintTop_toBottomOf="@+id/info_name_iv"
         app:srcCompat="@drawable/info_kakao" />
 
     <ImageButton

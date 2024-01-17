@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MyapgeSettingActivity">
-
+    tools:context=".MypageInsightActivity">
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
@@ -50,23 +49,22 @@
         android:id="@+id/mypage_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="2dp"
         android:fontFamily="@font/gmarketsansmedium"
         android:text="마이페이지"
-        android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/back_btn"
         app:layout_constraintStart_toEndOf="@+id/back_btn"
         app:layout_constraintTop_toTopOf="@+id/back_btn" />
 
     <ImageView
-        android:id="@+id/insight_logo"
+        android:id="@+id/logo"
         android:layout_width="20dp"
         android:layout_height="26dp"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/back_btn"
-        app:srcCompat="@drawable/mypage_setting_logo" />
+        app:srcCompat="@drawable/mypage_insight_logo" />
 
     <TextView
         android:id="@+id/insight_tv"
@@ -74,60 +72,58 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:fontFamily="@font/gmarketsansmedium"
-        android:text="환경설정"
-        android:textColor="#000000"
+        android:text="인사이트"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="@+id/insight_logo"
-        app:layout_constraintStart_toEndOf="@+id/insight_logo"
-        app:layout_constraintTop_toTopOf="@+id/insight_logo" />
+        app:layout_constraintBottom_toBottomOf="@+id/logo"
+        app:layout_constraintStart_toEndOf="@+id/logo"
+        app:layout_constraintTop_toTopOf="@+id/logo" />
 
-    <Switch
-        android:id="@+id/switch1"
+    <ImageView
+        android:id="@+id/insight_prof_iv"
         android:layout_width="0dp"
-        android:layout_height="95dp"
-        android:layout_marginTop="36dp"
-        android:background="@drawable/setting_alarmbg"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/insight_tv" />
+        app:layout_constraintTop_toTopOf="@+id/insight_tv"
+        app:srcCompat="@drawable/insight_profbg" />
 
-    <Switch
-        android:id="@+id/switch2"
-        android:layout_width="0dp"
-        android:layout_height="95dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/setting_themebg"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/switch1" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="0dp"
-        android:layout_height="95dp"
-        android:layout_marginTop="20dp"
-        android:background="@android:color/transparent"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/switch2"
-        app:srcCompat="@drawable/setting_langbg" />
-
-    <Button
-        android:id="@+id/button"
+    <TextView
+        android:id="@+id/insight_prof_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@android:color/transparent"
+        android:layout_marginTop="100dp"
         android:fontFamily="@font/gmarketsansmedium"
-        android:text="캐시 데이터 삭제하기"
-        android:textColor="#939292"
-        android:textSize="15sp"
+        android:text="공유받은 사람 12명"
+        android:textSize="22sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintTop_toTopOf="@+id/insight_prof_iv" />
 
+    <ImageView
+        android:id="@+id/insight_space_iv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="128dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/insight_prof_iv"
+        app:srcCompat="@drawable/insight_spacebg" />
+
+    <TextView
+        android:id="@+id/insight_space_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:text="공유받은 사람 10명"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/insight_space_iv" />
 </androidx.constraintlayout.widget.ConstraintLayout>
