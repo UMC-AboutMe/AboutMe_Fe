@@ -13,6 +13,9 @@
         android:theme="@style/Theme.AboutMe"
         tools:targetApi="33">
         <activity
+            android:name=".MyapgeSettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".MapageInsightActivity"
             android:exported="false" />
         <activity
