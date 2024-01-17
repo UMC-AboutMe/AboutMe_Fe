@@ -13,6 +13,9 @@
         android:theme="@style/Theme.AboutMe"
         tools:targetApi="33">
         <activity
+            android:name=".MypageNotiActivity"
+            android:exported="false" />
+        <activity
             android:name=".MypageSettingActivity"
             android:exported="false" />
         <activity
