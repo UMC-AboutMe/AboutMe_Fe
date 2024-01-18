@@ -18,19 +18,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.findFragment
 import com.bumptech.glide.Glide
 import com.example.aboutme.databinding.FragmentFrontprofileBinding
+import com.example.aboutme.databinding.FragmentSharebottomsheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import de.hdodenhof.circleimageview.CircleImageView
+import kotlin.concurrent.fixedRateTimer
 
 
 class BottomSheet() : DialogFragment() {
 
-    lateinit var binding : FragmentFrontprofileBinding
+    lateinit var binding : FragmentSharebottomsheetBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,15 +44,15 @@ class BottomSheet() : DialogFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        binding = FragmentFrontprofileBinding.inflate(inflater,container,false)
+        binding = FragmentSharebottomsheetBinding.inflate(inflater, container, false)
+
 
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         dialog?.window?.setBackgroundDrawableResource(R.drawable.bottomsheetbox)
         dialog?.window?.setGravity(Gravity.BOTTOM)
 
-
-        return inflater.inflate(R.layout.fragment_sharebottomsheet, container, false)
+        return binding.root
     }
 
 
@@ -102,7 +107,8 @@ class BottomSheet() : DialogFragment() {
                     Toast.makeText(context, "권한을 거부하셨습니다.", Toast.LENGTH_SHORT).show()
             }
             else -> {
-                //
+                Toast.makeText(context, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
+
             }
         }
     }
@@ -124,16 +130,26 @@ class BottomSheet() : DialogFragment() {
         when (requestCode) {
             // 2000: 이미지 컨텐츠를 가져오는 액티비티를 수행한 후 실행되는 Activity 일 때만 수행하기 위해서
             2000 -> {
-                val ivProfile = binding.profileIv
+                val frontProfileFragment = parentFragmentManager.findFragmentByTag("FrontProfileFragmentTag") as? FrontProfileFragment
+                val ivProfile = frontProfileFragment?.getProfileImageView()
                 val selectedImageUri: Uri? = data?.data
-                if (selectedImageUri != null) {
-                    ivProfile.setImageURI(selectedImageUri)
+                Log.d("PutImage1", "success")
+                if (selectedImageUri != null&& ivProfile != null) {
+                    Glide.with(requireContext()).load(selectedImageUri).into(ivProfile)
+                    Log.d("PutImage2", "success")
                 } else {
+                    if (selectedImageUri == null) {
+                        Log.d("PutImage", "selectedImageUri is null")
+                    }
+                    if (ivProfile == null) {
+                        Log.d("PutImage", "ivProfile is null")
+                    }
                     Toast.makeText(context, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
+
             else -> {
-                Toast.makeText(context, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -162,7 +178,7 @@ class BottomSheet() : DialogFragment() {
         val params: ViewGroup.LayoutParams? = dialog?.window?.attributes
         val deviceHeight = size.y
 
-        // 다이얼로그의 높이를 디바이스 높이의 30%로 설정
+        // 다이얼로그의 높이를 디바이스 높이의 25%로 설정
         params?.height = (deviceHeight * 0.25).toInt()
 
         dialog?.window?.attributes = params as WindowManager.LayoutParams

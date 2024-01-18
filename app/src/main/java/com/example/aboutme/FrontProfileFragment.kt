@@ -2,9 +2,11 @@ package com.example.aboutme
 
 import android.R.id.edit
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.aboutme.databinding.FragmentFrontprofileBinding
@@ -54,6 +56,10 @@ class FrontProfileFragment : Fragment() {
         return binding.root
     }
 
+    fun getProfileImageView(): ImageView? {
+
+        return binding.profileIv
+    }
 
 }
 
