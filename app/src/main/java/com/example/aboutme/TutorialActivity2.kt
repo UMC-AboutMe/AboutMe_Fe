@@ -1,5 +1,6 @@
 package com.example.aboutme
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.CheckBox
@@ -19,6 +20,9 @@ class TutorialActivity2 : AppCompatActivity() {
         binding.okIv.setOnClickListener {
 
             Toast.makeText(this, "okclicked", Toast.LENGTH_SHORT).show()
+
+            val intent= Intent(this, TutorialActivity3::class.java)
+            startActivity(intent)
 
         }
 
