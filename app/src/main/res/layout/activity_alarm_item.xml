@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/alarm_iv"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/alarm_iv2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/alarm_iv2"
+        app:srcCompat="@drawable/alarm_bg1" />
+
+    <ImageView
+        android:id="@+id/alarm_iv2"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toEndOf="@+id/alarm_iv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/alarm_bg2" />
+
+    <ImageView
+        android:id="@+id/alarm_img_iv"
+        android:layout_width="31dp"
+        android:layout_height="34dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/alarm_iv"
+        app:layout_constraintEnd_toEndOf="@+id/alarm_iv"
+        app:layout_constraintStart_toStartOf="@+id/alarm_iv"
+        app:layout_constraintTop_toTopOf="@+id/alarm_iv"
+        app:srcCompat="@drawable/nav_myprof" />
+
+    <ImageButton
+        android:id="@+id/alarm_yes_btn"
+        android:layout_width="65dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toEndOf="@+id/alarm_iv"
+        app:layout_constraintTop_toBottomOf="@+id/alarm_tv"
+        app:srcCompat="@drawable/alarm_yesbtn" />
+
+    <ImageButton
+        android:id="@+id/alarm_save_btn"
+        android:layout_width="68dp"
+        android:layout_height="21dp"
+        android:layout_marginEnd="50dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/alarm_yes_btn"
+        app:srcCompat="@drawable/alarm_savebtn"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/alarm_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:text="테디님이 프로필을 공유하였습니다."
+        android:textColor="#000000"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/alarm_iv2"
+        app:layout_constraintStart_toEndOf="@+id/alarm_iv"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
