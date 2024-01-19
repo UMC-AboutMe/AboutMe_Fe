@@ -50,7 +50,18 @@ class RecommendBottomSheet : DialogFragment() {
             initMbti()
 
         }
-
+        view?.findViewById<ImageButton>(R.id.job_btn)?.setOnClickListener {
+            initJob()
+        }
+        view?.findViewById<ImageButton>(R.id.company_btn)?.setOnClickListener {
+            initCompany()
+        }
+        view?.findViewById<ImageButton>(R.id.hobby_btn)?.setOnClickListener {
+            initHobby()
+        }
+        view?.findViewById<ImageButton>(R.id.recommendBlank_ib)?.setOnClickListener {
+            initSchool()
+        }
         view?.findViewById<ImageButton>(R.id.school_btn)?.setOnClickListener {
             initSchool()
         }
@@ -84,6 +95,50 @@ class RecommendBottomSheet : DialogFragment() {
     fun setOnSchoolSelectedListener(listener: OnSchoolSelectedListener){
         this.schoolSelectedListener = listener
     }
+
+    private fun initJob(){
+        jobSelectedListener?.onJobSelected()
+    }
+
+    interface OnJobSelectedListener{
+        fun onJobSelected()
+    }
+
+    private var jobSelectedListener : OnJobSelectedListener? = null
+
+    fun setOnJobSelectedListener(listener: OnJobSelectedListener){
+        this.jobSelectedListener = listener
+    }
+
+    private fun initHobby(){
+        hobbySelectedListener?.onHobbySelected()
+    }
+
+    interface OnHobbySelectedListener{
+        fun onHobbySelected()
+    }
+
+    private var hobbySelectedListener : OnHobbySelectedListener? = null
+
+    fun setOnHobbySelectedListener(listener: OnHobbySelectedListener){
+        this.hobbySelectedListener = listener
+    }
+
+    private fun initCompany(){
+        companySelectedListener?.onCompanySelected()
+    }
+
+    interface OnCompanySelectedListener{
+        fun onCompanySelected()
+    }
+
+    private var companySelectedListener : OnCompanySelectedListener? = null
+
+    fun setOnCompanySelectedListener(listener: OnCompanySelectedListener){
+        this.companySelectedListener = listener
+    }
+
+
 
 
     override fun onResume() {
