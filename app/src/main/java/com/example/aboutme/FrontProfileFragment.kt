@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.aboutme.databinding.FragmentFrontprofileBinding
 
 
-class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener {
+class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, BottomSheet.OnBasicImageSelectedListener {
 
     lateinit var binding: FragmentFrontprofileBinding
 
@@ -40,6 +40,7 @@ class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener {
             val bottomSheet = BottomSheet()
 
             bottomSheet.setOnImageSelectedListener(this@FrontProfileFragment)
+            bottomSheet.setOnBasicImageSelectedListener(this@FrontProfileFragment)
 
             bottomSheet.show(childFragmentManager, bottomSheet.tag)
 
@@ -58,6 +59,11 @@ class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener {
 
 
         return binding.root
+    }
+
+    override fun onBasicImageSelected() {
+        // drawable에 있는 이미지를 사용하여 프로필 이미지뷰 업데이트
+        Glide.with(requireContext()).load(R.drawable.logo).into(binding.profileIv)
     }
 
     override fun onImageSelected(imageUri: Uri) {
