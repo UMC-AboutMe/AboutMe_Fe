@@ -103,12 +103,12 @@ class BottomSheet() : DialogFragment() {
                     1000
                 )
             }
-        dismiss()
 
         }
 
     private fun initBasicImage(){
         basicImageSelectedListener?.onBasicImageSelected()
+        dismiss()
     }
 
     private fun initCharImage(){

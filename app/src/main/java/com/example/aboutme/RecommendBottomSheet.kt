@@ -24,6 +24,7 @@ class RecommendBottomSheet : DialogFragment() {
 
     lateinit var binding : FragmentBackprofileBinding
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,6 +51,10 @@ class RecommendBottomSheet : DialogFragment() {
 
         }
 
+        view?.findViewById<ImageButton>(R.id.school_btn)?.setOnClickListener {
+            initSchool()
+        }
+
     }
 
     private fun initMbti(){
@@ -65,6 +70,21 @@ class RecommendBottomSheet : DialogFragment() {
     fun setOnMbtiSelectedListener(listener: OnMbtiSelectedListener){
         this.mbtiSelectedListener = listener
     }
+
+    private fun initSchool(){
+        schoolSelectedListener?.onSchoolSelected()
+    }
+
+    interface OnSchoolSelectedListener{
+        fun onSchoolSelected()
+    }
+
+    private var schoolSelectedListener : OnSchoolSelectedListener? = null
+
+    fun setOnSchoolSelectedListener(listener: OnSchoolSelectedListener){
+        this.schoolSelectedListener = listener
+    }
+
 
     override fun onResume() {
         super.onResume()
