@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.aboutme.databinding.FragmentBackprofileBinding
 import com.example.aboutme.databinding.FragmentFrontprofileBinding
 
-class BackProfileFragment : Fragment() {
+class BackProfileFragment : Fragment(), RecommendBottomSheet.OnMbtiSelectedListener {
 
     lateinit var binding : FragmentBackprofileBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -24,6 +25,8 @@ class BackProfileFragment : Fragment() {
         binding.backProfileEt1.setOnClickListener {
 
             val bottomSheet = RecommendBottomSheet()
+
+            bottomSheet.setOnMbtiSelectedListener(this@BackProfileFragment)
 
             bottomSheet.show(childFragmentManager, bottomSheet.tag)
         }
@@ -59,5 +62,9 @@ class BackProfileFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    override fun onMbtiSelected() {
+        Glide.with(requireContext()).load(R.drawable.mbti).into(binding.recommendEt1Iv)
     }
 }

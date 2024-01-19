@@ -46,10 +46,24 @@ class RecommendBottomSheet : DialogFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         view?.findViewById<ImageButton>(R.id.mbti_btn)?.setOnClickListener {
-
+            initMbti()
 
         }
 
+    }
+
+    private fun initMbti(){
+        mbtiSelectedListener?.onMbtiSelected()
+    }
+
+    interface OnMbtiSelectedListener{
+        fun onMbtiSelected()
+    }
+
+    private var mbtiSelectedListener : OnMbtiSelectedListener? = null
+
+    fun setOnMbtiSelectedListener(listener: OnMbtiSelectedListener){
+        this.mbtiSelectedListener = listener
     }
 
     override fun onResume() {
@@ -63,8 +77,8 @@ class RecommendBottomSheet : DialogFragment() {
         val params: ViewGroup.LayoutParams? = dialog?.window?.attributes
         val deviceHeight = size.y
 
-        // 다이얼로그의 높이를 디바이스 높이의 30%로 설정
-        params?.height = (deviceHeight * 0.3).toInt()
+        // 다이얼로그의 높이를 디바이스 높이의 20%로 설정
+        params?.height = (deviceHeight * 0.2).toInt()
 
         dialog?.window?.attributes = params as WindowManager.LayoutParams
     }

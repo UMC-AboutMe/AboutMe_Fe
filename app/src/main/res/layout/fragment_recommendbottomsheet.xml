@@ -40,10 +40,10 @@
                 android:layout_marginLeft="30dp"/>
 
             <ImageButton
-                android:id="@+id/favorite_btn"
+                android:id="@+id/job_btn"
                 android:layout_width="100dp"
                 android:layout_height="35dp"
-                android:background="@drawable/favorite"
+                android:background="@drawable/job"
                 android:layout_marginLeft="30dp"/>
 
         </LinearLayout>
@@ -69,42 +69,14 @@
                 android:layout_marginLeft="30dp"/>
 
             <ImageButton
-                android:id="@+id/job_btn"
+                android:id="@+id/recommendBlank_ib"
                 android:layout_width="100dp"
                 android:layout_height="35dp"
-                android:background="@drawable/job"
+                android:background="@drawable/recommend_blank"
                 android:layout_marginLeft="30dp"/>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="160dp">
-
-            <ImageButton
-                android:id="@+id/phoneNumber_btn"
-                android:layout_width="100dp"
-                android:layout_height="35dp"
-                android:background="@drawable/phonenumber"
-                android:layout_marginLeft="30dp"/>
-
-            <ImageButton
-                android:id="@+id/address_btn"
-                android:layout_width="100dp"
-                android:layout_height="35dp"
-                android:background="@drawable/address"
-                android:layout_marginLeft="30dp"/>
-
-            <ImageButton
-                android:id="@+id/announce_btn"
-                android:layout_width="100dp"
-                android:layout_height="35dp"
-                android:background="@drawable/announce"
-                android:layout_marginLeft="30dp"/>
-
-        </LinearLayout>
 
 
 

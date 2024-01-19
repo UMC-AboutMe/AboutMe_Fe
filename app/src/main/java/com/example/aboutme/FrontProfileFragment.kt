@@ -65,7 +65,7 @@ class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, Bot
 
     override fun onBasicImageSelected() {
         // drawable에 있는 이미지를 사용하여 프로필 이미지뷰 업데이트
-        Glide.with(requireContext()).load(R.drawable.frontprofil_basic).into(binding.profileIv)
+        Glide.with(requireContext()).load(R.drawable.frontprofile_basic).into(binding.profileIv)
     }
 
     override fun onImageSelected(imageUri: Uri) {
