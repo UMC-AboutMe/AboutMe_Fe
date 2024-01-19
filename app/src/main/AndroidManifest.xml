@@ -5,14 +5,16 @@
 
     <!-- 인터넷 사용 권한 설정-->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 알림 허용 권한 설정-->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon_aboutme"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/icon_aboutme_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AboutMe"
         tools:targetApi="33"
@@ -35,6 +37,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+        <!-- 카카오 소셜 로그인 api key 연결-->
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
