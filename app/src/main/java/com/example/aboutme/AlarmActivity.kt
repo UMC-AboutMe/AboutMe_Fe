@@ -14,6 +14,9 @@ class AlarmActivity : AppCompatActivity() {
         binding = ActivityAlarmBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
         //최근 7일 알림
         val itemList = ArrayList<Alarm_day7>()
         itemList.add(Alarm_day7(R.drawable.nav_myprof,"테디님이 프로필을 공유하였습니다."))
