@@ -52,6 +52,7 @@ class RecommendBottomSheet : DialogFragment() {
         }
         view?.findViewById<ImageButton>(R.id.job_btn)?.setOnClickListener {
             initJob()
+
         }
         view?.findViewById<ImageButton>(R.id.company_btn)?.setOnClickListener {
             initCompany()
@@ -70,6 +71,7 @@ class RecommendBottomSheet : DialogFragment() {
 
     private fun initMbti(){
         mbtiSelectedListener?.onMbtiSelected()
+        dismiss()
     }
 
     interface OnMbtiSelectedListener{
@@ -84,6 +86,7 @@ class RecommendBottomSheet : DialogFragment() {
 
     private fun initSchool(){
         schoolSelectedListener?.onSchoolSelected()
+        dismiss()
     }
 
     interface OnSchoolSelectedListener{
@@ -98,6 +101,7 @@ class RecommendBottomSheet : DialogFragment() {
 
     private fun initJob(){
         jobSelectedListener?.onJobSelected()
+        dismiss()
     }
 
     interface OnJobSelectedListener{
@@ -112,6 +116,7 @@ class RecommendBottomSheet : DialogFragment() {
 
     private fun initHobby(){
         hobbySelectedListener?.onHobbySelected()
+        dismiss()
     }
 
     interface OnHobbySelectedListener{
@@ -126,6 +131,7 @@ class RecommendBottomSheet : DialogFragment() {
 
     private fun initCompany(){
         companySelectedListener?.onCompanySelected()
+        dismiss()
     }
 
     interface OnCompanySelectedListener{

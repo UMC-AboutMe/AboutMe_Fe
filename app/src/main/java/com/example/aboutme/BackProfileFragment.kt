@@ -34,6 +34,9 @@ class BackProfileFragment : Fragment(), RecommendBottomSheet.OnMbtiSelectedListe
 
             bottomSheet.setOnMbtiSelectedListener(this@BackProfileFragment)
             bottomSheet.setOnSchoolSelectedListener(this@BackProfileFragment)
+            bottomSheet.setOnJobSelectedListener(this@BackProfileFragment)
+            bottomSheet.setOnHobbySelectedListener(this@BackProfileFragment)
+            bottomSheet.setOnCompanySelectedListener(this@BackProfileFragment)
 
             bottomSheet.show(childFragmentManager, bottomSheet.tag)
         }
@@ -44,6 +47,9 @@ class BackProfileFragment : Fragment(), RecommendBottomSheet.OnMbtiSelectedListe
             selectedButtonId = 2
             bottomSheet.setOnMbtiSelectedListener(this@BackProfileFragment)
             bottomSheet.setOnSchoolSelectedListener(this@BackProfileFragment)
+            bottomSheet.setOnJobSelectedListener(this@BackProfileFragment)
+            bottomSheet.setOnHobbySelectedListener(this@BackProfileFragment)
+            bottomSheet.setOnCompanySelectedListener(this@BackProfileFragment)
 
             bottomSheet.show(childFragmentManager, bottomSheet.tag)
         }
@@ -55,6 +61,9 @@ class BackProfileFragment : Fragment(), RecommendBottomSheet.OnMbtiSelectedListe
 
             bottomSheet.setOnMbtiSelectedListener(this@BackProfileFragment)
             bottomSheet.setOnSchoolSelectedListener(this@BackProfileFragment)
+            bottomSheet.setOnJobSelectedListener(this@BackProfileFragment)
+            bottomSheet.setOnHobbySelectedListener(this@BackProfileFragment)
+            bottomSheet.setOnCompanySelectedListener(this@BackProfileFragment)
             bottomSheet.show(childFragmentManager, bottomSheet.tag)
         }
 
@@ -65,6 +74,9 @@ class BackProfileFragment : Fragment(), RecommendBottomSheet.OnMbtiSelectedListe
 
             bottomSheet.setOnMbtiSelectedListener(this@BackProfileFragment)
             bottomSheet.setOnSchoolSelectedListener(this@BackProfileFragment)
+            bottomSheet.setOnJobSelectedListener(this@BackProfileFragment)
+            bottomSheet.setOnHobbySelectedListener(this@BackProfileFragment)
+            bottomSheet.setOnCompanySelectedListener(this@BackProfileFragment)
             bottomSheet.show(childFragmentManager, bottomSheet.tag)
         }
 
@@ -75,6 +87,9 @@ class BackProfileFragment : Fragment(), RecommendBottomSheet.OnMbtiSelectedListe
 
             bottomSheet.setOnMbtiSelectedListener(this@BackProfileFragment)
             bottomSheet.setOnSchoolSelectedListener(this@BackProfileFragment)
+            bottomSheet.setOnJobSelectedListener(this@BackProfileFragment)
+            bottomSheet.setOnHobbySelectedListener(this@BackProfileFragment)
+            bottomSheet.setOnCompanySelectedListener(this@BackProfileFragment)
             bottomSheet.show(childFragmentManager, bottomSheet.tag)
         }
 
@@ -119,6 +134,66 @@ class BackProfileFragment : Fragment(), RecommendBottomSheet.OnMbtiSelectedListe
             }
             5 -> {
                 Glide.with(requireContext()).load(R.drawable.school).into(binding.recommendEt5Iv)
+            }
+        }
+    }
+
+    override fun onCompanySelected() {
+        when(selectedButtonId){
+            1 -> {
+                Glide.with(requireContext()).load(R.drawable.company).into(binding.recommendEt1Iv)
+            }
+            2 -> {
+                Glide.with(requireContext()).load(R.drawable.company).into(binding.recommendEt2Iv)
+            }
+            3 -> {
+                Glide.with(requireContext()).load(R.drawable.company).into(binding.recommendEt3Iv)
+            }
+            4 -> {
+                Glide.with(requireContext()).load(R.drawable.company).into(binding.recommendEt4Iv)
+            }
+            5 -> {
+                Glide.with(requireContext()).load(R.drawable.company).into(binding.recommendEt5Iv)
+            }
+        }
+    }
+
+    override fun onHobbySelected() {
+        when(selectedButtonId){
+            1 -> {
+                Glide.with(requireContext()).load(R.drawable.hobby).into(binding.recommendEt1Iv)
+            }
+            2 -> {
+                Glide.with(requireContext()).load(R.drawable.hobby).into(binding.recommendEt2Iv)
+            }
+            3 -> {
+                Glide.with(requireContext()).load(R.drawable.hobby).into(binding.recommendEt3Iv)
+            }
+            4 -> {
+                Glide.with(requireContext()).load(R.drawable.hobby).into(binding.recommendEt4Iv)
+            }
+            5 -> {
+                Glide.with(requireContext()).load(R.drawable.hobby).into(binding.recommendEt5Iv)
+            }
+        }
+    }
+
+    override fun onJobSelected() {
+        when(selectedButtonId){
+            1 -> {
+                Glide.with(requireContext()).load(R.drawable.job).into(binding.recommendEt1Iv)
+            }
+            2 -> {
+                Glide.with(requireContext()).load(R.drawable.job).into(binding.recommendEt2Iv)
+            }
+            3 -> {
+                Glide.with(requireContext()).load(R.drawable.job).into(binding.recommendEt3Iv)
+            }
+            4 -> {
+                Glide.with(requireContext()).load(R.drawable.job).into(binding.recommendEt4Iv)
+            }
+            5 -> {
+                Glide.with(requireContext()).load(R.drawable.job).into(binding.recommendEt5Iv)
             }
         }
     }
