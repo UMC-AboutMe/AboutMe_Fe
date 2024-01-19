@@ -73,6 +73,10 @@ class BottomSheet() : DialogFragment() {
             Log.d("basic", "success")
         }
 
+        view?.findViewById<ImageButton>(R.id.shareBottomSheet_char_btn)?.setOnClickListener {
+            initCharImage()
+        }
+
     }
 
     private fun initImageViewProfile() {
@@ -106,6 +110,10 @@ class BottomSheet() : DialogFragment() {
         basicImageSelectedListener?.onBasicImageSelected()
     }
 
+    private fun initCharImage(){
+        charImageSelectedListener?.onCharImageSelected()
+    }
+
     interface OnImageSelectedListener {
         fun onImageSelected(imageUri: Uri)
     }
@@ -124,6 +132,16 @@ class BottomSheet() : DialogFragment() {
 
     fun setOnBasicImageSelectedListener(listener: OnBasicImageSelectedListener){
         this.basicImageSelectedListener = listener
+    }
+
+    interface OnCharImageSelectedListener{
+        fun onCharImageSelected()
+    }
+
+    private var charImageSelectedListener : OnCharImageSelectedListener? = null
+
+    fun setOnCharImageSelectedListener(listener: OnCharImageSelectedListener){
+        this.charImageSelectedListener = listener
     }
 
     // 권한 요청 승인 이후 실행되는 함수

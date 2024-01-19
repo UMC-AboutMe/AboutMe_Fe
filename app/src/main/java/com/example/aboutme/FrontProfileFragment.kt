@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.aboutme.databinding.FragmentFrontprofileBinding
 
 
-class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, BottomSheet.OnBasicImageSelectedListener {
+class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, BottomSheet.OnBasicImageSelectedListener, BottomSheet.OnCharImageSelectedListener {
 
     lateinit var binding: FragmentFrontprofileBinding
 
@@ -41,10 +41,12 @@ class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, Bot
 
             bottomSheet.setOnImageSelectedListener(this@FrontProfileFragment)
             bottomSheet.setOnBasicImageSelectedListener(this@FrontProfileFragment)
+            bottomSheet.setOnCharImageSelectedListener(this@FrontProfileFragment)
 
             bottomSheet.show(childFragmentManager, bottomSheet.tag)
 
         }
+
 
         val str: String = binding.profileNameEt.text.toString()
 
@@ -63,11 +65,15 @@ class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, Bot
 
     override fun onBasicImageSelected() {
         // drawable에 있는 이미지를 사용하여 프로필 이미지뷰 업데이트
-        Glide.with(requireContext()).load(R.drawable.logo).into(binding.profileIv)
+        Glide.with(requireContext()).load(R.drawable.myprofile_image).into(binding.profileIv)
     }
 
     override fun onImageSelected(imageUri: Uri) {
         Glide.with(requireContext()).load(imageUri).into(binding.profileIv)
+    }
+
+    override fun onCharImageSelected() {
+        Glide.with(requireContext()).load(R.drawable.myprofile_character).into(binding.profileIv)
     }
 
 
