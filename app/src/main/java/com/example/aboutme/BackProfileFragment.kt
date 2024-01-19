@@ -9,7 +9,8 @@ import com.bumptech.glide.Glide
 import com.example.aboutme.databinding.FragmentBackprofileBinding
 import com.example.aboutme.databinding.FragmentFrontprofileBinding
 
-class BackProfileFragment : Fragment(), RecommendBottomSheet.OnMbtiSelectedListener, RecommendBottomSheet.OnSchoolSelectedListener {
+class BackProfileFragment : Fragment(), RecommendBottomSheet.OnMbtiSelectedListener, RecommendBottomSheet.OnSchoolSelectedListener,
+    RecommendBottomSheet.OnCompanySelectedListener, RecommendBottomSheet.OnHobbySelectedListener, RecommendBottomSheet.OnJobSelectedListener {
 
     lateinit var binding : FragmentBackprofileBinding
 
