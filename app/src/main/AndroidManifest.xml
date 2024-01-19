@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AboutMe"
-        tools:targetApi="33">
+        tools:targetApi="33"
+        android:name=".KakaoApplication">
         <activity
             android:name=".TutorialActivity2"
             android:exported="false" />
@@ -34,6 +35,19 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+                <data android:host="oauth"
+                    android:scheme="kakao14bbf6997b475309590efc7c9a7d9b11" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
