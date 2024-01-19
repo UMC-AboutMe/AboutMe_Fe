@@ -35,7 +35,10 @@ import kotlin.concurrent.fixedRateTimer
 
 class BottomSheet() : DialogFragment() {
 
-    lateinit var binding : FragmentSharebottomsheetBinding
+    lateinit var binding : FragmentFrontprofileBinding
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +47,7 @@ class BottomSheet() : DialogFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        binding = FragmentSharebottomsheetBinding.inflate(inflater, container, false)
+        binding = FragmentFrontprofileBinding.inflate(inflater, container, false)
 
 
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -52,12 +55,15 @@ class BottomSheet() : DialogFragment() {
         dialog?.window?.setBackgroundDrawableResource(R.drawable.bottomsheetbox)
         dialog?.window?.setGravity(Gravity.BOTTOM)
 
-        return binding.root
+
+        return inflater.inflate(R.layout.fragment_sharebottomsheet, container, false)
     }
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        
+
         view?.findViewById<ImageButton>(R.id.shareBottomSheet_image_btn)?.setOnClickListener {
             initImageViewProfile()
         }
@@ -91,6 +97,16 @@ class BottomSheet() : DialogFragment() {
 
         }
 
+    interface OnImageSelectedListener {
+        fun onImageSelected(imageUri: Uri)
+    }
+
+    private var imageSelectedListener: OnImageSelectedListener? = null
+
+    fun setOnImageSelectedListener(listener: OnImageSelectedListener) {
+        this.imageSelectedListener = listener
+    }
+
     // 권한 요청 승인 이후 실행되는 함수
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -110,7 +126,10 @@ class BottomSheet() : DialogFragment() {
                 Toast.makeText(context, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
 
             }
+
+
         }
+
     }
 
     private fun navigateGallery() {
@@ -130,20 +149,17 @@ class BottomSheet() : DialogFragment() {
         when (requestCode) {
             // 2000: 이미지 컨텐츠를 가져오는 액티비티를 수행한 후 실행되는 Activity 일 때만 수행하기 위해서
             2000 -> {
-                val frontProfileFragment = parentFragmentManager.findFragmentByTag("FrontProfileFragmentTag") as? FrontProfileFragment
-                val ivProfile = frontProfileFragment?.getProfileImageView()
+               /* val frontProfileFragment = parentFragmentManager.findFragmentByTag("FrontProfileFragmentTag") as? FrontProfileFragment
+                val ivProfile = frontProfileFragment?.getProfileImageView()*/
+
                 val selectedImageUri: Uri? = data?.data
                 Log.d("PutImage1", "success")
-                if (selectedImageUri != null&& ivProfile != null) {
-                    Glide.with(requireContext()).load(selectedImageUri).into(ivProfile)
-                    Log.d("PutImage2", "success")
+                if (selectedImageUri != null) {
+                    imageSelectedListener?.onImageSelected(selectedImageUri)
+                    Glide.with(requireContext()).load(selectedImageUri).into(binding.profileIv)
+                    Log.d("PutImage!", "success")
                 } else {
-                    if (selectedImageUri == null) {
-                        Log.d("PutImage", "selectedImageUri is null")
-                    }
-                    if (ivProfile == null) {
-                        Log.d("PutImage", "ivProfile is null")
-                    }
+                    Log.d("PutImage", "selectedImageUri is null")
                     Toast.makeText(context, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -165,6 +181,7 @@ class BottomSheet() : DialogFragment() {
             .create()
             .show()
     }
+
 
 
     override fun onResume() {

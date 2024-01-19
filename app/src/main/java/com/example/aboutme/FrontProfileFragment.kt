@@ -1,6 +1,7 @@
 package com.example.aboutme
 
 import android.R.id.edit
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,10 +10,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.aboutme.databinding.FragmentFrontprofileBinding
 
 
-class FrontProfileFragment : Fragment() {
+class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener {
 
     lateinit var binding: FragmentFrontprofileBinding
 
@@ -37,6 +39,8 @@ class FrontProfileFragment : Fragment() {
 
             val bottomSheet = BottomSheet()
 
+            bottomSheet.setOnImageSelectedListener(this@FrontProfileFragment)
+
             bottomSheet.show(childFragmentManager, bottomSheet.tag)
 
         }
@@ -56,10 +60,10 @@ class FrontProfileFragment : Fragment() {
         return binding.root
     }
 
-    fun getProfileImageView(): ImageView? {
-
-        return binding.profileIv
+    override fun onImageSelected(imageUri: Uri) {
+        Glide.with(requireContext()).load(imageUri).into(binding.profileIv)
     }
+
 
 }
 
