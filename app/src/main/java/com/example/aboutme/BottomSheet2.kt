@@ -53,22 +53,33 @@ class BottomSheet2 : DialogFragment() {
         dialog?.window?.setGravity(Gravity.TOP)
 
 
-        return inflater.inflate(R.layout.fragment_sharebottomsheet2, container, false)
+        return binding.root
     }
 
     //
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 공유 뷰모델 초기화
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
-        //이미지 저장 버튼 클릭시 발생하는 이벤트
+        // 이미지 저장 버튼 클릭 이벤트 처리
         binding.shareBottomSheet2ImageBtn.setOnClickListener {
-            sharedViewModel.profileLayoutLiveData.value?.let {
-                profileLayout -> viewSave(profileLayout)
+            sharedViewModel.profileLayoutLiveData.value?.let { profileLayout ->
+                Log.d("bottomclick", "profileLayout not null")
+                // 뷰를 비트맵으로 변환하고 파일로 저장
+                viewSave(profileLayout)
+                Log.d("bottomclick", "success")
+            } ?: run {
+                Log.d("bottomclick", "profileLayout is null")
             }
+
+            Log.d("bottomclic!!", "success")
+            // 다이얼로그 닫기
+            dismiss()
         }
     }
+
 
 
     private fun viewSave(view: View) {

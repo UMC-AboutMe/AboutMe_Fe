@@ -93,7 +93,9 @@ class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, Bot
         sharedViewModel.profileLayoutLiveData.observe(viewLifecycleOwner) {
             if (sharedViewModel.storeBitmap.value == true) {
                 // 프로필 레이아웃을 비트맵으로 저장하는 로직 수행
-                viewSave(it)
+                val bitmap = getViewBitmap(it)
+                val filePath = getSaveFilePathName()
+                bitmapFileSave(bitmap, filePath)
                 Log.d("bitmap", "success")
             }
         }
@@ -102,12 +104,21 @@ class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, Bot
 
 
     private fun getViewBitmap(view: View): Bitmap {
+        // View의 크기를 측정
+        view.measure(
+            View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(view.height, View.MeasureSpec.EXACTLY)
+        )
+
         val width = view.measuredWidth
         val height = view.measuredHeight
 
-        // 크기가 0 또는 음수인 경우 예외 처리
+
+        // 측정된 폭과 높이가 0일 경우 처리
         if (width <= 0 || height <= 0) {
             Log.e("FrontProfileFragment", "Invalid view size: width=$width, height=$height")
+            // 너비와 높이가 0일 경우에 대한 예외 처리를 추가하거나 기본값으로 처리
+            // 예: width = defaultWidth, height = defaultHeight
             return Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
         }
 
