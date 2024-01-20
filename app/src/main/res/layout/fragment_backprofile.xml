@@ -36,18 +36,33 @@
             android:layout_marginLeft="50dp"/>
 
 
-        <EditText
-            android:id="@+id/backProfile_et1"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="24dp"
-            android:ems="12"
-            android:hint="내용1"
-            android:fontFamily="@font/gmarketsansmedium"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="180dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="50dp"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/backProfile_et1"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="24dp"
+                android:ems="12"
+                android:hint="내용1"
+                android:fontFamily="@font/gmarketsansmedium"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="180dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="50dp"
+                android:background="@color/transparent"/>
+
+            <ImageButton
+                android:id="@+id/profileEdit1_btn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/myprofile_pencil"
+                android:layout_marginTop="190dp"
+                android:layout_marginLeft="110dp" />
+
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/recommend_et2_iv"
@@ -58,18 +73,33 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="50dp"/>
 
-        <EditText
-            android:id="@+id/backProfile_et2"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="24dp"
-            android:ems="12"
-            android:hint="내용2"
-            android:fontFamily="@font/gmarketsansmedium"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="260dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="50dp"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/backProfile_et2"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="24dp"
+                android:ems="12"
+                android:hint="내용2"
+                android:fontFamily="@font/gmarketsansmedium"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="260dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="50dp"
+                android:background="@color/transparent"/>
+
+            <ImageButton
+                android:id="@+id/profileEdit2_btn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/myprofile_pencil"
+                android:layout_marginTop="270dp"
+                android:layout_marginLeft="110dp" />
+
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/recommend_et3_iv"
@@ -80,19 +110,34 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="50dp"/>
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/backProfile_et3"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="24dp"
-            android:ems="12"
-            android:hint="내용3"
-            android:fontFamily="@font/gmarketsansmedium"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="340dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="50dp"/>
+
+            <EditText
+                android:id="@+id/backProfile_et3"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="24dp"
+                android:ems="12"
+                android:hint="내용3"
+                android:fontFamily="@font/gmarketsansmedium"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="340dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="50dp"
+                android:background="@color/transparent"/>
+
+            <ImageButton
+                android:id="@+id/profileEdit3_btn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/myprofile_pencil"
+                android:layout_marginTop="350dp"
+                android:layout_marginLeft="110dp"/>
+
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/recommend_et4_iv"
@@ -103,18 +148,35 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="50dp"/>
 
-        <EditText
-            android:id="@+id/backProfile_et4"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="24dp"
-            android:ems="12"
-            android:hint="내용4"
-            android:fontFamily="@font/gmarketsansmedium"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="420dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="50dp"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/backProfile_et4"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="24dp"
+                android:ems="12"
+                android:hint="내용4"
+                android:fontFamily="@font/gmarketsansmedium"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="420dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="50dp"
+                android:background="@color/transparent"/>
+
+            <ImageButton
+                android:id="@+id/profileEdit4_btn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/myprofile_pencil"
+                android:layout_marginTop="430dp"
+                android:layout_marginLeft="110dp"/>
+
+        </RelativeLayout>
+
+
 
         <ImageView
             android:id="@+id/recommend_et5_iv"
@@ -125,18 +187,33 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="50dp"/>
 
-        <EditText
-            android:id="@+id/backProfile_et5"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="24dp"
-            android:ems="12"
-            android:hint="내용5"
-            android:fontFamily="@font/gmarketsansmedium"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="500dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="50dp"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/backProfile_et5"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="24dp"
+                android:ems="12"
+                android:hint="내용5"
+                android:fontFamily="@font/gmarketsansmedium"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="500dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="50dp"
+                android:background="@color/transparent"/>
+
+            <ImageButton
+                android:id="@+id/profileEdit5_btn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/myprofile_pencil"
+                android:layout_marginTop="510dp"
+                android:layout_marginLeft="110dp"/>
+
+        </RelativeLayout>
 
 
 

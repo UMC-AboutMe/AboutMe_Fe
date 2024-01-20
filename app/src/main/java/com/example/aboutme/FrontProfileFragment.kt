@@ -18,6 +18,10 @@ class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, Bot
 
     lateinit var binding: FragmentFrontprofileBinding
 
+    private var profileName: String? = null
+    private var imageUri: Uri? = null
+    private var profileNum : String? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +36,7 @@ class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, Bot
             val ft = parentFragmentManager.beginTransaction()
 
             ft.replace(R.id.profile_frame, BackProfileFragment()).commit()
+
         }
 
 
@@ -48,6 +53,7 @@ class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, Bot
         }
 
 
+
         val str: String = binding.profileNameEt.text.toString()
 
 
@@ -59,8 +65,35 @@ class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, Bot
 
         }
 
+        if (savedInstanceState != null) {
+            // onSaveInstanceState에서 저장한 데이터를 복원
+            profileName = savedInstanceState?.getString(PROFILE_NAME_KEY)
+            imageUri = savedInstanceState?.getParcelable(IMAGE_URI_KEY )
+            profileNum = savedInstanceState?.getString(PROFILE_NUM_KEY)
+            updateUI()
+            Log.d("updateuiuiui", "success")
+        }
+
 
         return binding.root
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        // 데이터를 저장
+        outState.putString(PROFILE_NAME_KEY, binding.profileNameEt.text.toString())
+        outState.putParcelable(IMAGE_URI_KEY, imageUri)
+        outState.putString(PROFILE_NUM_KEY, binding.profileNumEt.text.toString())
+    }
+
+    private fun updateUI() {
+        // 데이터가 있으면 UI를 업데이트
+        binding.profileNameEt.setText(profileName)
+        binding.profileNumEt.setText(profileNum)
+        if (imageUri != null) {
+            Glide.with(requireContext()).load(imageUri).into(binding.profileIv)
+        }
     }
 
     override fun onBasicImageSelected() {
@@ -76,6 +109,11 @@ class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, Bot
         Glide.with(requireContext()).load(R.drawable.myprofile_character).into(binding.profileIv)
     }
 
+    companion object {
+        private const val PROFILE_NAME_KEY = "profileName"
+        private const val IMAGE_URI_KEY = "imageUri"
+        private const val PROFILE_NUM_KEY = "profileNum"
+    }
 
 }
 
