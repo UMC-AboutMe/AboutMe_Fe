@@ -1,5 +1,6 @@
 package com.example.aboutme
 
+import android.net.Uri
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintSet.Layout
 import androidx.lifecycle.MutableLiveData
@@ -9,6 +10,7 @@ class SharedViewModel : ViewModel(){
 
     val profileLayoutLiveData = MutableLiveData<View>()
     val storeBitmap = MutableLiveData<Boolean>()
+    val savedImageUri = MutableLiveData<Uri?>()
 
     fun storeProfileLayout(profileLayout: View) {
         profileLayoutLiveData.value = profileLayout
@@ -17,5 +19,13 @@ class SharedViewModel : ViewModel(){
 
     fun setStoreBitmap(value: Boolean) {
         storeBitmap.value = value
+    }
+
+    fun setSavedImageUri(uri: Uri) {
+        savedImageUri.value = uri
+    }
+
+    fun getSavedImageUri(): Uri? {
+        return savedImageUri.value
     }
 }

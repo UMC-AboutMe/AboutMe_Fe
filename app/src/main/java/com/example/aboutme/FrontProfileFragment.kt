@@ -1,6 +1,7 @@
 package com.example.aboutme
 
 import android.R.id.edit
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
@@ -99,6 +100,7 @@ class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, Bot
                 Log.d("bitmap", "success")
             }
         }
+
     }
 
 
@@ -128,6 +130,7 @@ class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, Bot
 
         Log.d("FrontProfileFragment", "Bitmap created successfully: width=$width, height=$height")
 
+
         return bitmap
     }
 
@@ -149,11 +152,8 @@ class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, Bot
         }
     }
 
-    private fun viewSave(view: View) {
-        val bitmap = getViewBitmap(view)
-        val filePath = getSaveFilePathName()
-        bitmapFileSave(bitmap, filePath)
-    }
+
+
 
     override fun onBasicImageSelected() {
         // drawable에 있는 이미지를 사용하여 프로필 이미지뷰 업데이트

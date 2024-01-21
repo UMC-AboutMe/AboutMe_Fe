@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.aboutme"
-        minSdk = 28
+        minSdk = 29
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -72,4 +72,7 @@ dependencies {
 
     //바텀시트
     implementation ("com.google.android.material:material:1.5.0-alpha02")
+
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2")
 }
