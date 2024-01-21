@@ -11,6 +11,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -24,9 +25,11 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import android.Manifest
 import com.example.aboutme.databinding.FragmentSharebottomsheet2Binding
 import java.io.File
 import java.io.FileNotFoundException
@@ -73,12 +76,45 @@ class BottomSheet2 : DialogFragment() {
         }
 
         binding.shareBottomSheet2InstargramBtn.setOnClickListener {
-            sharedViewModel.profileLayoutLiveData.value?.let { profileLayout ->
-                val viewBitmap = getViewBitmap(profileLayout)
-                val viewUri = saveImageOnAboveAndroidQ(viewBitmap)
 
-                instaShare(viewUri)
-                Log.d("insta!!","success")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                sharedViewModel.profileLayoutLiveData.value?.let { profileLayout ->
+                    val viewBitmap = getViewBitmap(profileLayout)
+                    val viewUri = saveImageOnAboveAndroidQ(viewBitmap)
+
+                    instaShare(viewUri)
+                    Log.d("insta!!", "success")
+                }
+
+            } else {
+                // 외부 저장소 읽기 권한 체크
+                val readPermission = ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+
+                if (readPermission != PackageManager.PERMISSION_GRANTED) {
+                    // 권한이 부여되지 않은 경우 권한 요청
+                    val requestReadExternalStorageCode = 2
+
+                    val permissionStorage = arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+
+                    ActivityCompat.requestPermissions(
+                        requireActivity(),
+                        permissionStorage,
+                        requestReadExternalStorageCode
+                    )
+                } else {
+                    // 이미 권한이 있는 경우에 수행할 동작
+                    sharedViewModel.profileLayoutLiveData.value?.let { profileLayout ->
+                        val viewBitmap = getViewBitmap(profileLayout)
+                        val viewUri = saveImageOnAboveAndroidQ(viewBitmap)
+
+                        instaShare(viewUri)
+                    }
+                }
             }
             dismiss()
         }
@@ -121,7 +157,6 @@ class BottomSheet2 : DialogFragment() {
     }
 
 
-
     override fun onResume() {
         super.onResume()
         val windowManager = context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
@@ -135,7 +170,7 @@ class BottomSheet2 : DialogFragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
-    private fun saveImageOnAboveAndroidQ(bitmap: Bitmap) : Uri? {
+    private fun saveImageOnAboveAndroidQ(bitmap: Bitmap): Uri? {
         val fileName = System.currentTimeMillis().toString() + ".Png"
 
         val contentValues = ContentValues()
@@ -176,7 +211,8 @@ class BottomSheet2 : DialogFragment() {
         return uri
     }
 
-    fun instaShare(viewUri: Uri?){
+
+    fun instaShare(viewUri: Uri?) {
 
         val stickerAssetUri = Uri.parse(viewUri.toString())
         val sourceApplication = "com.example.aboutme"
@@ -198,13 +234,17 @@ class BottomSheet2 : DialogFragment() {
 
         try {
             this.startActivity(intent)
-        } catch (e : ActivityNotFoundException) {
-            Toast.makeText(requireContext().applicationContext, "인스타그램 앱이 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(
+                requireContext().applicationContext,
+                "인스타그램 앱이 존재하지 않습니다.",
+                Toast.LENGTH_SHORT
+            ).show()
 
             val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/"))
             startActivity(webIntent)
         }
-        try{
+        try {
             //저장해놓고 삭제한다.
             Thread.sleep(1000)
             viewUri?.let { uri -> requireContext().contentResolver.delete(uri, null, null) }
@@ -213,4 +253,75 @@ class BottomSheet2 : DialogFragment() {
         }
     }
 
+    private fun saveImageOnUnderAndroidQ(bitmap: Bitmap): Uri? {
+        val fileName = System.currentTimeMillis().toString() + ".png"
+        val externalStorage = Environment.getExternalStorageDirectory().absolutePath
+        val path = "$externalStorage/DCIM/imageSave"
+        val dir = File(path)
+
+        if (dir.exists().not()) {
+            dir.mkdirs() //폴더 없는 경우 폴더 생성
+        }
+
+        val fileItem = File("$dir/$fileName")
+
+        try {
+            fileItem.createNewFile() // 0kB 파일 생성
+
+            val fos = FileOutputStream(fileItem)
+
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos) //비트맵 압축
+
+            fos.close()
+
+            MediaScannerConnection.scanFile(
+                requireContext().applicationContext,
+                arrayOf(fileItem.toString()),
+                null,
+                null
+            )
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } catch (e: Exception) {
+            e.printStackTrace()
+
+        }
+
+        return FileProvider.getUriForFile(
+            requireContext().applicationContext,
+            "com.example.aboutme.fileprovider",
+            fileItem
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when (requestCode) {
+            2 -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // 권한이 부여된 경우에 수행할 동작
+                    sharedViewModel.profileLayoutLiveData.value?.let { profileLayout ->
+                        val viewBitmap = getViewBitmap(profileLayout)
+                        val viewUri = saveImageOnAboveAndroidQ(viewBitmap)
+
+                        instaShare(viewUri)
+                    }
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "외부 저장소 읽기 권한이 거부되었습니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            // 다른 권한 요청에 대한 처리 추가할 수 있음
+        }
+    }
 }
