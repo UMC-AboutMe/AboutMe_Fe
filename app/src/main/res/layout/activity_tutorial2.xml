@@ -27,7 +27,6 @@
                 android:layout_height="420dp"
                 android:src="@drawable/tutorial_say1"/>
 
-
             <ImageView
                 android:id="@+id/ok_iv"
                 android:layout_width="40dp"
@@ -43,7 +42,6 @@
                 android:layout_marginTop="270dp"
                 android:layout_marginLeft="80dp"/>
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,18 +50,13 @@
                 android:layout_marginLeft="120dp"
                 android:fontFamily="@font/gmarketsansmedium"/>
 
-
-
         </RelativeLayout>
-
 
         <ImageView
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:src="@drawable/tutorial_person"
             android:layout_marginLeft="180dp"/>
-
-
 
     </LinearLayout>
 
