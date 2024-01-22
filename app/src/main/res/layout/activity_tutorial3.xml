@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,18 +16,18 @@
             android:src="@drawable/logo"/>
 
         <RelativeLayout
-            android:id="@+id/say_layout"
+            android:id="@+id/say_layout_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/say2_iv"
+                android:id="@+id/say3_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="420dp"
-                android:src="@drawable/tutorial_say1"/>
+                android:src="@drawable/tutorial_say3"/>
 
             <ImageView
-                android:id="@+id/ok_iv"
+                android:id="@+id/ok_iv_2"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/tutorial_ok"
@@ -36,7 +35,7 @@
                 android:layout_marginLeft="300dp"/>
 
             <CheckBox
-                android:id="@+id/cb"
+                android:id="@+id/cb_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="270dp"
