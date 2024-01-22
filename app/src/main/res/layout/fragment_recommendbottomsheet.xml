@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/recommend_dialog"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottomsheet_background">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="추천항목"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:textSize="25sp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="140dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="60dp">
+
+            <ImageButton
+                android:id="@+id/school_btn"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:background="@drawable/school"
+                android:layout_marginLeft="30dp"/>
+
+            <ImageButton
+                android:id="@+id/hobby_btn"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:background="@drawable/hobby"
+                android:layout_marginLeft="30dp"/>
+
+            <ImageButton
+                android:id="@+id/job_btn"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:background="@drawable/job"
+                android:layout_marginLeft="30dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="110dp">
+
+            <ImageButton
+                android:id="@+id/mbti_btn"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:background="@drawable/mbti"
+                android:layout_marginLeft="30dp"/>
+
+            <ImageButton
+                android:id="@+id/company_btn"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:background="@drawable/company"
+                android:layout_marginLeft="30dp"/>
+
+            <ImageButton
+                android:id="@+id/recommendBlank_ib"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:background="@drawable/recommend_blank"
+                android:layout_marginLeft="30dp"/>
+
+        </LinearLayout>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

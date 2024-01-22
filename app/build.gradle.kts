@@ -15,6 +15,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -36,12 +37,14 @@ android {
     dataBinding{
         enable = true
     }
+
     viewBinding{
         enable = true
     }
     buildFeatures {
         viewBinding = true
     }
+
 }
 
 dependencies {
@@ -57,6 +60,29 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+
+    //프래그먼트
+    implementation("androidx.fragment:fragment-ktx:1.3.6")
+
+    //뷰페이저2
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+
+    //리사이클러뷰
+    implementation("androidx.recyclerview:recyclerview:1.1.0")
+
+    //glide
+    implementation ("com.github.bumptech.glide:glide:4.13.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.0")
+
+    //둥근 이미지뷰
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
+
+    //바텀시트
+    implementation ("com.google.android.material:material:1.5.0-alpha02")
+
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2")
+
     implementation ("com.kakao.sdk:v2-all:2.19.0") // 전체 모듈 설치, 2.11.0 버전부터 지원
     implementation ("com.kakao.sdk:v2-user:2.19.0") // 카카오 로그인
     implementation ("com.kakao.sdk:v2-talk:2.19.0") // 친구, 메시지(카카오톡)
@@ -67,4 +93,5 @@ dependencies {
 
     // Normal
     implementation ("io.github.ParkSangGwon:tedpermission-normal:3.3.0")
+
 }

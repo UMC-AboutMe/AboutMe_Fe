@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             }
+
         }
 
         updateLoginInfo();
@@ -73,4 +74,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 }

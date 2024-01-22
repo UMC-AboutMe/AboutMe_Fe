@@ -8,6 +8,26 @@
     <!-- 알림 허용 권한 설정-->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!--갤러리 권한-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.CAMERA" ></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
+
+
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -19,6 +39,26 @@
         android:theme="@style/Theme.AboutMe"
         tools:targetApi="33"
         android:name=".KakaoApplication">
+
+
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.aboutme.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths">
+
+            </meta-data>
+        </provider>
+
+
+
+        <activity
+            android:name=".MainActivity2"
+            android:name="true" />
         <activity
             android:name=".AlarmActivity"
             android:exported="false" />
@@ -57,13 +97,14 @@
             android:exported="false" />
         <activity
             android:name=".bottomNavigationView"
+
             android:exported="true" />
         <activity
             android:name=".TutorialActivity2"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TutorialActivity1"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".SplashActivity"
             android:exported="true">
@@ -76,6 +117,10 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+
+
+
+
         <!-- 카카오 소셜 로그인 api key 연결-->
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
@@ -90,6 +135,7 @@
                     android:scheme="kakao14bbf6997b475309590efc7c9a7d9b11" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
