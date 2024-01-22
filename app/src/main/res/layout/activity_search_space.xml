@@ -36,12 +36,13 @@
         app:layout_constraintGuide_end="57dp" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/prof_bg"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:scaleType="fitXY"
         android:src="@drawable/searchprof_bg"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -89,7 +90,7 @@
         android:ems="10"
         android:fontFamily="@font/gmarketsansmedium"
         android:hint="입력하세요"
-        android:inputType="number"
+        android:inputType="text"
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
@@ -118,6 +119,7 @@
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         android:src="@drawable/searchspace_btn"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -130,9 +132,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:src="@drawable/searchspace_card"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/prof_bg"
         app:layout_constraintTop_toBottomOf="@+id/myspace_name" />
 
     <TextView
@@ -145,6 +148,7 @@
         android:gravity="center"
         android:text="테디'S 스페이스"
         android:textSize="10sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_tv" />
