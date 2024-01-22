@@ -7,11 +7,14 @@ import android.graphics.Canvas
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
@@ -50,7 +53,6 @@ class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, Bot
 
         }
 
-        //비트맵으로 뷰 저장
 
 
 
@@ -80,6 +82,66 @@ class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, Bot
             }
 
         }
+
+        val profileEdit1 : EditText = binding.profileNameEt
+        val profileBtn1 : ImageButton = binding.frontProfileEdit1Btn
+
+        var message1 : String = ""
+
+        profileEdit1.addTextChangedListener (object : TextWatcher {
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                //
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                message1 = profileEdit1.text.toString()
+
+                if (message1.isNotEmpty()){
+                    profileBtn1.isEnabled = false
+                    profileBtn1.alpha = 0.1f
+                }else{
+                    profileBtn1.isEnabled = true
+                    profileBtn1.alpha = 1.0f
+                }
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
+
+        val profileEdit2 : EditText = binding.profileNumEt
+        val profileBtn2 : ImageButton = binding.frontProfileEdit2Btn
+
+        var message2 : String = ""
+
+        profileEdit2.addTextChangedListener (object : TextWatcher{
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                //
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                message2 = profileEdit2.text.toString()
+
+                if (message2.isNotEmpty()){
+                    profileBtn2.isEnabled = false
+                    profileBtn2.alpha = 0.1f
+                }else{
+                    profileBtn2.isEnabled = true
+                    profileBtn2.alpha = 1.0f
+                }
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
 
 
         return binding.root

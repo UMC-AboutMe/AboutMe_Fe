@@ -40,32 +40,62 @@
                 android:layout_marginLeft="90dp"/>
 
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/profile_name_et"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:ems="12"
-            android:hint="             NAME"
-            android:fontFamily="@font/gmarketsansmedium"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="350dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="80dp"/>
 
-        <EditText
-            android:id="@+id/profile_num_et"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:ems="12"
-            android:hint="    PHONE NUMBER"
-            android:fontFamily="@font/gmarketsansmedium"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="410dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="80dp"/>
+            <EditText
+                android:id="@+id/profile_name_et"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="24dp"
+                android:ems="12"
+                android:background="@color/transparent"
+                android:hint="             NAME"
+                android:fontFamily="@font/gmarketsansmedium"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="350dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="90dp"/>
+
+                <ImageButton
+                    android:id="@+id/frontProfileEdit1_btn"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/myprofile_pencil"
+                    android:layout_marginTop="360dp"
+                    android:layout_marginLeft="-70dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/profile_num_et"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="24dp"
+                android:ems="12"
+                android:hint="    PHONE NUMBER"
+                android:fontFamily="@font/gmarketsansmedium"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="410dp"
+                android:background="@color/transparent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="80dp"/>
+
+                <ImageButton
+                    android:id="@+id/frontProfileEdit2_btn"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/myprofile_pencil"
+                    android:layout_marginTop="420dp"
+                    android:layout_marginLeft="-10dp"/>
+
+            </LinearLayout>
 
         <ImageView
             android:layout_width="150dp"
