@@ -22,15 +22,17 @@ class CustomDialog(val content: String) : DialogFragment() {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         // 제목, 내용 설정
-        binding.customTvContent.text = content
+        binding.dialogTv.text = content
 
         // 취소 버튼
-        binding.customTvBtn1.setOnClickListener {
+        binding.noBtn.setOnClickListener {
             dismiss()
         }
         // 확인 버튼
-        binding.customTvBtn2.setOnClickListener {
+        binding.yesBtn.setOnClickListener {
             dismiss()
+            // 다음 다이얼로그
+            CustomDialogProf().show(requireFragmentManager(), "SecondDialog")
         }
         // 다이얼로그를 하단으로 조정
         dialog?.window?.setGravity(Gravity.BOTTOM)
