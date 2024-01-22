@@ -10,4 +10,6 @@
     <string name="myspace_step3_sub">다양한 요소들을 배치해 스페이스를 꾸며주세요.</string>
     <string name="myspace_step3_sub2">친구와 공유할 나만의 멋진 스페이스를 만들어보세요.</string>
 
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
