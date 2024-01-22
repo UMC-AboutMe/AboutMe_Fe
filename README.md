@@ -1,6 +1,12 @@
-# 다양한 나, 다양한 관계의 시작 AboutMe_Fe
+<h1 align="center">AboutMe Frontend</h1>
+<div align="center"></div>
 
 ![image](https://github.com/UMC-AboutMe/AboutMe_Fe/assets/62244340/cf69937d-532a-429e-94d8-77f4e797e96e)
+
+<div align="center">
+<img src="https://img.shields.io/badge/Android%20Studio-3DDC84?style=flat-square&logo=Android%20Studio&logoColor=white" />
+<img src="https://img.shields.io/badge/Kotlin-7F52FF?style=flat-square&logo=Kotlin&logoColor=white" />
+</div>
 
 <br>
 
