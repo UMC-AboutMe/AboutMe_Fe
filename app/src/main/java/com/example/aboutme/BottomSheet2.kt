@@ -321,7 +321,6 @@ class BottomSheet2 : DialogFragment() {
                     ).show()
                 }
             }
-            // 다른 권한 요청에 대한 처리 추가할 수 있음
         }
     }
 }
