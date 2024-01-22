@@ -55,4 +55,7 @@ dependencies {
     implementation ("com.kakao.sdk:v2-friend:2.19.0") // 카카오톡 소셜 피커, 리소스 번들 파일 포함
     implementation ("com.kakao.sdk:v2-navi:2.19.0") // 카카오내비
     implementation ("com.kakao.sdk:v2-cert:2.19.0") // 카카오 인증서비스
+
+    // Normal
+    implementation ("io.github.ParkSangGwon:tedpermission-normal:3.3.0")
 }
