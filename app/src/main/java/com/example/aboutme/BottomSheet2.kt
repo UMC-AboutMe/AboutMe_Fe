@@ -30,6 +30,8 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import android.Manifest
+import android.app.Application
+import androidx.core.content.ContextCompat
 import com.example.aboutme.databinding.FragmentSharebottomsheet2Binding
 import java.io.File
 import java.io.FileNotFoundException
@@ -295,6 +297,22 @@ class BottomSheet2 : DialogFragment() {
             fileItem
         )
     }
+
+    private fun drawBackgroundBitmap(): Bitmap {
+        // 기기 해상도를 가져옴.
+        val backgroundWidth = resources.displayMetrics.widthPixels
+        val backgroundHeight = resources.displayMetrics.heightPixels
+
+        val backgroundBitmap = Bitmap.createBitmap(backgroundWidth, backgroundHeight, Bitmap.Config.ARGB_8888) // 비트맵 생성
+        val canvas = Canvas(backgroundBitmap) // 캔버스에 비트맵을 Mapping.
+
+        // 배경색을 흰색으로 지정
+        val bgColor = ContextCompat.getColor(requireContext(), android.R.color.white)
+        canvas.drawColor(bgColor)// 캔버스에 흰색으로 칠한다.
+
+        return backgroundBitmap
+    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
