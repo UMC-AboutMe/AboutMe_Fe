@@ -84,7 +84,10 @@ class BottomSheet2 : DialogFragment() {
                     val viewBitmap = getViewBitmap(profileLayout)
                     val viewUri = saveImageOnAboveAndroidQ(viewBitmap)
 
-                    instaShare(viewUri)
+                    val bgBitmap = drawBackgroundBitmap()
+                    val bgUri = saveImageOnAboveAndroidQ(bgBitmap)
+
+                    instaShare(bgUri, viewUri)
                     Log.d("insta!!", "success")
                 }
 
@@ -112,9 +115,12 @@ class BottomSheet2 : DialogFragment() {
                     // 이미 권한이 있는 경우에 수행할 동작
                     sharedViewModel.profileLayoutLiveData.value?.let { profileLayout ->
                         val viewBitmap = getViewBitmap(profileLayout)
-                        val viewUri = saveImageOnAboveAndroidQ(viewBitmap)
+                        val viewUri = saveImageOnUnderAndroidQ(viewBitmap)
 
-                        instaShare(viewUri)
+                        val bgBitmap = drawBackgroundBitmap()
+                        val bgUri = saveImageOnUnderAndroidQ(bgBitmap)
+
+                        instaShare(bgUri,viewUri)
                     }
                 }
             }
@@ -214,7 +220,7 @@ class BottomSheet2 : DialogFragment() {
     }
 
 
-    fun instaShare(viewUri: Uri?) {
+    fun instaShare(bgUri: Uri?, viewUri: Uri?) {
 
         val stickerAssetUri = Uri.parse(viewUri.toString())
         val sourceApplication = "com.example.aboutme"
@@ -234,6 +240,10 @@ class BottomSheet2 : DialogFragment() {
             "com.instagram.android", viewUri, Intent.FLAG_GRANT_READ_URI_PERMISSION
         )
 
+        requireActivity().grantUriPermission(
+            "com.instagram.android", bgUri, Intent.FLAG_GRANT_READ_URI_PERMISSION
+        )
+
         try {
             this.startActivity(intent)
         } catch (e: ActivityNotFoundException) {
@@ -250,6 +260,7 @@ class BottomSheet2 : DialogFragment() {
             //저장해놓고 삭제한다.
             Thread.sleep(1000)
             viewUri?.let { uri -> requireContext().contentResolver.delete(uri, null, null) }
+            bgUri?.let { uri -> requireContext().contentResolver.delete(uri, null, null) }
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
@@ -327,9 +338,12 @@ class BottomSheet2 : DialogFragment() {
                     // 권한이 부여된 경우에 수행할 동작
                     sharedViewModel.profileLayoutLiveData.value?.let { profileLayout ->
                         val viewBitmap = getViewBitmap(profileLayout)
-                        val viewUri = saveImageOnAboveAndroidQ(viewBitmap)
+                        val viewUri = saveImageOnUnderAndroidQ(viewBitmap)
 
-                        instaShare(viewUri)
+                        val bgBitmap = drawBackgroundBitmap()
+                        val bgUri = saveImageOnUnderAndroidQ(bgBitmap)
+
+                        instaShare(bgUri,viewUri)
                     }
                 } else {
                     Toast.makeText(
