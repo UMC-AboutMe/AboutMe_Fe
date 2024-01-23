@@ -70,6 +70,7 @@ class BottomSheet2 : DialogFragment() {
         binding.shareBottomSheet2ImageBtn.setOnClickListener {
             sharedViewModel.profileLayoutLiveData.value?.let { profileLayout ->
                 savedImageUri = viewSave(profileLayout)
+                Toast.makeText(requireContext(),"이미지가 파일에 저장되었습니다.", Toast.LENGTH_SHORT ).show()
                 Log.d("bottomclick", "Image saved successfully")
             } ?: run {
                 Log.d("bottomclick", "profileLayout is null")
