@@ -230,16 +230,17 @@ class BottomSheet2 : DialogFragment() {
         intent.putExtra("source_application", sourceApplication)
 
         intent.type = "image/png"
-        intent.setDataAndType(viewUri, "image/png")
+        intent.setDataAndType(bgUri, "image/png")
         intent.putExtra("interactive_asset_uri", stickerAssetUri)
+
 
         requireActivity().grantUriPermission(
             "com.instagram.android", stickerAssetUri, Intent.FLAG_GRANT_READ_URI_PERMISSION
         )
 
-        requireActivity().grantUriPermission(
+        /*requireActivity().grantUriPermission(
             "com.instagram.android", viewUri, Intent.FLAG_GRANT_READ_URI_PERMISSION
-        )
+        )*/
 
         requireActivity().grantUriPermission(
             "com.instagram.android", bgUri, Intent.FLAG_GRANT_READ_URI_PERMISSION
@@ -320,10 +321,12 @@ class BottomSheet2 : DialogFragment() {
 
         // 배경색을 흰색으로 지정
         val bgColor = ContextCompat.getColor(requireContext(), android.R.color.white)
-        canvas.drawColor(bgColor)// 캔버스에 흰색으로 칠한다.
+        canvas.drawColor(bgColor) // 캔버스에 현재 설정된 배경화면색으로 칠한다.
 
         return backgroundBitmap
     }
+
+
 
 
     override fun onRequestPermissionsResult(
