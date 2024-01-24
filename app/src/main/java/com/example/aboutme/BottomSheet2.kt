@@ -467,7 +467,4 @@ class BottomSheet2 : DialogFragment() {
         }
     }
 
-
-
-
 }
