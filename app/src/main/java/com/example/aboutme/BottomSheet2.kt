@@ -1,6 +1,8 @@
 package com.example.aboutme
 
-import android.app.Activity
+import android.Manifest
+import android.app.Activity.RESULT_CANCELED
+import android.app.Activity.RESULT_OK
 import android.content.ActivityNotFoundException
 import android.content.ContentValues
 import android.content.Context
@@ -26,25 +28,24 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-import android.Manifest
-import android.app.Application
-import androidx.core.content.ContextCompat
 import com.example.aboutme.databinding.FragmentSharebottomsheet2Binding
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.Date
+
 
 class BottomSheet2 : DialogFragment() {
 
     lateinit var binding: FragmentSharebottomsheet2Binding
     private lateinit var sharedViewModel: SharedViewModel
+
     var savedImageUri: Uri? = null
         private set
 
@@ -65,6 +66,7 @@ class BottomSheet2 : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
         binding.shareBottomSheet2ImageBtn.setOnClickListener {
@@ -77,6 +79,7 @@ class BottomSheet2 : DialogFragment() {
             }
             dismiss()
         }
+
 
         binding.shareBottomSheet2InstargramBtn.setOnClickListener {
 
@@ -126,6 +129,74 @@ class BottomSheet2 : DialogFragment() {
                 }
             }
             dismiss()
+        }
+
+        binding.shareBottomSheet2KakaoBtn.setOnClickListener {
+
+            // Android 버전이 Q (Android 10) 이상인 경우
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
+                //let : profileLayoutLiveData의 현재 값이 null이 아닌 경우에만 실행되는 블록
+                //sharedViewModel.profileLayoutLiveData.value의 의미 : profileLayoutLiveData에 저장된 LiveData의 현재 값에 접근
+                //따라서 여기서 profileLayout은 frontprofilefragment에서 바인딩한 명함뷰 레이아웃
+                sharedViewModel.profileLayoutLiveData.value?.let { profileLayout ->
+
+                    // 프로필 레이아웃을 Bitmap으로 변환
+                    val viewBitmapKakao = getViewBitmap(profileLayout)
+
+                    // Android Q 이상에서 이미지를 저장하고 Uri를 반환하는 메서드 호출
+                    val viewUriKakao = saveImageOnAboveAndroidQ(viewBitmapKakao)
+
+
+                    shareImageToKakaoTalk(viewUriKakao)
+
+                    Log.d("insta!!", "success")
+                }
+
+            }
+
+            //안드로이드 버전이 10미만일때
+            else {
+
+                // 외부 저장소 읽기 권한 체크
+                val readPermission = ActivityCompat.checkSelfPermission(
+                    requireContext(),
+
+                    //Manifest의 외부저장소 read permission
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+
+                // 권한이 부여되지 않은 경우 권한 요청
+                if (readPermission != PackageManager.PERMISSION_GRANTED) {
+                    val requestReadExternalStorageCode = 2
+                    val permissionStorage = arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+
+                    ActivityCompat.requestPermissions(
+                        requireActivity(),
+                        permissionStorage,
+                        requestReadExternalStorageCode
+                    )
+                }else {
+                    // 이미 권한이 있는 경우에 수행할 동작:(안드로이드10이상에서의 코드와 같음)
+
+                    sharedViewModel.profileLayoutLiveData.value?.let { profileLayout ->
+
+                        // 프로필 레이아웃을 Bitmap으로 변환
+                        val viewBitmapKakao = getViewBitmap(profileLayout)
+
+                        // Android Q 이상에서 이미지를 저장하고 Uri를 반환하는 메서드 호출
+                        val viewUriKakao = saveImageOnAboveAndroidQ(viewBitmapKakao)
+
+
+                        shareImageToKakaoTalk(viewUriKakao)
+                    }
+                }
+            }
+            // BottomSheet 닫기
+            dismiss()
+
         }
     }
 
@@ -359,4 +430,44 @@ class BottomSheet2 : DialogFragment() {
             }
         }
     }
+
+    fun shareImageToKakaoTalk(imageUri: Uri?) {
+        try {
+            // KakaoTalk 패키지 이름
+            val kakaoPackageName = "com.kakao.talk"
+
+            // 카카오톡에 이미지를 공유하기 위한 인텐트
+            val intent = Intent(Intent.ACTION_SEND).apply {
+                type = "image/*"
+                putExtra(Intent.EXTRA_STREAM, imageUri)
+            }
+
+            // 카카오톡에게 이미지에 대한 읽기 권한 부여
+            requireActivity().grantUriPermission(
+                kakaoPackageName, imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
+
+            // 카카오톡 패키지를 설정하고 공유 인텐트 시작
+            intent.setPackage(kakaoPackageName)
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            // 카카오톡이 설치되어 있지 않은 경우 처리
+            Toast.makeText(
+                requireContext().applicationContext,
+                "카카오톡이 설치되어 있지 않습니다.",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            // 카카오톡 다운로드를 위해 Play Store 열기
+            val playStoreIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://play.google.com/store/apps/details?id=com.kakao.talk")
+            )
+            startActivity(playStoreIntent)
+        }
+    }
+
+
+
+
 }

@@ -21,6 +21,11 @@
         </intent>
     </queries>
 
+    <!--queries에 카카오톡 패키지 추가-->
+    <queries>
+        <package android:name="com.kakao.talk" />
+    </queries>
+
     <application
         android:name=".KakaoApplication"
         android:allowBackup="true"
@@ -34,7 +39,16 @@
         tools:targetApi="33">
         <activity
             android:name=".MainActivity2"
-            android:exported="true" />
+            android:exported="true" >
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+
+            <data android:host="kakaolink"
+                android:scheme="@string/kakao_scheme" />
+        </intent-filter>
+        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
