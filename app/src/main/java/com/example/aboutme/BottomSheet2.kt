@@ -33,6 +33,13 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.aboutme.databinding.FragmentSharebottomsheet2Binding
+import com.kakao.sdk.common.util.KakaoCustomTabsClient
+import com.kakao.sdk.share.ShareClient
+import com.kakao.sdk.share.WebSharerClient
+import com.kakao.sdk.template.model.Button
+import com.kakao.sdk.template.model.Content
+import com.kakao.sdk.template.model.FeedTemplate
+import com.kakao.sdk.template.model.Link
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -46,9 +53,81 @@ class BottomSheet2 : DialogFragment() {
     lateinit var binding: FragmentSharebottomsheet2Binding
     private lateinit var sharedViewModel: SharedViewModel
 
+    private val TAG = "BottomSheet2"
+
     var savedImageUri: Uri? = null
         private set
 
+    interface OnBottomSheetListener {
+        fun onBottomSheetAction()
+    }
+
+    private var listener: OnBottomSheetListener? = null
+
+    fun setOnBottomSheetListener(listener: OnBottomSheetListener) {
+        this.listener = listener
+    }
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        Log.d(TAG, "Fragment isAdded: $isAdded")
+
+        binding.shareBottomSheet2KakaoBtn.setOnClickListener {
+            listener?.onBottomSheetAction()
+
+            if (isAdded) {
+                context?.let { nonNullContext ->
+                    // 카카오톡 설치여부 확인
+                    if (isAdded) { // Fragment가 Activity에 추가되었는지 확인
+                        ShareClient.instance.shareDefault(
+                            nonNullContext,
+                            defaultFeed
+                        ) { sharingResult, error ->
+                            if (error != null) {
+                                Log.e(TAG, "카카오톡 공유 실패", error)
+                            } else if (sharingResult != null) {
+                                Log.d(TAG, "카카오톡 공유 성공 ${sharingResult.intent}")
+                                startActivity(sharingResult.intent)
+
+                                // 카카오톡 공유에 성공했지만 아래 경고 메시지가 존재할 경우 일부 컨텐츠가 정상 동작하지 않을 수 있습니다.
+                                Log.w(TAG, "Warning Msg: ${sharingResult.warningMsg}")
+                                Log.w(TAG, "Argument Msg: ${sharingResult.argumentMsg}")
+
+                                dismiss()
+                            }
+                        }
+
+                    } else {
+                        // 카카오톡 미설치: 웹 공유 사용 권장
+                        // 웹 공유 예시 코드
+                        val sharerUrl = WebSharerClient.instance.makeDefaultUrl(defaultFeed)
+
+                        // CustomTabs으로 웹 브라우저 열기
+
+                        // 1. CustomTabsServiceConnection 지원 브라우저 열기
+                        // ex) Chrome, 삼성 인터넷, FireFox, 웨일 등
+                        try {
+                            KakaoCustomTabsClient.openWithDefault(nonNullContext, sharerUrl)
+                        } catch (e: UnsupportedOperationException) {
+                            // CustomTabsServiceConnection 지원 브라우저가 없을 때 예외처리
+                        }
+
+                        // 2. CustomTabsServiceConnection 미지원 브라우저 열기
+                        // ex) 다음, 네이버 등
+                        try {
+                            KakaoCustomTabsClient.open(nonNullContext, sharerUrl)
+                        } catch (e: ActivityNotFoundException) {
+                            // 디바이스에 설치된 인터넷 브라우저가 없을 때 예외처리
+                        }
+                        dismiss()
+                    }
+                }
+            }
+
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,6 +139,8 @@ class BottomSheet2 : DialogFragment() {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.setBackgroundDrawableResource(R.drawable.bottomsheetbox)
         dialog?.window?.setGravity(Gravity.TOP)
+
+
 
         return binding.root
     }
@@ -131,73 +212,7 @@ class BottomSheet2 : DialogFragment() {
             dismiss()
         }
 
-        binding.shareBottomSheet2KakaoBtn.setOnClickListener {
 
-            // Android 버전이 Q (Android 10) 이상인 경우
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-
-                //let : profileLayoutLiveData의 현재 값이 null이 아닌 경우에만 실행되는 블록
-                //sharedViewModel.profileLayoutLiveData.value의 의미 : profileLayoutLiveData에 저장된 LiveData의 현재 값에 접근
-                //따라서 여기서 profileLayout은 frontprofilefragment에서 바인딩한 명함뷰 레이아웃
-                sharedViewModel.profileLayoutLiveData.value?.let { profileLayout ->
-
-                    // 프로필 레이아웃을 Bitmap으로 변환
-                    val viewBitmapKakao = getViewBitmap(profileLayout)
-
-                    // Android Q 이상에서 이미지를 저장하고 Uri를 반환하는 메서드 호출
-                    val viewUriKakao = saveImageOnAboveAndroidQ(viewBitmapKakao)
-
-
-                    shareImageToKakaoTalk(viewUriKakao)
-
-                    Log.d("insta!!", "success")
-                }
-
-            }
-
-            //안드로이드 버전이 10미만일때
-            else {
-
-                // 외부 저장소 읽기 권한 체크
-                val readPermission = ActivityCompat.checkSelfPermission(
-                    requireContext(),
-
-                    //Manifest의 외부저장소 read permission
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                )
-
-                // 권한이 부여되지 않은 경우 권한 요청
-                if (readPermission != PackageManager.PERMISSION_GRANTED) {
-                    val requestReadExternalStorageCode = 2
-                    val permissionStorage = arrayOf(
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    )
-
-                    ActivityCompat.requestPermissions(
-                        requireActivity(),
-                        permissionStorage,
-                        requestReadExternalStorageCode
-                    )
-                }else {
-                    // 이미 권한이 있는 경우에 수행할 동작:(안드로이드10이상에서의 코드와 같음)
-
-                    sharedViewModel.profileLayoutLiveData.value?.let { profileLayout ->
-
-                        // 프로필 레이아웃을 Bitmap으로 변환
-                        val viewBitmapKakao = getViewBitmap(profileLayout)
-
-                        // Android Q 이상에서 이미지를 저장하고 Uri를 반환하는 메서드 호출
-                        val viewUriKakao = saveImageOnAboveAndroidQ(viewBitmapKakao)
-
-
-                        shareImageToKakaoTalk(viewUriKakao)
-                    }
-                }
-            }
-            // BottomSheet 닫기
-            dismiss()
-
-        }
     }
 
     private fun viewSave(view: View): Uri {
@@ -467,4 +482,28 @@ class BottomSheet2 : DialogFragment() {
         }
     }
 
+    private val defaultFeed: FeedTemplate by lazy {
+        // 메시지 템플릿 만들기 (피드형)
+        FeedTemplate(
+            content = Content(
+                title = "테디님의 AboutMe 프로필을 확인해보세요",
+                description = "AboutMe 앱의 홈 화면에 있는 프로필 검색창에 위의 일련번호를 입력하면 프로필을 쉽게 찾을 수 있어요.",
+                imageUrl = "https://imgur.com/8LO8kWd",
+                link = Link(
+                    webUrl = null,
+                    mobileWebUrl = null
+                )
+            ),
+            buttons = listOf(
+                Button(
+                    "앱으로 이동",
+                    Link(
+                        //이 부분을 사용해서 어떤 상세페이지를 띄울지 결정할수 있다
+                        androidExecutionParams = mapOf("key1" to "value1")
+                    )
+                )
+            )
+        )
+
+    }
 }
