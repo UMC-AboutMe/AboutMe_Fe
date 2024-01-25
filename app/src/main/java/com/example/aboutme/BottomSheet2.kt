@@ -39,6 +39,8 @@ import com.kakao.sdk.share.WebSharerClient
 import com.kakao.sdk.template.model.Button
 import com.kakao.sdk.template.model.Content
 import com.kakao.sdk.template.model.FeedTemplate
+import com.kakao.sdk.template.model.ItemContent
+import com.kakao.sdk.template.model.ItemInfo
 import com.kakao.sdk.template.model.Link
 import java.io.File
 import java.io.FileNotFoundException
@@ -488,20 +490,33 @@ class BottomSheet2 : DialogFragment() {
             content = Content(
                 title = "테디님의 AboutMe 프로필을 확인해보세요",
                 description = "AboutMe 앱의 홈 화면에 있는 프로필 검색창에 위의 일련번호를 입력하면 프로필을 쉽게 찾을 수 있어요.",
-                imageUrl = "https://imgur.com/8LO8kWd",
+                imageUrl = "https://i.imgur.com/8LO8kWd.png",
                 link = Link(
-                    webUrl = null,
-                    mobileWebUrl = null
+                    webUrl = "https://www.apple.com/kr/app-store/",
+                    mobileWebUrl = "https://www.apple.com/kr/app-store/"
                 )
             ),
+            itemContent = ItemContent(
+                profileText = "일련번호 : 123456"
+
+            ),
             buttons = listOf(
+
+                Button(
+                    "앱 다운로드",
+                    Link(
+                        webUrl = "https://www.apple.com/kr/app-store/",
+                        mobileWebUrl = "https://www.apple.com/kr/app-store/"
+                    )
+                ),
                 Button(
                     "앱으로 이동",
                     Link(
-                        //이 부분을 사용해서 어떤 상세페이지를 띄울지 결정할수 있다
+                        //이 부분을 사용해서 어떤 상세페이지를 띄울지 결정
                         androidExecutionParams = mapOf("key1" to "value1")
                     )
                 )
+
             )
         )
 
