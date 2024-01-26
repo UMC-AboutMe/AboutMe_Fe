@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.example.aboutme.databinding.ActivityMyspacestep3Binding
 
 class MySpaceStep3Activity : AppCompatActivity() {
@@ -36,5 +37,34 @@ class MySpaceStep3Activity : AppCompatActivity() {
         binding.back.setOnClickListener {
             finish()
         }
+
+        val layouts = listOf(
+            binding.step3FeelingLayout,
+            binding.step3CommentLayout,
+            binding.step3StoryLayout,
+            binding.step3MusicLayout,
+            binding.step3ScheduleLayout,
+            binding.step3PhotoLayout
+        )
+
+        val buttons = listOf(
+            binding.step3Feeling,
+            binding.step3Comment,
+            binding.step3Story,
+            binding.step3Music,
+            binding.step3Schedule,
+            binding.step3Photo
+        )
+
+        buttons.forEachIndexed { index, button ->
+            button.setOnClickListener {
+                // 기존에 선택된 레이아웃들을 모두 숨김
+                layouts.forEach { layout -> layout.visibility = View.GONE }
+
+                // 현재 클릭된 버튼에 해당하는 레이아웃을 보임
+                layouts[index].visibility = View.VISIBLE
+            }
+        }
+
     }
 }

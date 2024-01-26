@@ -10,6 +10,13 @@
     <string name="myspace_step3_sub">마이스페이스에서 사용할 배경을 선택해주세요.</string>
     <string name="myspace_step3_sub2">나의 이미지와 어울리는 스페이스 배경을 골라보세요.</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <string name="step3_schedule">일정을 입력하세요.</string>
+    <string name="step3_comment">하고 싶은 말을 자유롭게 입력하세요.</string>
+    <string name="step3_feeling">내 기분을 표현해보세요.</string>
+    <string name="step3_photo">사진으로 나의 일상을 공유해보세요.</string>
+    <string name="step3_music">내가 좋아하는 노래를 공유해보세요.</string>
+    <string name="step3_story">방명록에 나의 흔적을 남겨보세요.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
