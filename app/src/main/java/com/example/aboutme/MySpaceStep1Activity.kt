@@ -14,8 +14,8 @@ class MySpaceStep1Activity : AppCompatActivity() {
         binding = ActivityMyspacestep1Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.nextIb.setOnClickListener {
-            val intent = Intent(this@MySpaceStep1Activity, MySpaceStep2Activity::class.java)
+        binding.nextIbStep1.setOnClickListener {
+            val intent = Intent(this, MySpaceStep2Activity::class.java)
             startActivity(intent)
         }
     }
