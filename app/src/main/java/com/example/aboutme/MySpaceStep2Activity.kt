@@ -17,6 +17,8 @@ class MySpaceStep2Activity : AppCompatActivity() {
         binding = ActivityMyspacestep2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val nextButton = binding.nextIbStep2
+
         // 체크박스에 해당하는 이미지뷰들을 리스트에 추가
         val checkBoxList = listOf(
             binding.checkBox1,
@@ -61,17 +63,20 @@ class MySpaceStep2Activity : AppCompatActivity() {
 
                 // 선택된 체크박스의 인덱스 저장
                 selectedCheckBoxIndex = if (isCheckmarkVisible) null else index
+
+                // 다음 버튼의 가시성 설정
+                nextButton.visibility = if (selectedCheckBoxIndex != null) View.VISIBLE else View.INVISIBLE
             }
         }
 
         binding.nextIbStep2.setOnClickListener {
             // 다음 액티비티로 넘길 때 선택된 체크박스의 인덱스 정보를 넘김
-            val intent = Intent(this, MySpaceStep3Activity::class.java)
+            val intent = Intent(this, MySpaceStep2RoomActivity::class.java)
             selectedCheckBoxIndex?.let {
-                intent.putExtra("clickedIndex", it)
+                intent.putExtra("index_step2_avatar", it)
             }
             startActivity(intent)
-            Log.d("Myspacestep2", "step3로 넘어갑니다.")
+            Log.d("MySpaceStep2", "$selectedCheckBoxIndex")
         }
 
         binding.back.setOnClickListener {
