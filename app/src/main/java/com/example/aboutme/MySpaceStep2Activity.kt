@@ -1,5 +1,6 @@
 package com.example.aboutme
 
+import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -75,12 +76,17 @@ class MySpaceStep2Activity : AppCompatActivity() {
             selectedCheckBoxIndex?.let {
                 intent.putExtra("index_step2_avatar", it)
             }
-            startActivity(intent)
+            startActivityWithAnimation(intent)
             Log.d("MySpaceStep2", "$selectedCheckBoxIndex")
         }
 
         binding.back.setOnClickListener {
             finish()
         }
+    }
+
+    private fun startActivityWithAnimation(intent: Intent) {
+        val options = ActivityOptions.makeCustomAnimation(this, R.anim.slide_in_right, R.anim.slide_out_left)
+        startActivity(intent, options.toBundle())
     }
 }

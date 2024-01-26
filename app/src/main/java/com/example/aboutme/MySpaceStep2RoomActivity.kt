@@ -1,5 +1,6 @@
 package com.example.aboutme
 
+import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -70,7 +71,7 @@ class MySpaceStep2RoomActivity : AppCompatActivity() {
                 intent.putExtra("index_step2_room", it)
                 intent.putExtra("index_step2_avatar", selectedCheckBoxIndexavatar)
             }
-            startActivity(intent)
+            startActivityWithAnimation(intent)
             Log.d("Myspacestep2room", "step3로 넘어갑니다.")
             Log.d("Avatar Index", "$selectedCheckBoxIndexavatar")
             Log.d("Room Index", "$selectedCheckBoxIndexroom")
@@ -79,5 +80,10 @@ class MySpaceStep2RoomActivity : AppCompatActivity() {
         binding.back.setOnClickListener {
             finish()
         }
+    }
+
+    private fun startActivityWithAnimation(intent: Intent) {
+        val options = ActivityOptions.makeCustomAnimation(this, R.anim.slide_in_right, R.anim.slide_out_left)
+        startActivity(intent, options.toBundle())
     }
 }
