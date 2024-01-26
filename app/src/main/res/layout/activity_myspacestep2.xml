@@ -446,7 +446,8 @@
         android:background="@color/transparent"
         android:src="@drawable/next_korean"
         app:layout_constraintStart_toStartOf="@id/myspace_step2_avatar_8"
-        app:layout_constraintTop_toBottomOf="@id/myspace_step2_avatar_8" />
+        app:layout_constraintTop_toBottomOf="@id/myspace_step2_avatar_8"
+        android:visibility="invisible"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
