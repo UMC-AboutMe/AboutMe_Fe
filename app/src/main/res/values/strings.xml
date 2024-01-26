@@ -7,8 +7,8 @@
     <string name="myspace_step2_sub">마이스페이스에서 사용할 캐릭터를 선택해주세요.</string>
     <string name="myspace_step2_sub2">친구에게 내가 어떤 모습일지 알려주세요.</string>
     <string name="myspace_step3_main">마이스페이스\nSTEP 03: 스페이스</string>
-    <string name="myspace_step3_sub">다양한 요소들을 배치해 스페이스를 꾸며주세요.</string>
-    <string name="myspace_step3_sub2">친구와 공유할 나만의 멋진 스페이스를 만들어보세요.</string>
+    <string name="myspace_step3_sub">마이스페이스에서 사용할 배경을 선택해주세요.</string>
+    <string name="myspace_step3_sub2">나의 이미지와 어울리는 스페이스 배경을 골라보세요.</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
