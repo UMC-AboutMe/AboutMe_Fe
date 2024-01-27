@@ -492,8 +492,8 @@ class BottomSheet2 : DialogFragment() {
                 description = "앱의 홈 화면에 있는 검색창에 일련번호를 입력하면 프로필을 찾을 수 있어요.",
                 imageUrl = "https://i.imgur.com/8LO8kWd.png",
                 link = Link(
-                    webUrl = "https://www.apple.com/kr/app-store/",
-                    mobileWebUrl = "https://www.apple.com/kr/app-store/"
+                    webUrl = "https://developers.kakao.com",
+                    mobileWebUrl = "https://developers.kakao.com"
                 )
             ),
             itemContent = ItemContent(
@@ -505,8 +505,8 @@ class BottomSheet2 : DialogFragment() {
                 Button(
                     "앱 다운로드",
                     Link(
-                        webUrl = "https://www.apple.com/kr/app-store/",
-                        mobileWebUrl = "https://www.apple.com/kr/app-store/"
+                        webUrl = "https://developers.kakao.com",
+                        mobileWebUrl = "https://developers.kakao.com"
                     )
                 ),
                 Button(
