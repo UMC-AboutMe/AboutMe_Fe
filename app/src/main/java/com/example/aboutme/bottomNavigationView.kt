@@ -34,14 +34,14 @@ class bottomNavigationView : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_myprof -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(frame.id, Fragment())
+                        .replace(frame.id, MainProfileFragment())
                         .commit()
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.nav_saveprof -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(frame.id, Fragment())
+                        .replace(frame.id, ProfileStorageFragment())
                         .commit()
                     return@setOnItemSelectedListener true
                 }
