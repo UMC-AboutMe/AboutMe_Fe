@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -9,8 +10,8 @@ android {
 
     defaultConfig {
         applicationId = "com.example.aboutme"
-        minSdk = 28
-        targetSdk = 34
+        minSdk = 29
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -93,5 +94,11 @@ dependencies {
 
     // Normal
     implementation ("io.github.ParkSangGwon:tedpermission-normal:3.3.0")
+
+    //구글 로그인
+    implementation ("com.google.android.gms:play-services-auth:20.7.0")
+    //구글 로그인 - 파이어베이스
+    implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
+    implementation("com.google.firebase:firebase-analytics")
 
 }

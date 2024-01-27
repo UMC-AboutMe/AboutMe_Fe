@@ -2,19 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.aboutme">
-
-    <!-- 인터넷 사용 권한 설정-->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 알림 허용 권한 설정-->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
-    <!--갤러리 권한-->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.CAMERA" ></uses-permission>
+    <!-- 인터넷 사용 권한 설정 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 알림 허용 권한 설정 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- 갤러리 권한 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -26,9 +21,13 @@
         </intent>
     </queries>
 
-
+    <!--queries에 카카오톡 패키지 추가-->
+    <queries>
+        <package android:name="com.kakao.talk" />
+    </queries>
 
     <application
+        android:name=".KakaoApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -37,10 +36,19 @@
         android:roundIcon="@mipmap/icon_aboutme_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AboutMe"
-        tools:targetApi="33"
-        android:name=".KakaoApplication">
+        tools:targetApi="33">
+        <activity
+            android:name=".MainActivity2"
+            android:exported="true" >
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
 
-
+            <data android:host="kakaolink"
+                android:scheme="@string/kakao_scheme" />
+        </intent-filter>
+        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -49,16 +57,12 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths">
-
-            </meta-data>
+                android:resource="@xml/file_paths"></meta-data>
         </provider>
-
-
 
         <activity
             android:name=".TutorialActivity3"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".AlarmActivity"
             android:exported="false" />
@@ -97,7 +101,6 @@
             android:exported="false" />
         <activity
             android:name=".bottomNavigationView"
-
             android:exported="true" />
         <activity
             android:name=".TutorialActivity2"
@@ -116,26 +119,22 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
-
-
-
-
-        <!-- 카카오 소셜 로그인 api key 연결-->
+            android:exported="true" /> <!-- 카카오 소셜 로그인 api key 연결 -->
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
-                <data android:host="oauth"
+                <data
+                    android:host="oauth"
                     android:scheme="kakao14bbf6997b475309590efc7c9a7d9b11" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

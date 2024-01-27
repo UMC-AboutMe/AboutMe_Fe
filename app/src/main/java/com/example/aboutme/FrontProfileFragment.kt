@@ -37,6 +37,8 @@ class FrontProfileFragment : Fragment(),BottomSheet.OnImageSelectedListener, Bot
     private lateinit var sharedViewModel: SharedViewModel
 
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

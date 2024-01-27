@@ -9,12 +9,21 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.aboutme.databinding.FragmentMyprofileBinding
 
-class MyProfileFragment : Fragment() {
+
+class MyProfileFragment : Fragment(),BottomSheet2.OnBottomSheetListener {
 
     lateinit var binding: FragmentMyprofileBinding
 
     private lateinit var sharedViewModel: SharedViewModel
 
+    private lateinit var mActivity: MainActivity2
+
+
+    private var mListener: BottomSheet2.OnBottomSheetListener? = null
+
+    fun setOnBottomSheetListener(listener: BottomSheet2.OnBottomSheetListener) {
+        mListener = listener
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
 
@@ -31,10 +40,23 @@ class MyProfileFragment : Fragment() {
             bottomSheet2.show(childFragmentManager, bottomSheet2.tag)
         }*/
 
+        binding.myprofileShareBtn.setOnClickListener {
+            val bottomSheet2 = BottomSheet2()
+            mListener?.let {
+                bottomSheet2.setOnBottomSheetListener(it)
+            }
+
+            bottomSheet2.show(childFragmentManager, bottomSheet2.tag)
+        }
 
         return binding.root
     }
 
+
+
+    fun setActivity(activity: MainActivity2) {
+        mActivity = activity
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -65,5 +87,12 @@ class MyProfileFragment : Fragment() {
             }
         }
     }
+
+    override fun onBottomSheetAction() {
+
+    }
+
+
+
 
 }
