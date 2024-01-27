@@ -77,7 +77,6 @@ class BottomSheet2 : DialogFragment() {
         binding.shareBottomSheet2KakaoBtn.setOnClickListener {
             listener?.onBottomSheetAction()
 
-            if (isAdded) {
                 context?.let { nonNullContext ->
                     // 카카오톡 설치여부 확인
                     if (isAdded) { // Fragment가 Activity에 추가되었는지 확인
@@ -86,7 +85,29 @@ class BottomSheet2 : DialogFragment() {
                             defaultFeed
                         ) { sharingResult, error ->
                             if (error != null) {
+                                Toast.makeText(
+                                    nonNullContext,
+                                    "카카오톡이 설치되어있지 않습니다",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                val sharerUrl = WebSharerClient.instance.makeDefaultUrl(defaultFeed)
                                 Log.e(TAG, "카카오톡 공유 실패", error)
+                                // 카카오톡 공유 실패 시 웹으로 공유 시도
+                                try {
+                                    KakaoCustomTabsClient.openWithDefault(nonNullContext, sharerUrl)
+                                } catch (e: UnsupportedOperationException) {
+                                    // CustomTabsServiceConnection 지원 브라우저가 없을 때 예외처리
+                                }
+
+                                // 디바이스에 설치된 인터넷 브라우저가 없을 때 예외처리
+                                try {
+                                    KakaoCustomTabsClient.open(nonNullContext, sharerUrl)
+                                } catch (e: ActivityNotFoundException) {
+                                    // 디바이스에 설치된 인터넷 브라우저가 없을 때 예외처리
+                                }
+
+                                dismiss()
+
                             } else if (sharingResult != null) {
                                 Log.d(TAG, "카카오톡 공유 성공 ${sharingResult.intent}")
                                 startActivity(sharingResult.intent)
@@ -98,36 +119,12 @@ class BottomSheet2 : DialogFragment() {
                                 dismiss()
                             }
                         }
-
-                    } else {
-                        // 카카오톡 미설치: 웹 공유 사용 권장
-                        // 웹 공유 예시 코드
-                        val sharerUrl = WebSharerClient.instance.makeDefaultUrl(defaultFeed)
-
-                        // CustomTabs으로 웹 브라우저 열기
-
-                        // 1. CustomTabsServiceConnection 지원 브라우저 열기
-                        // ex) Chrome, 삼성 인터넷, FireFox, 웨일 등
-                        try {
-                            KakaoCustomTabsClient.openWithDefault(nonNullContext, sharerUrl)
-                        } catch (e: UnsupportedOperationException) {
-                            // CustomTabsServiceConnection 지원 브라우저가 없을 때 예외처리
-                        }
-
-                        // 2. CustomTabsServiceConnection 미지원 브라우저 열기
-                        // ex) 다음, 네이버 등
-                        try {
-                            KakaoCustomTabsClient.open(nonNullContext, sharerUrl)
-                        } catch (e: ActivityNotFoundException) {
-                            // 디바이스에 설치된 인터넷 브라우저가 없을 때 예외처리
-                        }
-                        dismiss()
                     }
                 }
             }
 
         }
-    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -446,41 +443,7 @@ class BottomSheet2 : DialogFragment() {
         }
     }
 
-    fun shareImageToKakaoTalk(imageUri: Uri?) {
-        try {
-            // KakaoTalk 패키지 이름
-            val kakaoPackageName = "com.kakao.talk"
 
-            // 카카오톡에 이미지를 공유하기 위한 인텐트
-            val intent = Intent(Intent.ACTION_SEND).apply {
-                type = "image/*"
-                putExtra(Intent.EXTRA_STREAM, imageUri)
-            }
-
-            // 카카오톡에게 이미지에 대한 읽기 권한 부여
-            requireActivity().grantUriPermission(
-                kakaoPackageName, imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION
-            )
-
-            // 카카오톡 패키지를 설정하고 공유 인텐트 시작
-            intent.setPackage(kakaoPackageName)
-            startActivity(intent)
-        } catch (e: ActivityNotFoundException) {
-            // 카카오톡이 설치되어 있지 않은 경우 처리
-            Toast.makeText(
-                requireContext().applicationContext,
-                "카카오톡이 설치되어 있지 않습니다.",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            // 카카오톡 다운로드를 위해 Play Store 열기
-            val playStoreIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://play.google.com/store/apps/details?id=com.kakao.talk")
-            )
-            startActivity(playStoreIntent)
-        }
-    }
 
     private val defaultFeed: FeedTemplate by lazy {
         // 메시지 템플릿 만들기 (피드형)
@@ -490,8 +453,8 @@ class BottomSheet2 : DialogFragment() {
                 description = "앱의 홈 화면에 있는 검색창에 일련번호를 입력하면 프로필을 찾을 수 있어요.",
                 imageUrl = "https://i.imgur.com/8LO8kWd.png",
                 link = Link(
-                    webUrl = "https://developers.kakao.com",
-                    mobileWebUrl = "https://developers.kakao.com"
+                    webUrl = "https://play.google.com",
+                    mobileWebUrl = "https://play.google.com"
                 )
             ),
             itemContent = ItemContent(
@@ -503,8 +466,8 @@ class BottomSheet2 : DialogFragment() {
                 Button(
                     "앱 다운로드",
                     Link(
-                        webUrl = "https://developers.kakao.com",
-                        mobileWebUrl = "https://developers.kakao.com"
+                        webUrl = "https://play.google.com",
+                        mobileWebUrl = "https://play.google.com"
                     )
                 ),
                 Button(
