@@ -38,7 +38,7 @@
         android:theme="@style/Theme.AboutMe"
         tools:targetApi="33">
         <activity
-            android:name=".MainActivity2"
+            android:name=".Myprofile.MainActivity2"
             android:exported="true" >
         <intent-filter>
             <action android:name="android.intent.action.VIEW" />
@@ -61,52 +61,52 @@
         </provider>
 
         <activity
-            android:name=".TutorialActivity3"
+            android:name=".Tutorial.TutorialActivity3"
             android:exported="true" />
         <activity
-            android:name=".AlarmActivity"
+            android:name=".Alarm.AlarmActivity"
             android:exported="false" />
         <activity
-            android:name=".MypageHelpActivity"
+            android:name=".Mypage.MypageHelpActivity"
             android:exported="false" />
         <activity
-            android:name=".MypageNotiActivity"
+            android:name=".Mypage.MypageNotiActivity"
             android:exported="false" />
         <activity
-            android:name=".MypageSettingActivity"
+            android:name=".Mypage.MypageSettingActivity"
             android:exported="false" />
         <activity
-            android:name=".MypageInsightActivity"
+            android:name=".Mypage.MypageInsightActivity"
             android:exported="false" />
         <activity
-            android:name=".MypageInfoActivity"
+            android:name=".Mypage.MypageInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".MypageActivity"
+            android:name=".Mypage.MypageActivity"
             android:exported="false" />
         <activity
-            android:name=".CustomDialogSpace"
+            android:name=".Search.CustomDialogSpace"
             android:exported="false" />
         <activity
-            android:name=".CustomDialogProf"
+            android:name=".Search.CustomDialogProf"
             android:exported="false" />
         <activity
-            android:name=".SearchSpaceActivity"
+            android:name=".Search.SearchSpaceActivity"
             android:exported="false" />
         <activity
-            android:name=".CustomDialog"
+            android:name=".Search.CustomDialog"
             android:exported="false" />
         <activity
-            android:name=".SearchProfActivity"
+            android:name=".Search.SearchProfActivity"
             android:exported="false" />
         <activity
             android:name=".bottomNavigationView"
             android:exported="true" />
         <activity
-            android:name=".TutorialActivity2"
+            android:name=".Tutorial.TutorialActivity2"
             android:exported="true" />
         <activity
-            android:name=".TutorialActivity1"
+            android:name=".Tutorial.TutorialActivity1"
             android:exported="true" />
         <activity
             android:name=".SplashActivity"

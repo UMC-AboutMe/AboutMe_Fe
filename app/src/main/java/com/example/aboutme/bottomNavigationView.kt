@@ -4,7 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import com.example.aboutme.databinding.ActivityMainBinding
+import com.example.aboutme.Myprofile.MainProfileFragment
+import com.example.aboutme.MyprofileStorage.ProfileStorageFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class bottomNavigationView : AppCompatActivity() {
