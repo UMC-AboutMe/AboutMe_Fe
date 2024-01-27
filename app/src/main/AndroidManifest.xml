@@ -19,9 +19,7 @@
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
         </intent>
-    </queries>
-
-    <!--queries에 카카오톡 패키지 추가-->
+    </queries> <!-- queries에 카카오톡 패키지 추가 -->
     <queries>
         <package android:name="com.kakao.talk" />
     </queries>
@@ -38,16 +36,21 @@
         android:theme="@style/Theme.AboutMe"
         tools:targetApi="33">
         <activity
+            android:name=".MyprofileStorage.ProfileStorageDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".Myprofile.MainActivity2"
-            android:exported="true" >
-        <intent-filter>
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-            <data android:host="kakaolink"
-                android:scheme="@string/kakao_scheme" />
-        </intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="kakaolink"
+                    android:scheme="@string/kakao_scheme" />
+            </intent-filter>
         </activity>
 
         <provider
@@ -57,7 +60,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
 
         <activity
