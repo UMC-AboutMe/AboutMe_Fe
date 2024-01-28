@@ -1,14 +1,10 @@
 package com.example.aboutme.Myprofile
 
-import MainProfileAddVPAdapter
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import com.example.aboutme.R
 import com.example.aboutme.databinding.FragmentMainprofileBinding
 
@@ -17,7 +13,6 @@ class MainProfileFragment : Fragment() {
     lateinit var binding: FragmentMainprofileBinding
     private val multiList = mutableListOf<MultiProfileData>()
     private lateinit var vpadapter : MainProfileVPAdapter
-    private lateinit var vpadapter2 : MainProfileAddVPAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +48,7 @@ class MainProfileFragment : Fragment() {
 
         binding.mainProfileVp.adapter = vpadapter
 
-        binding.mainProfileVp.setCurrentItem(multiList.size - 1, false)
+        binding.mainProfileVp.setCurrentItem(0, false)
 
     }
 }
