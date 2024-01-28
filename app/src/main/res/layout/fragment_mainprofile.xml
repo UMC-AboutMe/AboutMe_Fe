@@ -17,6 +17,7 @@
 
 
 
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/mainProfile_vp"
             android:layout_width="match_parent"
@@ -29,6 +30,10 @@
             android:clipChildren="false">
 
         </androidx.viewpager2.widget.ViewPager2>
+
+
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
