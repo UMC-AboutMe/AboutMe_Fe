@@ -24,11 +24,6 @@ class MainProfileFragment : Fragment() {
 
         initViewPager()
 
-        // ViewPager2 설정
-
-
-        // 첫 번째 뷰페이저의 페이지 변경 이벤트 처리
-
 
 
         return binding.root
@@ -49,6 +44,7 @@ class MainProfileFragment : Fragment() {
         binding.mainProfileVp.adapter = vpadapter
 
         binding.mainProfileVp.setCurrentItem(0, false)
+
 
     }
 }

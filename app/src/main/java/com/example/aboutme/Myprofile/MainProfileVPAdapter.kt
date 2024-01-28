@@ -2,11 +2,14 @@ package com.example.aboutme.Myprofile
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aboutme.databinding.ItemAddProfileBinding
 import com.example.aboutme.databinding.ItemMultiprofileBinding
+import com.kakao.sdk.template.model.Content
+import kotlin.coroutines.coroutineContext
 
 class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHolder>(
     MainListDiffCallback()
@@ -23,7 +26,12 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
             MainItemViewHolder(binding)
         } else {
             val binding = ItemAddProfileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+            binding.profileAddBtn.setOnClickListener {
+                Toast.makeText(parent.context, "프로필 추가", Toast.LENGTH_SHORT).show()
+            }
             MainAddItemViewHolder(binding)
+
         }
     }
 
