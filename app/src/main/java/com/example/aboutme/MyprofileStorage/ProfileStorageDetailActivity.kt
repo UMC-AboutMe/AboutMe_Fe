@@ -14,6 +14,9 @@ class ProfileStorageDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile_storage_detail)
 
         setFrag1(0)
+
+        val receivedIntent = intent
+
     }
 
     private fun setFrag1(fragNum : Int){
