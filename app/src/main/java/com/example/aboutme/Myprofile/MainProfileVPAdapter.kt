@@ -1,11 +1,13 @@
 package com.example.aboutme.Myprofile
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.aboutme.MyprofileStorage.ProfileStorageDetailActivity
 import com.example.aboutme.databinding.ItemAddProfileBinding
 import com.example.aboutme.databinding.ItemMultiprofileBinding
 import com.kakao.sdk.template.model.Content
@@ -29,6 +31,9 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
 
             binding.profileAddBtn.setOnClickListener {
                 Toast.makeText(parent.context, "프로필 추가", Toast.LENGTH_SHORT).show()
+
+                val intent = Intent(parent.context, MainActivity2::class.java)
+                parent.context.startActivity(intent)
             }
             MainAddItemViewHolder(binding)
 
