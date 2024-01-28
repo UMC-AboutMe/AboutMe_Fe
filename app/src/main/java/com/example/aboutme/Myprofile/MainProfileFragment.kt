@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.aboutme.R
 import com.example.aboutme.databinding.FragmentMainprofileBinding
@@ -32,19 +33,7 @@ class MainProfileFragment : Fragment() {
 
 
         // 첫 번째 뷰페이저의 페이지 변경 이벤트 처리
-        binding.mainProfileVp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
 
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                Log.d("ViewPager", "Current position: $position, Total items: ${vpadapter.itemCount}")
-
-                if (position == vpadapter.itemCount -1){
-                    vpadapter2 = MainProfileAddVPAdapter()
-                    binding.mainProfileVp.adapter = vpadapter2
-                }
-            }
-
-        })
 
 
         return binding.root
@@ -63,6 +52,8 @@ class MainProfileFragment : Fragment() {
         vpadapter.submitList(multiList)
 
         binding.mainProfileVp.adapter = vpadapter
+
+        binding.mainProfileVp.setCurrentItem(multiList.size - 1, false)
 
     }
 }

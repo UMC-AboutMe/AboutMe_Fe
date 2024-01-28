@@ -5,19 +5,43 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.aboutme.databinding.ItemAddProfileBinding
 import com.example.aboutme.databinding.ItemMultiprofileBinding
 
-class MainProfileVPAdapter : ListAdapter<MultiProfileData, MainProfileVPAdapter.MainItemViewHolder>(
+class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHolder>(
     MainListDiffCallback()
 ) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainItemViewHolder {
-        val binding = ItemMultiprofileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MainItemViewHolder(binding)
+    companion object {
+        private const val VIEW_TYPE_ITEM = 0
+        private const val VIEW_TYPE_ADD_ITEM = 1
     }
 
-    override fun onBindViewHolder(holder: MainItemViewHolder, position: Int) {
-        holder.bind(getItem(position))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == VIEW_TYPE_ITEM) {
+            val binding = ItemMultiprofileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            MainItemViewHolder(binding)
+        } else {
+            val binding = ItemAddProfileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            MainAddItemViewHolder(binding)
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is MainItemViewHolder -> holder.bind(getItem(position) as MultiProfileData)
+            is MainAddItemViewHolder -> holder.bind()
+        }
+    }
+
+    override fun getItemCount(): Int {
+        // 마지막에 추가 항목을 위한 1을 더합니다.
+        return super.getItemCount() + 1
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        // 마지막 항목인 경우 추가 항목을 위한 VIEW_TYPE_ADD_ITEM을 반환합니다.
+        return if (position < super.getItemCount()) VIEW_TYPE_ITEM else VIEW_TYPE_ADD_ITEM
     }
 
     inner class MainItemViewHolder(private val binding: ItemMultiprofileBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -25,6 +49,12 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, MainProfileVPAdapter.
             binding.multiProfileCharIv.setImageResource(item.profileImageResId)
             binding.multiProfileNameTv.text = item.name
             binding.multiProfileNumberTv.text = item.phoneNumber
+        }
+    }
+
+    inner class MainAddItemViewHolder(private val binding: ItemAddProfileBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind() {
+            // 추가 항목에 대한 바인딩 로직을 추가하세요.
         }
     }
 
