@@ -15,8 +15,6 @@ class MainActivity2 : AppCompatActivity(), BottomSheet2.OnBottomSheetListener{
 
         if (savedInstanceState == null) {
             val myProfileFragment = MyProfileFragment()
-            val frontProfileFragment = FrontProfileFragment()
-             frontProfileFragment.viewModel= viewModel
 
             supportFragmentManager.beginTransaction().apply {
                 setReorderingAllowed(true)

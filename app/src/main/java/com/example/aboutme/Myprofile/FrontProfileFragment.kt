@@ -31,6 +31,12 @@ import java.util.Date
 class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
     BottomSheet.OnBasicImageSelectedListener, BottomSheet.OnCharImageSelectedListener {
 
+    interface OnProfileNameChangeListener {
+        fun onProfileNameChanged(name: String)
+    }
+
+    private var profileNameChangeListener : OnProfileNameChangeListener? = null
+
     lateinit var binding: FragmentFrontprofileBinding
 
 
@@ -40,7 +46,6 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
     //private lateinit var viewModel: FrontProfileViewModel
 
-    var viewModel: FrontProfileViewModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -90,6 +95,7 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
         val profileEdit1 : EditText = binding.profileNameEt
         val profileBtn1 : ImageButton = binding.frontProfileEdit1Btn
 
+
         var message1 : String = ""
 
         profileEdit1.addTextChangedListener (object : TextWatcher {
@@ -119,6 +125,7 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
         val profileEdit2 : EditText = binding.profileNumEt
         val profileBtn2 : ImageButton = binding.frontProfileEdit2Btn
+
 
         var message2 : String = ""
 
@@ -169,20 +176,16 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
             }
         }
 
-        viewModel = ViewModelProvider(requireActivity()).get(FrontProfileViewModel::class.java)
 
-        val editName : EditText = binding.profileNameEt
-        val editNum =  binding.profileNumEt.text.toString()
-
-        val activity = requireActivity() as? MainActivity2
-        val viewModel = activity?.getViewModel2()
-        viewModel?.setEditName(editName.toString())
 
         profileEditName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable?) {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 saveName(s.toString())
+            }
+            override fun afterTextChanged(s: Editable?) {
+                //saveName(s.toString())
+                //profileNameChangeListener?.onProfileNameChanged(s.toString())
             }
         })
 
@@ -264,6 +267,11 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
         val sharedPreferences = requireContext().getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
         return sharedPreferences.getString("name", "")
     }
+
+    fun setOnProfileNameChangeListener(listener: OnProfileNameChangeListener) {
+        profileNameChangeListener = listener
+    }
+
 
 }
 

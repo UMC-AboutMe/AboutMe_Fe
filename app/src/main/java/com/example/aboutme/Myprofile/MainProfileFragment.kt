@@ -11,13 +11,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.aboutme.R
 import com.example.aboutme.databinding.FragmentMainprofileBinding
 
-class MainProfileFragment : Fragment() {
+class MainProfileFragment : Fragment(), FrontProfileFragment.OnProfileNameChangeListener {
 
     lateinit var binding: FragmentMainprofileBinding
     private val multiList = mutableListOf<MultiProfileData>() // 전역 변수로 multiList 선언
     private lateinit var vpadapter : MainProfileVPAdapter
 
-    private lateinit var viewModel: FrontProfileViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,5 +71,9 @@ class MainProfileFragment : Fragment() {
 
         binding.mainProfileVp.setCurrentItem(0, false)
 
+    }
+
+    override fun onProfileNameChanged(name: String) {
+        // 변경된 이름 처리
     }
 }
