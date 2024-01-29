@@ -2,6 +2,7 @@ package com.example.aboutme.Myprofile
 
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
@@ -24,10 +25,12 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEW_TYPE_ITEM) {
-            val binding = ItemMultiprofileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            val binding =
+                ItemMultiprofileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             MainItemViewHolder(binding)
         } else {
-            val binding = ItemAddProfileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            val binding =
+                ItemAddProfileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
             binding.profileAddBtn.setOnClickListener {
                 Toast.makeText(parent.context, "프로필 추가", Toast.LENGTH_SHORT).show()
@@ -57,7 +60,8 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
         return if (position < super.getItemCount()) VIEW_TYPE_ITEM else VIEW_TYPE_ADD_ITEM
     }
 
-    inner class MainItemViewHolder(private val binding: ItemMultiprofileBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class MainItemViewHolder(private val binding: ItemMultiprofileBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: MultiProfileData) {
             binding.multiProfileCharIv.setImageResource(item.profileImageResId)
             binding.multiProfileNameTv.text = item.name
@@ -65,19 +69,28 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
         }
     }
 
-    inner class MainAddItemViewHolder(private val binding: ItemAddProfileBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class MainAddItemViewHolder(private val binding: ItemAddProfileBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind() {
             // 추가 항목에 대한 바인딩 로직을 추가하세요.
         }
     }
 
     class MainListDiffCallback : DiffUtil.ItemCallback<MultiProfileData>() {
-        override fun areItemsTheSame(oldItem: MultiProfileData, newItem: MultiProfileData): Boolean {
+        override fun areItemsTheSame(
+            oldItem: MultiProfileData,
+            newItem: MultiProfileData
+        ): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: MultiProfileData, newItem: MultiProfileData): Boolean {
+        override fun areContentsTheSame(
+            oldItem: MultiProfileData,
+            newItem: MultiProfileData
+        ): Boolean {
             return oldItem.name == newItem.name
         }
     }
+
+
 }

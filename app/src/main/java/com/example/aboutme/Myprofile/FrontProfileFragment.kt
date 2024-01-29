@@ -1,5 +1,6 @@
 package com.example.aboutme.Myprofile
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
@@ -16,6 +17,7 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import com.bumptech.glide.Glide
 import com.example.aboutme.R
 import com.example.aboutme.databinding.FragmentFrontprofileBinding
@@ -34,8 +36,11 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
     private lateinit var sharedViewModel: SharedViewModel
 
+    private lateinit var profileEditName: EditText
 
+    //private lateinit var viewModel: FrontProfileViewModel
 
+    var viewModel: FrontProfileViewModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,15 +51,14 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
         binding = FragmentFrontprofileBinding.inflate(inflater,container,false)
 
+        profileEditName = binding.profileNameEt
+
         binding.turnBtn.setOnClickListener {
             val ft = parentFragmentManager.beginTransaction()
 
             ft.replace(R.id.profile_frame, BackProfileFragment()).commit()
 
         }
-
-
-
 
 
         //다이얼로그에서 버튼 클릭->프로필사진변경
@@ -143,6 +147,8 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
             }
         })
 
+        val savedName = getSavedName()
+        profileEdit1.setText(savedName)
 
         return binding.root
     }
@@ -162,6 +168,23 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
                 Log.d("bitmap", "success")
             }
         }
+
+        viewModel = ViewModelProvider(requireActivity()).get(FrontProfileViewModel::class.java)
+
+        val editName : EditText = binding.profileNameEt
+        val editNum =  binding.profileNumEt.text.toString()
+
+        val activity = requireActivity() as? MainActivity2
+        val viewModel = activity?.getViewModel2()
+        viewModel?.setEditName(editName.toString())
+
+        profileEditName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                saveName(s.toString())
+            }
+        })
 
     }
 
@@ -228,6 +251,18 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
     override fun onCharImageSelected() {
         Glide.with(requireContext()).load(R.drawable.myprofile_character).into(binding.profileIv)
+    }
+
+    private fun saveName(name: String) {
+        val sharedPreferences = requireContext().getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("name", name)
+        editor.commit()
+    }
+
+    private fun getSavedName(): String? {
+        val sharedPreferences = requireContext().getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("name", "")
     }
 
 }
