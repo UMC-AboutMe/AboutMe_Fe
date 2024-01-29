@@ -81,8 +81,8 @@
         app:layout_constraintStart_toEndOf="@+id/logo"
         app:layout_constraintTop_toTopOf="@+id/logo" />
 
-    <Switch
-        android:id="@+id/alarm_switch"
+    <ImageView
+        android:id="@+id/alarm_iv"
         android:layout_width="0dp"
         android:layout_height="95dp"
         android:layout_marginTop="36dp"
@@ -92,8 +92,8 @@
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/setting_tv" />
 
-    <Switch
-        android:id="@+id/theme_switch"
+    <ImageView
+        android:id="@+id/theme_iv"
         android:layout_width="0dp"
         android:layout_height="95dp"
         android:layout_marginTop="20dp"
@@ -101,7 +101,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/alarm_switch" />
+        app:layout_constraintTop_toBottomOf="@+id/alarm_iv" />
 
     <ImageButton
         android:id="@+id/lang_btn"
@@ -113,7 +113,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/theme_switch"
+        app:layout_constraintTop_toBottomOf="@+id/theme_iv"
         app:srcCompat="@drawable/setting_langbg" />
 
     <Button
@@ -129,5 +129,27 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/lang_btn" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:thumb="@drawable/selector_thumb"
+        android:trackTint="@drawable/selector_switch"
+        app:layout_constraintBottom_toBottomOf="@+id/alarm_iv"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/alarm_iv"
+        app:track="@drawable/selector_switch" />
+
+    <Switch
+        android:id="@+id/switch2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:thumb="@drawable/selector_thumb"
+        android:trackTint="@drawable/selector_switch"
+        app:layout_constraintBottom_toBottomOf="@+id/theme_iv"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/theme_iv"
+        app:track="@drawable/selector_switch" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
