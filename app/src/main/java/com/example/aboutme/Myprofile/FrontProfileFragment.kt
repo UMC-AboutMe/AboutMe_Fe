@@ -31,11 +31,6 @@ import java.util.Date
 class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
     BottomSheet.OnBasicImageSelectedListener, BottomSheet.OnCharImageSelectedListener {
 
-    interface OnProfileNameChangeListener {
-        fun onProfileNameChanged(name: String)
-    }
-
-    private var profileNameChangeListener : OnProfileNameChangeListener? = null
 
     lateinit var binding: FragmentFrontprofileBinding
 
@@ -268,9 +263,7 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
         return sharedPreferences.getString("name", "")
     }
 
-    fun setOnProfileNameChangeListener(listener: OnProfileNameChangeListener) {
-        profileNameChangeListener = listener
-    }
+
 
 
 }

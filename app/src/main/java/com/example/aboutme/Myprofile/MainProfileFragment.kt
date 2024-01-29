@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.aboutme.R
 import com.example.aboutme.databinding.FragmentMainprofileBinding
 
-class MainProfileFragment : Fragment(), FrontProfileFragment.OnProfileNameChangeListener {
+class MainProfileFragment : Fragment() {
 
     lateinit var binding: FragmentMainprofileBinding
     private val multiList = mutableListOf<MultiProfileData>() // 전역 변수로 multiList 선언
@@ -25,9 +25,6 @@ class MainProfileFragment : Fragment(), FrontProfileFragment.OnProfileNameChange
     ): View? {
 
         binding = FragmentMainprofileBinding.inflate(inflater, container, false)
-
-        //initViewPager()
-
 
 
 
@@ -73,7 +70,5 @@ class MainProfileFragment : Fragment(), FrontProfileFragment.OnProfileNameChange
 
     }
 
-    override fun onProfileNameChanged(name: String) {
-        // 변경된 이름 처리
-    }
+
 }
