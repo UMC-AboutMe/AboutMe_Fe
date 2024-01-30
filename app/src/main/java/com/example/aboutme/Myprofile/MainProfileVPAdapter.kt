@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.aboutme.MyprofileStorage.ProfileStorageDetailActivity
 import com.example.aboutme.databinding.ItemAddProfileBinding
 import com.example.aboutme.databinding.ItemMultiprofileBinding
@@ -63,7 +64,9 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
     inner class MainItemViewHolder(private val binding: ItemMultiprofileBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: MultiProfileData) {
-            binding.multiProfileCharIv.setImageResource(item.profileImageResId)
+            Glide.with(binding.root.context)
+                .load(item.profileImageUrl)
+                .into(binding.multiProfileCharIv)
             binding.multiProfileNameTv.text = item.name
             binding.multiProfileNumberTv.text = item.phoneNumber
         }
