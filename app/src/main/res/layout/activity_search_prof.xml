@@ -46,7 +46,8 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/search_tv" />
+        app:layout_constraintTop_toTopOf="@+id/search_tv"
+        tools:visibility="visible" />
 
     <ImageButton
         android:id="@+id/back_btn"
@@ -117,12 +118,13 @@
         android:layout_height="55dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        android:src="@drawable/searchprof_btn"
+        android:src="@drawable/storageprof_btn"
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/example_iv"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+        tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/example_iv"
@@ -132,6 +134,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/prof_bg"
-        app:layout_constraintTop_toBottomOf="@+id/search_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/search_tv"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

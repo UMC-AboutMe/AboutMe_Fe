@@ -7,7 +7,10 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.aboutme.Myspace.MySpaceStep1Activity
 import com.example.aboutme.R
+import com.example.aboutme.bottomNavigationView
+import com.example.aboutme.databinding.ActivityTutorial2Binding
 import com.example.aboutme.databinding.ActivityTutorial3Binding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class TutorialActivity3 : AppCompatActivity() {
 
@@ -16,21 +19,12 @@ class TutorialActivity3 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_tutorial3)
-        binding.okIv2.setOnClickListener {
-
-            Toast.makeText(this, "okclicked", Toast.LENGTH_SHORT).show()
-
-            val intent= Intent(this, MySpaceStep1Activity::class.java)
+        //binding = DataBindingUtil.setContentView(this, R.layout.activity_tutorial3)
+        binding = ActivityTutorial3Binding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.okbtn.setOnClickListener {
+            val intent= Intent(this, bottomNavigationView::class.java)
             startActivity(intent)
-
-        }
-
-        binding.cb2.setOnCheckedChangeListener { buttonView, isChecked ->
-            when (isChecked){
-                true -> Toast.makeText(this, "체크됨", Toast.LENGTH_SHORT).show()
-                false -> Toast.makeText(this, "체크해제됨", Toast.LENGTH_SHORT).show()
-            }
         }
     }
 
