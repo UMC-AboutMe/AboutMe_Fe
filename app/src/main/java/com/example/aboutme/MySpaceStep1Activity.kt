@@ -16,7 +16,13 @@ class MySpaceStep1Activity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.nextIbStep1.setOnClickListener {
+
+            // EditText에서 텍스트 가져오기
+            val inputText = binding.nickname.text.toString()
+
             val intent = Intent(this, MySpaceStep2Activity::class.java)
+            intent.putExtra("nickname", inputText)
+
             startActivityWithAnimation(intent)
         }
     }

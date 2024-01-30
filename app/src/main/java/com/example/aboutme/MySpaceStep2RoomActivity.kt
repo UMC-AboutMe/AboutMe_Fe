@@ -36,8 +36,10 @@ class MySpaceStep2RoomActivity : AppCompatActivity() {
         )
 
         val selectedCheckBoxIndexavatar = intent.getIntExtra("index_step2_avatar", -1)
+        val nickname = intent.getStringExtra("nickname")
 
         Log.d("Avatar Index", "$selectedCheckBoxIndexavatar")
+        Log.d("nickname", "$nickname")
 
         // 선택된 체크박스의 인덱스를 저장할 변수
         var selectedCheckBoxIndexroom: Int? = null
@@ -70,9 +72,11 @@ class MySpaceStep2RoomActivity : AppCompatActivity() {
             selectedCheckBoxIndexroom?.let {
                 intent.putExtra("index_step2_room", it)
                 intent.putExtra("index_step2_avatar", selectedCheckBoxIndexavatar)
+                intent.putExtra("nickname", nickname)
             }
             startActivityWithAnimation(intent)
             Log.d("Myspacestep2room", "step3로 넘어갑니다.")
+            Log.d("nickname", "$nickname")
             Log.d("Avatar Index", "$selectedCheckBoxIndexavatar")
             Log.d("Room Index", "$selectedCheckBoxIndexroom")
         }

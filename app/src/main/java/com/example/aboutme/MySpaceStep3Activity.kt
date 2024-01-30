@@ -19,9 +19,11 @@ class MySpaceStep3Activity : AppCompatActivity() {
         // 이전 액티비티에서 받아온 인덱스 값
         val receivedIndexStep2avatar = intent.getIntExtra("index_step2_avatar", -1)
         val receivedIndexStep2room = intent.getIntExtra("index_step2_room", -1)
+        val receivedNickname = intent.getStringExtra("nickname")
 
         Log.d("myspace_avatar", "$receivedIndexStep2avatar")
         Log.d("myspace_room", "$receivedIndexStep2room")
+        Log.d("myspace_nickname", "$receivedNickname")
 
         // 이미지 리소스 이름을 동적으로 생성
         val imageNameavatar = "step2_avatar_${receivedIndexStep2avatar + 1}"
@@ -33,6 +35,10 @@ class MySpaceStep3Activity : AppCompatActivity() {
 
         binding.step3SelectedAvatar.setImageResource(resourceIdavatar)
         binding.step3SelectedRoom.setImageResource(resourceIdroom)
+        binding.myspaceTitlebox.text = buildString {
+            append(receivedNickname)
+            append("'s 스페이스")
+        }
 
         binding.back.setOnClickListener {
             finish()

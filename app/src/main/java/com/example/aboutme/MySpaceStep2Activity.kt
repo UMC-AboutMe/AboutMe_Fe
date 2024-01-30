@@ -45,6 +45,8 @@ class MySpaceStep2Activity : AppCompatActivity() {
             binding.checkmark9
         )
 
+        val nickname = intent.getStringExtra("nickname")
+
         // 선택된 체크박스의 인덱스를 저장할 변수
         var selectedCheckBoxIndex: Int? = null
 
@@ -75,9 +77,11 @@ class MySpaceStep2Activity : AppCompatActivity() {
             val intent = Intent(this, MySpaceStep2RoomActivity::class.java)
             selectedCheckBoxIndex?.let {
                 intent.putExtra("index_step2_avatar", it)
+                intent.putExtra("nickname", nickname)
             }
             startActivityWithAnimation(intent)
             Log.d("MySpaceStep2", "$selectedCheckBoxIndex")
+            Log.d("nickname", "$nickname")
         }
 
         binding.back.setOnClickListener {
