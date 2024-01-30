@@ -1,14 +1,12 @@
 package com.example.aboutme
 
 import android.content.Intent
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.aboutme.Tutorial.TutorialActivity1
 import com.example.aboutme.databinding.ActivityMainBinding
@@ -18,9 +16,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.normal.TedPermission
 import com.kakao.sdk.user.UserApiClient
+
 
 private const val TAG = "MainActivity"
 
@@ -28,17 +25,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding : ActivityMainBinding
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private val permissionResult =
-        TedPermission.create().setPermissionListener(object: PermissionListener {
-            override fun onPermissionGranted() {
-                Toast.makeText(this@MainActivity, "Permission Granted", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
-                Toast.makeText(this@MainActivity, "Permission Denied", Toast.LENGTH_SHORT).show()
-            }
-        }).setDeniedMessage("알림을 거부한다면 앱 사용에 지장이 있을 수 있습니다.").setPermissions(android.Manifest.permission.POST_NOTIFICATIONS).check()
+//    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+//    private val permissionResult =
+//        TedPermission.create().setPermissionListener(object: PermissionListener {
+//            override fun onPermissionGranted() {
+//                Toast.makeText(this@MainActivity, "Permission Granted", Toast.LENGTH_SHORT).show()
+//            }
+//
+//            override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+//                Toast.makeText(this@MainActivity, "Permission Denied", Toast.LENGTH_SHORT).show()
+//            }
+//        }).setDeniedMessage("알림을 거부한다면 앱 사용에 지장이 있을 수 있습니다.").setPermissions(android.Manifest.permission.POST_NOTIFICATIONS).check()
 
     //구글 로그인
     // Google Sign In API와 호출할 구글 로그인 클라이언트
@@ -114,6 +111,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val acct = completedTask.getResult(ApiException::class.java)
+            //로그인 성공시
             if (acct != null) {
                 val personName = acct.displayName
                 val personGivenName = acct.givenName
@@ -145,6 +143,26 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     TAG,
                     "handleSignInResult:personPhoto $personPhoto"
                 )
+
+                //최초 실행 여부 (최초 실행일시,튜토리얼 화면으로 전환 아닐시 메인화면으로 전환된다.)
+                // SharedPreferences 객체 생성
+                val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                // "isInit" 값 가져오기 (기본값은 false)
+                val isInit = sharedPreferences.getBoolean("isInit", false)
+                if (!isInit) {
+                    Log.d("test-log", "최초 실행")
+                    // "isInit" 값을 true로 설정하여 최초 실행으로 표시
+                    val editor = sharedPreferences.edit()
+                    editor.putBoolean("isInit", true)
+                    editor.apply()
+                    val intent = Intent(this, TutorialActivity1::class.java)
+                    startActivity(intent)
+                }
+                else {
+                    Log.d("test-log", "최초 실행 아님")
+                    val intent = Intent(this, bottomNavigationView::class.java)
+                    startActivity(intent)
+                }
             }
         } catch (e: ApiException) {
             Log.e(TAG, "signInResult:failed code=" + e.statusCode)
