@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/search_share_bg1"
-    tools:context=".CustomDialog">
+    tools:context=".Search.CustomDialog">
 
     <ImageView
         android:id="@+id/dialog_logo"

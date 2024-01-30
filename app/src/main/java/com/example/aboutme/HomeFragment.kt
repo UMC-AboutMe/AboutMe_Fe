@@ -6,6 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.aboutme.Alarm.AlarmActivity
+import com.example.aboutme.Mypage.MypageActivity
+import com.example.aboutme.Search.SearchProfActivity
+import com.example.aboutme.Search.SearchSpaceActivity
 import com.example.aboutme.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
