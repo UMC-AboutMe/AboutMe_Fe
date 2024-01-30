@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.aboutme.Myprofile.FrontProfileViewModel
 import com.example.aboutme.Myprofile.MainProfileFragment
 import com.example.aboutme.MyprofileStorage.ProfileStorageFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -16,6 +18,8 @@ class bottomNavigationView : AppCompatActivity() {
     private val bottomNagivationView: BottomNavigationView by lazy { // 하단 네비게이션 바
         findViewById(R.id.bottomNavigationView)
     }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,4 +76,5 @@ class bottomNavigationView : AppCompatActivity() {
             }
         }
     }
+
 }

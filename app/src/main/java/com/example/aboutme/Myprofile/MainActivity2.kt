@@ -2,9 +2,12 @@ package com.example.aboutme.Myprofile
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.aboutme.R
 
 class MainActivity2 : AppCompatActivity(), BottomSheet2.OnBottomSheetListener{
+
+    private val viewModel by lazy { ViewModelProvider(this).get(FrontProfileViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +38,10 @@ class MainActivity2 : AppCompatActivity(), BottomSheet2.OnBottomSheetListener{
         // BottomSheet2에서 발생한 액션에 대한 동작
         // ...
     }
+    fun getViewModel2(): FrontProfileViewModel {
+        return viewModel
+    }
+
 
 
 }

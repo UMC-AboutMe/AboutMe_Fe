@@ -34,12 +34,6 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
         setFrag(0)
 
 
-        /*binding.myprofileShareBtn.setOnClickListener {
-
-            val bottomSheet2 = BottomSheet2()
-
-            bottomSheet2.show(childFragmentManager, bottomSheet2.tag)
-        }*/
 
         binding.myprofileShareBtn.setOnClickListener {
             val bottomSheet2 = BottomSheet2()
