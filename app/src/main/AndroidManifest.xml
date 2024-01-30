@@ -36,6 +36,9 @@
         android:theme="@style/Theme.AboutMe"
         tools:targetApi="33">
         <activity
+            android:name=".Tutorial.CustomDialogAlarm"
+            android:exported="false" />
+        <activity
             android:name=".MyprofileStorage.ProfileStorageDetailActivity"
             android:exported="true" />
         <activity
