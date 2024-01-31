@@ -23,7 +23,7 @@ import retrofit2.Response
 class MainProfileFragment : Fragment() {
 
     lateinit var binding: FragmentMainprofileBinding
-    private val multiList = mutableListOf<MultiProfileData>() // 전역 변수로 multiList 선언
+    private val multiList = mutableListOf<FrontFeature>() // 전역 변수로 multiList 선언
     private lateinit var vpadapter : MainProfileVPAdapter
 
 
@@ -70,6 +70,9 @@ class MainProfileFragment : Fragment() {
 
         //initViewPager()
 
+
+
+
         vpadapter = MainProfileVPAdapter()
 
         vpadapter.submitList(multiList)
@@ -81,27 +84,59 @@ class MainProfileFragment : Fragment() {
 
 
 
-        RetrofitClient.mainProfile.getData().enqueue(object : Callback<FrontFeature> {
+
+        RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
             // 서버 통신 실패 시의 작업
-            override fun onFailure(call: Call<FrontFeature>, t: Throwable) {
+            override fun onFailure(call: Call<MainProfileData>, t: Throwable) {
                 Log.e("실패", t.toString())
             }
 
             // 서버 통신 성공 시의 작업
             // 매개변수 Response에 서버에서 받은 응답 데이터가 들어있음.
-            override fun onResponse(
-                call: Call<FrontFeature>,
-                response: Response<FrontFeature>
+            /*override fun onResponse(
+                call: Call<MainProfileData>,
+                response: Response<MainProfileData>
             ) {
                 // 응답받은 데이터를 가지고 처리할 코드 작성
-                val repos: FrontFeature? = response.body()
+                val repos: MainProfileData? = response.body()
                 if (repos != null) {
                     Log.d("성공", repos.toString())
+                    Log.e("Response", "${response.code()}")
                 } else {
                     Log.e("실패", "응답 데이터가 null입니다.")
+                    Log.e("Response", "${response.code()}")
+                }
+            }
+
+
+        })*/
+
+            override fun onResponse(call: Call<MainProfileData>, response: Response<MainProfileData>) {
+                val repos: MainProfileData? = response.body()
+                if (repos != null) {
+                    val frontFeatures: List<FrontFeature>? = repos.result.myprofiles?.flatMap { profile ->
+                        profile.frontFeatures
+                    }
+                    if (frontFeatures != null) {
+                        multiList.clear()
+                        multiList.addAll(frontFeatures)
+
+                        // 어댑터에 업데이트된 multiList를 제출합니다.
+                        vpadapter.submitList(multiList)
+                        Log.d("성공티비","success")
+                        Log.d("FrontFeature List", multiList.toString())
+                    } else {
+                        Log.e("실패", "front_features 데이터가 null입니다.")
+                    }
+                } else {
+                    Log.e("실패", "응답 데이터가 null입니다.")
+                    Log.e("Response", "${response.code()}")
                 }
             }
         })
     }
+
+
+
 
 }
