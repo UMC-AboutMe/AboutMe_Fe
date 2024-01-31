@@ -1,6 +1,7 @@
 package com.example.aboutme.Myprofile
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +14,12 @@ import com.example.aboutme.MyprofileStorage.ProfileStorageDetailActivity
 import com.example.aboutme.databinding.ItemAddProfileBinding
 import com.example.aboutme.databinding.ItemMultiprofileBinding
 import com.kakao.sdk.template.model.Content
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import kotlin.coroutines.coroutineContext
 
-class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHolder>(
+class MainProfileVPAdapter : ListAdapter<FrontFeature, RecyclerView.ViewHolder>(
     MainListDiffCallback()
 ) {
 
@@ -67,9 +71,33 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
             Glide.with(binding.root.context)
                 .load(item.profileImageUrl)
                 .into(binding.multiProfileCharIv)
-            binding.multiProfileNameTv.text = item.name
+            binding.multiProfileNameTv.text = item.key
             binding.multiProfileNumberTv.text = item.phoneNumber
+
+            RetrofitClient.mainProfile.getData().enqueue(object : Callback<FrontFeature> {
+                // 서버 통신 실패 시의 작업
+                override fun onFailure(call: Call<FrontFeature>, t: Throwable) {
+                    Log.e("실패", t.toString())
+                }
+
+                // 서버 통신 성공 시의 작업
+                // 매개변수 Response에 서버에서 받은 응답 데이터가 들어있음.
+                override fun onResponse(
+                    call: Call<FrontFeature>,
+                    response: Response<FrontFeature>
+                ) {
+                    // 응답받은 데이터를 가지고 처리할 코드 작성
+                    val repos: FrontFeature? = response.body()
+                    if (repos != null) {
+                        Log.d("성공", repos.toString())
+                    } else {
+                        Log.e("실패", "응답 데이터가 null입니다.")
+                    }
+                }
+            })
         }
+
+
     }
 
     inner class MainAddItemViewHolder(private val binding: ItemAddProfileBinding) :
@@ -94,6 +122,7 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
             return oldItem.name == newItem.name
         }
     }
+
 
 
 }

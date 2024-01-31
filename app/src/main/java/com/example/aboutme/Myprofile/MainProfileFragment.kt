@@ -1,5 +1,6 @@
 package com.example.aboutme.Myprofile
 
+import RetrofitClient
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -11,8 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.aboutme.MainProfile
 import com.example.aboutme.R
-import com.example.aboutme.RetrofitClient
-import com.example.aboutme.RetrofitClient.mainProfile
 import com.example.aboutme.databinding.FragmentMainprofileBinding
 import com.google.gson.Gson
 import com.kakao.sdk.user.model.User
@@ -51,7 +50,7 @@ class MainProfileFragment : Fragment() {
     }
 
     private fun initViewPager() {
-        val multiList = mutableListOf<MultiProfileData>()
+        val multiList = mutableListOf<FrontFeature>()
 
         /*multiList.add(MultiProfileData(R.drawable.myprofile_character, "1", "010-1234-5678"))
         multiList.add(MultiProfileData(R.drawable.myprofile_character, "2", "010-1234-5678"))
@@ -69,6 +68,7 @@ class MainProfileFragment : Fragment() {
             Log.e("MainProfileFragment", "Name is null")
         }*/
 
+        //initViewPager()
 
         vpadapter = MainProfileVPAdapter()
 
@@ -78,44 +78,28 @@ class MainProfileFragment : Fragment() {
 
         binding.mainProfileVp.setCurrentItem(0, false)
 
-    }
 
-    private fun fetchProfileData() {
-        // Retrofit을 사용하여 API 서비스 인스턴스 생성
-        val apiService = RetrofitClient.mainProfile
 
-        // API 호출하여 데이터 가져오기 (비동기 방식)
-        apiService.getData().enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
-            ) {
-                if (response.isSuccessful) {
-                    val responseData = response.body()?.string()
 
-                    responseData?.let {
-                        val myProfilesResponse = Gson().fromJson(it, MyProfilesResponse::class.java)
-
-                        val myProfiles = myProfilesResponse.result.myProfiles
-
-                        multiList.addAll(myProfiles.map { profile ->
-                            val name = profile.frontFeatures.find { it.key == "name" }?.value ?: ""
-                            val phoneNumber = profile.frontFeatures.find { it.key == "phonenumber" }?.value ?: ""
-                            val profileImageUrl = profile.profileImageUrl
-
-                            MultiProfileData(name, phoneNumber, profileImageUrl)
-                        })
-
-                        vpadapter.submitList(multiList)
-                        binding.mainProfileVp.adapter = vpadapter
-                    }
-                } else {
-                    Log.e("MainProfileFragment", "API call failed")
-                }
+        RetrofitClient.mainProfile.getData().enqueue(object : Callback<FrontFeature> {
+            // 서버 통신 실패 시의 작업
+            override fun onFailure(call: Call<FrontFeature>, t: Throwable) {
+                Log.e("실패", t.toString())
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.e("MainProfileFragment", "API call failed: ${t.message}")
+            // 서버 통신 성공 시의 작업
+            // 매개변수 Response에 서버에서 받은 응답 데이터가 들어있음.
+            override fun onResponse(
+                call: Call<FrontFeature>,
+                response: Response<FrontFeature>
+            ) {
+                // 응답받은 데이터를 가지고 처리할 코드 작성
+                val repos: FrontFeature? = response.body()
+                if (repos != null) {
+                    Log.d("성공", repos.toString())
+                } else {
+                    Log.e("실패", "응답 데이터가 null입니다.")
+                }
             }
         })
     }
