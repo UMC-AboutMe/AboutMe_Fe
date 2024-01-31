@@ -9,14 +9,10 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.aboutme.MyprofileStorage.ProfileStorageDetailActivity
 import com.example.aboutme.databinding.ItemAddProfileBinding
 import com.example.aboutme.databinding.ItemMultiprofileBinding
 import com.kakao.sdk.template.model.Content
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import kotlin.coroutines.coroutineContext
 
 class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHolder>(
@@ -50,7 +46,11 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is MainItemViewHolder -> holder.bind(getItem(position) as MultiProfileData)
+            is MainItemViewHolder -> {
+                val item = getItem(position)
+                Log.d("MainProfileVPAdapter", "Binding item at position $position: $item")
+                holder.bind(item)
+            }
             is MainAddItemViewHolder -> holder.bind()
         }
     }
@@ -63,6 +63,7 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
     override fun getItemViewType(position: Int): Int {
         // 마지막 항목인 경우 추가 항목을 위한 VIEW_TYPE_ADD_ITEM을 반환합니다.
         return if (position < super.getItemCount()) VIEW_TYPE_ITEM else VIEW_TYPE_ADD_ITEM
+
     }
 
     inner class MainItemViewHolder(private val binding: ItemMultiprofileBinding) :
@@ -96,7 +97,6 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
             return oldItem.name == newItem.name
         }
     }
-
 
 
 }

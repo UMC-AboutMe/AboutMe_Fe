@@ -45,44 +45,31 @@ class MainProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // SharedPreferences에서 데이터를 읽어옴
+        binding.mainProfileVp.setCurrentItem(0, false)
+
 
         initViewPager()
     }
 
     private fun initViewPager() {
-        val multiList = mutableListOf<MultiProfileData>()
+        //val multiList = mutableListOf<MultiProfileData>()
 
         /*multiList.add(MultiProfileData(R.drawable.myprofile_character, "1", "010-1234-5678"))
         multiList.add(MultiProfileData(R.drawable.myprofile_character, "2", "010-1234-5678"))
         multiList.add(MultiProfileData(R.drawable.myprofile_character, "3", "010-1234-5678"))*/
 
         /*val sharedPreferences = requireContext().getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
-        val name = sharedPreferences.getString("name", "")
+        val name = sharedPreferences.getString("name", "")*/
 
         //initViewPager()
-
-        if (name != null) {
-            multiList.add(MultiProfileData(R.id.char_iv, name, "010-1234-5678" ))
-            Log.d("profile!!", "success")
-        } else {
-            Log.e("MainProfileFragment", "Name is null")
-        }*/
-
-        //initViewPager()
-
 
 
 
         vpadapter = MainProfileVPAdapter()
 
-        vpadapter.submitList(multiList)
-
         binding.mainProfileVp.adapter = vpadapter
 
-        binding.mainProfileVp.setCurrentItem(0, false)
-
-
-
+        //binding.mainProfileVp.setCurrentItem(0, false)
 
 
         RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
@@ -91,25 +78,6 @@ class MainProfileFragment : Fragment() {
                 Log.e("실패", t.toString())
             }
 
-            // 서버 통신 성공 시의 작업
-            // 매개변수 Response에 서버에서 받은 응답 데이터가 들어있음.
-            /*override fun onResponse(
-                call: Call<MainProfileData>,
-                response: Response<MainProfileData>
-            ) {
-                // 응답받은 데이터를 가지고 처리할 코드 작성
-                val repos: MainProfileData? = response.body()
-                if (repos != null) {
-                    Log.d("성공", repos.toString())
-                    Log.e("Response", "${response.code()}")
-                } else {
-                    Log.e("실패", "응답 데이터가 null입니다.")
-                    Log.e("Response", "${response.code()}")
-                }
-            }
-
-
-        })*/
 
             override fun onResponse(call: Call<MainProfileData>, response: Response<MainProfileData>) {
                 val repos: MainProfileData? = response.body()
@@ -118,11 +86,18 @@ class MainProfileFragment : Fragment() {
                         profile.frontFeatures
                     }
                     if (frontFeatures != null) {
-                        frontFeatures?.forEach { frontFeature ->
-                            Log.d("FrontFeature key", frontFeature.key ?: "Key is null")
-                            Log.d("FrontFeature value", frontFeature.value ?: "Value is null")
-                        }
                         multiList.clear()
+                        frontFeatures?.forEach { frontFeature ->
+                            if (frontFeature.featureId == 1) {
+                                multiList.add(
+                                    MultiProfileData(R.drawable.myprofile_character, frontFeature.value, frontFeature.value)
+                                )
+                                Log.d("FrontFeature key", frontFeature.key ?: "Key is null")
+                                Log.d("FrontFeature value", frontFeature.value ?: "Value is null")
+                            }
+                        }
+
+                        binding.mainProfileVp.setCurrentItem(0, false)
 
                         // 어댑터에 업데이트된 multiList를 제출합니다.
                         vpadapter.submitList(multiList)
@@ -137,6 +112,7 @@ class MainProfileFragment : Fragment() {
                 }
             }
         })
+
     }
 
 
