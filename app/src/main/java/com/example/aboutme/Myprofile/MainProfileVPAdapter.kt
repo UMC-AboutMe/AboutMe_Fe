@@ -50,7 +50,7 @@ class MainProfileVPAdapter : ListAdapter<FrontFeature, RecyclerView.ViewHolder>(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is MainItemViewHolder -> holder.bind(getItem(position) as MultiProfileData)
+            is MainItemViewHolder -> holder.bind(getItem(position) as FrontFeature)
             is MainAddItemViewHolder -> holder.bind()
         }
     }
@@ -67,12 +67,12 @@ class MainProfileVPAdapter : ListAdapter<FrontFeature, RecyclerView.ViewHolder>(
 
     inner class MainItemViewHolder(private val binding: ItemMultiprofileBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: MultiProfileData) {
+        fun bind(item: FrontFeature) {
             Glide.with(binding.root.context)
-                .load(item.profileImageUrl)
+                .load(item.profileImgUrl)
                 .into(binding.multiProfileCharIv)
-            binding.multiProfileNameTv.text = item.key
-            binding.multiProfileNumberTv.text = item.phoneNumber
+            binding.multiProfileNameTv.text = item.name
+            binding.multiProfileNumberTv.text = item.name
 
             RetrofitClient.mainProfile.getData().enqueue(object : Callback<FrontFeature> {
                 // 서버 통신 실패 시의 작업
@@ -107,17 +107,17 @@ class MainProfileVPAdapter : ListAdapter<FrontFeature, RecyclerView.ViewHolder>(
         }
     }
 
-    class MainListDiffCallback : DiffUtil.ItemCallback<MultiProfileData>() {
+    class MainListDiffCallback : DiffUtil.ItemCallback<FrontFeature>() {
         override fun areItemsTheSame(
-            oldItem: MultiProfileData,
-            newItem: MultiProfileData
+            oldItem: FrontFeature,
+            newItem: FrontFeature
         ): Boolean {
             return oldItem == newItem
         }
 
         override fun areContentsTheSame(
-            oldItem: MultiProfileData,
-            newItem: MultiProfileData
+            oldItem: FrontFeature,
+            newItem: FrontFeature
         ): Boolean {
             return oldItem.name == newItem.name
         }
