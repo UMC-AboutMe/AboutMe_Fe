@@ -23,7 +23,7 @@ import retrofit2.Response
 class MainProfileFragment : Fragment() {
 
     lateinit var binding: FragmentMainprofileBinding
-    private val multiList = mutableListOf<FrontFeature>() // 전역 변수로 multiList 선언
+    private val multiList = mutableListOf<MultiProfileData>() // 전역 변수로 multiList 선언
     private lateinit var vpadapter : MainProfileVPAdapter
 
 
@@ -50,7 +50,7 @@ class MainProfileFragment : Fragment() {
     }
 
     private fun initViewPager() {
-        val multiList = mutableListOf<FrontFeature>()
+        val multiList = mutableListOf<MultiProfileData>()
 
         /*multiList.add(MultiProfileData(R.drawable.myprofile_character, "1", "010-1234-5678"))
         multiList.add(MultiProfileData(R.drawable.myprofile_character, "2", "010-1234-5678"))
@@ -118,8 +118,11 @@ class MainProfileFragment : Fragment() {
                         profile.frontFeatures
                     }
                     if (frontFeatures != null) {
+                        frontFeatures?.forEach { frontFeature ->
+                            Log.d("FrontFeature key", frontFeature.key ?: "Key is null")
+                            Log.d("FrontFeature value", frontFeature.value ?: "Value is null")
+                        }
                         multiList.clear()
-                        multiList.addAll(frontFeatures)
 
                         // 어댑터에 업데이트된 multiList를 제출합니다.
                         vpadapter.submitList(multiList)

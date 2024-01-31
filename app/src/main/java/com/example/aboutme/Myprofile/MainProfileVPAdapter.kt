@@ -19,7 +19,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import kotlin.coroutines.coroutineContext
 
-class MainProfileVPAdapter : ListAdapter<FrontFeature, RecyclerView.ViewHolder>(
+class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHolder>(
     MainListDiffCallback()
 ) {
 
@@ -50,7 +50,7 @@ class MainProfileVPAdapter : ListAdapter<FrontFeature, RecyclerView.ViewHolder>(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is MainItemViewHolder -> holder.bind(getItem(position) as FrontFeature)
+            is MainItemViewHolder -> holder.bind(getItem(position) as MultiProfileData)
             is MainAddItemViewHolder -> holder.bind()
         }
     }
@@ -67,48 +67,11 @@ class MainProfileVPAdapter : ListAdapter<FrontFeature, RecyclerView.ViewHolder>(
 
     inner class MainItemViewHolder(private val binding: ItemMultiprofileBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        /*RecyclerView.ViewHolder(binding.root) {
-            fun bind(item: MultiProfileData) {
-                binding.multiProfileCharIv.setImageResource(item.profileImageResId)
-                binding.multiProfileNameTv.text = item.name
-                binding.multiProfileNumberTv.text = item.phoneNumber
-            }*/
-
-        fun bind(item: FrontFeature) {
-            /*Glide.with(binding.root.context)
-                .load(item.profileImgUrl)
-                .into(binding.multiProfileCharIv)*/
-            binding.multiProfileNameTv.text = item.key
-            binding.multiProfileNumberTv.text = item.key
-
-            Log.d("FrontFeature Key", item.key ?: "Key is null") // 로그로 key 출력
-
-
-            RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
-                // 서버 통신 실패 시의 작업
-                override fun onFailure(call: Call<MainProfileData>, t: Throwable) {
-                    Log.e("실패", t.toString())
-                }
-
-                // 서버 통신 성공 시의 작업
-                // 매개변수 Response에 서버에서 받은 응답 데이터가 들어있음.
-                override fun onResponse(
-                    call: Call<MainProfileData>,
-                    response: Response<MainProfileData>
-                ) {
-                    // 응답받은 데이터를 가지고 처리할 코드 작성
-                    val repos: MainProfileData? = response.body()
-                    if (repos != null) {
-                        Log.d("성공", repos.toString())
-                    } else {
-                        Log.e("실패", "응답 데이터가 null입니다.")
-                    }
-                }
-            })
+        fun bind(item: MultiProfileData) {
+            binding.multiProfileCharIv.setImageResource(item.profileImageResId)
+            binding.multiProfileNameTv.text = item.name
+            binding.multiProfileNumberTv.text = item.phoneNumber
         }
-
-
     }
 
     inner class MainAddItemViewHolder(private val binding: ItemAddProfileBinding) :
@@ -118,19 +81,19 @@ class MainProfileVPAdapter : ListAdapter<FrontFeature, RecyclerView.ViewHolder>(
         }
     }
 
-    class MainListDiffCallback : DiffUtil.ItemCallback<FrontFeature>() {
+    class MainListDiffCallback : DiffUtil.ItemCallback<MultiProfileData>() {
         override fun areItemsTheSame(
-            oldItem: FrontFeature,
-            newItem: FrontFeature
+            oldItem: MultiProfileData,
+            newItem: MultiProfileData
         ): Boolean {
             return oldItem == newItem
         }
 
         override fun areContentsTheSame(
-            oldItem: FrontFeature,
-            newItem: FrontFeature
+            oldItem: MultiProfileData,
+            newItem: MultiProfileData
         ): Boolean {
-            return oldItem.key == newItem.key
+            return oldItem.name == newItem.name
         }
     }
 
