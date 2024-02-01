@@ -155,8 +155,8 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
             }
         })
 
-        val savedName = getSavedName()
-        profileEdit1.setText(savedName)
+        //val savedName = getSavedName()
+        //profileEdit1.setText(savedName)
 
         return binding.root
     }
@@ -190,29 +190,32 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
             }
         })
 
+        val profileEdit1 : EditText = binding.profileNameEt
+        var message1 : String = ""
+        message1 = profileEdit1.text.toString()
+
         val retrofitClient = RetrofitClient.mainProfile
 
-        // 데이터 객체 생성
-        val postData = PostProfile("박어바웃미")
+        val name = "박어바웃미" // 동적으로 설정할 이름
+        val postData = PostProfile(name)
 
-        // POST 요청 보내기
         retrofitClient.submitData(postData).enqueue(object : Callback<ResponsePostProfile> {
             override fun onResponse(call: Call<ResponsePostProfile>, response: Response<ResponsePostProfile>) {
                 if (response.isSuccessful) {
-                    // 성공적으로 응답을 받았을 때의 처리
                     val responseData: ResponsePostProfile? = response.body()
                     // responseData를 처리하는 로직 작성
                 } else {
-                    // 서버로부터 응답을 받지 못했을 때의 처리
-                    Log.e("POST 요청 실패", "응답코드: ${response.code()}")
+                    Log.e("Post 요청 실패", "응답코드: ${response.code()}")
+                    Log.e("Post 요청 실패", "응답메시지: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<ResponsePostProfile>, t: Throwable) {
-                // 통신 실패 시의 처리
                 Log.e("POST 요청 실패", "통신 에러: ${t.message}")
             }
         })
+
+
 
     }
 
@@ -288,10 +291,10 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
         editor.commit()
     }
 
-    private fun getSavedName(): String? {
+    /*private fun getSavedName(): String? {
         val sharedPreferences = requireContext().getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
         return sharedPreferences.getString("name", "")
-    }
+    }*/
 
 
 
