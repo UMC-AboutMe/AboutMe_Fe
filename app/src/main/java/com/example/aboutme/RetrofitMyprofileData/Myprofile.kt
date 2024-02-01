@@ -1,4 +1,4 @@
-package com.example.aboutme.Myprofile
+package com.example.aboutme.RetrofitMyprofileData
 
 import com.google.gson.annotations.SerializedName
 

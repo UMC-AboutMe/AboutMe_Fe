@@ -1,21 +1,16 @@
 package com.example.aboutme.Myprofile
 
-import RetrofitClient
-import android.content.Context
+import com.example.aboutme.RetrofitMyprofile.RetrofitClient
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SimpleAdapter
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.aboutme.MainProfile
 import com.example.aboutme.R
+import com.example.aboutme.RetrofitMyprofileData.FrontFeature
+import com.example.aboutme.RetrofitMyprofileData.MainProfileData
 import com.example.aboutme.databinding.FragmentMainprofileBinding
-import com.google.gson.Gson
-import com.kakao.sdk.user.model.User
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -95,6 +90,7 @@ class MainProfileFragment : Fragment() {
                                 Log.d("FrontFeature key", frontFeature.key ?: "Key is null")
                                 Log.d("FrontFeature value", frontFeature.value ?: "Value is null")
                             }
+
                         }
 
                         binding.mainProfileVp.setCurrentItem(0, false)

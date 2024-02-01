@@ -1,8 +1,7 @@
-import com.example.aboutme.MainProfile
-import com.google.firebase.BuildConfig
+package com.example.aboutme.RetrofitMyprofile
+
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
