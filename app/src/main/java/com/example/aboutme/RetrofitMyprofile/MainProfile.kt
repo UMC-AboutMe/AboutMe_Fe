@@ -1,5 +1,6 @@
 package com.example.aboutme.RetrofitMyprofile
 
+import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
 import com.example.aboutme.RetrofitMyprofileData.MainProfileData
 import com.example.aboutme.RetrofitMyprofileData.PostProfile
 import com.example.aboutme.RetrofitMyprofileData.ResponsePostProfile
@@ -18,7 +19,7 @@ interface MainProfile {
     fun getData(): Call<MainProfileData>
 
     @GET("/myprofiles/{profile-id}")
-    suspend fun getDataAll(@Path(value = "profile-id") albumId : Int) : Call<>
+    suspend fun getDataAll(@Path(value = "profile-id") albumId : Int) : Call<GetAllProfile>
 
 
     @POST("/myprofiles")
