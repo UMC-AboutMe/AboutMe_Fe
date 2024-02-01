@@ -2,6 +2,7 @@ package com.example.aboutme.RetrofitMyprofile
 
 import com.example.aboutme.RetrofitMyprofileData.MainProfileData
 import com.example.aboutme.RetrofitMyprofileData.PostProfile
+import com.example.aboutme.RetrofitMyprofileData.ResponsePostProfile
 import com.google.android.gms.fido.u2f.api.common.ResponseData
 import retrofit2.Call
 import retrofit2.http.Body
@@ -16,5 +17,5 @@ interface MainProfile {
 
     @POST("/myprofiles")
     @Headers("member-id: 1")
-    fun submitData(@Body data: PostProfile): Call<ResponseData>
+    fun submitData(@Body data: PostProfile): Call<ResponsePostProfile>
 }

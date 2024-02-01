@@ -20,7 +20,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import com.bumptech.glide.Glide
 import com.example.aboutme.R
+import com.example.aboutme.RetrofitMyprofile.RetrofitClient
+import com.example.aboutme.RetrofitMyprofileData.PostProfile
+import com.example.aboutme.RetrofitMyprofileData.ResponsePostProfile
 import com.example.aboutme.databinding.FragmentFrontprofileBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -184,6 +190,30 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
             }
         })
 
+        val retrofitClient = RetrofitClient.mainProfile
+
+        // 데이터 객체 생성
+        val postData = PostProfile("박어바웃미")
+
+        // POST 요청 보내기
+        retrofitClient.submitData(postData).enqueue(object : Callback<ResponsePostProfile> {
+            override fun onResponse(call: Call<ResponsePostProfile>, response: Response<ResponsePostProfile>) {
+                if (response.isSuccessful) {
+                    // 성공적으로 응답을 받았을 때의 처리
+                    val responseData: ResponsePostProfile? = response.body()
+                    // responseData를 처리하는 로직 작성
+                } else {
+                    // 서버로부터 응답을 받지 못했을 때의 처리
+                    Log.e("POST 요청 실패", "응답코드: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<ResponsePostProfile>, t: Throwable) {
+                // 통신 실패 시의 처리
+                Log.e("POST 요청 실패", "통신 에러: ${t.message}")
+            }
+        })
+
     }
 
 
@@ -262,6 +292,7 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
         val sharedPreferences = requireContext().getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
         return sharedPreferences.getString("name", "")
     }
+
 
 
 

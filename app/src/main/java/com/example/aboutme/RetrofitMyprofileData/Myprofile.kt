@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName
 data class Myprofile(
     @SerializedName("front_features")
     val frontFeatures: List<FrontFeature>,
-    @SerializedName("isDefault")
-    val is_default: Boolean,
+    @SerializedName("is_default")
+    val isDefault: Boolean,
     @SerializedName("profile_id")
     val profileId: Int,
     @SerializedName("profile_img_url")

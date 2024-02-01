@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName
 
 data class ResultX(
     @SerializedName("back_features")
-    val BackFeatures: List<BackFeature>,
+    val backFeatures: List<BackFeature>,
     @SerializedName("front_features")
-    val FrontFeatures: List<FrontFeature>,
+    val frontFeatures: List<FrontFeature>,
     @SerializedName("is_default")
-    val IsDefault: Boolean,
+    val isDefault: Boolean,
     @SerializedName("profile_id")
-    val ProfileId: Int,
+    val profileId: Int,
     @SerializedName("serial_number")
-    val SerialNumber: Int
+    val serialNumber: Int
 )

@@ -1,7 +1,12 @@
 package com.example.aboutme.RetrofitMyprofileData
 
+import com.google.gson.annotations.SerializedName
+
 data class BackFeature(
-    val feature_id: Int,
+    @SerializedName("feature_id")
+    val featureId: Int,
+    @SerializedName("key")
     val key: Any,
+    @SerializedName("value")
     val value: Any
 )
