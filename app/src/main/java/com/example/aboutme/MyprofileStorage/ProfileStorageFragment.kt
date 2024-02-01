@@ -26,12 +26,17 @@ class ProfileStorageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRecycler()
-        val intent = Intent(requireContext(), ProfileStorageDetailActivity::class.java)
+        //val intent = Intent(requireContext(), ProfileStorageDetailFragment::class.java)
 
         rvAdapter.setOnItemClickListener(object : ProfileRVAdapter.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 Log.d("클릭2", "success")
-                startActivity(intent)
+                //startActivity(intent)
+                val fragmentTransaction = parentFragmentManager.beginTransaction()
+                val fragment = ProfileStorageDetailFragment()
+                fragmentTransaction.replace(R.id.detailLayout, fragment)
+                fragmentTransaction.addToBackStack(null)
+                fragmentTransaction.commit()
             }
         })
     }
@@ -41,7 +46,7 @@ class ProfileStorageFragment : Fragment() {
         binding.profileStorageRv.adapter = rvAdapter
         binding.profileStorageRv.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        // 프로필 데이터 추가
+        // 프로필 데이터 추가 - api 연결 전 임시 데이터
         itemList.add(ProfileData(R.drawable.profilestorage_profile, "프로필1"))
         itemList.add(ProfileData(R.drawable.profilestorage_profile, "프로필2"))
         itemList.add(ProfileData(R.drawable.profilestorage_profile, "프로필3"))
