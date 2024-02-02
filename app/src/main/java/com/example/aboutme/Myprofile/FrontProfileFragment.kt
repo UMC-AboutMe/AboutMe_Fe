@@ -21,6 +21,7 @@ import androidx.lifecycle.get
 import com.bumptech.glide.Glide
 import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyprofile.RetrofitClient
+import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
 import com.example.aboutme.RetrofitMyprofileData.PostProfile
 import com.example.aboutme.RetrofitMyprofileData.ResponsePostProfile
 import com.example.aboutme.databinding.FragmentFrontprofileBinding
@@ -155,6 +156,9 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
             }
         })
 
+        // Retrofit 인스턴스 가져오기
+
+
         //val savedName = getSavedName()
         //profileEdit1.setText(savedName)
 
@@ -203,10 +207,13 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
             override fun onResponse(call: Call<ResponsePostProfile>, response: Response<ResponsePostProfile>) {
                 if (response.isSuccessful) {
                     val responseData: ResponsePostProfile? = response.body()
+                    Log.d("Post","success")
+                    Log.d("Post 성공", "응답 데이터: $responseData")
                     // responseData를 처리하는 로직 작성
                 } else {
-                    Log.e("Post 요청 실패", "응답코드: ${response.code()}")
-                    Log.e("Post 요청 실패", "응답메시지: ${response.message()}")
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e("Post 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
+
                 }
             }
 
@@ -214,6 +221,7 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
                 Log.e("POST 요청 실패", "통신 에러: ${t.message}")
             }
         })
+
 
 
 
