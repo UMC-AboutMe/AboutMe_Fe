@@ -17,18 +17,16 @@ class TutorialActivity1 : AppCompatActivity() {
         binding = ActivityTutorial1Binding.inflate(layoutInflater)
         setContentView(binding.root)
         //Dialog
-        CustomDialogAlarm("내 프로필도 공유 하시겠습니까?")
+        CustomDialogAlarm()
             .show(supportFragmentManager, "AlarmDialog")
         //binding= DataBindingUtil.setContentView(this, R.layout.activity_tutorial1)
         binding.nextBtn1.setOnClickListener {
             val intent= Intent(this, TutorialActivity2::class.java)
-            //시작 애니메이션만 제거 intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
         }
     }
     override fun onPause() {
         super.onPause()
-        //시작,종료 애니메이션 모두 제거
         overridePendingTransition(0, 0)
     }
 }
