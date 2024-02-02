@@ -1,5 +1,6 @@
 package com.example.aboutme.RetrofitMyprofile
 
+import com.example.aboutme.RetrofitMyprofileData.DeleteMyprofile
 import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
 import com.example.aboutme.RetrofitMyprofileData.MainProfileData
 import com.example.aboutme.RetrofitMyprofileData.PostProfile
@@ -8,6 +9,7 @@ import com.google.android.gms.fido.u2f.api.common.ResponseData
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -28,4 +30,7 @@ interface MainProfile {
     @POST("/myprofiles")
     //@Headers("member-id: 4")
     fun submitData(@Body postData : PostProfile): Call<ResponsePostProfile>
+
+    @DELETE("/myprofiles/{profile-id}")
+    suspend fun deleteData(@Path(value = "profile-id") profileId: Long) : Response<DeleteMyprofile>
 }

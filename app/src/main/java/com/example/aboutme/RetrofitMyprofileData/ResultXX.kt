@@ -4,15 +4,15 @@ import com.google.gson.annotations.SerializedName
 
 data class ResultXX(
     @SerializedName("back_features")
-    val back_features: List<BackFeatureXX>,
+    val backFeatures: List<BackFeatureXX>,
     @SerializedName("front_features")
-    val front_features: List<FrontFeatureXX>,
+    val frontFeatures: List<FrontFeatureXX>,
     @SerializedName("is_default")
-    val is_default: Boolean,
+    val isDefault: Boolean,
     @SerializedName("profile_id")
-    val profile_id: Long,
+    val profileId: Long,
     @SerializedName("profile_img_url")
-    val profile_img_url: String,
+    val profileImgUrl: String,
     @SerializedName("serial_number")
-    val serial_number: Int
+    val serialNumber: Int
 )
