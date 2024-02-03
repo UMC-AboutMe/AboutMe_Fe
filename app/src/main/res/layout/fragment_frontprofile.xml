@@ -68,6 +68,15 @@
                     android:layout_marginTop="360dp"
                     android:layout_marginLeft="-120dp"/>
 
+                <Button
+                    android:id="@+id/finish_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="완료"
+                    android:layout_marginTop="340dp"
+                    android:layout_marginLeft="50dp"/>
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -95,6 +104,13 @@
                     android:background="@drawable/myprofile_pencil"
                     android:layout_marginTop="420dp"
                     android:layout_marginLeft="-30dp"/>
+
+                <Button
+                    android:id="@+id/finish2_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="완료"
+                    android:layout_marginTop="400dp" />
 
             </LinearLayout>
 
