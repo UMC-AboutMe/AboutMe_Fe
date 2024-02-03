@@ -1,6 +1,8 @@
 package com.example.aboutme.Myprofile
 
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
@@ -51,9 +53,9 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
     private lateinit var sharedViewModel: SharedViewModel
 
-    private lateinit var profileEditName: EditText
 
-    //private lateinit var viewModel: FrontProfileViewModel
+    private lateinit var profileEditName: EditText
+    private val retrofitClient = RetrofitClient.mainProfile
 
 
     override fun onCreateView(
@@ -101,7 +103,7 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
         }
 
-        val profileEdit1 : EditText = binding.profileNameEt
+        val profileEdit1  = binding.profileNameEt
         val profileBtn1 : ImageButton = binding.frontProfileEdit1Btn
 
 
@@ -192,25 +194,21 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
         profileEditName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                saveName(s.toString())
-            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
-                //saveName(s.toString())
-                //profileNameChangeListener?.onProfileNameChanged(s.toString())
+                // EditText의 값이 변경될 때마다 데이터 객체를 생성하고 Retrofit을 통해 서버로 전송합니다.
+                val name = s.toString()
+                sendDataToServer(name)
             }
         })
 
-        val profileEdit1 : EditText = binding.profileNameEt
-        var message1 : String = ""
-        message1 = profileEdit1.text.toString()
+
 
         val retrofitClient = RetrofitClient.mainProfile
 
-        val name = "박어바웃미" // 동적으로 설정할 이름
-        val postData = PostProfile(name)
 
-        retrofitClient.submitData(postData).enqueue(object : Callback<ResponsePostProfile> {
+
+        /*retrofitClient.submitData(postData).enqueue(object : Callback<ResponsePostProfile> {
             override fun onResponse(call: Call<ResponsePostProfile>, response: Response<ResponsePostProfile>) {
                 if (response.isSuccessful) {
                     val responseData: ResponsePostProfile? = response.body()
@@ -227,7 +225,7 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
             override fun onFailure(call: Call<ResponsePostProfile>, t: Throwable) {
                 Log.e("POST 요청 실패", "통신 에러: ${t.message}")
             }
-        })
+        })*/
 
 
         val patchData = RequestPatchProfile(129, "mbti", "intj")
@@ -328,12 +326,29 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
         editor.commit()
     }
 
-    /*private fun getSavedName(): String? {
-        val sharedPreferences = requireContext().getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
-        return sharedPreferences.getString("name", "")
-    }*/
+    private fun sendDataToServer(name: String) {
+        // Retrofit을 사용하여 서버에 데이터를 전송하는 과정입니다.
+        val postData = PostProfile(name)
+        retrofitClient.submitData(postData).enqueue(object : Callback<ResponsePostProfile> {
+            override fun onResponse(call: Call<ResponsePostProfile>, response: Response<ResponsePostProfile>) {
+                if (response.isSuccessful) {
+                    val responseData: ResponsePostProfile? = response.body()
+                    Log.d("Post", "success")
+                    Log.d("Post 성공", "응답 데이터: $responseData")
+                    // 성공적으로 서버에 데이터를 전송한 후의 로직을 작성합니다.
+                } else {
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e("Post 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
+                    // 서버에 데이터 전송에 실패한 경우의 예외 처리를 작성합니다.
+                }
+            }
 
-
+            override fun onFailure(call: Call<ResponsePostProfile>, t: Throwable) {
+                Log.e("POST 요청 실패", "통신 에러: ${t.message}")
+                // 통신 과정에서 예외가 발생한 경우의 예외 처리를 작성합니다.
+            }
+        })
+    }
 
 
 
