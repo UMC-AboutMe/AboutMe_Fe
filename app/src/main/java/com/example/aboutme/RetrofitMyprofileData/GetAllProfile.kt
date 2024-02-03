@@ -11,4 +11,5 @@ data class GetAllProfile(
     val message: String,
     @SerializedName("result")
     val result: ResultXX
+
 )

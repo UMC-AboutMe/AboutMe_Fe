@@ -78,10 +78,58 @@ class MainProfileFragment : Fragment() {
                     val frontFeatures: List<FrontFeature>? = repos.result.myprofiles?.flatMap { profile ->
                         profile.frontFeatures
                     }
+                    val totalMyProfile = repos.getTotalMyProfile()
+
                     if (frontFeatures != null) {
                         multiList.clear()
                         frontFeatures?.forEach { frontFeature ->
-                            if (frontFeature.featureId == 1) {
+                            if (totalMyProfile == 1) {
+                                //if (frontFeature.key != null) {
+                                    multiList.add(
+                                        MultiProfileData(R.drawable.myprofile_character, frontFeature.value, frontFeature.value
+                                        )
+                                    )
+                                    Log.d("FrontFeature key", frontFeature.key ?: "Key is null")
+                                    Log.d("FrontFeature value", frontFeature.value ?: "Value is null"
+                                    )
+                                }/*else{
+                                    multiList.add(
+                                        MultiProfileData(R.drawable.myprofile_character, frontFeature.value, ""
+                                        )
+                                    )
+                                }*/
+                            //}
+                            if (totalMyProfile == 2){
+                                //if (frontFeature.key.getOrNull(1) != null) {
+                                    multiList.add(
+                                        MultiProfileData(R.drawable.myprofile_character, frontFeature.value, frontFeature.value
+                                        )
+                                    )
+                                    multiList.add(
+                                        MultiProfileData(R.drawable.myprofile_character, frontFeature.value, frontFeature.value
+                                        )
+                                    )
+                                    Log.d("FrontFeature key!!", frontFeature.key ?: "Key is null")
+                                    Log.d("FrontFeature value", frontFeature.value ?: "Value is null"
+                                    )
+                                }/*else{
+                                    multiList.add(
+                                        MultiProfileData(R.drawable.myprofile_character, frontFeature.value, ""
+                                        )
+                                    )
+                                    multiList.add(
+                                        MultiProfileData(R.drawable.myprofile_character, frontFeature.value, ""
+                                        )
+                                    )
+                                }*/
+
+                            if (totalMyProfile == 3){
+                                multiList.add(
+                                    MultiProfileData(R.drawable.myprofile_character, frontFeature.value, frontFeature.value)
+                                )
+                                multiList.add(
+                                    MultiProfileData(R.drawable.myprofile_character, frontFeature.value, frontFeature.value)
+                                )
                                 multiList.add(
                                     MultiProfileData(R.drawable.myprofile_character, frontFeature.value, frontFeature.value)
                                 )

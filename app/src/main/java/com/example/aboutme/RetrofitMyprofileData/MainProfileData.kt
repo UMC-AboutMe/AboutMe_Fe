@@ -11,4 +11,9 @@ data class MainProfileData(
     val message: String,
     @SerializedName("result")
     val result: Result
-)
+){
+    fun getTotalMyProfile(): Int {
+        return result.totalMyprofile
+    }
+}
+
