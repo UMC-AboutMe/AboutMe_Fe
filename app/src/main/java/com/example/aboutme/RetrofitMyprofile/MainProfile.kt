@@ -26,7 +26,6 @@ interface MainProfile {
 
     @GET("/myprofiles/{profile-id}")
     //@Headers("member-id: 4")
-
     suspend fun getDataAll(@Path(value = "profile-id") profileId : Long) : Response<GetAllProfile>
 
 
@@ -38,5 +37,5 @@ interface MainProfile {
     suspend fun deleteData(@Path(value = "profile-id") profileId: Long) : Response<DeleteMyprofile>
 
     @PATCH("/myprofiles/{profile-id}")
-    suspend fun patchProfile(@Path(value = "profile-id") profileId: Long, @Body patchData: RequestPatchProfile) : Response<PatchMyprofile>
+    suspend fun patchProfile(@Path(value = "profile-id") profile_id : Long, @Body patchData: RequestPatchProfile) : Response<PatchMyprofile>
 }

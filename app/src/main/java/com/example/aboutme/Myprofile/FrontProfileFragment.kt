@@ -18,13 +18,19 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyprofile.RetrofitClient
 import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
+import com.example.aboutme.RetrofitMyprofileData.PatchMyprofile
 import com.example.aboutme.RetrofitMyprofileData.PostProfile
+import com.example.aboutme.RetrofitMyprofileData.RequestPatchProfile
 import com.example.aboutme.RetrofitMyprofileData.ResponsePostProfile
 import com.example.aboutme.databinding.FragmentFrontprofileBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,6 +39,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
+
 
 
 class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
@@ -223,6 +230,28 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
         })
 
 
+        val patchData = RequestPatchProfile(129, "mbti", "intj")
+
+        lifecycleScope.launch {
+            try {
+                // withContext를 사용하여 백그라운드 스레드에서 실행하도록 함
+                val response: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
+                    retrofitClient.patchProfile(19, patchData)
+                }
+
+                if (response.isSuccessful) {
+                    val responseData: PatchMyprofile? = response.body()
+                    Log.d("patch 성공", "응답 데이터: $responseData")
+                    // responseData를 처리하는 로직 작성
+                } else {
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e("patch 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
+
+                }
+            } catch (e: Exception) {
+                Log.e("patch 요청 실패", "에러: ${e.message}")
+            }
+        }
 
 
     }

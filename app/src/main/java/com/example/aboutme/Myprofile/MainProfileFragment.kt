@@ -58,8 +58,6 @@ class MainProfileFragment : Fragment() {
 
         //initViewPager()
 
-
-
         vpadapter = MainProfileVPAdapter()
 
         binding.mainProfileVp.adapter = vpadapter
@@ -110,8 +108,6 @@ class MainProfileFragment : Fragment() {
         })
 
     }
-
-
 
 
 }
