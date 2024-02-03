@@ -105,10 +105,6 @@ class MainProfileFragment : Fragment() {
                                         MultiProfileData(R.drawable.myprofile_character, frontFeature.value, frontFeature.value
                                         )
                                     )
-                                    multiList.add(
-                                        MultiProfileData(R.drawable.myprofile_character, frontFeature.value, frontFeature.value
-                                        )
-                                    )
                                     Log.d("FrontFeature key!!", frontFeature.key ?: "Key is null")
                                     Log.d("FrontFeature value", frontFeature.value ?: "Value is null"
                                     )
@@ -124,12 +120,6 @@ class MainProfileFragment : Fragment() {
                                 }*/
 
                             if (totalMyProfile == 3){
-                                multiList.add(
-                                    MultiProfileData(R.drawable.myprofile_character, frontFeature.value, frontFeature.value)
-                                )
-                                multiList.add(
-                                    MultiProfileData(R.drawable.myprofile_character, frontFeature.value, frontFeature.value)
-                                )
                                 multiList.add(
                                     MultiProfileData(R.drawable.myprofile_character, frontFeature.value, frontFeature.value)
                                 )
