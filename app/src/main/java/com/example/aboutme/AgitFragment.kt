@@ -37,14 +37,10 @@ class AgitFragment : Fragment() {
         itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
         itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
 
-
         val rvadapter = AgitSpaceRVAdapter(itemList)
 
         binding.spaceStorageRv.adapter = rvadapter
 
         binding.spaceStorageRv.layoutManager = GridLayoutManager(requireContext(), 2)
-
-
     }
-
 }

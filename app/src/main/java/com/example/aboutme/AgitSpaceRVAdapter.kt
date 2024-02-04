@@ -34,6 +34,5 @@ class AgitSpaceRVAdapter(val items : MutableList<AgitSpaceData>) :RecyclerView.A
             spaceName.text = items.space_name
         }
     }
-
 }
 

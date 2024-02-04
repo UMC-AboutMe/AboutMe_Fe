@@ -62,7 +62,7 @@ class bottomNavigationView : AppCompatActivity() {
 
                 R.id.nav_agit -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(frame.id, Fragment())
+                        .replace(frame.id, AgitFragment())
                         .commit()
                     return@setOnItemSelectedListener true
                 }
