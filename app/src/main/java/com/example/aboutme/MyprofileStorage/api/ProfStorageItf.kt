@@ -4,6 +4,7 @@ import retrofit2.Call
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.PATCH
 import retrofit2.http.Path
 
 interface ProfStorageItf {
@@ -20,5 +21,10 @@ interface ProfStorageItf {
         @Header("member-id") memberId: Long
     ) : Call<ProfStorageResponse.ResponseDeleteProf>
 
-
+    //프로필 보관함 즐겨찾기 등록
+    @PATCH("/myprofiles/storage/{profile-id}/favorite")
+    fun patchProfStorage(
+        @Path("profile-id") profileId: Long,
+        @Header("member-id") memberId: Int
+    ) : Call<ProfStorageResponse.ResponseFavProf>
 }

@@ -26,6 +26,9 @@ class ProfileStorageDetailFragment : Fragment() {
         binding.trashButton.setOnClickListener {
             deleteProfiles()
         }
+        binding.testbutton.setOnClickListener {
+            favProfiles()
+        }
         return binding.root
     }
 
@@ -54,7 +57,7 @@ class ProfileStorageDetailFragment : Fragment() {
                 call: Call<ProfStorageResponse.ResponseDeleteProf>,
                 response: Response<ProfStorageResponse.ResponseDeleteProf>
             ) {
-                Log.d("Reftrofit", response.toString())
+                Log.d("Retrofit", response.toString())
                 if (response.isSuccessful) {
                     val response = response.body()
                     Log.d("Retrofit", response.toString())
@@ -73,6 +76,44 @@ class ProfileStorageDetailFragment : Fragment() {
 
             override fun onFailure(
                 call: Call<ProfStorageResponse.ResponseDeleteProf>,
+                t: Throwable
+            ) {
+                val errorMessage = "Call Failed:  ${t.message}"
+                Log.d("Retrofit", errorMessage)
+            }
+        }
+        )
+    }
+
+    //프로필 보관함 즐겨찾기 등록
+    private fun favProfiles() {
+        Log.d("Retrofit", "patch 함수 호출됨")
+        val call = ProfStorageObj.getRetrofitService.patchProfStorage(1, 1)
+
+        call.enqueue(object : Callback<ProfStorageResponse.ResponseFavProf> {
+            override fun onResponse(
+                call: Call<ProfStorageResponse.ResponseFavProf>,
+                response: Response<ProfStorageResponse.ResponseFavProf>
+            ) {
+                Log.d("Retrofit", response.toString())
+                if (response.isSuccessful) {
+                    val response = response.body()
+                    Log.d("Retrofit", response.toString())
+
+                    if (response != null) {
+                        if (response.isSuccess) {
+                            //성공했을 때
+                            Log.d("Retrofit", "처리에 성공함")
+                        } else {
+                            //실패했을 때
+                            Log.d("Retrofit", "처리에 실패함")
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(
+                call: Call<ProfStorageResponse.ResponseFavProf>,
                 t: Throwable
             ) {
                 val errorMessage = "Call Failed:  ${t.message}"

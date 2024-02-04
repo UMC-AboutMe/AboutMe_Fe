@@ -41,4 +41,14 @@ class ProfStorageResponse {
         var memberProfileId : Int
     )
 
+    //프로필 보관함 즐겨찾기 등록
+    data class ResponseFavProf(
+        val isSuccess: Boolean,
+        val code: String,
+        val message: String,
+        val result: isFavorite
+    )
+    data class isFavorite(
+        val favorite : Boolean
+    )
 }
