@@ -6,19 +6,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.aboutme.MyprofileStorage.api.ProfStorageObj
+import com.example.aboutme.MyprofileStorage.api.ProfStorageResponse
 import com.example.aboutme.R
+import com.example.aboutme.databinding.FragmentProfileStorageDetailBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProfileStorageDetailFragment : Fragment() {
-
+    lateinit var binding: FragmentProfileStorageDetailBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.activity_profile_storage_detail, container, false)
-
+    ): View {
+        binding = FragmentProfileStorageDetailBinding.inflate(inflater)
         setFrag(0)
 
-        return view
+        binding.trashButton.setOnClickListener {
+            deleteProfiles()
+        }
+        return binding.root
     }
 
     private fun setFrag(fragNum: Int) {
@@ -34,5 +42,43 @@ class ProfileStorageDetailFragment : Fragment() {
                 ft.replace(R.id.profileStorage_frame, ProfileStorageBackFragment()).commit()
             }
         }
+    }
+
+    //프로필 보관함 조회 api
+    private fun deleteProfiles(){
+        Log.d("Retrofit","delete 함수 호출됨")
+        val call = ProfStorageObj.getRetrofitService.deleteProfStorage(1,1)
+
+        call.enqueue(object : Callback<ProfStorageResponse.ResponseDeleteProf> {
+            override fun onResponse(
+                call: Call<ProfStorageResponse.ResponseDeleteProf>,
+                response: Response<ProfStorageResponse.ResponseDeleteProf>
+            ) {
+                Log.d("Reftrofit", response.toString())
+                if (response.isSuccessful) {
+                    val response = response.body()
+                    Log.d("Retrofit", response.toString())
+
+                    if (response != null) {
+                        if (response.isSuccess) {
+                            //성공했을 때
+                            Log.d("Retrofit", "처리에 성공함")
+                        } else {
+                            //실패했을 때
+                            Log.d("Retrofit", "처리에 실패함")
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(
+                call: Call<ProfStorageResponse.ResponseDeleteProf>,
+                t: Throwable
+            ) {
+                val errorMessage = "Call Failed:  ${t.message}"
+                Log.d("Retrofit", errorMessage)
+            }
+        }
+        )
     }
 }
