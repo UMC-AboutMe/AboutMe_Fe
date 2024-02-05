@@ -24,9 +24,10 @@ class SearchProfActivity : AppCompatActivity() {
 
         //Dialog
         binding.addBtn.setOnClickListener {
-            //상대방 마이프로필 내 보관함에 추가하기
+            //보관함 추가하기 api
             postProfStorage()
 
+            //상대방 마이프로필 내 보관함에 추가하기
             CustomDialog("내 프로필도 공유 하시겠습니까?")
                 .show(supportFragmentManager, "ProfDialog")
         }
@@ -51,7 +52,7 @@ class SearchProfActivity : AppCompatActivity() {
 
     //상대방 마이프로필 내 보관함에 추가하기
     private fun postProfStorage(){
-        Log.d("Retrofit","보관함 추가 실행")
+        Log.d("Retrofit_Add","보관함 추가 실행")
         val requestStoreProf = SearchResponse.RequestStoreProf(listOf(123456, 987654))
         val call = SearchObj.getRetrofitService.postProfStorage(1, requestStoreProf)
 
@@ -59,10 +60,10 @@ class SearchProfActivity : AppCompatActivity() {
             override fun onResponse(
                 call: Call<SearchResponse.ResponseStoreProf>, response: Response<SearchResponse.ResponseStoreProf>
             ) {
-                Log.d("Retrofit",response.toString())
+                Log.d("Retrofit_Add",response.toString())
                 if(response.isSuccessful){
                     val response=response.body()
-                    Log.d("Retrofit",response.toString())
+                    Log.d("Retrofit_Add",response.toString())
 
                     if(response != null) {
                         if(response.isSuccess){
@@ -70,7 +71,7 @@ class SearchProfActivity : AppCompatActivity() {
                         }
                         else{
                             //실패했을 때
-                            Log.d("Retrofit",response.message)
+                            Log.d("Retrofit_Add",response.message)
 
                         }
                     }
@@ -78,7 +79,7 @@ class SearchProfActivity : AppCompatActivity() {
             }
             override fun onFailure(call:Call<SearchResponse.ResponseStoreProf>, t:Throwable) {
                 val errorMessage = "Call Failed:  ${t.message}"
-                Log.d("Retrofit",errorMessage)
+                Log.d("Retrofit_Add",errorMessage)
             }
         }
         )
