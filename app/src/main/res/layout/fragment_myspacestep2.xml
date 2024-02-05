@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fragment_myspacestep2"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageButton
@@ -61,6 +62,7 @@
         app:layout_constraintTop_toBottomOf="@+id/myspace_step2_sub2" />
 
     <ImageView
+        android:id="@+id/avatar_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/step2_avatar_1"
@@ -104,6 +106,7 @@
         app:layout_constraintTop_toBottomOf="@+id/myspace_step2_sub2" />
 
     <ImageView
+        android:id="@+id/avatar_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/step2_avatar_2"
@@ -147,6 +150,7 @@
         app:layout_constraintTop_toBottomOf="@+id/myspace_step2_sub2" />
 
     <ImageView
+        android:id="@+id/avatar_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/step2_avatar_3"
@@ -190,6 +194,7 @@
         app:layout_constraintTop_toBottomOf="@+id/myspace_step2_avatar_1" />
 
     <ImageView
+        android:id="@+id/avatar_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/step2_avatar_4"
@@ -233,6 +238,7 @@
         app:layout_constraintTop_toBottomOf="@+id/myspace_step2_avatar_2" />
 
     <ImageView
+        android:id="@+id/avatar_5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/step2_avatar_5"
@@ -276,6 +282,7 @@
         app:layout_constraintTop_toBottomOf="@+id/myspace_step2_avatar_3" />
 
     <ImageView
+        android:id="@+id/avatar_6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/step2_avatar_6"
@@ -319,6 +326,7 @@
         app:layout_constraintTop_toBottomOf="@+id/myspace_step2_avatar_4" />
 
     <ImageView
+        android:id="@+id/avatar_7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/step2_avatar_7"
@@ -362,6 +370,7 @@
         app:layout_constraintTop_toBottomOf="@+id/myspace_step2_avatar_5" />
 
     <ImageView
+        android:id="@+id/avatar_8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/step2_avatar_8"
@@ -405,6 +414,7 @@
         app:layout_constraintTop_toBottomOf="@+id/myspace_step2_avatar_6" />
 
     <ImageView
+        android:id="@+id/avatar_9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/step2_avatar_9"
