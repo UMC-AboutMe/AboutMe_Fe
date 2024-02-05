@@ -21,8 +21,8 @@ class TutorialActivity3 : AppCompatActivity() {
 
             Toast.makeText(this, "okclicked", Toast.LENGTH_SHORT).show()
 
-            val intent= Intent(this, MySpaceStep1Activity::class.java)
-            startActivity(intent)
+//            val intent= Intent(this, MySpaceStep1Activity::class.java)
+//            startActivity(intent)
 
         }
 
