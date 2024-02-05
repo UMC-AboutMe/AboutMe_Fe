@@ -82,54 +82,32 @@ class MainProfileFragment : Fragment() {
 
                     if (frontFeatures != null) {
                         multiList.clear()
-                        frontFeatures?.forEach { frontFeature ->
-                            if (totalMyProfile == 1) {
-                                //if (frontFeature.key != null) {
+                        for (profile in repos.result.myprofiles) {
+                            val frontFeatures = profile.frontFeatures
+                            //profile?.forEach {  ->
+                            //for (frontFeature in frontFeatures) {
+                                if (frontFeatures.size > 1) {
                                     multiList.add(
-                                        MultiProfileData(R.drawable.myprofile_character, frontFeature.value, frontFeature.value
-                                        )
-                                    )
-                                    Log.d("FrontFeature key", frontFeature.key ?: "Key is null")
-                                    Log.d("FrontFeature value", frontFeature.value ?: "Value is null"
-                                    )
-                                }/*else{
-                                    multiList.add(
-                                        MultiProfileData(R.drawable.myprofile_character, frontFeature.value, ""
-                                        )
-                                    )
-                                }*/
-                            //}
-                            if (totalMyProfile == 2){
-                                //if (frontFeature.key.getOrNull(1) != null) {
-                                    multiList.add(
-                                        MultiProfileData(R.drawable.myprofile_character, frontFeature.value, frontFeature.value
-                                        )
-                                    )
-                                    Log.d("FrontFeature key!!", frontFeature.key ?: "Key is null")
-                                    Log.d("FrontFeature value", frontFeature.value ?: "Value is null"
-                                    )
-                                }/*else{
-                                    multiList.add(
-                                        MultiProfileData(R.drawable.myprofile_character, frontFeature.value, ""
-                                        )
-                                    )
-                                    multiList.add(
-                                        MultiProfileData(R.drawable.myprofile_character, frontFeature.value, ""
-                                        )
-                                    )
-                                }*/
+                                        MultiProfileData(
+                                            R.drawable.myprofile_character,
+                                            frontFeatures[0].value,
+                                            frontFeatures[1].value
 
-                            if (totalMyProfile == 3){
-                                multiList.add(
-                                    MultiProfileData(R.drawable.myprofile_character, frontFeature.value, frontFeature.value)
-                                )
-                                Log.d("FrontFeature key", frontFeature.key ?: "Key is null")
-                                Log.d("FrontFeature value", frontFeature.value ?: "Value is null")
+                                        )
+                                    )
+                                }else{
+                                    multiList.add(
+                                        MultiProfileData(
+                                            R.drawable.myprofile_character,
+                                            frontFeatures[0].value,
+                                            ""
+
+                                        )
+                                    )
+                                }
                             }
 
-                        }
 
-                        binding.mainProfileVp.setCurrentItem(0, false)
 
                         // 어댑터에 업데이트된 multiList를 제출합니다.
                         vpadapter.submitList(multiList)
@@ -142,6 +120,7 @@ class MainProfileFragment : Fragment() {
                     Log.e("실패", "응답 데이터가 null입니다.")
                     Log.e("Response", "${response.code()}")
                 }
+                binding.mainProfileVp.setCurrentItem(0, false)
             }
         })
 
