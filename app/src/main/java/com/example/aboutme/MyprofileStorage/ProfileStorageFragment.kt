@@ -82,10 +82,10 @@ class ProfileStorageFragment : Fragment() {
                 call: Call<ProfStorageResponse.ResponeProfStorage>,
                 response: Response<ProfStorageResponse.ResponeProfStorage>
             ) {
-                Log.d("Reftrofit", response.toString())
+                Log.d("Reftrofit_Get", response.toString())
                 if (response.isSuccessful) {
                     val response = response.body()
-                    Log.d("Retrofit", response.toString())
+                    Log.d("Retrofit_Get", response.toString())
 
                     if (response != null) {
                         if (response.isSuccess) {
@@ -102,7 +102,7 @@ class ProfileStorageFragment : Fragment() {
                 t: Throwable
             ) {
                 val errorMessage = "Call Failed:  ${t.message}"
-                Log.d("Retrofit", errorMessage)
+                Log.d("Retrofit_Get", errorMessage)
             }
         }
         )
