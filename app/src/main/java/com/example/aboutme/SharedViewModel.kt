@@ -12,6 +12,12 @@ class SharedViewModel : ViewModel(){
     val storeBitmap = MutableLiveData<Boolean>()
     val savedImageUri = MutableLiveData<Uri?>()
 
+    // 마이스페이스 관련 데이터
+    var nickname: String? = null
+    var selectedAvatarIndex: Int? = null
+    var selectedRoomIndex: Int? = null
+    var isCreated: Boolean = false
+
     fun storeProfileLayout(profileLayout: View) {
         profileLayoutLiveData.value = profileLayout
         setStoreBitmap(true)
@@ -27,5 +33,14 @@ class SharedViewModel : ViewModel(){
 
     fun getSavedImageUri(): Uri? {
         return savedImageUri.value
+    }
+
+    // 선택된 Avatar의 인덱스를 저장하는 메서드
+    fun setSelectedAvatarIndex(index: Int) {
+        selectedAvatarIndex = index
+    }
+
+    fun setSelectedRoomIndex(index: Int) {
+        selectedRoomIndex = index
     }
 }
