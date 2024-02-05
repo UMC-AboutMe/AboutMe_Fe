@@ -16,4 +16,19 @@ class SearchResponse {
     data class NumberList(
         var profileSerialNumberList : String
     )
+
+
+    //스페이스 검색
+    data class ResponseSearchSpace (
+        var isSuccess: Boolean,
+        var code: String,
+        var message: String,
+        var result : SpaceList
+            )
+    data class SpaceList(
+        var spaceId : Int,
+        var nickname : String,
+        var characterType : Int,
+        var roomType : Int
+    )
 }
