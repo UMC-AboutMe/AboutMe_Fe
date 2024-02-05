@@ -2,12 +2,16 @@ package com.example.aboutme
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.example.aboutme.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class bottomNavigationView : AppCompatActivity() {
+
+    private val isCreatedViewModel: SharedViewModel by viewModels()
 
     private val frame: ConstraintLayout by lazy { // activity_main의 화면 부분
         findViewById(R.id.layout_main)
@@ -54,15 +58,22 @@ class bottomNavigationView : AppCompatActivity() {
                 }
 
                 R.id.nav_myspace -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(frame.id, Fragment())
-                        .commit()
+                    if (isCreatedViewModel.isCreated) {
+                        supportFragmentManager.beginTransaction()
+                            .replace(frame.id, MySpaceMainFragment())
+                            .commit()
+                    } else {
+                        supportFragmentManager.beginTransaction()
+                            .replace(frame.id, MySpaceStep1Fragment())
+                            .commit()
+                        bottomNagivationView.visibility = View.GONE
+                    }
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.nav_agit -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(frame.id, Fragment())
+                        .replace(frame.id, AgitFragment())
                         .commit()
                     return@setOnItemSelectedListener true
                 }
