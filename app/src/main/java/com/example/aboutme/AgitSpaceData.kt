@@ -9,7 +9,7 @@ data class YourResponseType(
     val isSuccess: Boolean,
     val code: String,
     val message: String,
-    val result: ResultModelAdd
+    val result: ResultModel
 )
 
 data class ResultModel(
@@ -24,6 +24,6 @@ data class SpaceModel(
     val favorite: Boolean
 )
 
-data class ResultModelAdd(
-    val spaceId: Int
-)
+//data class ResultModelAdd(
+//    val spaceId: Int
+//)
