@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import com.example.aboutme.databinding.ActivityMyspacestep2roomBinding
 
 class MySpaceStep2RoomActivity : AppCompatActivity() {
@@ -65,7 +64,7 @@ class MySpaceStep2RoomActivity : AppCompatActivity() {
 
         binding.nextIbStep3.setOnClickListener {
             // 다음 액티비티로 넘길 때 선택된 체크박스의 인덱스 정보를 넘김
-            val intent = Intent(this, MySpaceStep3Activity::class.java)
+            val intent = Intent(this, myspace3Activity::class.java)
             selectedCheckBoxIndexroom?.let {
                 intent.putExtra("index_step2_room", it)
                 intent.putExtra("index_step2_avatar", selectedCheckBoxIndexavatar)

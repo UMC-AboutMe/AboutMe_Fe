@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -9,8 +10,8 @@ android {
 
     defaultConfig {
         applicationId = "com.example.aboutme"
-        minSdk = 28
-        targetSdk = 34
+        minSdk = 29
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -94,7 +95,23 @@ dependencies {
     // Normal
     implementation ("io.github.ParkSangGwon:tedpermission-normal:3.3.0")
 
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    //구글 로그인
+    implementation ("com.google.android.gms:play-services-auth:20.7.0")
+    //구글 로그인 - 파이어베이스
+    implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
+    implementation("com.google.firebase:firebase-analytics")
+
+    //네비게이션
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.4.2")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.4.2")
+
+    //
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //
+    implementation ("com.google.code.gson:gson:2.8.8")
+
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.8.1")
 
 }

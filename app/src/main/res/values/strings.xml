@@ -10,6 +10,10 @@
     <string name="myspace_step3_sub">마이스페이스에서 사용할 배경을 선택해주세요.</string>
     <string name="myspace_step3_sub2">나의 이미지와 어울리는 스페이스 배경을 골라보세요.</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    //카톡 링크 공유(애플리케이션 등록)
+    <string name="kakao_scheme" translatable="false">kakao14bbf6997b475309590efc7c9a7d9b11</string>
+    <string name="kakao_share_app_key" translatable="false">14bbf6997b475309590efc7c9a7d9b11</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
