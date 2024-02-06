@@ -36,6 +36,14 @@ class AgitFragment : Fragment() {
         itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
         itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
         itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
+        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
+        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
+        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
+        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
+        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
+        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
+        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
+        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
 
         // API 호출로 서버에 저장되어있는 사용자들의 스페이스 정보 추출
         call.enqueue(object : Callback<YourResponseType> {
