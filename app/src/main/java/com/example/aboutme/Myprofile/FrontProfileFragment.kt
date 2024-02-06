@@ -1,6 +1,8 @@
 package com.example.aboutme.Myprofile
 
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
@@ -18,14 +20,28 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.aboutme.R
+import com.example.aboutme.RetrofitMyprofile.RetrofitClient
+import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
+import com.example.aboutme.RetrofitMyprofileData.PatchMyprofile
+import com.example.aboutme.RetrofitMyprofileData.PostProfile
+import com.example.aboutme.RetrofitMyprofileData.RequestPatchProfile
+import com.example.aboutme.RetrofitMyprofileData.ResponsePostProfile
 import com.example.aboutme.databinding.FragmentFrontprofileBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
+
 
 
 class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
@@ -37,9 +53,9 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
     private lateinit var sharedViewModel: SharedViewModel
 
-    private lateinit var profileEditName: EditText
 
-    //private lateinit var viewModel: FrontProfileViewModel
+    private lateinit var profileEditName: EditText
+    private val retrofitClient = RetrofitClient.mainProfile
 
 
     override fun onCreateView(
@@ -87,7 +103,7 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
         }
 
-        val profileEdit1 : EditText = binding.profileNameEt
+        val profileEdit1  = binding.profileNameEt
         val profileBtn1 : ImageButton = binding.frontProfileEdit1Btn
 
 
@@ -149,8 +165,6 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
             }
         })
 
-        val savedName = getSavedName()
-        profileEdit1.setText(savedName)
 
         return binding.root
     }
@@ -173,16 +187,53 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
 
 
-        profileEditName.addTextChangedListener(object : TextWatcher {
+        /*profileEditName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                saveName(s.toString())
-            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
-                //saveName(s.toString())
-                //profileNameChangeListener?.onProfileNameChanged(s.toString())
+                // EditText의 값이 변경될 때마다 데이터 객체를 생성하고 Retrofit을 통해 서버로 전송합니다.
+                val name = s.toString()
+                sendDataToServer(name)
             }
-        })
+        })*/
+
+        /*val saveButton = binding.finishBtn
+        saveButton.setOnClickListener {
+            // 저장 버튼 클릭 시 EditText의 값을 서버로 전송
+            val name = profileEditName.text.toString()
+            sendDataToServer(name)
+        }
+*/
+
+
+        val retrofitClient = RetrofitClient.mainProfile
+
+
+
+
+        val patchData = RequestPatchProfile(129, "mbti", "intj")
+
+        lifecycleScope.launch {
+            try {
+                // withContext를 사용하여 백그라운드 스레드에서 실행하도록 함
+                val response: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
+                    retrofitClient.patchProfile(19, patchData)
+                }
+
+                if (response.isSuccessful) {
+                    val responseData: PatchMyprofile? = response.body()
+                    Log.d("patch 성공", "응답 데이터: $responseData")
+                    // responseData를 처리하는 로직 작성
+                } else {
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e("patch 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
+
+                }
+            } catch (e: Exception) {
+                Log.e("patch 요청 실패", "에러: ${e.message}")
+            }
+        }
+
 
     }
 
@@ -257,13 +308,6 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
         editor.putString("name", name)
         editor.commit()
     }
-
-    private fun getSavedName(): String? {
-        val sharedPreferences = requireContext().getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
-        return sharedPreferences.getString("name", "")
-    }
-
-
 
 
 }

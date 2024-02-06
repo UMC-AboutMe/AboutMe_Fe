@@ -449,9 +449,9 @@ class BottomSheet2 : DialogFragment() {
         // 메시지 템플릿 만들기 (피드형)
         FeedTemplate(
             content = Content(
-                title = "테디님의 AboutMe 프로필을 확인해보세요",
-                description = "앱의 홈 화면에 있는 검색창에 일련번호를 입력하면 프로필을 찾을 수 있어요.",
-                imageUrl = "https://i.imgur.com/8LO8kWd.png",
+                title = "테디님의 AboutMe 프로필을 확인해보세요.",
+                description = "홈 화면에 있는 프로필 찾기에 일련번호를 입력하면 프로필을 찾을 수 있어요.",
+                imageUrl = "https://i.imgur.com/PsidRUL.jpg",
                 link = Link(
                     webUrl = "https://play.google.com",
                     mobileWebUrl = "https://play.google.com"
