@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -34,10 +35,15 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
                 ItemAddProfileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
             binding.profileAddBtn.setOnClickListener {
-                Toast.makeText(parent.context, "프로필 추가", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(parent.context, "프로필 추가", Toast.LENGTH_SHORT).show()
 
-                val intent = Intent(parent.context, MainActivity2::class.java)
-                parent.context.startActivity(intent)
+
+                    val nameDialog = NameDialogFragment()
+
+                nameDialog.show((parent.context as AppCompatActivity).supportFragmentManager, nameDialog.tag)
+
+                /*val intent = Intent(parent.context, MainActivity2::class.java)
+                parent.context.startActivity(intent)*/
             }
             MainAddItemViewHolder(binding)
 

@@ -35,6 +35,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AboutMe"
         tools:targetApi="33">
+
+
         <activity
             android:name=".Tutorial.CustomDialogAlarm"
             android:exported="false" />
@@ -107,6 +109,7 @@
             android:exported="false" />
         <activity
             android:name=".bottomNavigationView"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true" />
         <activity
             android:name=".Tutorial.TutorialActivity2"
