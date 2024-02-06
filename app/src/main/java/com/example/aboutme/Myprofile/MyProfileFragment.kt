@@ -78,7 +78,7 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
             try {
                 // withContext를 사용하여 백그라운드 스레드에서 실행하도록 함
                 val response: Response<DeleteMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.deleteData(18)
+                    RetrofitClient.mainProfile.deleteData(9)
                 }
 
                 if (response.isSuccessful) {

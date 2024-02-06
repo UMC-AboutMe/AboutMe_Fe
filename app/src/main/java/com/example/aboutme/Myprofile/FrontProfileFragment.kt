@@ -187,24 +187,6 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
 
 
-        /*profileEditName.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable?) {
-                // EditText의 값이 변경될 때마다 데이터 객체를 생성하고 Retrofit을 통해 서버로 전송합니다.
-                val name = s.toString()
-                sendDataToServer(name)
-            }
-        })*/
-
-        /*val saveButton = binding.finishBtn
-        saveButton.setOnClickListener {
-            // 저장 버튼 클릭 시 EditText의 값을 서버로 전송
-            val name = profileEditName.text.toString()
-            sendDataToServer(name)
-        }
-*/
-
 
         val retrofitClient = RetrofitClient.mainProfile
 

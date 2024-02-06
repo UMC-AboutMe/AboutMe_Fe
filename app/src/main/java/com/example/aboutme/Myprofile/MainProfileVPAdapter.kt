@@ -12,9 +12,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aboutme.MyprofileStorage.ProfileStorageDetailActivity
+import com.example.aboutme.R
+import com.example.aboutme.RetrofitMyprofile.RetrofitClient
+import com.example.aboutme.RetrofitMyprofileData.FrontFeature
+import com.example.aboutme.RetrofitMyprofileData.MainProfileData
 import com.example.aboutme.databinding.ItemAddProfileBinding
 import com.example.aboutme.databinding.ItemMultiprofileBinding
 import com.kakao.sdk.template.model.Content
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import kotlin.coroutines.coroutineContext
 
 class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHolder>(
@@ -27,6 +34,8 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
+
         return if (viewType == VIEW_TYPE_ITEM) {
             val binding =
                 ItemMultiprofileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -37,12 +46,36 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
                 ItemAddProfileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
             binding.profileAddBtn.setOnClickListener {
-                //Toast.makeText(parent.context, "프로필 추가", Toast.LENGTH_SHORT).show()
+
+                RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
+                    // 서버 통신 실패 시의 작업
+                    override fun onFailure(call: Call<MainProfileData>, t: Throwable) {
+                        Log.e("실패", t.toString())
+                    }
 
 
-                val nameDialog = NameDialogFragment()
+                    override fun onResponse(
+                        call: Call<MainProfileData>,
+                        response: Response<MainProfileData>
+                    ) {
+                        val repos: MainProfileData? = response.body()
+                        if (repos != null) {
+                            val totalMyProfile = repos.getTotalMyProfile()
 
-                nameDialog.show((parent.context as AppCompatActivity).supportFragmentManager, nameDialog.tag)
+                            if (totalMyProfile == 3) {
+                                Toast.makeText(parent.context,"더 이상 프로필을 생성할 수 없습니다.", Toast.LENGTH_SHORT).show()
+                            }
+                            else{
+                                val nameDialog = NameDialogFragment()
+
+                                nameDialog.show((parent.context as AppCompatActivity).supportFragmentManager, nameDialog.tag)
+                            }
+                        } else {
+                            Log.e("실패", "front_features 데이터가 null입니다.")
+                        }
+                    }
+                })
+
             }
             MainAddItemViewHolder(binding)
 
