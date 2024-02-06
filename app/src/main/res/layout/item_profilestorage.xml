@@ -1,36 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content">
-
-
-        <ImageView
-            android:id="@+id/profile1_iv"
-            android:layout_width="150dp"
-            android:layout_height="230dp"
-            android:src="@drawable/profilestorage_profile"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="40dp"
-            android:adjustViewBounds="true"/>
-
-
-
-        <TextView
-            android:id="@+id/profileName_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="프로필1"
-            android:fontFamily="@font/gmarketsansmedium"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="220dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="90dp"/>
+    <ImageView
+        android:id="@+id/profile1_iv"
+        android:layout_width="101dp"
+        android:layout_height="192dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/myprofile_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
+    <TextView
+        android:id="@+id/profileName_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:text="프로필1"
+        android:textAlignment="center"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/profile1_iv"
+        app:layout_constraintEnd_toEndOf="@+id/profile1_iv"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/profile1_iv" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="20dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="18dp"
+        app:layout_constraintEnd_toEndOf="@+id/profile1_iv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/profstorage_star" />
 
-</layout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
