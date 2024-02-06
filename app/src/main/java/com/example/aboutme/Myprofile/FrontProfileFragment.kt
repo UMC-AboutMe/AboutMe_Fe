@@ -165,11 +165,6 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
             }
         })
 
-        // Retrofit 인스턴스 가져오기
-
-
-        //val savedName = getSavedName()
-        //profileEdit1.setText(savedName)
 
         return binding.root
     }
@@ -202,37 +197,18 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
             }
         })*/
 
-        val saveButton = binding.finishBtn
+        /*val saveButton = binding.finishBtn
         saveButton.setOnClickListener {
-            // 저장 버튼 클릭 시 EditText의 값을 서버로 전송합니다.
+            // 저장 버튼 클릭 시 EditText의 값을 서버로 전송
             val name = profileEditName.text.toString()
             sendDataToServer(name)
         }
-
+*/
 
 
         val retrofitClient = RetrofitClient.mainProfile
 
 
-
-        /*retrofitClient.submitData(postData).enqueue(object : Callback<ResponsePostProfile> {
-            override fun onResponse(call: Call<ResponsePostProfile>, response: Response<ResponsePostProfile>) {
-                if (response.isSuccessful) {
-                    val responseData: ResponsePostProfile? = response.body()
-                    Log.d("Post","success")
-                    Log.d("Post 성공", "응답 데이터: $responseData")
-                    // responseData를 처리하는 로직 작성
-                } else {
-                    val errorBody = response.errorBody()?.string() ?: "No error body"
-                    Log.e("Post 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
-
-                }
-            }
-
-            override fun onFailure(call: Call<ResponsePostProfile>, t: Throwable) {
-                Log.e("POST 요청 실패", "통신 에러: ${t.message}")
-            }
-        })*/
 
 
         val patchData = RequestPatchProfile(129, "mbti", "intj")
@@ -332,31 +308,6 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
         editor.putString("name", name)
         editor.commit()
     }
-
-    private fun sendDataToServer(name: String) {
-        // Retrofit을 사용하여 서버에 데이터를 전송하는 과정입니다.
-        val postData = PostProfile(name)
-        retrofitClient.submitData(postData).enqueue(object : Callback<ResponsePostProfile> {
-            override fun onResponse(call: Call<ResponsePostProfile>, response: Response<ResponsePostProfile>) {
-                if (response.isSuccessful) {
-                    val responseData: ResponsePostProfile? = response.body()
-                    Log.d("Post", "success")
-                    Log.d("Post 성공", "응답 데이터: $responseData")
-                    // 성공적으로 서버에 데이터를 전송한 후의 로직을 작성합니다.
-                } else {
-                    val errorBody = response.errorBody()?.string() ?: "No error body"
-                    Log.e("Post 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
-                    // 서버에 데이터 전송에 실패한 경우의 예외 처리를 작성합니다.
-                }
-            }
-
-            override fun onFailure(call: Call<ResponsePostProfile>, t: Throwable) {
-                Log.e("POST 요청 실패", "통신 에러: ${t.message}")
-                // 통신 과정에서 예외가 발생한 경우의 예외 처리를 작성합니다.
-            }
-        })
-    }
-
 
 
 }

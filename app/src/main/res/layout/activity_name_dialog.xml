@@ -6,6 +6,7 @@
     android:background="@drawable/nameedit_box">
 
     <EditText
+        android:id="@+id/nameDialog_edit"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginLeft="110dp"

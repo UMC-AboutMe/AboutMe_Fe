@@ -32,8 +32,6 @@ class MainProfileFragment : Fragment() {
 
 
 
-
-
         return binding.root
     }
 
