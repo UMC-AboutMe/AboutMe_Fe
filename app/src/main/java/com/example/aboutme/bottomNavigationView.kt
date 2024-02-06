@@ -58,6 +58,7 @@ class bottomNavigationView : AppCompatActivity() {
                 }
 
                 R.id.nav_myspace -> {
+                    // 뷰모델의 isCreated로 사용자의 스페이스 생성 여부 판단
                     if (isCreatedViewModel.isCreated) {
                         supportFragmentManager.beginTransaction()
                             .replace(frame.id, MySpaceMainFragment())

@@ -14,8 +14,6 @@
     <uses-permission android:name="android.permission.CAMERA" ></uses-permission>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -25,7 +23,6 @@
             <action android:name="android.media.action.IMAGE_CAPTURE" />
         </intent>
     </queries>
-
 
 
     <application
@@ -41,7 +38,6 @@
         android:name=".KakaoApplication">
 
 
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.aboutme.fileprovider"
@@ -50,33 +46,9 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths">
-
             </meta-data>
         </provider>
 
-
-
-        <activity
-            android:name=".MySpaceStep1Activity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".MySpaceStep2Activity"
-            android:exported="true"/>
-        <activity
-            android:name=".MySpaceStep2RoomActivity"
-            android:exported="true"/>
-        <activity
-            android:name=".MySpaceStep3Activity"
-            android:exported="true"/>
-        <activity
-            android:name=".TutorialActivity3"
-            android:exported="true"/>
         <activity
             android:name=".AlarmActivity"
             android:exported="false" />
@@ -115,8 +87,16 @@
             android:exported="false" />
         <activity
             android:name=".bottomNavigationView"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            android:exported="true" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".TutorialActivity3"
+            android:exported="true"/>
         <activity
             android:name=".TutorialActivity2"
             android:exported="true" />
@@ -125,18 +105,10 @@
             android:exported="true" />
         <activity
             android:name=".SplashActivity"
-            android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".MainActivity"
             android:exported="true" />
-
-
 
 
         <!-- 카카오 소셜 로그인 api key 연결-->

@@ -16,7 +16,7 @@ class SharedViewModel : ViewModel(){
     var nickname: String? = null
     var selectedAvatarIndex: Int? = null
     var selectedRoomIndex: Int? = null
-    var isCreated: Boolean = false
+    var isCreated: Boolean = true
 
     fun storeProfileLayout(profileLayout: View) {
         profileLayoutLiveData.value = profileLayout
