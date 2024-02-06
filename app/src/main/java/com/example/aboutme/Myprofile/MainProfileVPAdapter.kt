@@ -81,19 +81,20 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
                     Log.d("뷰페이저!",position.toString())
                     if (position == 0){
                         val intent = Intent(itemView.context, MainActivity2::class.java)
-                        itemView.context.startActivity(intent)
                         intent.putExtra("positionId",0)
+                        itemView.context.startActivity(intent)
                     }
                     if (position == 1){
                         val intent = Intent(itemView.context, MainActivity2::class.java)
-                        itemView.context.startActivity(intent)
                         intent.putExtra("positionId",1)
+                        itemView.context.startActivity(intent)
+
 
                     }
                     if (position == 2){
                         val intent = Intent(itemView.context, MainActivity2::class.java)
-                        itemView.context.startActivity(intent)
                         intent.putExtra("positionId",2)
+                        itemView.context.startActivity(intent)
 
                     }
 
