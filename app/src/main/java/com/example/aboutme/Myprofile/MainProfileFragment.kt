@@ -46,22 +46,11 @@ class MainProfileFragment : Fragment() {
     }
 
     private fun initViewPager() {
-        //val multiList = mutableListOf<MultiProfileData>()
-
-        /*multiList.add(MultiProfileData(R.drawable.myprofile_character, "1", "010-1234-5678"))
-        multiList.add(MultiProfileData(R.drawable.myprofile_character, "2", "010-1234-5678"))
-        multiList.add(MultiProfileData(R.drawable.myprofile_character, "3", "010-1234-5678"))*/
-
-        /*val sharedPreferences = requireContext().getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
-        val name = sharedPreferences.getString("name", "")*/
-
-        //initViewPager()
 
         vpadapter = MainProfileVPAdapter()
 
         binding.mainProfileVp.adapter = vpadapter
 
-        //binding.mainProfileVp.setCurrentItem(0, false)
 
 
         RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
@@ -83,8 +72,6 @@ class MainProfileFragment : Fragment() {
                         multiList.clear()
                         for (profile in repos.result.myprofiles) {
                             val frontFeatures = profile.frontFeatures
-                            //profile?.forEach {  ->
-                            //for (frontFeature in frontFeatures) {
                                 if (frontFeatures.size > 1) {
                                     multiList.add(
                                         MultiProfileData(
@@ -124,6 +111,7 @@ class MainProfileFragment : Fragment() {
         })
 
     }
+
 
 
 }

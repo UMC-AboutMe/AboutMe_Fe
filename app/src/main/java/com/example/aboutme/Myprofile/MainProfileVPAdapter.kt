@@ -29,6 +29,7 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
         return if (viewType == VIEW_TYPE_ITEM) {
             val binding =
                 ItemMultiprofileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
             MainItemViewHolder(binding)
         } else {
             val binding =
@@ -38,12 +39,9 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
                 //Toast.makeText(parent.context, "프로필 추가", Toast.LENGTH_SHORT).show()
 
 
-                    val nameDialog = NameDialogFragment()
+                val nameDialog = NameDialogFragment()
 
                 nameDialog.show((parent.context as AppCompatActivity).supportFragmentManager, nameDialog.tag)
-
-                /*val intent = Intent(parent.context, MainActivity2::class.java)
-                parent.context.startActivity(intent)*/
             }
             MainAddItemViewHolder(binding)
 
@@ -74,6 +72,16 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
 
     inner class MainItemViewHolder(private val binding: ItemMultiprofileBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    Log.d("뷰페이저!",position.toString())
+                    
+                }
+            }
+        }
         fun bind(item: MultiProfileData) {
             binding.multiProfileCharIv.setImageResource(item.profileImageResId)
             binding.multiProfileNameTv.text = item.name
@@ -83,6 +91,17 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
 
     inner class MainAddItemViewHolder(private val binding: ItemAddProfileBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                Log.d("뷰페이저!!",position.toString())
+                if (position != RecyclerView.NO_POSITION) {
+                    Log.d("뷰페이저!!",position.toString())
+
+                }
+            }
+        }
         fun bind() {
             // 추가 항목에 대한 바인딩 로직을 추가하세요.
         }
@@ -103,6 +122,12 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
             return oldItem.name == newItem.name
         }
     }
+
+    override fun getItemId(position: Int): Long {
+        // 아이템의 위치(position)을 그대로 ID로 사용
+        return position.toLong()
+    }
+
 
 
 }
