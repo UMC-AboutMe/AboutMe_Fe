@@ -119,7 +119,6 @@ class ProfileStorageDetailFragment : Fragment() {
                 val errorMessage = "Call Failed:  ${t.message}"
                 Log.d("Retrofit_Fav", errorMessage)
             }
-        }
-        )
+        })
     }
 }
