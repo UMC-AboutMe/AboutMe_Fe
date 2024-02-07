@@ -1,4 +1,4 @@
-package com.example.aboutme
+package com.example.aboutme.RetrofitMyspaceAgit
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -38,7 +38,7 @@ object RetrofitClient2 {
 
         okHttpClientBuilder.addInterceptor { chain ->
             val newRequest = chain.request().newBuilder()
-                .addHeader("member-id", RetrofitClient2.MEMBER_ID_VALUE)
+                .addHeader("member-id", MEMBER_ID_VALUE)
                 .build()
             chain.proceed(newRequest)
         }

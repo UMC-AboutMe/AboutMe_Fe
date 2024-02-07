@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.aboutme.Myprofile.FrontProfileViewModel
+import com.example.aboutme.Agit.AgitFragment
 import com.example.aboutme.Myprofile.MainProfileFragment
 import com.example.aboutme.Myprofile.SharedViewModel
 import com.example.aboutme.MyprofileStorage.ProfileStorageFragment
+import com.example.aboutme.Myspace.MySpaceMainFragment
+import com.example.aboutme.Myspace.MySpaceStep1Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class bottomNavigationView : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package com.example.aboutme
+package com.example.aboutme.Agit
 
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.aboutme.RetrofitMyspaceAgit.AgitSpaceData
+import com.example.aboutme.R
+import com.example.aboutme.RetrofitMyspaceAgit.ResultModel
+import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClient
+import com.example.aboutme.RetrofitMyspaceAgit.YourResponseType
 import com.example.aboutme.databinding.FragmentAgitBinding
 import retrofit2.Call
 import retrofit2.Callback
