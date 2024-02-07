@@ -34,6 +34,19 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
 
     private var mListener: BottomSheet2.OnBottomSheetListener? = null
 
+    companion object {
+        // newInstance 메서드 추가
+        fun newInstance(positionId: Int): MyProfileFragment {
+            val fragment = MyProfileFragment()
+            val args = Bundle().apply {
+                putInt("positionId", positionId)
+            }
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
+
     fun setOnBottomSheetListener(listener: BottomSheet2.OnBottomSheetListener) {
         mListener = listener
     }
@@ -44,6 +57,9 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
 
 
         setFrag(0)
+
+        val positionId = arguments?.getInt("positionId", -1)
+        Log.d("MyProfileFragment", "Position ID: $positionId")
 
 
 
@@ -62,7 +78,7 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
             try {
                 // withContext를 사용하여 백그라운드 스레드에서 실행하도록 함
                 val response: Response<DeleteMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.deleteData(18)
+                    RetrofitClient.mainProfile.deleteData(9)
                 }
 
                 if (response.isSuccessful) {
