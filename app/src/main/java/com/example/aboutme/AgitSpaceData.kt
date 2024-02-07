@@ -1,8 +1,9 @@
 package com.example.aboutme
 
 data class AgitSpaceData(
-    val space_img : Int,
-    val space_name : String
+    val spaceImg : Int,
+    val spaceName : String,
+    var isBookmarked : Boolean = false
 )
 
 data class YourResponseType(
@@ -24,6 +25,6 @@ data class SpaceModel(
     val favorite: Boolean
 )
 
-//data class ResultModelAdd(
-//    val spaceId: Int
-//)
+data class ResultModelAdd(
+    val spaceId: Int
+)
