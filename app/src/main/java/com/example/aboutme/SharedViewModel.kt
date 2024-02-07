@@ -13,9 +13,9 @@ class SharedViewModel : ViewModel(){
     val savedImageUri = MutableLiveData<Uri?>()
 
     // 마이스페이스 관련 데이터
-    var nickname: String? = null
-    var selectedAvatarIndex: Int? = null
-    var selectedRoomIndex: Int? = null
+    var nickname: String? = "다에몬"
+    var selectedAvatarIndex: Int? = 3
+    var selectedRoomIndex: Int? = 1
     var isCreated: Boolean = true
 
     fun storeProfileLayout(profileLayout: View) {

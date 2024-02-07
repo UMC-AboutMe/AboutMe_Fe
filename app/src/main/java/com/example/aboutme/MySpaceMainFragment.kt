@@ -28,8 +28,14 @@ class MySpaceMainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.back.setOnClickListener {
-            parentFragmentManager.popBackStack()
+        binding.logo.setOnClickListener {
+//            parentFragmentManager.popBackStack()
+
+            // 데이터는 ViewModel에 저장되어 있으므로 Bundle 사용할 필요 없음
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.frame, HomeFragment())
+                .commit()
+            return@setOnClickListener
         }
 
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
@@ -37,6 +43,50 @@ class MySpaceMainFragment : Fragment() {
         if (sharedViewModel.isCreated) {
             // 서버에 저장되어있는 유저의 스페이스 정보 추출
             // 소셜 로그인 구현 후 추가 작성
+            val nickname = sharedViewModel.nickname
+            val selectedAvatarIndex = sharedViewModel.selectedAvatarIndex
+            val selectedRoomIndex = sharedViewModel.selectedRoomIndex
+
+            val imageNameavatar = "step2_avatar_${selectedAvatarIndex?.plus(1)}"
+            val imageNameroom = "step3_room_${selectedRoomIndex?.plus(1)}"
+
+            // 리소스 아이디 가져오기
+            val resourceIdavatar = requireContext().resources.getIdentifier(imageNameavatar, "drawable", requireContext().packageName)
+            val resourceIdroom = requireContext().resources.getIdentifier(imageNameroom, "drawable", requireContext().packageName)
+
+            binding.step3SelectedAvatar.setImageResource(resourceIdavatar)
+            binding.step3SelectedRoom.setImageResource(resourceIdroom)
+            binding.myspaceTitle.text = buildString {
+                append("$nickname's 스페이스")
+            }
+
+            val layouts = listOf(
+                binding.step3FeelingLayout,
+                binding.step3CommentLayout,
+                binding.step3StoryLayout,
+                binding.step3MusicLayout,
+                binding.step3ScheduleLayout,
+                binding.step3PhotoLayout
+            )
+
+            val buttons = listOf(
+                binding.step3Feeling,
+                binding.step3Comment,
+                binding.step3Story,
+                binding.step3Music,
+                binding.step3Schedule,
+                binding.step3Photo
+            )
+
+            buttons.forEachIndexed { index, button ->
+                button.setOnClickListener {
+                    // 기존에 선택된 레이아웃들을 모두 숨김
+                    layouts.forEach { layout -> layout.visibility = View.GONE }
+
+                    // 현재 클릭된 버튼에 해당하는 레이아웃을 보임
+                    layouts[index].visibility = View.VISIBLE
+                }
+            }
 
         } else {
             // 이전 step 데이터들을 서버에 저장하고 로컬 뷰모델에 저장되어있는 정보 추출
