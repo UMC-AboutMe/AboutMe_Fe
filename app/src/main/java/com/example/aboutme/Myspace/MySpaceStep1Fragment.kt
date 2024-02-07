@@ -1,4 +1,4 @@
-package com.example.aboutme
+package com.example.aboutme.Myspace
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.aboutme.Myprofile.SharedViewModel
+import com.example.aboutme.R
 import com.example.aboutme.databinding.FragmentMyspacestep1Binding
 
 class MySpaceStep1Fragment : Fragment() {

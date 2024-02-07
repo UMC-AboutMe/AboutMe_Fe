@@ -1,4 +1,4 @@
-package com.example.aboutme
+package com.example.aboutme.Myspace
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.example.aboutme.Myprofile.SharedViewModel
+import com.example.aboutme.R
 import com.example.aboutme.databinding.FragmentMyspacestep3Binding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 

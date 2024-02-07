@@ -1,4 +1,4 @@
-package com.example.aboutme
+package com.example.aboutme.Agit
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.aboutme.databinding.ItemAgitBinding
+import com.example.aboutme.RetrofitMyspaceAgit.AgitSpaceData
+import com.example.aboutme.R
 
 class AgitSpaceRVAdapter(val items : MutableList<AgitSpaceData>) :RecyclerView.Adapter<AgitSpaceRVAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AgitSpaceRVAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_agit, parent, false)
 
         return ViewHolder(v)
