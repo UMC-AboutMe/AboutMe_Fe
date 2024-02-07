@@ -1,10 +1,12 @@
 package com.example.aboutme
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.aboutme.databinding.FragmentMyspacemainBinding
@@ -85,6 +87,56 @@ class MySpaceMainFragment : Fragment() {
 
                     // 현재 클릭된 버튼에 해당하는 레이아웃을 보임
                     layouts[index].visibility = View.VISIBLE
+                }
+            }
+
+            // Edittext와 Ok 버튼을 포함한 레이아웃에 대한 리스트
+            val layoutsWithEditTextAndOkButton = listOf(
+                Pair(binding.step3CommentEt, binding.step3CommentOk),
+                Pair(binding.step3MusicEt, binding.step3MusicOk),
+                Pair(binding.step3StoryEt, binding.step3StoryOk),
+                Pair(binding.step3FeelingEt, binding.step3FeelingOk)
+            )
+
+            val editTextToVariableMap = mapOf(
+                R.id.step3_comment_et to "commentText",
+                R.id.step3_music_et to "musicText",
+                R.id.step3_story_et to "storyText",
+                R.id.step3_feeling_et to "feelingText"
+            )
+
+            val okButtons = listOf(
+                binding.step3CommentOk,
+                binding.step3MusicOk,
+                binding.step3StoryOk,
+                binding.step3FeelingOk
+            )
+
+            // Ok 버튼에 대한 클릭 이벤트 처리
+            okButtons.forEachIndexed { index, okButton ->
+                okButton.setOnClickListener {
+                    val editText = layoutsWithEditTextAndOkButton[index].first
+                    val inputText = editText.text.toString()
+
+                    // ViewModel에 저장
+                    val variableName = editTextToVariableMap[editText.id]
+                    variableName?.let {
+                        sharedViewModel.saveText(it, inputText)
+                    }
+
+                    // Ok 버튼 숨기기
+                    okButton.visibility = View.GONE
+
+                    // 키보드 숨기기
+                    val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
+                }
+            }
+
+            // EditText를 클릭할 때 Ok 버튼 보이도록 설정
+            layoutsWithEditTextAndOkButton.forEach { (editText, okButton) ->
+                editText.setOnClickListener {
+                    okButton.visibility = View.VISIBLE
                 }
             }
 
