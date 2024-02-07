@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.aboutme.Myprofile.FrontProfileViewModel
 import com.example.aboutme.Myprofile.MainProfileFragment
+import com.example.aboutme.Myprofile.SharedViewModel
 import com.example.aboutme.MyprofileStorage.ProfileStorageFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
