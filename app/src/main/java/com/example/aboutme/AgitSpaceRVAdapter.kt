@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.aboutme.databinding.ItemAgitBinding
 
 class AgitSpaceRVAdapter(val items : MutableList<AgitSpaceData>) :RecyclerView.Adapter<AgitSpaceRVAdapter.ViewHolder>() {
@@ -25,24 +24,14 @@ class AgitSpaceRVAdapter(val items : MutableList<AgitSpaceData>) :RecyclerView.A
         return items.count()
     }
 
-//    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//        fun bindItems(items : AgitSpaceData){
-//            val spaceImage = itemView.findViewById<ImageView>(R.id.space_iv)
-//            val spaceName = itemView.findViewById<TextView>(R.id.spaceName_tv)
-//
-//            spaceImage.setImageResource(items.space_img)
-//            spaceName.text = items.space_name
-//        }
-//    }
-
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val spaceImage: ImageView = itemView.findViewById(R.id.space_iv)
         private val spaceName: TextView = itemView.findViewById(R.id.spaceName_tv)
         private val bookmarkButton: ImageView = itemView.findViewById(R.id.agit_bookmark)
 
         fun bindItems(item: AgitSpaceData) {
-            spaceImage.setImageResource(item.space_img)
-            spaceName.text = item.space_name
+            spaceImage.setImageResource(item.spaceImg)
+            spaceName.text = item.spaceName
 
             bookmarkButton.setOnClickListener {
                 // 북마크된 이미지와 북마크 해제된 이미지를 번갈아가면서 설정합니다.
