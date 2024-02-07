@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="379dp"
+        android:layout_height="670dp"
+        android:background="@color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/storage_back" />
+
+
+    <ImageButton
+        android:id="@+id/turn_btn2"
+        android:layout_width="26dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="64dp"
+        android:background="@drawable/myprofile_turn2"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <ImageView
+        android:id="@+id/recommend_et1_iv"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="132dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/backProfile_et1"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:ems="12"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:hint="내용1"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/recommend_et1_iv"
+        app:layout_constraintTop_toBottomOf="@+id/recommend_et1_iv" />
+
+    <ImageView
+        android:id="@+id/recommend_et2_iv"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/backProfile_et1"
+        app:layout_constraintTop_toBottomOf="@+id/backProfile_et1" />
+
+    <TextView
+        android:id="@+id/backProfile_et2"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:ems="12"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:hint="내용2"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/backProfile_et1"
+        app:layout_constraintTop_toBottomOf="@+id/recommend_et2_iv" />
+
+    <ImageView
+        android:id="@+id/recommend_et3_iv"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/backProfile_et1"
+        app:layout_constraintTop_toBottomOf="@+id/backProfile_et2" />
+
+
+    <TextView
+        android:id="@+id/backProfile_et3"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:ems="12"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:hint="내용3"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/backProfile_et1"
+        app:layout_constraintTop_toBottomOf="@+id/recommend_et3_iv" />
+
+    <ImageView
+        android:id="@+id/recommend_et4_iv"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/backProfile_et1"
+        app:layout_constraintTop_toBottomOf="@+id/backProfile_et3" />
+
+    <TextView
+        android:id="@+id/backProfile_et4"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:ems="12"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:hint="내용4"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/backProfile_et1"
+        app:layout_constraintTop_toBottomOf="@+id/recommend_et4_iv" />
+
+    <ImageView
+        android:id="@+id/recommend_et5_iv"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/backProfile_et1"
+        app:layout_constraintTop_toBottomOf="@+id/backProfile_et4" />
+
+    <TextView
+        android:id="@+id/backProfile_et5"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:ems="12"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:hint="내용5"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/backProfile_et1"
+        app:layout_constraintTop_toBottomOf="@+id/recommend_et5_iv" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

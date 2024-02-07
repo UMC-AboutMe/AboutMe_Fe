@@ -12,4 +12,7 @@ interface ApitestInterface {
 
     @POST("/myspaces/")
     fun createMySpaces(@Header("member-id") memberId: String, @Body request: MySpaceCreateRequest): Call<MySpaceCreate>
+
+    @POST("/myspaces/storage/3")
+    fun addspace(@Header("member-id") memberId: String): Call<YourResponseType>
 }

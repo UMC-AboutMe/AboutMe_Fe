@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MypageActivity">
+    tools:context=".Mypage.MypageActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -27,6 +27,36 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="41dp" />
 
+    <ImageView
+        android:id="@+id/bgline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        app:srcCompat="@drawable/mypage_bgline" />
+
+    <ImageView
+        android:id="@+id/bgline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:srcCompat="@drawable/mypage_bgline" />
+
+    <ImageView
+        android:id="@+id/bgline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_iv5"
+        app:srcCompat="@drawable/mypage_bgline" />
+
     <ImageButton
         android:id="@+id/back_btn"
         android:layout_width="34dp"
@@ -43,7 +73,7 @@
         android:id="@+id/mypage_logo"
         android:layout_width="157dp"
         android:layout_height="90dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
         app:srcCompat="@drawable/home_logo" />
 
@@ -54,79 +84,343 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
         android:fontFamily="@font/gmarketsansmedium"
-        android:textColor="#000000"
         android:text="마이페이지"
+        android:textColor="#000000"
         android:textSize="25sp"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/back_btn" />
 
-    <ImageButton
-        android:id="@+id/info_btn"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="30dp"
-        android:background="@android:color/transparent"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+    <TextView
+        android:id="@+id/mypage_tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:text="내 정보"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/mypage_tv"
-        app:srcCompat="@drawable/mypage_btn1"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/mypage_tv" />
 
-    <ImageButton
-        android:id="@+id/insight_btn"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:background="@android:color/transparent"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.0"
+    <TextView
+        android:id="@+id/mypage_tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:text="인사이트"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/info_btn"
-        app:srcCompat="@drawable/mypage_btn2"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/bgline1" />
 
-    <ImageButton
-        android:id="@+id/setting_btn"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:background="@android:color/transparent"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.0"
+    <TextView
+        android:id="@+id/mypage_tv3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:text="환경설정"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/mypage_iv3"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/insight_btn"
-        app:srcCompat="@drawable/mypage_btn3"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toTopOf="@+id/mypage_iv3" />
 
-    <ImageButton
-        android:id="@+id/notif_btn"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:background="@android:color/transparent"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.0"
+    <TextView
+        android:id="@+id/mypage_tv4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:text="공지사항"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/mypage_iv4"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/setting_btn"
-        app:srcCompat="@drawable/mypage_btn4"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toTopOf="@+id/mypage_iv4" />
 
-    <ImageButton
-        android:id="@+id/help_btn"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:background="@android:color/transparent"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.0"
+    <TextView
+        android:id="@+id/mypage_tv5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:text="도움말"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/mypage_iv5"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/notif_btn"
-        app:srcCompat="@drawable/mypage_btn5"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toTopOf="@+id/mypage_iv5" />
+
+    <ImageView
+        android:id="@+id/mypage_iv1"
+        android:layout_width="20dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/mypage_tv1"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/mypage_tv1"
+        app:srcCompat="@drawable/mypage_user" />
+
+    <ImageView
+        android:id="@+id/mypage_iv2"
+        android:layout_width="24dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/mypage_tv2"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/mypage_tv2"
+        app:srcCompat="@drawable/mypage_insight" />
+
+    <ImageView
+        android:id="@+id/mypage_iv3"
+        android:layout_width="23dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="20dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/bgline2"
+        app:srcCompat="@drawable/mypage_setting" />
+
+    <ImageView
+        android:id="@+id/mypage_iv4"
+        android:layout_width="26dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="20dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_iv3"
+        app:srcCompat="@drawable/mypage_noti" />
+
+    <ImageView
+        android:id="@+id/mypage_iv5"
+        android:layout_width="23dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="20dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_iv4"
+        app:srcCompat="@drawable/mypage_help" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_tv1">
+
+        <TextView
+            android:id="@+id/name_tv"
+            android:layout_width="116dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gmarketsanslight"
+            android:text="프로필 이름"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/space_tv"
+            android:layout_width="116dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:fontFamily="@font/gmarketsanslight"
+            android:text="스페이스 이름"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/name_tv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/profName_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:text="유태연"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/name_tv"
+            app:layout_constraintStart_toStartOf="@+id/name_tv"
+            app:layout_constraintTop_toBottomOf="@+id/name_tv" />
+
+        <TextView
+            android:id="@+id/spaceName_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:text="테디"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/space_tv"
+            app:layout_constraintStart_toStartOf="@+id/space_tv"
+            app:layout_constraintTop_toBottomOf="@+id/space_tv" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_tv2">
+
+        <TextView
+            android:id="@+id/insight1_tv"
+            android:layout_width="116dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gmarketsanslight"
+            android:text="내 프로필\n공유 현황"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/insight2_tv"
+            android:layout_width="116dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/gmarketsanslight"
+            android:text="내 스페이스\n공유 현황"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@+id/insight1_tv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/insight_iv1"
+            android:layout_width="50dp"
+            android:layout_height="47dp"
+            app:layout_constraintEnd_toEndOf="@+id/insight1_tv"
+            app:layout_constraintStart_toStartOf="@+id/insight1_tv"
+            app:layout_constraintTop_toBottomOf="@+id/insight1_tv"
+            app:srcCompat="@drawable/mypage_insight2" />
+
+        <ImageView
+            android:id="@+id/insight_iv2"
+            android:layout_width="50dp"
+            android:layout_height="47dp"
+            app:layout_constraintEnd_toEndOf="@+id/insight2_tv"
+            app:layout_constraintStart_toStartOf="@+id/insight2_tv"
+            app:layout_constraintTop_toBottomOf="@+id/insight2_tv"
+            app:srcCompat="@drawable/mypage_insight2" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/insight_iv1"
+            app:layout_constraintStart_toStartOf="@+id/insight_iv1"
+            app:layout_constraintTop_toBottomOf="@+id/insight_iv1">
+
+            <TextView
+                android:id="@+id/insight_x1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:text="x"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/profInsight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:text="12"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/insight_x1"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/insight_iv2"
+            app:layout_constraintStart_toStartOf="@+id/insight_iv2"
+            app:layout_constraintTop_toBottomOf="@+id/insight_iv2">
+
+            <TextView
+                android:id="@+id/insight_x2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:text="x"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/spaceInsight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:text="12"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/insight_x2"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/bgline3">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:fontFamily="@font/gmarketsanslight"
+            android:text="탈퇴"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="0140dp"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:fontFamily="@font/gmarketsanslight"
+            android:text="로그아웃"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,10 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import com.example.aboutme.databinding.ActivityMainBinding
+import androidx.lifecycle.ViewModelProvider
+import com.example.aboutme.Myprofile.FrontProfileViewModel
+import com.example.aboutme.Myprofile.MainProfileFragment
+import com.example.aboutme.MyprofileStorage.ProfileStorageFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class bottomNavigationView : AppCompatActivity() {
@@ -19,6 +22,8 @@ class bottomNavigationView : AppCompatActivity() {
     private val bottomNagivationView: BottomNavigationView by lazy { // 하단 네비게이션 바
         findViewById(R.id.bottomNavigationView)
     }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,14 +43,14 @@ class bottomNavigationView : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_myprof -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(frame.id, Fragment())
+                        .replace(frame.id, MainProfileFragment())
                         .commit()
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.nav_saveprof -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(frame.id, Fragment())
+                        .replace(frame.id, ProfileStorageFragment())
                         .commit()
                     return@setOnItemSelectedListener true
                 }
@@ -83,4 +88,5 @@ class bottomNavigationView : AppCompatActivity() {
             }
         }
     }
+
 }

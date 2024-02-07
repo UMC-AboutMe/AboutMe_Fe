@@ -16,22 +16,22 @@ class TutorialActivity3 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_tutorial3)
-        binding.okIv2.setOnClickListener {
-
-            Toast.makeText(this, "okclicked", Toast.LENGTH_SHORT).show()
-
-//            val intent= Intent(this, MySpaceStep1Activity::class.java)
-//            startActivity(intent)
-
-        }
-
-        binding.cb2.setOnCheckedChangeListener { buttonView, isChecked ->
-            when (isChecked){
-                true -> Toast.makeText(this, "체크됨", Toast.LENGTH_SHORT).show()
-                false -> Toast.makeText(this, "체크해제됨", Toast.LENGTH_SHORT).show()
-            }
-        }
+//        binding = DataBindingUtil.setContentView(this, R.layout.activity_tutorial3)
+//        binding.okIv2.setOnClickListener {
+//
+//            Toast.makeText(this, "okclicked", Toast.LENGTH_SHORT).show()
+//
+////            val intent= Intent(this, MySpaceStep1Activity::class.java)
+////            startActivity(intent)
+//
+//        }
+//
+//        binding.cb2.setOnCheckedChangeListener { buttonView, isChecked ->
+//            when (isChecked){
+//                true -> Toast.makeText(this, "체크됨", Toast.LENGTH_SHORT).show()
+//                false -> Toast.makeText(this, "체크해제됨", Toast.LENGTH_SHORT).show()
+//            }
+//        }
     }
 
 }
