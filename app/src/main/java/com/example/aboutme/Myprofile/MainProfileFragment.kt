@@ -73,8 +73,7 @@ class MainProfileFragment : Fragment() {
                         for (profile in repos.result.myprofiles) {
                             val frontFeatures = profile.frontFeatures
                                 if (frontFeatures.size > 1) {
-                                    multiList.add(
-                                        MultiProfileData(
+                                    multiList.add(MultiProfileData(
                                             R.drawable.myprofile_character,
                                             frontFeatures[0].value,
                                             frontFeatures[1].value

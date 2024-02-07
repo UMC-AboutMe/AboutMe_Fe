@@ -52,13 +52,13 @@
                 android:layout_marginBottom="24dp"
                 android:textSize="20sp"
                 android:ems="12"
-                android:background="@color/transparent"
                 android:hint="  NAME"
                 android:fontFamily="@font/gmarketsansmedium"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="350dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginLeft="130dp"/>
+                android:layout_marginLeft="130dp"
+                android:background="@color/transparent"/>
 
                 <ImageButton
                     android:id="@+id/frontProfileEdit1_btn"
@@ -66,7 +66,7 @@
                     android:layout_height="25dp"
                     android:background="@drawable/myprofile_pencil"
                     android:layout_marginTop="360dp"
-                    android:layout_marginLeft="-120dp"/>
+                    android:layout_marginLeft="-110dp"/>
 
                 <Button
                     android:id="@+id/finish_btn"
