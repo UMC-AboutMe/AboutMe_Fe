@@ -70,7 +70,28 @@
         app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_1"
         app:layout_constraintVertical_bias="1.0" />
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/myspace_step2_avatar_1"
+        app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_1">
 
+        <ImageView
+            android:id="@+id/check_box_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_checkspace"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp" />
+
+        <ImageView
+            android:id="@+id/checkmark_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_checkmark"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/myspace_step2_avatar_2"
@@ -91,6 +112,29 @@
         app:layout_constraintBottom_toBottomOf="@+id/myspace_step2_avatar_2"
         app:layout_constraintEnd_toEndOf="@+id/myspace_step2_avatar_2"
         app:layout_constraintVertical_bias="1.0"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/myspace_step2_avatar_2"
+        app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_2">
+
+        <ImageView
+            android:id="@+id/check_box_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_checkspace"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp" />
+
+        <ImageView
+            android:id="@+id/checkmark_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_checkmark"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/myspace_step2_avatar_3"
@@ -113,6 +157,29 @@
         app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_3"
         app:layout_constraintVertical_bias="1.0" />
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/myspace_step2_avatar_3"
+        app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_3">
+
+        <ImageView
+            android:id="@+id/check_box_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_checkspace"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp" />
+
+        <ImageView
+            android:id="@+id/checkmark_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_checkmark"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
+
     <ImageView
         android:id="@+id/myspace_step2_avatar_4"
         android:layout_width="wrap_content"
@@ -131,6 +198,29 @@
         app:layout_constraintBottom_toBottomOf="@+id/myspace_step2_avatar_4"
         app:layout_constraintEnd_toEndOf="@+id/myspace_step2_avatar_4"
         app:layout_constraintVertical_bias="1.0"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/myspace_step2_avatar_4"
+        app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_4">
+
+        <ImageView
+            android:id="@+id/check_box_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_checkspace"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp" />
+
+        <ImageView
+            android:id="@+id/checkmark_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_checkmark"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/myspace_step2_avatar_5"
@@ -151,6 +241,29 @@
         app:layout_constraintBottom_toBottomOf="@+id/myspace_step2_avatar_5"
         app:layout_constraintEnd_toEndOf="@+id/myspace_step2_avatar_5"
         app:layout_constraintVertical_bias="1.0"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/myspace_step2_avatar_5"
+        app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_5">
+
+        <ImageView
+            android:id="@+id/check_box_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_checkspace"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp" />
+
+        <ImageView
+            android:id="@+id/checkmark_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_checkmark"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/myspace_step2_avatar_6"
@@ -173,6 +286,29 @@
         app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_6"
         app:layout_constraintVertical_bias="1.0" />
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/myspace_step2_avatar_6"
+        app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_6">
+
+        <ImageView
+            android:id="@+id/check_box_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_checkspace"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp" />
+
+        <ImageView
+            android:id="@+id/checkmark_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_checkmark"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
+
     <ImageView
         android:id="@+id/myspace_step2_avatar_7"
         android:layout_width="wrap_content"
@@ -191,6 +327,29 @@
         app:layout_constraintBottom_toBottomOf="@+id/myspace_step2_avatar_7"
         app:layout_constraintEnd_toEndOf="@+id/myspace_step2_avatar_7"
         app:layout_constraintVertical_bias="1.0"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/myspace_step2_avatar_7"
+        app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_7">
+
+        <ImageView
+            android:id="@+id/check_box_7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_checkspace"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp" />
+
+        <ImageView
+            android:id="@+id/checkmark_7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_checkmark"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/myspace_step2_avatar_8"
@@ -212,6 +371,29 @@
         app:layout_constraintEnd_toEndOf="@+id/myspace_step2_avatar_8"
         app:layout_constraintVertical_bias="1.0"/>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/myspace_step2_avatar_8"
+        app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_8">
+
+        <ImageView
+            android:id="@+id/check_box_8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_checkspace"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp" />
+
+        <ImageView
+            android:id="@+id/checkmark_8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_checkmark"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
+
     <ImageView
         android:id="@+id/myspace_step2_avatar_9"
         android:layout_width="wrap_content"
@@ -232,7 +414,31 @@
         app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_9"
         app:layout_constraintVertical_bias="1.0" />
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/myspace_step2_avatar_9"
+        app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_9">
+
+        <ImageView
+            android:id="@+id/check_box_9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_checkspace"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp" />
+
+        <ImageView
+            android:id="@+id/checkmark_9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_checkmark"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
+
     <ImageButton
+        android:id="@+id/next_ib_step2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
