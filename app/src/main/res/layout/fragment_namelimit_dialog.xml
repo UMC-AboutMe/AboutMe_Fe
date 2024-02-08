@@ -3,22 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="200dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/">
+    android:background="@drawable/namelimit_img">
 
-    <EditText
-        android:id="@+id/nameDialog_edit"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="110dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="110dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/transparent"
-        android:hint="이름"
-        android:fontFamily="@font/gmarketsansmedium"/>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/saveName_btn"
+        android:id="@+id/okayName_btn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="확인"
