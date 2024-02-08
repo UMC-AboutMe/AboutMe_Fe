@@ -39,6 +39,8 @@
             android:name=".Myprofile.EditProfileActivity"
             android:exported="true"/>
 
+        <activity android:name=".Myprofile.PreviewProfileActivity"
+            android:exported="true"/>
 
         <activity
             android:name=".Tutorial.CustomDialogAlarm"

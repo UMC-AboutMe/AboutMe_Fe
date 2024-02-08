@@ -73,7 +73,6 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
             val ft = parentFragmentManager.beginTransaction()
 
             ft.replace(R.id.profile_frame, BackProfileFragment()).commit()
-
         }
 
 

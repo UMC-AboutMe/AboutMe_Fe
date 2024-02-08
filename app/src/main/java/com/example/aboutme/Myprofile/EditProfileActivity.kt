@@ -26,7 +26,7 @@ class EditProfileActivity : AppCompatActivity() {
         setTabLayout()
 
         binding.profileEditPreviewBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity2::class.java)
+            val intent = Intent(this, PreviewProfileActivity::class.java)
             //intent.putExtra("positionId",0)
             startActivity(intent)
         }
