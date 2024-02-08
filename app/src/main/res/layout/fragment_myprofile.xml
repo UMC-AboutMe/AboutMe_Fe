@@ -28,23 +28,25 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/profile_frame"
-            android:layout_width="390dp"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="90dp"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="15dp"/>
-
-        <ImageButton
-            android:id="@+id/delete_multiProfile_btn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/mainprofile_trash"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="50dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="180dp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="60dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/myprofile_share_btn"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/finihEdit_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="완료"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:layout_marginTop="-20dp"
+            android:fontFamily="@font/gmarketsansmedium"
+            app:layout_constraintTop_toBottomOf="@id/profile_frame"
+            android:background="@color/transparent"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

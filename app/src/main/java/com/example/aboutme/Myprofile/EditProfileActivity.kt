@@ -1,5 +1,7 @@
 package com.example.aboutme.Myprofile
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.aboutme.R
@@ -22,6 +24,12 @@ class EditProfileActivity : AppCompatActivity() {
             .commit()
 
         setTabLayout()
+
+        binding.profileEditPreviewBtn.setOnClickListener {
+            val intent = Intent(this, MainActivity2::class.java)
+            //intent.putExtra("positionId",0)
+            startActivity(intent)
+        }
     }
     private fun setTabLayout() {
 
