@@ -91,6 +91,7 @@
             android:textSize="20sp"
             android:ems="12"
             android:hint="    이름"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="-73dp"
             android:background="@color/transparent"
             android:fontFamily="@font/gmarketsansmedium"/>
@@ -105,7 +106,8 @@
             android:layout_width="330dp"
             android:layout_height="100dp"
             android:src="@drawable/editprofile_box"
-            android:layout_marginTop="-30dp"/>
+            android:layout_marginTop="-30dp"
+            android:background="@color/white"/>
 
         <EditText
             android:id="@+id/profile_number_et"
@@ -114,6 +116,7 @@
             android:textSize="15sp"
             android:fontFamily="@font/gmarketsansmedium"
             android:ems="12"
+            android:layout_marginLeft="20dp"
             android:hint="  전화번호 / 메일주소 / Instagram"
             android:layout_marginTop="-73dp"
             android:background="@color/transparent"/>
