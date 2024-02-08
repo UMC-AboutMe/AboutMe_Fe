@@ -1,121 +1,130 @@
 package com.example.aboutme.Agit
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.aboutme.RetrofitMyspaceAgit.AgitSpaceData
 import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyspaceAgit.ResultModel
 import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClient
 import com.example.aboutme.RetrofitMyspaceAgit.YourResponseType
 import com.example.aboutme.databinding.FragmentAgitBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class AgitFragment : Fragment() {
 
-    lateinit var binding : FragmentAgitBinding
+    private lateinit var binding: FragmentAgitBinding
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var rvAdapter: AgitSpaceRVAdapter
+    private val itemList = mutableListOf<AgitSpaceData>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentAgitBinding.inflate(inflater, container, false)
 
-        binding = FragmentAgitBinding.inflate(inflater,container,false)
+        // 스와이프 리프레쉬 레이아웃 초기화
+        swipeRefreshLayout = binding.swipeRefreshLayout
+        swipeRefreshLayout.setColorSchemeColors(
+            // 스와이프 리프레쉬 레이아웃 색깔 변경 -> 블랙, 화이트
+            ContextCompat.getColor(requireContext(), R.color.black),
+            ContextCompat.getColor(requireContext(), R.color.white)
+        )
 
-        setAgitFragment()
+        swipeRefreshLayout.setOnRefreshListener {
+            // Coroutine을 사용하여 지연 작업 수행(UI 응답없음 방지를 위한 순차적 실행)
+            CoroutineScope(Dispatchers.Main).launch {
+                // 스켈레톤 UI 표시
+                binding.spaceStorageRv.visibility = View.GONE
+                binding.shimmerLayout.visibility = View.VISIBLE
+                binding.shimmerLayout.startShimmer()
+                delay(2000)
+                binding.spaceStorageRv.visibility = View.VISIBLE
+                fetchData()
+                binding.shimmerLayout.visibility = View.GONE
+                swipeRefreshLayout.isRefreshing = false // 새로고침 완료 시 리프레시 아이콘 감춤
+            }
+        }
+
+        fetchData()
 
         return binding.root
     }
 
-    private fun setAgitFragment() {
-        // Retrofit을 사용하여 API 호출
-        val call = RetrofitClient.apitest.getMySpaces("1")
-//        val call_add = RetrofitClient.apitest.addspace("1")
-        val itemList = mutableListOf<AgitSpaceData>()
+    private fun fetchData() {
+        binding.shimmerLayout.visibility
+        // retrofitclient에서 통신 방법 설정(GET, POST, DELETE, PATCH)
+        val call = RetrofitClient.apitest.getMySpaces("4")
 
-        // 리사이클러뷰에 예시 데이터 생성
-        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
-        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
-        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
-        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
-//        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
-//        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
-//        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
-//        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
-//        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
-//        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
-//        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
-//        itemList.add(AgitSpaceData(R.drawable.agit_space, "00's 스페이스"))
-
-        // API 호출로 서버에 저장되어있는 사용자들의 스페이스 정보 추출
-        call.enqueue(object : Callback<YourResponseType> {
+        call.enqueue(object : Callback<YourResponseType> { // API 호출(call, response 데이터 클래스 명시)
             override fun onResponse(call: Call<YourResponseType>, response: Response<YourResponseType>) {
-                if (response.isSuccessful) {
+                if (response.isSuccessful) { // API 호출 성공시
                     val result = response.body()?.result
-
-                    // API 응답 결과를 처리하는 작업 수행
                     result?.let {
                         updateUI(it)
                     }
-                } else {
-                    // API 오류 처리
+                } else { // API 호출 실패시
                     handleApiError(response)
                 }
             }
 
-            private fun updateUI(result: ResultModel) {
-                // Smart cast 오류를 해결하기 위해 명시적으로 null 체크
-                result.let {
-                    // result가 null이 아닌 경우에만 이 블록이 실행됨
-                    Log.d("MySpaceStep1Activity", "API 호출 성공: $it")
-                    Log.d("API TEST", "Result: $result")
-
-                    val dataList = result.memberSpaceList
-
-                    for (spaceModel in dataList) {
-                        // AgitSpaceData에 API에서 가져온 nickname을 설정
-                        itemList.add(AgitSpaceData(R.drawable.agit_space, "${spaceModel.nickname}'s 스페이스"))
-
-                        // API 호출 테스트 코드
-                        Log.d("API TEST", "Space ID: ${spaceModel.space_id}")
-                        Log.d("API TEST", "Nickname: ${spaceModel.nickname}")
-                        Log.d("API TEST", "Character Type: ${spaceModel.characterType}")
-                        Log.d("API TEST", "Room Type: ${spaceModel.roomType}")
-                        Log.d("API TEST", "Favorite: ${spaceModel.favorite}")
-                    }
-
-                    val rvadapter = AgitSpaceRVAdapter(itemList)
-
-                    binding.spaceStorageRv.adapter = rvadapter
-
-                    binding.spaceStorageRv.layoutManager = GridLayoutManager(requireContext(), 2)
-
-//                    val spaceid = result?.spaceId
-//                    Log.d("spaceID", "spaceid: $spaceid")
-                }
-            }
-
-            private fun handleApiError(response: Response<YourResponseType>) {
-                // TODO: API 오류를 처리하는 작업 수행
-
-                // TODO: 로그 추가
-                Log.e("handleApiError", "API 호출 실패: ${response.code()}")
-            }
-
+            // API 호출 실패시
             override fun onFailure(call: Call<YourResponseType>, t: Throwable) {
-                // API 호출 실패 처리
                 handleApiFailure(t)
             }
-
-            private fun handleApiFailure(t: Throwable) {
-                // TODO: API 호출 실패를 처리하는 작업 수행
-
-                // TODO: 로그 추가
-                Log.e("handleApiFailure", "API 호출 실패: ${t.message}")
-            }
         })
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun updateUI(result: ResultModel) {
+        // 서버에서 memberSpaceList 추출
+        val dataList = result.memberSpaceList
+
+        // 업데이트를 위해 기존 데이터 제거
+        itemList.clear()
+
+        // 서버에서 추출한 유저데이터리스트를 바탕으로 itemList에 하나씩 추가
+        for (spaceModel in dataList) {
+            itemList.add(AgitSpaceData(R.drawable.agit_space, "${spaceModel.nickname}'s 스페이스"))
+
+            // API TEST
+            Log.d("API TEST", "Space ID: ${spaceModel.space_id}")
+            Log.d("API TEST", "Nickname: ${spaceModel.nickname}")
+            Log.d("API TEST", "Character Type: ${spaceModel.characterType}")
+            Log.d("API TEST", "Room Type: ${spaceModel.roomType}")
+            Log.d("API TEST", "Favorite: ${spaceModel.favorite}")
+        }
+
+        rvAdapter = AgitSpaceRVAdapter(itemList)
+
+        binding.spaceStorageRv.adapter = rvAdapter
+        binding.spaceStorageRv.layoutManager = GridLayoutManager(requireContext(), 2)
+
+        // 어댑터에 데이터 세팅을 완료했다는 신호 전송
+        rvAdapter.notifyDataSetChanged()
+    }
+
+    // API ERROR 표시
+    private fun handleApiError(response: Response<YourResponseType>) {
+        Log.e("handleApiError", "API 호출 실패: ${response.code()}")
+    }
+
+    // API ERROR 표시
+    private fun handleApiFailure(t: Throwable) {
+        Log.e("handleApiFailure", "API 호출 실패: ${t.message}")
     }
 }
