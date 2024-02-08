@@ -22,7 +22,10 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="60dp"
         style="@style/TabLayoutStyle"
-        android:background="@color/white">
+        android:background="@color/white"
+        app:tabIndicatorColor="@color/black"
+        app:tabSelectedTextColor="@color/black"
+        app:tabIndicatorFullWidth="false">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
