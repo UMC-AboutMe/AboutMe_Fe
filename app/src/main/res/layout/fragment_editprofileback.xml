@@ -3,5 +3,116 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:src="@drawable/myprofilefeature"
+            android:layout_marginTop="20dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="330dp"
+                android:layout_height="100dp"
+                android:src="@drawable/editprofile_box"
+                android:layout_marginTop="-30dp"/>
+
+            <EditText
+                android:id="@+id/feature1_school_et"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:textSize="20sp"
+                android:ems="12"
+                android:hint="  학교 / 학과"
+                android:layout_marginTop="-73dp"
+                android:background="@color/transparent"
+                android:fontFamily="@font/gmarketsansmedium"/>
+
+            <ImageView
+                android:layout_width="330dp"
+                android:layout_height="100dp"
+                android:src="@drawable/editprofile_box"/>
+
+            <EditText
+                android:id="@+id/feature2_company_et"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:textSize="20sp"
+                android:ems="12"
+                android:hint="  회사 / 기관"
+                android:background="@color/transparent"
+                android:layout_marginTop="-73dp"
+                android:fontFamily="@font/gmarketsansmedium"/>
+
+            <ImageView
+                android:layout_width="330dp"
+                android:layout_height="100dp"
+                android:src="@drawable/editprofile_box"/>
+
+            <EditText
+                android:id="@+id/feature3_mbti_et"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:textSize="20sp"
+                android:ems="12"
+                android:hint="  MBTI"
+                android:background="@color/transparent"
+                android:layout_marginTop="-73dp"
+                android:fontFamily="@font/gmarketsansmedium"/>
+
+            <ImageView
+                android:layout_width="330dp"
+                android:layout_height="100dp"
+                android:src="@drawable/editprofile_box"/>
+
+            <EditText
+                android:id="@+id/feature4_hobby_et"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:textSize="20sp"
+                android:ems="12"
+                android:hint="  취미"
+                android:background="@color/transparent"
+                android:layout_marginTop="-73dp"
+                android:fontFamily="@font/gmarketsansmedium"/>
+
+
+        </LinearLayout>
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:src="@drawable/myprofiletmi"
+            android:layout_marginTop="-50dp"/>
+
+        <ImageView
+            android:layout_width="330dp"
+            android:layout_height="100dp"
+            android:src="@drawable/editprofile_box"
+            android:layout_marginTop="-30dp"/>
+
+        <EditText
+            android:id="@+id/profile_name_et"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:textSize="20sp"
+            android:ems="12"
+            android:hint="    입력"
+            android:layout_marginTop="-73dp"
+            android:background="@color/transparent"
+            android:fontFamily="@font/gmarketsansmedium"/>
+
+
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
