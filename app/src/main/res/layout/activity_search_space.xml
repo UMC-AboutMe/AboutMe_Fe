@@ -38,15 +38,14 @@
     <ImageView
         android:id="@+id/prof_bg"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_height="276dp"
         android:scaleType="fitXY"
-        android:src="@drawable/searchprof_bg"
+        android:src="@drawable/searchspace_bg2"
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/search_tv"
+        app:layout_constraintTop_toBottomOf="@+id/search_tv"
         tools:visibility="visible" />
 
     <ImageButton
@@ -114,9 +113,9 @@
 
     <ImageButton
         android:id="@+id/add_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="55dp"
-        android:layout_marginTop="48dp"
+        android:layout_width="255dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="15dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         android:src="@drawable/storagespace_btn"
@@ -130,31 +129,15 @@
 
     <ImageView
         android:id="@+id/example_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_width="185dp"
+        android:layout_height="153dp"
+        android:layout_marginTop="32dp"
         android:src="@drawable/searchspace_card"
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="@+id/prof_bg"
-        app:layout_constraintTop_toBottomOf="@+id/myspace_name"
-        tools:visibility="visible" />
-
-    <TextView
-        android:id="@+id/myspace_name"
-        android:layout_width="131dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="36dp"
-        android:background="@drawable/searchspace_bg"
-        android:fontFamily="@font/gmarketsansmedium"
-        android:gravity="center"
-        android:text="테디'S 스페이스"
-        android:textSize="10sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_tv"
+        app:layout_constraintTop_toTopOf="@+id/prof_bg"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:background="@drawable/myprofile_backbg">
+        android:background="@drawable/backprofile_img">
 
         <ImageButton
             android:id="@+id/turn_btn2"

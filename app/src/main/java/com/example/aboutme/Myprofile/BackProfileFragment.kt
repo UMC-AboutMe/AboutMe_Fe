@@ -3,15 +3,25 @@ package com.example.aboutme.Myprofile
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.aboutme.R
+import com.example.aboutme.RetrofitMyprofile.RetrofitClient
+import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
 import com.example.aboutme.databinding.FragmentBackprofileBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class BackProfileFragment : Fragment(), RecommendBottomSheet.OnMbtiSelectedListener,
     RecommendBottomSheet.OnSchoolSelectedListener,
@@ -23,6 +33,8 @@ class BackProfileFragment : Fragment(), RecommendBottomSheet.OnMbtiSelectedListe
     private var selectedButtonId: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        
+
 
 
         binding = FragmentBackprofileBinding.inflate(inflater,container, false)
@@ -254,6 +266,32 @@ class BackProfileFragment : Fragment(), RecommendBottomSheet.OnMbtiSelectedListe
         if(binding.backProfileEt1.text.toString().trim().isNotEmpty()){
             binding.backProfileEt1.isEnabled = false
         }
+
+
+        val retrofitClient = RetrofitClient.mainProfile
+
+// Coroutine을 사용하여 비동기 호출 수행
+        lifecycleScope.launch {
+            try {
+                // withContext를 사용하여 백그라운드 스레드에서 실행하도록 함
+                val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
+                    retrofitClient.getDataAll(7)
+                }
+
+                if (response.isSuccessful) {
+                    val responseData: GetAllProfile? = response.body()
+                    Log.d("Get 성공", "응답 데이터: $responseData")
+                    // responseData를 처리하는 로직 작성
+                } else {
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e("Get 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
+
+                }
+            } catch (e: Exception) {
+                Log.e("Get 요청 실패", "에러: ${e.message}")
+            }
+        }
+
 
 
         return binding.root

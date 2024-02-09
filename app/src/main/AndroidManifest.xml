@@ -8,8 +8,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -35,6 +34,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AboutMe"
         tools:targetApi="33">
+
+
         <activity
             android:name=".Tutorial.CustomDialogAlarm"
             android:exported="false" />
@@ -73,21 +74,6 @@
             android:name=".Alarm.AlarmActivity"
             android:exported="false" />
         <activity
-            android:name=".Mypage.MypageHelpActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Mypage.MypageNotiActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Mypage.MypageSettingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Mypage.MypageInsightActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Mypage.MypageInfoActivity"
-            android:exported="false" />
-        <activity
             android:name=".Mypage.MypageActivity"
             android:exported="false" />
         <activity
@@ -107,7 +93,14 @@
             android:exported="false" />
         <activity
             android:name=".bottomNavigationView"
-            android:exported="true" />
+            android:windowSoftInputMode="adjustPan"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Tutorial.TutorialActivity2"
             android:exported="true" />
@@ -117,11 +110,6 @@
         <activity
             android:name=".SplashActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
@@ -131,7 +119,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
