@@ -35,20 +35,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="71dp" />
 
-    <ImageView
-        android:id="@+id/prof_bg"
-        android:layout_width="0dp"
-        android:layout_height="324dp"
-        android:layout_marginTop="1dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/searchprof_bg"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/space_bg"
-        tools:visibility="visible" />
-
     <ImageButton
         android:id="@+id/back_btn"
         android:layout_width="34dp"
@@ -112,29 +98,46 @@
         app:layout_constraintTop_toBottomOf="@+id/myspace_iv"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-    <ImageButton
-        android:id="@+id/add_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="55dp"
-        android:background="@android:color/transparent"
-        android:scaleType="fitCenter"
-        android:src="@drawable/storageprof_btn"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/profView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/space_bg"
-        tools:ignore="SpeakableTextPresentCheck"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toBottomOf="@+id/search_tv">
 
-    <ImageView
-        android:id="@+id/space_bg"
-        android:layout_width="145dp"
-        android:layout_height="250dp"
-        android:src="@drawable/searprof_card"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/prof_bg"
-        app:layout_constraintTop_toBottomOf="@+id/search_tv"
-        tools:visibility="visible" />
+        <ImageView
+            android:id="@+id/prof_bg"
+            android:layout_width="0dp"
+            android:layout_height="324dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/searchprof_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/storageprof_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/space_bg"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageView
+            android:id="@+id/space_bg"
+            android:layout_width="145dp"
+            android:layout_height="250dp"
+            android:src="@drawable/searprof_card"
+            app:layout_constraintEnd_toEndOf="@+id/prof_bg"
+            app:layout_constraintStart_toStartOf="@+id/prof_bg"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
