@@ -70,6 +70,7 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
                             else{
                                 val nameDialog = NameDialogFragment()
 
+                                Log.d("!!!!","success")
                                 nameDialog.show((parent.context as AppCompatActivity).supportFragmentManager, nameDialog.tag)
                             }
                         } else {
