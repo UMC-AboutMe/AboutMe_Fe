@@ -105,7 +105,7 @@ class SearchSpaceActivity : AppCompatActivity() {
         }
     }
 
-    fun storeSpace() {
+    private fun storeSpace() {
         Log.d("Retrofit_Search", "스페이스 저장 실행")
 
         val call = SearchObj.getRetrofitService.postSpaceStorage(1,1)
