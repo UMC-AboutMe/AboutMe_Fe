@@ -10,8 +10,8 @@ class ProfStorageResponse {
         var result : ResultList
     )
     data class ResultList(
-        var memberProfile : List<Profiles>,
-        var totalProfiles : Int
+        var member_profiles : List<Profiles>,
+        var total_member_profiles : Int
     )
     data class Profiles (
         var member_profile_id : Int,

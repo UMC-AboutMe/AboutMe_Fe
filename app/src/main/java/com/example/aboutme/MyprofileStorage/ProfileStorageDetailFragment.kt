@@ -17,8 +17,6 @@ import retrofit2.Response
 
 class ProfileStorageDetailFragment : Fragment() {
     lateinit var binding: FragmentProfileStorageDetailBinding
-    private lateinit var adapter : ProfileRVAdapter
-    private val profileList = mutableListOf<ProfileData>() // 프로필 목록을 초기화합니다.
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
