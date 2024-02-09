@@ -18,6 +18,7 @@ import com.example.aboutme.RetrofitMyspaceAgit.YourResponseType
 import com.example.aboutme.databinding.FragmentAgitBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -48,6 +49,7 @@ class AgitFragment : Fragment() {
             // Coroutine을 사용하여 지연 작업 수행(UI 응답없음 방지를 위한 순차적 실행)
             CoroutineScope(Dispatchers.Main).launch {
                 fetchData()
+                delay(1500)
                 swipeRefreshLayout.isRefreshing = false // 새로고침 완료 시 리프레시 아이콘 감춤
             }
         }
