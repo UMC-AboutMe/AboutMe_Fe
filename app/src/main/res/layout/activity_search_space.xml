@@ -106,7 +106,8 @@
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/search_tv">
+        app:layout_constraintTop_toBottomOf="@+id/search_tv"
+        tools:visibility="visible">
 
         <ImageView
             android:id="@+id/prof_bg"
@@ -128,6 +129,28 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/roomTypeBg"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="@+id/space_bg"
+            app:layout_constraintStart_toStartOf="@+id/space_bg"
+            app:layout_constraintTop_toTopOf="@+id/space_bg"
+            app:srcCompat="@drawable/search_room1" />
+
+        <ImageView
+            android:id="@+id/charTypeBg"
+            android:layout_width="23dp"
+            android:layout_height="26dp"
+            app:layout_constraintBottom_toTopOf="@+id/spaceName"
+            app:layout_constraintEnd_toEndOf="@+id/roomTypeBg"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="@+id/roomTypeBg"
+            app:layout_constraintTop_toTopOf="@+id/roomTypeBg"
+            app:layout_constraintVertical_bias="0.575"
+            app:srcCompat="@drawable/step2_avatar_5" />
 
         <TextView
             android:id="@+id/spaceName"
@@ -154,6 +177,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/space_bg"
             tools:ignore="SpeakableTextPresentCheck" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

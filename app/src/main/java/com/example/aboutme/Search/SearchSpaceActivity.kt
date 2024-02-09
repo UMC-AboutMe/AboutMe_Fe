@@ -43,8 +43,8 @@ class SearchSpaceActivity : AppCompatActivity() {
     private fun getSearchSpace() {
         Log.d("Retrofit_Search", "스페이스 검색 실행")
         val spaceName = binding.searchTv.toString()
-        val call = SearchObj.getRetrofitService.getSearchSpace(spaceName)
-        //val call = SearchObj.getRetrofitService.getSearchSpace("짱구")
+        //val call = SearchObj.getRetrofitService.getSearchSpace(spaceName)
+        val call = SearchObj.getRetrofitService.getSearchSpace("짱구")
 
         call.enqueue(object : Callback<SearchResponse.ResponseSearchSpace> {
             override fun onResponse(
@@ -59,6 +59,8 @@ class SearchSpaceActivity : AppCompatActivity() {
                             Log.d("Retrofit_Search_Success", response.toString())
                             binding.spaceView.visibility = View.VISIBLE
                             binding.spaceName.text = "${response.result.nickname}'s 스페이스"
+                            roomType(response.result.roomType)
+                            avatarType(response.result.characterType)
                         } else {
                             //실패했을 때
                             Log.d("Retrofit_Search_Failed", response.message)
@@ -78,5 +80,27 @@ class SearchSpaceActivity : AppCompatActivity() {
                 binding.spaceView.visibility = View.GONE
             }
         })
+    }
+
+    fun roomType(Type : Int) {
+        when(Type) {
+            1-> binding.roomTypeBg.setImageResource(R.drawable.search_room1)
+            2-> binding.roomTypeBg.setImageResource(R.drawable.search_room2)
+            3-> binding.roomTypeBg.setImageResource(R.drawable.search_room3)
+            4-> binding.roomTypeBg.setImageResource(R.drawable.search_room4)
+        }
+    }
+    fun avatarType(Type : Int) {
+        when(Type) {
+            1-> binding.charTypeBg.setImageResource(R.drawable.step2_avatar_1)
+            2-> binding.charTypeBg.setImageResource(R.drawable.step2_avatar_2)
+            3-> binding.charTypeBg.setImageResource(R.drawable.step2_avatar_3)
+            4-> binding.charTypeBg.setImageResource(R.drawable.step2_avatar_4)
+            5-> binding.charTypeBg.setImageResource(R.drawable.step2_avatar_5)
+            6-> binding.charTypeBg.setImageResource(R.drawable.step2_avatar_6)
+            7-> binding.charTypeBg.setImageResource(R.drawable.step2_avatar_7)
+            8-> binding.charTypeBg.setImageResource(R.drawable.step2_avatar_8)
+            9-> binding.charTypeBg.setImageResource(R.drawable.step2_avatar_9)
+        }
     }
 }
