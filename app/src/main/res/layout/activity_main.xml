@@ -1,64 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-<layout>
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity"
-        android:orientation="vertical"
-        android:background="@color/white">
-
+        tools:context=".MainActivity">
 
         <TextView
+            android:id="@+id/main_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="나만의 공간을\n만들어 볼까요?"
-            android:fontFamily="@font/gmarketsansmedium"
             android:layout_marginTop="150dp"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:text="나만의 공간을\n만들어 볼까요?"
             android:textSize="30sp"
-            android:layout_marginLeft="20dp"/>
+            app:layout_constraintStart_toStartOf="@+id/main_iv"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/main_iv"
+            android:layout_width="321dp"
+            android:layout_height="91dp"
+            android:layout_marginTop="30dp"
             android:src="@drawable/login_icon"
-            android:layout_gravity="center"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_tv" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="로그인 방법 선택"
-            android:layout_gravity="center"
-            android:fontFamily="@font/gmarketsansmedium"
-            android:layout_marginTop="150dp"
-            android:textSize="18sp"/>
+        <ImageView
+            android:id="@+id/google_iv"
+            android:layout_width="254dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="15dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/login_google"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/kakao_iv" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp">
-
-            <ImageView
-                android:id="@+id/google_iv"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:src="@drawable/login_google"
-                android:layout_marginRight="30dp"/>
-
-            <ImageView
-                android:id="@+id/kakao_iv"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:src="@drawable/login_kakao"/>
-
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/kakao_iv"
+            android:layout_width="254dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="100dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/login_kakao"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_iv" />
 
 
-
-    </LinearLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
