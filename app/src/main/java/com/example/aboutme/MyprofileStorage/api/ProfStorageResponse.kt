@@ -51,4 +51,23 @@ class ProfStorageResponse {
     data class IsFavorite(
         val favorite : Boolean
     )
+
+    //프로필 보관함 검색
+    data class ResponseSearchProf(
+        val isSuccess: Boolean,
+        val code: String,
+        val message: String,
+        val result: ProfileList
+    )
+    data class ProfileList (
+        val profileId : Int,
+        val profileName : String,
+        val favorite : Boolean,
+        val image : Image
+            )
+    data class Image (
+        val type : Int,
+        val characterType : Int?,
+        val profile_image_url : String?
+            )
 }
