@@ -33,14 +33,26 @@
         app:layout_constraintStart_toStartOf="@+id/profile1_iv" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/prof_fav"
         android:layout_width="20dp"
         android:layout_height="27dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="18dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/profile1_iv"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/profstorage_star" />
+
+    <ImageView
+        android:id="@+id/prof_basic"
+        android:layout_width="22dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="17dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="@+id/profile1_iv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/profstorage_favbasic" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

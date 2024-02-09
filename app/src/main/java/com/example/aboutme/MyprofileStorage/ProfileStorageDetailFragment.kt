@@ -10,12 +10,16 @@ import com.example.aboutme.MyprofileStorage.api.ProfStorageObj
 import com.example.aboutme.MyprofileStorage.api.ProfStorageResponse
 import com.example.aboutme.R
 import com.example.aboutme.databinding.FragmentProfileStorageDetailBinding
+import com.kakao.sdk.user.model.Profile
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class ProfileStorageDetailFragment : Fragment() {
     lateinit var binding: FragmentProfileStorageDetailBinding
+    private lateinit var adapter : ProfileRVAdapter
+    private val profileList = mutableListOf<ProfileData>() // 프로필 목록을 초기화합니다.
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,9 +30,14 @@ class ProfileStorageDetailFragment : Fragment() {
         binding.trashButton.setOnClickListener {
             deleteProfiles()
         }
-        binding.testbutton.setOnClickListener {
-            favProfiles()
-        }
+
+        adapter = ProfileRVAdapter(profileList) // ProfileRVAdapter 생성 시 profileList를 넘겨줍니다.
+        adapter.setOnItemClickListener(object : ProfileRVAdapter.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                val clickedProfile = profileList[position]
+                Log.d("ProfileClick", "Clicked profile: $clickedProfile")
+            }
+        })
         return binding.root
     }
 

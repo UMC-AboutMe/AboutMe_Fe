@@ -43,11 +43,21 @@ class ProfileRVAdapter(val items : MutableList<ProfileData>) :RecyclerView.Adapt
         fun bindItems(items : ProfileData){
             val profileImage = itemView.findViewById<ImageView>(R.id.profile1_iv)
             val profileName = itemView.findViewById<TextView>(R.id.profileName_tv)
+            val profBasic = itemView.findViewById<ImageView>(R.id.prof_basic)
+            val profFav = itemView.findViewById<ImageView>(R.id.prof_fav)
 
             profileImage.setImageResource(items.profile_img)
             profileName.text = items.profile_name
 
-
+            //버튼의 가시성 변경
+            profBasic.setOnClickListener {
+                profBasic.visibility = View.GONE
+                profFav.visibility =View.VISIBLE
+            }
+            profFav.setOnClickListener {
+                profFav.visibility = View.GONE
+                profBasic.visibility =View.VISIBLE
+            }
         }
 
         init {
@@ -59,8 +69,6 @@ class ProfileRVAdapter(val items : MutableList<ProfileData>) :RecyclerView.Adapt
                 }
             }
         }
-
-        
     }
 
 }
