@@ -26,6 +26,7 @@ class SearchSpaceActivity : AppCompatActivity() {
 
         //Dialog
         binding.addBtn.setOnClickListener {
+            storeSpace()
                 CustomDialogSpace("내 스페이스도 공유 하시겠습니까?")
                 .show(supportFragmentManager, "SpaceDialog")
         }
@@ -102,5 +103,38 @@ class SearchSpaceActivity : AppCompatActivity() {
             8-> binding.charTypeBg.setImageResource(R.drawable.step2_avatar_8)
             9-> binding.charTypeBg.setImageResource(R.drawable.step2_avatar_9)
         }
+    }
+
+    fun storeSpace() {
+        Log.d("Retrofit_Search", "스페이스 저장 실행")
+
+        val call = SearchObj.getRetrofitService.postSpaceStorage(1,1)
+
+        call.enqueue(object : Callback<SearchResponse.ResponseSpaceStorage> {
+            override fun onResponse(
+                call: Call<SearchResponse.ResponseSpaceStorage>,
+                response: Response<SearchResponse.ResponseSpaceStorage>
+            ) {
+                if (response.isSuccessful) { // HTTP 응답 코드가 200에서 300 사이인지 확인
+                    val response = response.body()
+                    if (response != null) {
+                        if (response.isSuccess) {
+                            //성공했을 때
+                            Log.d("Retrofit_Storage_Success", response.toString())
+                        } else {
+                            //실패했을 때
+                            Log.d("Retrofit_Storage_Failed", response.message)
+                        }
+                    }
+                }
+                else {
+                    Log.d("Retrofit_Storage_Failed", response.toString())
+                }
+            }
+            override fun onFailure(call: Call<SearchResponse.ResponseSpaceStorage>, t: Throwable) {
+                val errorMessage = "Call Failed:  ${t.message}"
+                Log.d("Retrofit_Storage_Error", errorMessage)
+            }
+        })
     }
 }
