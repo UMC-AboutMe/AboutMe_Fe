@@ -48,8 +48,10 @@ class AgitFragment : Fragment() {
         swipeRefreshLayout.setOnRefreshListener {
             // Coroutine을 사용하여 지연 작업 수행(UI 응답없음 방지를 위한 순차적 실행)
             CoroutineScope(Dispatchers.Main).launch {
+                isLoading(true)
                 fetchData()
                 delay(1500)
+                isLoading(false)
                 swipeRefreshLayout.isRefreshing = false // 새로고침 완료 시 리프레시 아이콘 감춤
             }
         }
@@ -57,6 +59,19 @@ class AgitFragment : Fragment() {
         fetchData()
 
         return binding.root
+    }
+
+    private fun isLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.shimmerLayout.startShimmer()
+            binding.shimmerLayout.visibility = View.VISIBLE
+            binding.spaceStorageRv.visibility = View.GONE
+        }
+        else {
+            binding.shimmerLayout.stopShimmer()
+            binding.shimmerLayout.visibility = View.GONE
+            binding.spaceStorageRv.visibility = View.VISIBLE
+        }
     }
 
     private fun fetchData() {
