@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import com.example.aboutme.R
 import com.example.aboutme.Search.CustomDialog
@@ -22,8 +23,12 @@ class TutorialActivity1 : AppCompatActivity() {
         CustomDialogAlarm("알림을 보내도록 허용하시겠습니까?")
             .show(supportFragmentManager, "AlarmDialog")
         //binding= DataBindingUtil.setContentView(this, R.layout.activity_tutorial1)
+
+        val fadeIn = AnimationUtils.loadAnimation(this,R.anim.fade_in)
+
         binding.tutNextBtn1.setOnClickListener {
             binding.tutNextBtn2.visibility = View.VISIBLE
+            binding.tut2Tv.startAnimation(fadeIn)
             binding.tut2Tv.visibility = View.VISIBLE
 
             binding.tutNextBtn1.visibility = View.GONE
@@ -33,7 +38,9 @@ class TutorialActivity1 : AppCompatActivity() {
         }
         binding.tutNextBtn2.setOnClickListener {
             binding.tutNextBtn3.visibility = View.VISIBLE
+            binding.tut3Tv.startAnimation(fadeIn)
             binding.tut3Tv.visibility = View.VISIBLE
+
 
             binding.tutNextBtn1.visibility = View.GONE
             binding.tut1Tv.visibility = View.GONE
