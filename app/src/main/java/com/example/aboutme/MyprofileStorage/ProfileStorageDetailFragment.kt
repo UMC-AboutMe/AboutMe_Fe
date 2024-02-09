@@ -31,13 +31,6 @@ class ProfileStorageDetailFragment : Fragment() {
             deleteProfiles()
         }
 
-        adapter = ProfileRVAdapter(profileList) // ProfileRVAdapter 생성 시 profileList를 넘겨줍니다.
-        adapter.setOnItemClickListener(object : ProfileRVAdapter.OnItemClickListener {
-            override fun onItemClick(view: View, position: Int) {
-                val clickedProfile = profileList[position]
-                Log.d("ProfileClick", "Clicked profile: $clickedProfile")
-            }
-        })
         return binding.root
     }
 
@@ -92,42 +85,5 @@ class ProfileStorageDetailFragment : Fragment() {
             }
         }
         )
-    }
-
-    //프로필 보관함 즐겨찾기 등록
-    private fun favProfiles() {
-        Log.d("Retrofit_Fav", "patch 함수 호출됨")
-        val call = ProfStorageObj.getRetrofitService.patchProfStorage(4, 1)
-
-        call.enqueue(object : Callback<ProfStorageResponse.ResponseFavProf> {
-            override fun onResponse(
-                call: Call<ProfStorageResponse.ResponseFavProf>,
-                response: Response<ProfStorageResponse.ResponseFavProf>
-            ) {
-                Log.d("Retrofit_Fav", response.toString())
-                if (response.isSuccessful) { // HTTP 응답 코드가 200번대인지 여부 확인
-                    val response = response.body()
-                    Log.d("Retrofit", response.toString())
-
-                    if (response != null) {
-                        if (response.isSuccess) {
-                            //성공했을 때
-                            Log.d("Retrofit_Fav", "처리에 성공함")
-                        } else {
-                            //실패했을 때
-                            Log.d("Retrofit_Fav", "처리에 실패함")
-                        }
-                    }
-                }
-            }
-
-            override fun onFailure(
-                call: Call<ProfStorageResponse.ResponseFavProf>,
-                t: Throwable
-            ) {
-                val errorMessage = "Call Failed:  ${t.message}"
-                Log.d("Retrofit_Fav", errorMessage)
-            }
-        })
     }
 }

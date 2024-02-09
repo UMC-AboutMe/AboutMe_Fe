@@ -8,7 +8,12 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.aboutme.MyprofileStorage.api.ProfStorageObj
+import com.example.aboutme.MyprofileStorage.api.ProfStorageResponse
 import com.example.aboutme.R
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProfileRVAdapter(val items : MutableList<ProfileData>) :RecyclerView.Adapter<ProfileRVAdapter.ViewHolder>() {
 
@@ -53,10 +58,14 @@ class ProfileRVAdapter(val items : MutableList<ProfileData>) :RecyclerView.Adapt
             profBasic.setOnClickListener {
                 profBasic.visibility = View.GONE
                 profFav.visibility =View.VISIBLE
+                //favProfiles(adapterPosition)
+                favProfiles()
             }
             profFav.setOnClickListener {
                 profFav.visibility = View.GONE
                 profBasic.visibility =View.VISIBLE
+                //favProfiles(adapterPosition)
+                favProfiles()
             }
         }
 
@@ -70,6 +79,43 @@ class ProfileRVAdapter(val items : MutableList<ProfileData>) :RecyclerView.Adapt
             }
         }
     }
+    //프로필 보관함 즐겨찾기 등록
+    private fun favProfiles() {
+//        private fun favProfiles(position : Int) {
+        Log.d("Retrofit_Fav", "patch 함수 호출됨")
+        val call = ProfStorageObj.getRetrofitService.patchProfStorage(4, 1)
+        //val call = ProfStorageObj.getRetrofitService.patchProfStorage(4, position+1)
 
+        call.enqueue(object : Callback<ProfStorageResponse.ResponseFavProf> {
+            override fun onResponse(
+                call: Call<ProfStorageResponse.ResponseFavProf>,
+                response: Response<ProfStorageResponse.ResponseFavProf>
+            ) {
+                Log.d("Retrofit_Fav", response.toString())
+                if (response.isSuccessful) { // HTTP 응답 코드가 200번대인지 여부 확인
+                    val response = response.body()
+                    Log.d("Retrofit", response.toString())
+
+                    if (response != null) {
+                        if (response.isSuccess) {
+                            //성공했을 때
+                            Log.d("Retrofit_Fav", "처리에 성공함")
+                        } else {
+                            //실패했을 때
+                            Log.d("Retrofit_Fav", "처리에 실패함")
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(
+                call: Call<ProfStorageResponse.ResponseFavProf>,
+                t: Throwable
+            ) {
+                val errorMessage = "Call Failed:  ${t.message}"
+                Log.d("Retrofit_Fav", errorMessage)
+            }
+        })
+    }
 }
 
