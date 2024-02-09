@@ -46,7 +46,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/example_iv"
+        app:layout_constraintTop_toTopOf="@+id/space_bg"
         tools:visibility="visible" />
 
     <ImageButton
@@ -122,12 +122,12 @@
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/example_iv"
+        app:layout_constraintTop_toBottomOf="@+id/space_bg"
         tools:ignore="SpeakableTextPresentCheck"
         tools:visibility="visible" />
 
     <ImageView
-        android:id="@+id/example_iv"
+        android:id="@+id/space_bg"
         android:layout_width="145dp"
         android:layout_height="250dp"
         android:src="@drawable/searprof_card"

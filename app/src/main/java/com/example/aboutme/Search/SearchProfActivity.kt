@@ -40,12 +40,10 @@ class SearchProfActivity : AppCompatActivity() {
             if (binding.searchTv.text.toString() == "123456") {
                 binding.profBg.visibility = View.VISIBLE
                 binding.addBtn.visibility = View.VISIBLE
-                binding.exampleIv.visibility = View.VISIBLE
             }
             else {
                 binding.profBg.visibility = View.GONE
                 binding.addBtn.visibility = View.GONE
-                binding.exampleIv.visibility = View.GONE
             }
         }
     }
