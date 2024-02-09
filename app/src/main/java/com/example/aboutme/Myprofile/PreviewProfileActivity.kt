@@ -26,6 +26,13 @@ class PreviewProfileActivity : AppCompatActivity() {
             //intent.putExtra("positionId",0)
             startActivity(intent)
         }
+
+        binding.finihEditBtn.setOnClickListener {
+            val noEditDialog = NoEditDialogFragment()
+
+            Log.d("!!!!","success")
+            noEditDialog.show(supportFragmentManager, noEditDialog.tag)
+        }
     }
 
     private fun setFrag(fragNum : Int){
