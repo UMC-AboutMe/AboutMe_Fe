@@ -3,14 +3,8 @@ package com.example.aboutme.Tutorial
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.databinding.DataBindingUtil
-import com.example.aboutme.Myspace.MySpaceStep1Activity
-import com.example.aboutme.R
 import com.example.aboutme.bottomNavigationView
-import com.example.aboutme.databinding.ActivityTutorial2Binding
 import com.example.aboutme.databinding.ActivityTutorial3Binding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class TutorialActivity3 : AppCompatActivity() {
 
