@@ -1,6 +1,7 @@
 package com.example.aboutme.Myprofile
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.aboutme.R
@@ -14,6 +15,26 @@ class MainActivity2 : AppCompatActivity(), BottomSheet2.OnBottomSheetListener{
         setContentView(R.layout.activity_main2)
 
         if (savedInstanceState == null) {
+            // 기존 코드: val myProfileFragment = MyProfileFragment()
+            val positionId = intent.getIntExtra("positionId", -1)
+            // 수정된 코드: 새로운 인스턴스 생성 및 번들 설정
+            val myProfileFragment = MyProfileFragment.newInstance(positionId)
+
+            // 번들에 positionId 추가
+            val bundle = Bundle().apply {
+                putInt("positionId", positionId)
+            }
+            myProfileFragment.arguments = bundle
+
+            supportFragmentManager.beginTransaction().apply {
+                setReorderingAllowed(true)
+                add(R.id.frame_container, myProfileFragment)
+                commit()
+            }
+
+        }
+
+        /*if (savedInstanceState == null) {
             val myProfileFragment = MyProfileFragment()
 
             supportFragmentManager.beginTransaction().apply {
@@ -21,7 +42,16 @@ class MainActivity2 : AppCompatActivity(), BottomSheet2.OnBottomSheetListener{
                 add(R.id.frame_container, myProfileFragment)
                 commit()
             }
+
         }
+
+        val positionId = intent.getIntExtra("positionId", -1)
+
+        var myProfileFragment = MyProfileFragment()
+        var bundle = Bundle()
+        bundle.putInt("positionId",positionId)
+        myProfileFragment.arguments = bundle
+        Log.d("positionId!!",positionId.toString())*/
     }
 
     override fun onResume() {
