@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -106,7 +107,7 @@
             android:layout_width="330dp"
             android:layout_height="100dp"
             android:src="@drawable/editprofile_box"
-            android:layout_marginTop="-30dp"
+            android:layout_marginTop="-20dp"
             android:background="@color/white"/>
 
         <EditText
@@ -121,6 +122,17 @@
             android:layout_marginTop="-73dp"
             android:background="@color/transparent"/>
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/profileEditPreview_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="미리보기"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:background="@color/transparent"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:textSize="25sp"/>
 
 
     </LinearLayout>

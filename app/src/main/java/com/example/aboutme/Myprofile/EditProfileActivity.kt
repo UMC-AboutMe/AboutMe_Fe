@@ -16,6 +16,7 @@ class EditProfileActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityEditprofileBinding.inflate(layoutInflater)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -38,13 +39,17 @@ class EditProfileActivity : AppCompatActivity() {
 
         setTabLayout()
 
-        binding.profileEditPreviewBtn.setOnClickListener {
+        /*binding.profileEditPreviewBtn.setOnClickListener {
             val intent2 = Intent(this, PreviewProfileActivity::class.java)
             intent2.putExtra("prodilId2",profileId)
             startActivity(intent2)
-        }
+        }*/
+
+
 
     }
+
+
     private fun setTabLayout() {
 
         binding.storeFragmentTablayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

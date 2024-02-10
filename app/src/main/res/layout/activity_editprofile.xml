@@ -46,22 +46,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="80dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/store_fragment_tablayout">
     </FrameLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/profileEditPreview_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="미리보기"
-        android:fontFamily="@font/gmarketsansmedium"
-        android:background="@color/transparent"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/tab_layout_container"
-        android:gravity="center"
-        android:textSize="25sp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
