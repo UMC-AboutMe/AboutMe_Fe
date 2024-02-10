@@ -56,10 +56,10 @@ class NameDialogFragment():DialogFragment(){
                 // 저장 버튼 클릭 시 EditText의 값을 서버로 전송
             val name = binding.nameDialogEdit.text.toString()
             sendDataToServer(name)
-            val intent = Intent(activity, MainActivity2::class.java)
+            val intent = Intent(activity, EditProfileActivity::class.java)
             Log.d("다이얼로그", "success")
 
-            //intent.putExtra("key", value)
+            intent.putExtra("dialogName", name)
 
             // 액티비티2로 이동
             startActivity(intent)
@@ -89,7 +89,7 @@ class NameDialogFragment():DialogFragment(){
     }
 
     private fun sendDataToServer(name: String) {
-        // Retrofit을 사용하여 서버에 데이터를 전송하는 과정입니다.
+        // Retrofit을 사용하여 서버에 데이터를 전송
         val postData = PostProfile(name)
         RetrofitClient.mainProfile.submitData(postData).enqueue(object : Callback<ResponsePostProfile> {
             override fun onResponse(call: Call<ResponsePostProfile>, response: Response<ResponsePostProfile>) {
