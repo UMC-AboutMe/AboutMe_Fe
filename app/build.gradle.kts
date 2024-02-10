@@ -105,13 +105,19 @@ dependencies {
     implementation ("androidx.navigation:navigation-fragment-ktx:2.4.2")
     implementation ("androidx.navigation:navigation-ui-ktx:2.4.2")
 
-    //
+    // retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
-    //
+    // google gson
     implementation ("com.google.code.gson:gson:2.8.8")
 
+    // http3
     implementation ("com.squareup.okhttp3:logging-interceptor:4.8.1")
 
+    // 리사이클러뷰 아이템 shimmer effect
+    implementation ("com.facebook.shimmer:shimmer:0.5.0")
+
+    // swipe refresh
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 }
