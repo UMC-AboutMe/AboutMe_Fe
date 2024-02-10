@@ -41,6 +41,7 @@
             android:ems="14"
             android:background="@android:color/transparent"/>
 
+        <!--    swiperefreshlayout의 위에 ShimmerFrameLayout을 위치   <-->
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmerLayout"
             android:layout_width="match_parent"
