@@ -11,8 +11,8 @@ data class ResultXX(
     val isDefault: Boolean,
     @SerializedName("profile_id")
     val profileId: Long,
-    @SerializedName("profile_img_url")
-    val profileImgUrl: String,
+    @SerializedName("profile_image")
+    val profileImage: ProfileImage,
     @SerializedName("serial_number")
     val serialNumber: Int
 )

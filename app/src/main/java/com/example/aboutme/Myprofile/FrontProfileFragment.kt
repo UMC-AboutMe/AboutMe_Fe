@@ -111,7 +111,7 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
         profileEdit1.addTextChangedListener (object : TextWatcher {
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                //
+
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {

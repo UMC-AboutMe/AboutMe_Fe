@@ -3,6 +3,7 @@ package com.example.aboutme.Myprofile
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.aboutme.R
 import com.example.aboutme.databinding.ActivityEditprofileBinding
@@ -25,11 +26,18 @@ class EditProfileActivity : AppCompatActivity() {
 
         setTabLayout()
 
+        val profileId = intent.getStringExtra("profileId")
+        Log.d("intent데이터",profileId.toString())
+
+        val intent1 = Intent(this, EditProfileFrontFragment::class.java)
+        intent1.putExtra("profilId1",profileId)
+
         binding.profileEditPreviewBtn.setOnClickListener {
-            val intent = Intent(this, PreviewProfileActivity::class.java)
-            //intent.putExtra("positionId",0)
-            startActivity(intent)
+            val intent2 = Intent(this, PreviewProfileActivity::class.java)
+            intent2.putExtra("prodilId2",profileId)
+            startActivity(intent2)
         }
+
     }
     private fun setTabLayout() {
 
