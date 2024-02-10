@@ -46,7 +46,7 @@ class ProfileRVAdapter(val items : MutableList<ProfileData>) :RecyclerView.Adapt
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindItems(items : ProfileData){
-            val profileImage = itemView.findViewById<ImageView>(R.id.profile1_iv)
+            val profileImage = itemView.findViewById<ImageView>(R.id.avatar_iv)
             val profileName = itemView.findViewById<TextView>(R.id.profileName_tv)
             val profBasic = itemView.findViewById<ImageView>(R.id.prof_basic)
             val profFav = itemView.findViewById<ImageView>(R.id.prof_fav)

@@ -57,17 +57,21 @@ class ProfStorageResponse {
         val isSuccess: Boolean,
         val code: String,
         val message: String,
-        val result: ProfileList
+        val result: Result
     )
-    data class ProfileList (
-        val profileId : Int,
-        val profileName : String,
-        val favorite : Boolean,
-        val image : Image
-            )
-    data class Image (
-        val type : Int,
-        val characterType : Int?,
-        val profile_image_url : String?
-            )
+    data class Result(
+        val memberProfileList: List<MemberProfile>
+    )
+    data class MemberProfile(
+        val profileId: Int,
+        val profileName: String,
+        val favorite: Boolean,
+        val image: Image
+    )
+    data class Image(
+        val type: String,
+        val characterType: Int?,
+        val profile_image_url: String?
+    )
+
 }

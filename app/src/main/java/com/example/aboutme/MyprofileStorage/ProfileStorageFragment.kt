@@ -40,6 +40,10 @@ class ProfileStorageFragment : Fragment() {
         //프로필 보관함 조회 api
         getProfiles()
 
+        binding.searchBtn.setOnClickListener {
+            getSearchProfiles()
+        }
+
         rvAdapter.setOnItemClickListener(object : ProfileRVAdapter.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 Log.d("클릭2", "success")
@@ -73,6 +77,7 @@ class ProfileStorageFragment : Fragment() {
                     if (response != null) {
                         if (response.isSuccess) {
                             //성공했을 때
+                            itemList.clear()
                             Log.d("Retrofit_Get_Success", response.toString())
                             for (i in 1 .. response.result.total_member_profiles){
                                 Log.d("Retrofit_Get_Success", "$i 프로필 조회")
@@ -92,6 +97,70 @@ class ProfileStorageFragment : Fragment() {
 
             override fun onFailure(
                 call: Call<ProfStorageResponse.ResponeProfStorage>,
+                t: Throwable
+            ) {
+                val errorMessage = "Call Failed:  ${t.message}"
+                Log.d("Retrofit_Get_Error", errorMessage)
+            }
+        }
+        )
+    }
+
+    //프로필 보관함 검색 api
+    private fun getSearchProfiles(){
+        val call = ProfStorageObj.getRetrofitService.getSearchProf("아",1)
+
+        call.enqueue(object : Callback<ProfStorageResponse.ResponseSearchProf> {
+            override fun onResponse(
+                call: Call<ProfStorageResponse.ResponseSearchProf>,
+                response: Response<ProfStorageResponse.ResponseSearchProf>
+            ) {
+                if (response.isSuccessful) {
+                    val response = response.body()
+                    if (response != null) {
+                        if (response.isSuccess) {
+                            //성공했을 때
+                            itemList.clear()
+                            Log.d("Retrofit_Get_Success", response.toString())
+                            //response.result.memberProfileList.forEach { profile ->
+                                //itemList.add(ProfileData(R.drawable.profilestorage_profile, profile.profileName))
+                            //}
+                            response.result.memberProfileList.forEach { profile ->
+                                val imageResId = when {
+                                    profile.image.type == "CHARACTER" && profile.image.characterType in 1..8 -> {
+                                        when (profile.image.characterType) {
+                                            1 -> R.drawable.prof_avater1
+                                            2 -> R.drawable.prof_avater2
+                                            3 -> R.drawable.prof_avater3
+                                            4 -> R.drawable.prof_avater4
+                                            5 -> R.drawable.prof_avater5
+                                            6 -> R.drawable.prof_avater6
+                                            7 -> R.drawable.prof_avater7
+                                            8 -> R.drawable.prof_avater8
+                                            else -> R.drawable.prof_avater9
+                                        }
+                                    }
+                                    profile.image.type == "USER_IMAGE" -> R.drawable.prof_avater1
+                                    else -> R.drawable.prof_avater1
+                                }
+                                itemList.add(ProfileData(imageResId, profile.profileName))
+                            }
+
+
+                            rvAdapter.notifyDataSetChanged() //얘가 없으면 아이템이 갱신되지 않는다! 중요
+                        } else {
+                            //실패했을 때
+                            Log.d("Retrofit_Get_Failed", response.toString())
+                        }
+                    }
+                }
+                else {
+                    Log.d("Retrofit_Get_Failed", response.toString())
+                }
+            }
+
+            override fun onFailure(
+                call: Call<ProfStorageResponse.ResponseSearchProf>,
                 t: Throwable
             ) {
                 val errorMessage = "Call Failed:  ${t.message}"
