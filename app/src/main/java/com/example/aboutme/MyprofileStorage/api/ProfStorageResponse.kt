@@ -46,9 +46,9 @@ class ProfStorageResponse {
         val isSuccess: Boolean,
         val code: String,
         val message: String,
-        val result: isFavorite
+        val result: IsFavorite
     )
-    data class isFavorite(
+    data class IsFavorite(
         val favorite : Boolean
     )
 }

@@ -39,10 +39,10 @@
 
             <ImageButton
                 android:id="@+id/shareBottomSheet_char_btn"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_marginLeft="50dp"
-                android:background="@drawable/myprofile_character"/>
+                android:background="@drawable/profilepreview2"/>
 
         </LinearLayout>
 

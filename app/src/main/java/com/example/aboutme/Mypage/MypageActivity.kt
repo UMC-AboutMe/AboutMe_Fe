@@ -12,26 +12,6 @@ class MypageActivity : AppCompatActivity() {
         binding = ActivityMypageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.infoBtn.setOnClickListener {
-            val intent = Intent(this, MypageInfoActivity::class.java)
-            startActivity(intent)
-        }
-        binding.insightBtn.setOnClickListener {
-            val intent = Intent(this, MypageInsightActivity::class.java)
-            startActivity(intent)
-        }
-        binding.settingBtn.setOnClickListener {
-            val intent = Intent(this, MypageSettingActivity::class.java)
-            startActivity(intent)
-        }
-        binding.notifBtn.setOnClickListener {
-            val intent = Intent(this, MypageNotiActivity::class.java)
-            startActivity(intent)
-        }
-        binding.helpBtn.setOnClickListener {
-            val intent = Intent(this, MypageHelpActivity::class.java)
-            startActivity(intent)
-        }
         binding.backBtn.setOnClickListener {
             finish()
         }

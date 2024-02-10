@@ -47,28 +47,28 @@ class ProfileStorageDetailFragment : Fragment() {
         }
     }
 
-    //프로필 보관함 조회 api
+    //프로필 보관함 삭제 api
     private fun deleteProfiles(){
         Log.d("Retrofit","delete 함수 호출됨")
-        val call = ProfStorageObj.getRetrofitService.deleteProfStorage(1,1)
+        val call = ProfStorageObj.getRetrofitService.deleteProfStorage(4,1)
 
         call.enqueue(object : Callback<ProfStorageResponse.ResponseDeleteProf> {
             override fun onResponse(
                 call: Call<ProfStorageResponse.ResponseDeleteProf>,
                 response: Response<ProfStorageResponse.ResponseDeleteProf>
             ) {
-                Log.d("Retrofit", response.toString())
+                Log.d("Retrofit_Delete", response.toString())
                 if (response.isSuccessful) {
                     val response = response.body()
-                    Log.d("Retrofit", response.toString())
+                    Log.d("Retrofit_Delete", response.toString())
 
                     if (response != null) {
                         if (response.isSuccess) {
                             //성공했을 때
-                            Log.d("Retrofit", "처리에 성공함")
+                            Log.d("Retrofit_Delete", "처리에 성공함")
                         } else {
                             //실패했을 때
-                            Log.d("Retrofit", "처리에 실패함")
+                            Log.d("Retrofit_Delete", "처리에 실패함")
                         }
                     }
                 }
@@ -79,7 +79,7 @@ class ProfileStorageDetailFragment : Fragment() {
                 t: Throwable
             ) {
                 val errorMessage = "Call Failed:  ${t.message}"
-                Log.d("Retrofit", errorMessage)
+                Log.d("Retrofit_Delete", errorMessage)
             }
         }
         )
@@ -87,26 +87,26 @@ class ProfileStorageDetailFragment : Fragment() {
 
     //프로필 보관함 즐겨찾기 등록
     private fun favProfiles() {
-        Log.d("Retrofit", "patch 함수 호출됨")
-        val call = ProfStorageObj.getRetrofitService.patchProfStorage(1, 1)
+        Log.d("Retrofit_Fav", "patch 함수 호출됨")
+        val call = ProfStorageObj.getRetrofitService.patchProfStorage(4, 1)
 
         call.enqueue(object : Callback<ProfStorageResponse.ResponseFavProf> {
             override fun onResponse(
                 call: Call<ProfStorageResponse.ResponseFavProf>,
                 response: Response<ProfStorageResponse.ResponseFavProf>
             ) {
-                Log.d("Retrofit", response.toString())
-                if (response.isSuccessful) {
+                Log.d("Retrofit_Fav", response.toString())
+                if (response.isSuccessful) { // HTTP 응답 코드가 200번대인지 여부 확인
                     val response = response.body()
                     Log.d("Retrofit", response.toString())
 
                     if (response != null) {
                         if (response.isSuccess) {
                             //성공했을 때
-                            Log.d("Retrofit", "처리에 성공함")
+                            Log.d("Retrofit_Fav", "처리에 성공함")
                         } else {
                             //실패했을 때
-                            Log.d("Retrofit", "처리에 실패함")
+                            Log.d("Retrofit_Fav", "처리에 실패함")
                         }
                     }
                 }
@@ -117,7 +117,7 @@ class ProfileStorageDetailFragment : Fragment() {
                 t: Throwable
             ) {
                 val errorMessage = "Call Failed:  ${t.message}"
-                Log.d("Retrofit", errorMessage)
+                Log.d("Retrofit_Fav", errorMessage)
             }
         })
     }
