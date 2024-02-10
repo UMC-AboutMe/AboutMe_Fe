@@ -54,6 +54,7 @@ class AgitSpaceRVAdapter(val items: MutableList<AgitSpaceData>) :
                     intent.putExtra("spaceNameAgit", clickedItem.spaceName)
                     intent.putExtra("characterType", clickedItem.characterType)
                     intent.putExtra("roomType", clickedItem.roomType)
+                    intent.putExtra("spaceId", clickedItem.spaceId)
 
                     // 다른 액티비티로 이동
                     itemView.context.startActivity(intent)

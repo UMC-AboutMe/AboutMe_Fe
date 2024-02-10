@@ -1,11 +1,19 @@
 package com.example.aboutme.Agit
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.aboutme.R
+import com.example.aboutme.RetrofitMyspaceAgit.AgitFavoriteResponse
+import com.example.aboutme.RetrofitMyspaceAgit.AgitMemberDelete
+import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClient
+import com.example.aboutme.Search.CustomDialog
 import com.example.aboutme.databinding.ActivityAgitMemberSpaceBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class AgitMemberSpaceActivity : AppCompatActivity() {
 
@@ -22,6 +30,7 @@ class AgitMemberSpaceActivity : AppCompatActivity() {
         val spaceName = intent.getStringExtra("spaceNameAgit")
         val characterType = intent.getIntExtra("characterType", -1)
         val roomType = intent.getIntExtra("roomType", -1)
+        val spaceId = intent.getIntExtra("spaceId", -1)
 
         Log.d("YourActivity", "Received spaceName: $spaceName")
         Log.d("YourActivity", "Received characterType: $characterType")
@@ -66,8 +75,9 @@ class AgitMemberSpaceActivity : AppCompatActivity() {
         }
 
         binding.agitMemberspaceTrash.setOnClickListener {
+            val spaceIdLong = spaceId.toLong()
 
+            CustomDialogAgit("${spaceName}를 삭제하시겠습니까?", spaceIdLong).show(supportFragmentManager, "AgitDialog")
         }
-
     }
 }

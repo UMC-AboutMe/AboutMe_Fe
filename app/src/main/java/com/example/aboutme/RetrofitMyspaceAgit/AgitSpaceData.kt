@@ -42,3 +42,9 @@ data class AgitFavoriteResponse(
 data class AgitFavoriteResult(
     val favorite: Boolean
 )
+
+data class AgitMemberDelete(
+    val isSuccess: Boolean,
+    val code: String,
+    val message: String
+)
