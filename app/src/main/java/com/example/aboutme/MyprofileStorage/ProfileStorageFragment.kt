@@ -41,7 +41,8 @@ class ProfileStorageFragment : Fragment() {
         getProfiles()
 
         binding.searchBtn.setOnClickListener {
-            getSearchProfiles()
+            //getSearchProfiles()
+            getSearchProfiles(binding.searchTv.toString())
         }
 
         rvAdapter.setOnItemClickListener(object : ProfileRVAdapter.OnItemClickListener {
@@ -107,7 +108,8 @@ class ProfileStorageFragment : Fragment() {
     }
 
     //프로필 보관함 검색 api
-    private fun getSearchProfiles(){
+    private fun getSearchProfiles(Name : String){
+    //private fun getSearchProfiles(){
         val call = ProfStorageObj.getRetrofitService.getSearchProf("아",1)
 
         call.enqueue(object : Callback<ProfStorageResponse.ResponseSearchProf> {
