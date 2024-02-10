@@ -48,7 +48,6 @@ class SearchSpaceActivity : AppCompatActivity() {
                 binding.profBg.visibility = View.GONE
                 binding.addBtn.visibility = View.GONE
                 binding.exampleIv.visibility = View.GONE
-
             }
         }
     }
