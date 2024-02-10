@@ -67,7 +67,7 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
         binding = FragmentFrontprofileBinding.inflate(inflater,container,false)
 
-        profileEditName = binding.profileNameEt
+        //profileEditName = binding.profileNameEt
 
         binding.turnBtn.setOnClickListener {
             val ft = parentFragmentManager.beginTransaction()
@@ -102,13 +102,13 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
         }
 
-        val profileEdit1  = binding.profileNameEt
-        val profileBtn1 : ImageButton = binding.frontProfileEdit1Btn
+        //val profileEdit1  = binding.profileNameEt
+        //val profileBtn1 : ImageButton = binding.frontProfileEdit1Btn
 
 
         var message1 : String = ""
 
-        profileEdit1.addTextChangedListener (object : TextWatcher {
+        /*profileEdit1.addTextChangedListener (object : TextWatcher {
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
@@ -131,15 +131,15 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
             override fun afterTextChanged(s: Editable?) {
 
             }
-        })
+        })*/
 
-        val profileEdit2 : EditText = binding.profileNumEt
-        val profileBtn2 : ImageButton = binding.frontProfileEdit2Btn
+        //val profileEdit2 : EditText = binding.profileNumEt
+        //val profileBtn2 : ImageButton = binding.frontProfileEdit2Btn
 
 
         var message2 : String = ""
 
-        profileEdit2.addTextChangedListener (object : TextWatcher{
+        /*profileEdit2.addTextChangedListener (object : TextWatcher{
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //
@@ -162,7 +162,7 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
             override fun afterTextChanged(s: Editable?) {
 
             }
-        })
+        })*/
 
 
         return binding.root

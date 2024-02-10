@@ -1,6 +1,7 @@
 package com.example.aboutme.Myprofile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,9 @@ class BackProfilePreviewFragment: Fragment() {
     ): View? {
 
         binding = FragmentBackprofileBinding.inflate(inflater, container, false)
+
+        val profileId = arguments?.getString("profileId")
+        Log.d("preview_id_in_fragment", profileId.toString())
 
         binding.turnBtn2.setOnClickListener {
             val ft = requireActivity().supportFragmentManager.beginTransaction()

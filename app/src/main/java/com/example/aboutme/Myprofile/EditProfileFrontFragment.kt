@@ -1,5 +1,6 @@
 package com.example.aboutme.Myprofile
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils.replace
 import android.util.Log
@@ -23,7 +24,6 @@ class EditProfileFrontFragment : Fragment() {
 
     lateinit var binding: FragmentEditprofilefrontBinding
 
-    private val frontProfile = mutableListOf<FrontEditData>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,37 +55,28 @@ class EditProfileFrontFragment : Fragment() {
         val retrofitClient = RetrofitClient.mainProfile
 
         binding.profileEditPreviewBtn.setOnClickListener {
-
             lifecycleScope.launch {
                 try {
-                    // 백그라운드 스레드에서 Retrofit의 patchProfile 메서드를 호출하고, 결과를 받아옴
-                    // withContext를 사용하여 백그라운드 스레드에서 실행하도록 함
                     val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
                         retrofitClient.getDataAll(profileId1!!.toLong())
                     }
 
                     if (response.isSuccessful) {
-
-                        // 성공한 응답 데이터를 받아옴
                         val responseData: GetAllProfile? = response.body()
                         Log.d("GETALL 성공", "응답 데이터: $responseData")
-                        // responseData를 처리하는 로직 작성
 
-                        val frontFeature1 = responseData!!.result.frontFeatures[0].feature_id
-                        Log.d("id!", frontFeature1.toString())
-                        val frontFeature2 = responseData!!.result.frontFeatures[1].feature_id
-                        Log.d("id!", frontFeature2.toString())
+                        val frontFeature1 = responseData!!.result.frontFeatures[0].featureId
+                        val frontFeature2 = responseData!!.result.frontFeatures[1].featureId
 
-                        patchData(frontFeature1,frontFeature2)
+                        patchData(frontFeature1, frontFeature2)
 
-
+                        // patchData 호출 후에 PreviewProfileActivity 시작
+                        val intent = Intent(activity, PreviewProfileActivity::class.java)
+                        intent.putExtra("profileId_to_preview", profileId1)
+                        startActivity(intent)
                     } else {
                         val errorBody = response.errorBody()?.string() ?: "No error body"
-                        Log.e(
-                            "GETALL 요청 실패",
-                            "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
-                        )
-
+                        Log.e("GETALL 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
                     }
                 } catch (e: Exception) {
                     Log.e("GETALL 요청 실패", "에러: ${e.message}")

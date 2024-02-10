@@ -7,7 +7,7 @@ data class Myprofile(
     val frontFeatures: List<FrontFeature>,
     @SerializedName("is_default")
     val isDefault: Boolean,
-    @SerializedName("profile_id")
+    @SerializedName("myprofile_id")
     val profileId: Int,
     @SerializedName("profile_image")
     val profileImage: ProfileImage,

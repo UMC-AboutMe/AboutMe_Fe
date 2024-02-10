@@ -25,7 +25,12 @@ class PreviewProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        setFrag(0)
+        val profileId = intent.getStringExtra("profileId_to_preview")
+        Log.d("preview_id",profileId.toString())
+
+        setFrag(0, profileId.toString())
+
+
 
 
         binding.editProfileBackBtn.setOnClickListener {
@@ -41,45 +46,26 @@ class PreviewProfileActivity : AppCompatActivity() {
             noEditDialog.show(supportFragmentManager, noEditDialog.tag)
         }
 
-        /*lifecycleScope.launch {
-            try {
-                // 백그라운드 스레드에서 Retrofit의 patchProfile 메서드를 호출하고, 결과를 받아옴
-                // withContext를 사용하여 백그라운드 스레드에서 실행하도록 함
-                val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.getDataAll(profileId1!!.toLong())
-                }
-
-                if (response.isSuccessful) {
-
-                    // 성공한 응답 데이터를 받아옴
-                    val responseData: GetAllProfile? = response.body()
-                    Log.d("GETALL 성공", "응답 데이터: $responseData")
-                    // responseData를 처리하는 로직 작성
-
-
-                } else {
-                    val errorBody = response.errorBody()?.string() ?: "No error body"
-                    Log.e("GETALL 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
-
-                }
-            } catch (e: Exception) {
-                Log.e("GETALL 요청 실패", "에러: ${e.message}")
-            }
-        }*/
     }
 
-    private fun setFrag(fragNum : Int){
+    private fun setFrag(fragNum: Int, profileId: String) {
         val ft = supportFragmentManager.beginTransaction()
-        when(fragNum)
-        {
+        val bundle = Bundle()
+        bundle.putString("profileId", profileId)
+
+        when (fragNum) {
             0 -> {
                 Log.d("MyProfileFragment", "FrontProfileFragment로 교체 중")
-                ft.replace(R.id.profile_frame2, FrontProfilePreviewFragment()).commit()
+                val frontProfilePreviewFragment = FrontProfilePreviewFragment()
+                frontProfilePreviewFragment.arguments = bundle
+                ft.replace(R.id.profile_frame2, frontProfilePreviewFragment).commit()
             }
 
             1 -> {
                 Log.d("MyProfileFragment", "BackProfileFragment로 교체 중")
-                ft.replace(R.id.profile_frame2, BackProfilePreviewFragment()).commit()
+                val backProfilePreviewFragment = BackProfilePreviewFragment()
+                backProfilePreviewFragment.arguments = bundle
+                ft.replace(R.id.profile_frame2, backProfilePreviewFragment).commit()
             }
         }
     }

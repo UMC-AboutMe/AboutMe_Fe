@@ -10,7 +10,7 @@ data class ResultXX(
     @SerializedName("is_default")
     val isDefault: Boolean,
     //profile_id
-    @SerializedName("myprofile_id")
+    @SerializedName("profile_id")
     val profileId: Long,
     @SerializedName("profile_image")
     val profileImage: ProfileImage,

@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class FrontFeatureXX(
     @SerializedName("feature_id")
-    val feature_id: Long,
+    val featureId: Long,
     @SerializedName("key")
-    val key: String,
+    val key: String?,
     @SerializedName("value")
-    val value: String
+    val value: String?
 )
