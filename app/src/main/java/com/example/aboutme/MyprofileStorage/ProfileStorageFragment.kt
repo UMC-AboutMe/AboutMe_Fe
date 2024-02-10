@@ -141,7 +141,7 @@ class ProfileStorageFragment : Fragment() {
                                         }
                                     }
                                     profile.image.type == "USER_IMAGE" -> R.drawable.prof_avater1
-                                    else -> R.drawable.prof_avater1
+                                    else -> R.drawable.avatar_basic
                                 }
                                 itemList.add(ProfileData(imageResId, profile.profileName))
                             }
