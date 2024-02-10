@@ -282,7 +282,7 @@
             android:id="@+id/member_step3_music_et"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/member_myspace_step3_et"
+            android:background="@drawable/myspace_step3_et"
             android:visibility="visible"
             android:textSize="11sp"
             android:fontFamily="@font/gmarketsansmedium"
