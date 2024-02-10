@@ -22,9 +22,9 @@ class EditProfileBackFragment : Fragment() {
 
         binding = FragmentEditprofilebackBinding.inflate(inflater, container, false)
 
-        val profileId1 = arguments?.getString("profilId1")
-        Log.d("profileId1",profileId1.toString())
 
+        val profileId1 = arguments?.getString("profilId1")
+        Log.d("profileId_to_back",profileId1.toString())
 
 
         return binding.root

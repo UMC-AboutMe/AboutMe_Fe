@@ -1,12 +1,14 @@
 package com.example.aboutme.Myprofile
 
 import android.os.Bundle
+import android.text.TextUtils.replace
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyprofile.RetrofitClient
 import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
 import com.example.aboutme.databinding.FragmentEditprofilefrontBinding
@@ -34,6 +36,8 @@ class EditProfileFrontFragment : Fragment() {
         val dialogName = arguments?.getString("dialogName")
 
         binding.profileNameEt.setText(dialogName)
+
+
 
 //CoroutineScope의 lifecycleScope를 사용하여 백그라운드에서 실행될 코루틴 블록을 정의
         lifecycleScope.launch {

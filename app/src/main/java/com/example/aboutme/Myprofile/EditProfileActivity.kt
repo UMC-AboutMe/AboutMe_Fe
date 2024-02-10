@@ -58,7 +58,12 @@ class EditProfileActivity : AppCompatActivity() {
                     }
                     1 -> {
                         supportFragmentManager.beginTransaction()
-                            .replace(R.id.tab_layout_container, EditProfileBackFragment())
+                            .replace(R.id.tab_layout_container, EditProfileBackFragment().apply {
+                                arguments = Bundle().apply {
+                                    val profileId = intent.getStringExtra("profileId")
+                                    putString("profilId1", profileId)
+                                }
+                            })
                             .commit()
                     }
                 }
