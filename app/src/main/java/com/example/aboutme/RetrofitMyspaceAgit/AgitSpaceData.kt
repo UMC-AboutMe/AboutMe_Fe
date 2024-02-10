@@ -4,8 +4,10 @@ data class AgitSpaceData(
     val spaceImg : Int,
     val spaceName : String,
     var isBookmarked : Boolean,
-    val spaceId: Long
-    )
+    val spaceId: Long,
+    val characterType: Int,
+    val roomType: Int
+)
 
 data class YourResponseType(
     val isSuccess: Boolean,

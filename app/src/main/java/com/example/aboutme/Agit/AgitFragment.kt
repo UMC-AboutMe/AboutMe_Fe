@@ -113,7 +113,7 @@ class AgitFragment : Fragment() {
         // 서버에서 추출한 유저데이터리스트를 바탕으로 itemList에 하나씩 추가
         for (spaceModel in dataList) {
             val spaceIdLong = spaceModel.spaceId.toLong()
-            itemList.add(AgitSpaceData(R.drawable.agit_space, "${spaceModel.nickname}'s 스페이스", spaceModel.favorite, spaceIdLong))
+            itemList.add(AgitSpaceData(R.drawable.agit_space, "${spaceModel.nickname}'s 스페이스", spaceModel.favorite, spaceIdLong, spaceModel.characterType, spaceModel.roomType))
 
             // API TEST
             Log.d("API TEST", "Space ID: ${spaceModel.spaceId}")

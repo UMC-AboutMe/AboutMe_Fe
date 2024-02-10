@@ -1,5 +1,6 @@
 package com.example.aboutme.Agit
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.aboutme.RetrofitMyspaceAgit.AgitSpaceData
 import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyspaceAgit.AgitFavoriteResponse
-import com.example.aboutme.RetrofitMyspaceAgit.AgitFavoriteResult
 import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClient
-import com.example.aboutme.RetrofitMyspaceAgit.YourResponseType
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,6 +42,24 @@ class AgitSpaceRVAdapter(val items: MutableList<AgitSpaceData>) :
         private val spaceName: TextView = itemView.findViewById(R.id.spaceName_tv)
         private val agitFavorite: ImageView = itemView.findViewById(R.id.agit_bookmark)
         private val bookmarkButton: ImageView = itemView.findViewById(R.id.agit_bookmark)
+
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val clickedItem = items[position]
+
+                    // 데이터를 담은 Intent 생성
+                    val intent = Intent(itemView.context, AgitMemberSpaceActivity::class.java)
+                    intent.putExtra("spaceNameAgit", clickedItem.spaceName)
+                    intent.putExtra("characterType", clickedItem.characterType)
+                    intent.putExtra("roomType", clickedItem.roomType)
+
+                    // 다른 액티비티로 이동
+                    itemView.context.startActivity(intent)
+                }
+            }
+        }
 
         fun bindItems(item: AgitSpaceData) {
             contentLayout.visibility = View.VISIBLE
