@@ -15,10 +15,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/myspace_share"
+        android:id="@+id/agit_memberspace_trash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/myprofile_share"
+        android:src="@drawable/mainprofile_trash"
         android:layout_marginTop="20dp"
         android:layout_marginStart="10dp"
         app:layout_constraintStart_toEndOf="@+id/step3_photo"
@@ -58,14 +58,13 @@
         app:layout_constraintTop_toBottomOf="@+id/myspace_title"
         app:layout_constraintStart_toStartOf="@+id/myspace_title" />
 
-
     <ImageView
         android:id="@+id/step3_selected_room"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:foregroundGravity="center"
         android:src="@drawable/step3_room_1"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myspace_title_line" />

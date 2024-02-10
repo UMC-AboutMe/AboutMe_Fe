@@ -14,18 +14,16 @@ import com.example.aboutme.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
     lateinit var binding : FragmentHomeBinding
+
+    lateinit var HomeAdapter: HomeFragmentAdapter
+    private val datas = mutableListOf<HomeFragmentData>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        binding.myprofBgIv.setOnClickListener{
-            startActivity(Intent(requireActivity(), SearchProfActivity::class.java))
-        }
-        binding.myspaceBgIv.setOnClickListener{
-            startActivity(Intent(requireActivity(), SearchSpaceActivity::class.java))
-        }
         binding.mypageBtn.setOnClickListener{
             startActivity(Intent(requireActivity(), MypageActivity::class.java))
         }
@@ -35,5 +33,26 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        initRecycler()
+    }
+
+    private fun initRecycler() {
+        HomeAdapter = HomeFragmentAdapter(requireContext())
+        binding.homeitemRc.adapter = HomeAdapter
+
+        datas.apply {
+            add(HomeFragmentData(R.drawable.home_tut2, "Member"))
+            add(HomeFragmentData(R.drawable.home_tut2, "Member"))
+            add(HomeFragmentData(R.drawable.home_tut2, "Member"))
+            add(HomeFragmentData(R.drawable.home_tut2, "Member"))
+            add(HomeFragmentData(R.drawable.home_tut2, "Member"))
+            add(HomeFragmentData(R.drawable.home_tut2, "Member"))
+
+            HomeAdapter.datas = datas
+            HomeAdapter.notifyDataSetChanged()
+        }
+    }
 }

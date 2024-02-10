@@ -68,7 +68,7 @@
         </provider>
 
         <activity
-            android:name=".Tutorial.TutorialActivity3"
+            android:name=".Agit.AgitMemberSpaceActivity"
             android:exported="true" />
         <activity
             android:name=".Alarm.AlarmActivity"
