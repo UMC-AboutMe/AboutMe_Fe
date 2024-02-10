@@ -84,13 +84,13 @@
             android:exported="false" />
         <activity
             android:name=".Search.SearchSpaceActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".Search.CustomDialog"
             android:exported="false" />
         <activity
             android:name=".Search.SearchProfActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".bottomNavigationView"
             android:windowSoftInputMode="adjustPan"
