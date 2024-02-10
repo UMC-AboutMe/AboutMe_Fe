@@ -9,8 +9,8 @@ data class ResultX(
     val frontFeatures: List<FrontFeature>,
     @SerializedName("is_default")
     val isDefault: Boolean,
-    @SerializedName("profile_id")
-    val profileId: Int,
+    @SerializedName("myprofile_id")
+    val profileId: Long,
     @SerializedName("serial_number")
     val serialNumber: Int
 )
