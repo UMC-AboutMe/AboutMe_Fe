@@ -13,7 +13,7 @@ import com.example.aboutme.databinding.ActivityTutorial1Binding
 
 class TutorialActivity1 : AppCompatActivity() {
 
-    //private lateinit var binding : ActivityTutorial1Binding
+    private lateinit var binding : ActivityTutorial1Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
