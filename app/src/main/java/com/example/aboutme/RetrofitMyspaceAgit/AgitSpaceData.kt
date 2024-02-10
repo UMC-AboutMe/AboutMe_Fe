@@ -3,8 +3,9 @@ package com.example.aboutme.RetrofitMyspaceAgit
 data class AgitSpaceData(
     val spaceImg : Int,
     val spaceName : String,
-    var isBookmarked : Boolean = false
-)
+    var isBookmarked : Boolean,
+    val spaceId: Long
+    )
 
 data class YourResponseType(
     val isSuccess: Boolean,
@@ -18,7 +19,7 @@ data class ResultModel(
 )
 
 data class SpaceModel(
-    val space_id: Int,
+    val spaceId: Int,
     val nickname: String,
     val characterType: Int,
     val roomType: Int,
@@ -27,4 +28,15 @@ data class SpaceModel(
 
 data class ResultModelAdd(
     val spaceId: Int
+)
+
+data class AgitFavoriteResponse(
+    val isSuccess: Boolean,
+    val code: String,
+    val message: String,
+    val result: AgitFavoriteResult
+)
+
+data class AgitFavoriteResult(
+    val favorite: Boolean
 )
