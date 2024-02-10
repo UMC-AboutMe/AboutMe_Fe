@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/white">
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -36,26 +37,109 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
-    <ImageView
-        android:id="@+id/text1"
-        android:layout_width="362dp"
-        android:layout_height="427dp"
-        android:src="@drawable/tut_text1"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tutLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo_iv" />
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageButton
-        android:id="@+id/nextBtn1"
-        android:layout_width="47dp"
-        android:layout_height="34dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="120dp"
-        android:background="@color/transparent"
-        android:scaleType="fitCenter"
-        android:src="@drawable/next"
-        app:layout_constraintBottom_toBottomOf="@+id/text1"
-        app:layout_constraintEnd_toEndOf="@+id/text1" />
+        <ImageView
+            android:id="@+id/tut1_bg"
+            android:layout_width="362dp"
+            android:layout_height="427dp"
+            android:layout_marginTop="106dp"
+            android:src="@drawable/tut_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tut1_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:lineSpacingExtra="5sp"
+            android:text="마이프로필과 마이스페이스\n기능은 AboutMe의 핵심\n기능이자 컨셉으로, 나의 겉모\n습은 마이프로필, 속마음은 마\n이스페이스라고 생각하면 돼."
+            android:textColor="#000000"
+            android:textSize="23sp"
+            app:layout_constraintEnd_toEndOf="@+id/tut1_bg"
+            app:layout_constraintHorizontal_bias="0.555"
+            app:layout_constraintStart_toStartOf="@+id/tut1_bg"
+            app:layout_constraintTop_toTopOf="@+id/tut1_bg" />
+
+        <TextView
+            android:id="@+id/tut2_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:lineSpacingExtra="5sp"
+            android:text="여러 상황에서 사람들을 만\n나며 명함을 공유할 수 있겠\n지만, 내 기분, 일정, 생각과\n같은 민감한 정보는 친한\n친구들에게만 공유하는 것\n처럼, 앱 내에서 전환해가며\n사용할 수 있는 기능이야."
+            android:textColor="#000000"
+            android:textSize="23sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/tut1_bg"
+            app:layout_constraintHorizontal_bias="0.555"
+            app:layout_constraintStart_toStartOf="@+id/tut1_bg"
+            app:layout_constraintTop_toTopOf="@+id/tut1_bg" />
+
+        <TextView
+            android:id="@+id/tut3_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:lineSpacingExtra="5sp"
+            android:text="그럼 다른 사람들과는 어떻\n게 공유하냐고? 프로필마\n다 일련번호가 생성돼. 홈화\n면에서 상대방 일련번호를\n검색해서 추가할 수 있지.\n스페이스는 상대방 닉네임을\n검색해서 추가하면 돼.\n그럼 우리 한번 나만의 공간\n을 만들러 떠나볼까?"
+            android:textColor="#000000"
+            android:textSize="23sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/tut1_bg"
+            app:layout_constraintHorizontal_bias="0.555"
+            app:layout_constraintStart_toStartOf="@+id/tut1_bg"
+            app:layout_constraintTop_toTopOf="@+id/tut1_bg" />
+
+        <ImageButton
+            android:id="@+id/tut_nextBtn1"
+            android:layout_width="47dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="104dp"
+            android:background="@color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/next"
+            app:layout_constraintBottom_toBottomOf="@+id/tut1_bg"
+            app:layout_constraintEnd_toEndOf="@+id/tut1_bg" />
+
+        <ImageButton
+            android:id="@+id/tut_nextBtn2"
+            android:layout_width="47dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="104dp"
+            android:background="@color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/next"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/tut1_bg"
+            app:layout_constraintEnd_toEndOf="@+id/tut1_bg" />
+
+        <ImageButton
+            android:id="@+id/tut_nextBtn3"
+            android:layout_width="47dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="104dp"
+            android:background="@color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/tut_okbtn"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/tut1_bg"
+            app:layout_constraintEnd_toEndOf="@+id/tut1_bg" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/char_iv"
@@ -63,7 +147,5 @@
         android:layout_height="227dp"
         android:src="@drawable/tut_char"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/text1"
-        app:layout_constraintTop_toBottomOf="@+id/text1"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
