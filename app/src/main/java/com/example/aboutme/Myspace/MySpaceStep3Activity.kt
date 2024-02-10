@@ -1,46 +1,38 @@
 package com.example.aboutme.Myspace
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.aboutme.Myprofile.SharedViewModel
 import com.example.aboutme.R
-import com.example.aboutme.databinding.FragmentMyspacestep2Binding
+import com.example.aboutme.bottomNavigationView
+import com.example.aboutme.databinding.ActivityMyspacestep3Binding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MySpaceStep2Fragment : Fragment() {
+class MySpaceStep3Activity : AppCompatActivity() {
 
-    private lateinit var binding: FragmentMyspacestep2Binding
+    private lateinit var binding: ActivityMyspacestep3Binding
     private lateinit var sharedViewModel: SharedViewModel
+    private val isCreatedViewModel: SharedViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentMyspacestep2Binding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMyspacestep3Binding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        sharedViewModel = ViewModelProvider(this)[SharedViewModel::class.java]
 
-        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
-
-        val nextButton = binding.nextIbStep2
+        val nextButton = binding.nextIbStep3
 
         // 체크박스에 해당하는 이미지뷰들을 리스트에 추가
         val checkBoxList = listOf(
-            binding.avatar1,
-            binding.avatar2,
-            binding.avatar3,
-            binding.avatar4,
-            binding.avatar5,
-            binding.avatar6,
-            binding.avatar7,
-            binding.avatar8,
-            binding.avatar9,
+            binding.room1,
+            binding.room2,
+            binding.room3,
+            binding.room4
         )
 
         val checkmarkList = listOf(
@@ -48,11 +40,6 @@ class MySpaceStep2Fragment : Fragment() {
             binding.checkmark2,
             binding.checkmark3,
             binding.checkmark4,
-            binding.checkmark5,
-            binding.checkmark6,
-            binding.checkmark7,
-            binding.checkmark8,
-            binding.checkmark9
         )
 
         sharedViewModel.nickname?.let {
@@ -81,21 +68,21 @@ class MySpaceStep2Fragment : Fragment() {
                 }
             }
 
-            binding.nextIbStep2.setOnClickListener {
+            binding.nextIbStep3.setOnClickListener {
                 // 선택된 체크박스의 인덱스 정보를 ViewModel에 저장
                 selectedCheckBoxIndex?.let {
-                    sharedViewModel.setSelectedAvatarIndex(it)
+                    sharedViewModel.setSelectedRoomIndex(it)
                 }
 
-                // Step 3 프래그먼트로 이동
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
-                    .replace(R.id.frame, MySpaceStep3Fragment())
-                    .commit()
+                // isCreated 값 변경
+                isCreatedViewModel.isCreated = true
+
+                // Step 3 액티비티로 이동
+                startActivity(Intent(this, bottomNavigationView::class.java))
             }
 
             binding.back.setOnClickListener {
-                requireActivity().onBackPressed()
+                onBackPressed()
             }
         }
     }

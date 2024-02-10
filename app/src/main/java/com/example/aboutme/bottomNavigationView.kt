@@ -1,8 +1,8 @@
 package com.example.aboutme
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.aboutme.Agit.AgitFragment
@@ -10,7 +10,7 @@ import com.example.aboutme.Myprofile.MainProfileFragment
 import com.example.aboutme.Myprofile.SharedViewModel
 import com.example.aboutme.MyprofileStorage.ProfileStorageFragment
 import com.example.aboutme.Myspace.MySpaceMainFragment
-import com.example.aboutme.Myspace.MySpaceStep1Fragment
+import com.example.aboutme.Myspace.MySpaceStep1Activity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class bottomNavigationView : AppCompatActivity() {
@@ -70,10 +70,8 @@ class bottomNavigationView : AppCompatActivity() {
                             .replace(frame.id, MySpaceMainFragment())
                             .commit()
                     } else {
-                        supportFragmentManager.beginTransaction()
-                            .replace(frame.id, MySpaceStep1Fragment())
-                            .commit()
-                        bottomNagivationView.visibility = View.GONE
+                        val intent = Intent(this, MySpaceStep1Activity::class.java)
+                        startActivity(intent)
                     }
                     return@setOnItemSelectedListener true
                 }

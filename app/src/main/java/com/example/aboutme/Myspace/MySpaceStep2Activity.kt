@@ -1,44 +1,39 @@
 package com.example.aboutme.Myspace
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.aboutme.Myprofile.SharedViewModel
 import com.example.aboutme.R
-import com.example.aboutme.databinding.FragmentMyspacestep3Binding
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.aboutme.databinding.ActivityMyspacestep2Binding
 
-class MySpaceStep3Fragment : Fragment() {
+class MySpaceStep2Activity : AppCompatActivity() {
 
-    private lateinit var binding: FragmentMyspacestep3Binding
+    private lateinit var binding: ActivityMyspacestep2Binding
     private lateinit var sharedViewModel: SharedViewModel
-    private val isCreatedViewModel: SharedViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentMyspacestep3Binding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMyspacestep2Binding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        sharedViewModel = ViewModelProvider(this)[SharedViewModel::class.java]
 
-        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
-
-        val nextButton = binding.nextIbStep3
+        val nextButton = binding.nextIbStep2
 
         // 체크박스에 해당하는 이미지뷰들을 리스트에 추가
         val checkBoxList = listOf(
-            binding.room1,
-            binding.room2,
-            binding.room3,
-            binding.room4
+            binding.avatar1,
+            binding.avatar2,
+            binding.avatar3,
+            binding.avatar4,
+            binding.avatar5,
+            binding.avatar6,
+            binding.avatar7,
+            binding.avatar8,
+            binding.avatar9,
         )
 
         val checkmarkList = listOf(
@@ -46,6 +41,11 @@ class MySpaceStep3Fragment : Fragment() {
             binding.checkmark2,
             binding.checkmark3,
             binding.checkmark4,
+            binding.checkmark5,
+            binding.checkmark6,
+            binding.checkmark7,
+            binding.checkmark8,
+            binding.checkmark9
         )
 
         sharedViewModel.nickname?.let {
@@ -74,27 +74,19 @@ class MySpaceStep3Fragment : Fragment() {
                 }
             }
 
-            binding.nextIbStep3.setOnClickListener {
+            binding.nextIbStep2.setOnClickListener {
                 // 선택된 체크박스의 인덱스 정보를 ViewModel에 저장
                 selectedCheckBoxIndex?.let {
-                    sharedViewModel.setSelectedRoomIndex(it)
+                    sharedViewModel.setSelectedAvatarIndex(it)
                 }
 
-                // Step 3 프래그먼트로 이동
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
-                    .replace(R.id.frame, MySpaceMainFragment())
-                    .commit()
-
-                val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-                bottomNavigationView.visibility = View.VISIBLE
-
-                isCreatedViewModel.isCreated = true
-
+                // Step 3 액티비티로 이동
+                val intent = Intent(this, MySpaceStep3Activity::class.java)
+                startActivity(intent)
             }
 
             binding.back.setOnClickListener {
-                requireActivity().onBackPressed()
+                onBackPressed()
             }
         }
     }

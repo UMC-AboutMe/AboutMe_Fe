@@ -16,7 +16,7 @@ class SharedViewModel : ViewModel(){
     var nickname: String? = "다에몬"
     var selectedAvatarIndex: Int? = 3
     var selectedRoomIndex: Int? = 1
-    var isCreated: Boolean = true
+    var isCreated: Boolean = false
 
     // 댓글에 해당하는 텍스트를 저장할 변수
     var commentText: String? = null
