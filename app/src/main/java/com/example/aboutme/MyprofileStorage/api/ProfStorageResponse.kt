@@ -10,8 +10,8 @@ class ProfStorageResponse {
         var result : ResultList
     )
     data class ResultList(
-        var memberProfile : List<Profiles>,
-        var totalProfiles : Int
+        var member_profiles : List<Profiles>,
+        var total_member_profiles : Int
     )
     data class Profiles (
         var member_profile_id : Int,
@@ -51,4 +51,27 @@ class ProfStorageResponse {
     data class IsFavorite(
         val favorite : Boolean
     )
+
+    //프로필 보관함 검색
+    data class ResponseSearchProf(
+        val isSuccess: Boolean,
+        val code: String,
+        val message: String,
+        val result: Result
+    )
+    data class Result(
+        val memberProfileList: List<MemberProfile>
+    )
+    data class MemberProfile(
+        val profileId: Int,
+        val profileName: String,
+        val favorite: Boolean,
+        val image: Image
+    )
+    data class Image(
+        val type: String,
+        val characterType: Int?,
+        val profile_image_url: String?
+    )
+
 }
