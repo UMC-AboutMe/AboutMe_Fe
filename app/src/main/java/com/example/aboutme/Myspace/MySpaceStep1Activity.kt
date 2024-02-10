@@ -29,7 +29,7 @@ class MySpaceStep1Activity : AppCompatActivity() {
             sharedViewModel.nickname = inputText
 
             // 데이터는 ViewModel에 저장되어 있으므로 Bundle 사용할 필요 없음
-            val intent = Intent(this, Test2Activity::class.java)
+            val intent = Intent(this, MySpaceStep2Activity::class.java)
             startActivity(intent)
         }
     }

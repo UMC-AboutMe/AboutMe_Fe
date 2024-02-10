@@ -38,8 +38,6 @@ class MySpaceMainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.logo.setOnClickListener {
-//            parentFragmentManager.popBackStack()
-
             // 데이터는 ViewModel에 저장되어 있으므로 Bundle 사용할 필요 없음
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.frame, HomeFragment())
