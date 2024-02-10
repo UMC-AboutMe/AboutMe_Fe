@@ -20,17 +20,23 @@ class EditProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.tab_layout_container, EditProfileFrontFragment())
-            .commit()
-
-        setTabLayout()
-
         val profileId = intent.getStringExtra("profileId")
         Log.d("intent데이터",profileId.toString())
 
-        val intent1 = Intent(this, EditProfileFrontFragment::class.java)
-        intent1.putExtra("profilId1",profileId)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.tab_layout_container, EditProfileFrontFragment().apply {
+                arguments = Bundle().apply {
+                    // profileId를 가져와 Bundle에 추가
+                    val profileId = intent.getStringExtra("profileId")
+                    putString("profilId1", profileId)
+                    val dialogName = intent.getStringExtra("dialogName")
+                    putString("dialogName",dialogName)
+                }
+            })
+            .commit()
+
+
+        setTabLayout()
 
         binding.profileEditPreviewBtn.setOnClickListener {
             val intent2 = Intent(this, PreviewProfileActivity::class.java)

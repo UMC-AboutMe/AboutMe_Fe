@@ -9,7 +9,8 @@ data class ResultXX(
     val frontFeatures: List<FrontFeatureXX>,
     @SerializedName("is_default")
     val isDefault: Boolean,
-    @SerializedName("profile_id")
+    //profile_id
+    @SerializedName("myprofile_id")
     val profileId: Long,
     @SerializedName("profile_image")
     val profileImage: ProfileImage,

@@ -30,6 +30,10 @@ class EditProfileFrontFragment : Fragment() {
 
         //요청 바디에 들어갈 데이터
         val profileId1 = arguments?.getString("profilId1")
+        Log.d("profileId1",profileId1.toString())
+        val dialogName = arguments?.getString("dialogName")
+
+        binding.profileNameEt.setText(dialogName)
 
 //CoroutineScope의 lifecycleScope를 사용하여 백그라운드에서 실행될 코루틴 블록을 정의
         lifecycleScope.launch {
@@ -46,6 +50,8 @@ class EditProfileFrontFragment : Fragment() {
                     val responseData: GetAllProfile? = response.body()
                     Log.d("GETALL 성공", "응답 데이터: $responseData")
                     // responseData를 처리하는 로직 작성
+
+
                 } else {
                     val errorBody = response.errorBody()?.string() ?: "No error body"
                     Log.e("GETALL 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")

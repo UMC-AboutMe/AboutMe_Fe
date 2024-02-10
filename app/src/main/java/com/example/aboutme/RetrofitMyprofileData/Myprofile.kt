@@ -9,8 +9,8 @@ data class Myprofile(
     val isDefault: Boolean,
     @SerializedName("profile_id")
     val profileId: Int,
-    @SerializedName("profile_img_url")
-    val profileImgUrl: Any?,
+    @SerializedName("profile_image")
+    val profileImage: ProfileImage,
     @SerializedName("serial_number")
     val serialNumber: Int
 )

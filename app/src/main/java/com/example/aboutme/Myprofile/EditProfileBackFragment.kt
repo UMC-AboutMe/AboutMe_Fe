@@ -1,6 +1,7 @@
 package com.example.aboutme.Myprofile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,10 @@ class EditProfileBackFragment : Fragment() {
     ): View? {
 
         binding = FragmentEditprofilebackBinding.inflate(inflater, container, false)
+
+        val profileId1 = arguments?.getString("profilId1")
+        Log.d("profileId1",profileId1.toString())
+
 
 
         return binding.root

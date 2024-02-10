@@ -64,6 +64,7 @@ class NameDialogFragment():DialogFragment(){
                 }
                 val intent = Intent(activity, EditProfileActivity::class.java)
                 Log.d("다이얼로그", "success")
+                intent.putExtra("dialogName",name)
 
                 //intent.putExtra("dialogName", name)
 
