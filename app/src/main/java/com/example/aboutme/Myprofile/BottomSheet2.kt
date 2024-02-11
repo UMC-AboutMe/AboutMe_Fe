@@ -2,8 +2,11 @@ package com.example.aboutme.Myprofile
 
 import android.Manifest
 import android.content.ActivityNotFoundException
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.ContentValues
 import android.content.Context
+import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -27,6 +30,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
@@ -143,6 +147,7 @@ class BottomSheet2 : DialogFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentSharebottomsheet2Binding.inflate(inflater, container, false)
 
+
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.setBackgroundDrawableResource(R.drawable.bottomsheetbox)
         dialog?.window?.setGravity(Gravity.TOP)
@@ -221,6 +226,15 @@ class BottomSheet2 : DialogFragment() {
                 }
             }
             dismiss()
+        }
+
+        binding.numberPasteBtn.setOnClickListener {
+            val clip = ClipData.newPlainText("클립보드 복사", serialNumber.toString())
+            val clipboard: ClipboardManager = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+            clipboard.setPrimaryClip(clip)
+            Toast.makeText(requireContext(), "클립보드에 복사되었습니다.", Toast.LENGTH_SHORT).show()
+
         }
 
 
