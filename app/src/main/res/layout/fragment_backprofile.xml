@@ -143,13 +143,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <EditText
+            <TextView
                 android:id="@+id/backProfile_et4"
                 android:layout_width="250dp"
                 android:layout_height="50dp"
                 android:layout_marginBottom="24dp"
-                android:ems="12"
-                android:hint="내용4"
                 android:fontFamily="@font/gmarketsansmedium"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="420dp"
@@ -182,13 +180,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <EditText
+            <TextView
                 android:id="@+id/backProfile_et5"
                 android:layout_width="250dp"
                 android:layout_height="50dp"
                 android:layout_marginBottom="24dp"
-                android:ems="12"
-                android:hint="내용5"
                 android:fontFamily="@font/gmarketsansmedium"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="500dp"

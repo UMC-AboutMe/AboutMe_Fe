@@ -77,13 +77,6 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
         binding = FragmentFrontprofileBinding.inflate(inflater,container,false)
 
-        //profileEditName = binding.profileNameEt
-
-        /*binding.turnBtn.setOnClickListener {
-            val ft = parentFragmentManager.beginTransaction()
-
-            ft.replace(R.id.profile_frame, BackProfileFragment()).commit()
-        }*/
 
         binding.turnBtn.setOnClickListener {
             // 프로필 ID 가져오기
