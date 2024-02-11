@@ -74,7 +74,7 @@ class FrontProfilePreviewFragment : Fragment(){
         Log.d("프리뷰", profileId1.toString())
 
         viewLifecycleOwner.lifecycleScope.launch {
-            delay(300) // 0.5초 지연
+            delay(200) // 0.2초 지연
             refreshData(profileId1.toString())
         }
     }
@@ -102,8 +102,8 @@ class FrontProfilePreviewFragment : Fragment(){
 
     private fun applyUpdatedDataToUI(updatedData: GetAllProfile) {
         // 변경된 데이터를 UI의 각 요소에 적용
-        binding.profileNameEt.setText(updatedData.result.frontFeatures[0].value)
-        binding.profileNumEt.setText(updatedData.result.frontFeatures[1].value)
+        binding.profileNameEt.setText(updatedData.result.frontFeatures[0].value.toString())
+        binding.profileNumEt.setText(updatedData.result.frontFeatures[1].value.toString())
 
 
         // 예시: 변경된 데이터가 로그에 출력되도록 함

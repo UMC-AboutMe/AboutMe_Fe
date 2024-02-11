@@ -9,17 +9,7 @@ import com.example.aboutme.databinding.ActivityPreviewprofileBinding
 
 class PreviewProfileActivity : AppCompatActivity() {
 
-    /*companion object {
-        // newInstance 메서드 추가
-        fun newInstance(positionId: Int): PreviewProfileActivity {
-            val activity = PreviewProfileActivity()
-            val args = Bundle().apply {
-                putInt("positionId", positionId)
-            }
-            activity.arguments = args
-            return fragment
-        }
-    }*/
+
 
 
     private val binding by lazy {
@@ -53,29 +43,6 @@ class PreviewProfileActivity : AppCompatActivity() {
         }
 
     }
-
-    /*private fun setFrag(fragNum: Int, profileId: String) {
-        val ft = supportFragmentManager.beginTransaction()
-        val bundle = Bundle()
-        bundle.putString("profileId", profileId)
-
-        when (fragNum) {
-            0 -> {
-                Log.d("MyProfileFragment", "FrontProfileFragment로 교체 중")
-                val frontProfilePreviewFragment = FrontProfilePreviewFragment()
-                frontProfilePreviewFragment.arguments = bundle
-                ft.replace(R.id.profile_frame2, frontProfilePreviewFragment).commit()
-            }
-
-            *//*1 -> {
-                Log.d("MyProfileFragment", "BackProfileFragment로 교체 중")
-                val backProfilePreviewFragment = BackProfilePreviewFragment()
-                backProfilePreviewFragment.arguments = bundle
-                ft.replace(R.id.profile_frame2, backProfilePreviewFragment).commit()
-            }*//*
-        }
-    }*/
-
     private fun setFrag(fragNum: Int) {
         val positionId = intent.getStringExtra("profileId_to_preview")
         Log.d("preview_id",positionId.toString())
@@ -87,11 +54,6 @@ class PreviewProfileActivity : AppCompatActivity() {
                     val frontProfilePreviewFragment = FrontProfilePreviewFragment.newInstance(positionId.toInt())
                     ft.replace(R.id.profile_frame2, frontProfilePreviewFragment).commit()
                 }
-                /*1 -> {
-                    Log.d("MyProfileFragment", "BackProfileFragment로 교체 중")
-                    val backProfileFragment = BackProfileFragment.newInstance(positionId)
-                    ft.replace(R.id.profile_frame, backProfileFragment).commit()
-                }*/
             }
         } else {
             Log.e("MyProfileFragment", "positionId가 null입니다.")

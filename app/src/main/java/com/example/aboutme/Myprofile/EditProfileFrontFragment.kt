@@ -2,6 +2,7 @@ package com.example.aboutme.Myprofile
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils.replace
 import android.util.Log
 import android.view.LayoutInflater
@@ -62,6 +63,7 @@ class EditProfileFrontFragment : Fragment() {
             Log.d("UpdatedData", "Updated data: $updatedData")
             if (updatedData != null) {
                 applyUpdatedDataToUI(updatedData)
+                Log.d("싱행",updatedData.toString())
             } else {
                 Log.e("applyUpdatedDataToUI", "Updated data is null")
             }
@@ -82,6 +84,7 @@ class EditProfileFrontFragment : Fragment() {
                         val frontFeature2 = responseData!!.result.frontFeatures[1].featureId
 
                         patchData(frontFeature1, frontFeature2)
+                        //responseData?.let { applyUpdatedDataToUI(it) }
 
                         // patchData 호출 후에 PreviewProfileActivity 시작
                         val intent = Intent(activity, PreviewProfileActivity::class.java).apply {
@@ -163,9 +166,11 @@ class EditProfileFrontFragment : Fragment() {
 
     private fun applyUpdatedDataToUI(updatedData: GetAllProfile) {
         // 변경된 데이터를 UI의 각 요소에 적용
-        binding.profileNameEt.setText(updatedData.result.frontFeatures[0].value)
+        //binding.profileNameEt.setText(updatedData.result.frontFeatures[0].value)
+        binding.profileNameEt.text = Editable.Factory.getInstance().newEditable(updatedData.result.frontFeatures[0].value)
+        Log.d("edit",updatedData.result.frontFeatures[0].value.toString())
         binding.profileNumberEt.setText(updatedData.result.frontFeatures[1].value)
-
+        Log.d("edit",updatedData.result.frontFeatures[1].value.toString())
 
         // 예시: 변경된 데이터가 로그에 출력되도록 함
         Log.d("UpdatedData", "Updated data applied to UI: $updatedData")
