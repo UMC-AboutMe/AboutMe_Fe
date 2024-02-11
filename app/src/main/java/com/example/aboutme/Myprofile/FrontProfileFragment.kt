@@ -126,6 +126,7 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
         profilePosion(positionId!!) { realProfileId ->
             Log.d("realprofileID", realProfileId.toString())
             // 여기서 realProfileId를 사용할 수 있습니다.
+            refreshData(realProfileId.toString())
         }
     }
 
