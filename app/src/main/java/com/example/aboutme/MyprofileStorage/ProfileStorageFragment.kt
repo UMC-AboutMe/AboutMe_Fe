@@ -84,7 +84,7 @@ class ProfileStorageFragment : Fragment() {
                             Log.d("Retrofit_Get_Success", response.toString())
                             response.result.member_profiles.forEach { memberProfile ->
                                 val profileId = memberProfile.profile.profile_id
-                                itemList.add(ProfileData(R.drawable.avatar_basic, "프로필 $profileId"))
+                                itemList.add(ProfileData(R.drawable.avatar_basic, "프로필 $profileId", profileId.toLong()))
                             }
                             rvAdapter.notifyDataSetChanged() //얘가 없으면 아이템이 갱신되지 않는다! 중요
                         } else {
@@ -126,9 +126,6 @@ class ProfileStorageFragment : Fragment() {
                             //성공했을 때
                             itemList.clear()
                             Log.d("Retrofit_Get_Success", response.toString())
-                            //response.result.memberProfileList.forEach { profile ->
-                                //itemList.add(ProfileData(R.drawable.profilestorage_profile, profile.profileName))
-                            //}
                             response.result.memberProfileList.forEach { profile ->
                                 val imageResId = when {
                                     profile.image.type == "CHARACTER" && profile.image.characterType in 1..8 -> {
@@ -147,7 +144,7 @@ class ProfileStorageFragment : Fragment() {
                                     profile.image.type == "USER_IMAGE" -> R.drawable.prof_avater1
                                     else -> R.drawable.avatar_basic
                                 }
-                                itemList.add(ProfileData(imageResId, profile.profileName))
+                                itemList.add(ProfileData(imageResId, profile.profileName,profile.profileId.toLong()))
                             }
 
 
