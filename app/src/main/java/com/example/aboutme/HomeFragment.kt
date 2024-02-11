@@ -30,6 +30,12 @@ class HomeFragment : Fragment() {
         binding.alarmBtn.setOnClickListener{
             startActivity(Intent(requireActivity(), AlarmActivity::class.java))
         }
+        binding.myprofIv.setOnClickListener {
+            startActivity(Intent(requireActivity(), SearchProfActivity::class.java))
+        }
+        binding.myspaceIv.setOnClickListener {
+            startActivity(Intent(requireActivity(), SearchSpaceActivity::class.java))
+        }
         return binding.root
     }
 
