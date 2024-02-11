@@ -21,6 +21,17 @@ class FrontProfilePreviewFragment : Fragment(){
 
     lateinit var binding: FragmentFrontprofileBinding
 
+    companion object {
+        fun newInstance(positionId: Int): FrontProfilePreviewFragment {
+            val fragment = FrontProfilePreviewFragment()
+            val args = Bundle().apply {
+                putInt("positionId", positionId)
+            }
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,8 +43,19 @@ class FrontProfilePreviewFragment : Fragment(){
 
 
         binding.turnBtn.setOnClickListener {
-            val ft = requireActivity().supportFragmentManager.beginTransaction()
-            ft.replace(R.id.profile_frame2, BackProfilePreviewFragment()).commit()
+            // 프로필 ID 가져오기
+            val positionId = arguments?.getInt("positionId", -1)
+
+            // BackProfileFragment로 전환하기 위해 프로필 ID를 번들에 담아서 생성
+            val backProfileFragment = BackProfilePreviewFragment.newInstance(positionId ?: -1)
+
+            // 프로필 ID를 담은 번들을 BackProfileFragment로 전달
+            backProfileFragment.arguments = arguments
+
+            // BackProfileFragment로 전환
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.profile_frame2, backProfileFragment)
+                .commit()
         }
 
         /*viewLifecycleOwner.lifecycleScope.launch {
@@ -48,12 +70,12 @@ class FrontProfilePreviewFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val profileId1 = arguments?.getString("profileId")
+        val profileId1 = arguments?.getInt("positionId", -1)
         Log.d("프리뷰", profileId1.toString())
 
         viewLifecycleOwner.lifecycleScope.launch {
-            delay(500) // 0.5초 지연
-            refreshData(profileId1)
+            delay(300) // 0.5초 지연
+            refreshData(profileId1.toString())
         }
     }
 
