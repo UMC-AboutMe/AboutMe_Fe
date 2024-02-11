@@ -30,7 +30,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.aboutme.R
+import com.example.aboutme.RetrofitMyprofile.RetrofitClient
+import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
 import com.example.aboutme.databinding.FragmentSharebottomsheet2Binding
 import com.kakao.sdk.common.util.KakaoCustomTabsClient
 import com.kakao.sdk.share.ShareClient
@@ -40,6 +43,10 @@ import com.kakao.sdk.template.model.Content
 import com.kakao.sdk.template.model.FeedTemplate
 import com.kakao.sdk.template.model.ItemContent
 import com.kakao.sdk.template.model.Link
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Response
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -52,6 +59,9 @@ class BottomSheet2 : DialogFragment() {
 
     lateinit var binding: FragmentSharebottomsheet2Binding
     private lateinit var sharedViewModel: SharedViewModel
+
+    private var serialNumber: Int? = null
+
 
     private val TAG = "BottomSheet2"
 
@@ -141,11 +151,12 @@ class BottomSheet2 : DialogFragment() {
 
         return binding.root
     }
-그
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
+        initDefaultFeed()
 
         val realProfileId = arguments?.getInt("realProfileId", -1)
         Log.d("다이얼로그id",realProfileId.toString())
@@ -447,9 +458,31 @@ class BottomSheet2 : DialogFragment() {
     }
 
 
-
     private val defaultFeed: FeedTemplate by lazy {
-        // 메시지 템플릿 만들기 (피드형)
+        lifecycleScope.launch {
+
+            val realProfileId = arguments?.getInt("realProfileId", -1)
+            try {
+                val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
+                    RetrofitClient.mainProfile.getDataAll(realProfileId!!.toLong())
+                }
+
+                if (response.isSuccessful) {
+                    val responseData: GetAllProfile? = response.body()
+                    Log.d("GETALL 성공~~", "응답 데이터: $responseData")
+                    // API 응답에서 serialNumber 값을 받아와서 초기화합니다.
+                    serialNumber = responseData?.result?.serialNumber
+                    Log.d("씨리얼", serialNumber.toString())
+                } else {
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e("GETALL 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
+                }
+            } catch (e: Exception) {
+                Log.e("GETALL 요청 실패", "에러: ${e.message}")
+            }
+        }
+
+        // serialNumber 값을 사용하여 defaultFeed를 초기화합니다.
         FeedTemplate(
             content = Content(
                 title = "테디님의 AboutMe 프로필을 확인해보세요.",
@@ -461,11 +494,9 @@ class BottomSheet2 : DialogFragment() {
                 )
             ),
             itemContent = ItemContent(
-                profileText = "일련번호 : 123456"
-
+                profileText = "일련번호: $serialNumber" // serialNumber 값을 사용합니다.
             ),
             buttons = listOf(
-
                 Button(
                     "앱 다운로드",
                     Link(
@@ -480,9 +511,96 @@ class BottomSheet2 : DialogFragment() {
                         androidExecutionParams = mapOf("key1" to "value1")
                     )
                 )
-
             )
         )
-
     }
+
+
+
+/*       private val defaultFeed: FeedTemplate by lazy {
+
+            val realProfileId = arguments?.getInt("realProfileId", -1)
+
+            lifecycleScope.launch {
+                try {
+                    val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
+                        RetrofitClient.mainProfile.getDataAll(realProfileId!!.toLong())
+                    }
+
+                    if (response.isSuccessful) {
+                        val responseData: GetAllProfile? = response.body()
+                        Log.d("GETALL 성공!!!!", "응답 데이터: $responseData")
+                        val serialNumber = responseData!!.result.serialNumber
+                    } else {
+                        val errorBody = response.errorBody()?.string() ?: "No error body"
+                        Log.e("GETALL 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
+                    }
+                } catch (e: Exception) {
+                    Log.e("GETALL 요청 실패", "에러: ${e.message}")
+                }
+            }
+            // 메시지 템플릿 만들기 (피드형)
+            FeedTemplate(
+                content = Content(
+                    title = "테디님의 AboutMe 프로필을 확인해보세요.",
+                    description = "홈 화면에 있는 프로필 찾기에 일련번호를 입력하면 프로필을 찾을 수 있어요.",
+                    imageUrl = "https://i.imgur.com/PsidRUL.jpg",
+                    link = Link(
+                        webUrl = "https://play.google.com",
+                        mobileWebUrl = "https://play.google.com"
+                    )
+                ),
+                itemContent = ItemContent(
+                    profileText = "일련번호 :" + serialNumber
+
+                ),
+                buttons = listOf(
+
+                    Button(
+                        "앱 다운로드",
+                        Link(
+                            webUrl = "https://play.google.com",
+                            mobileWebUrl = "https://play.google.com"
+                        )
+                    ),
+                    Button(
+                        "앱으로 이동",
+                        Link(
+                            //이 부분을 사용해서 어떤 상세페이지를 띄울지 결정
+                            androidExecutionParams = mapOf("key1" to "value1")
+                        )
+                    )
+
+                )
+            )
+
+        }*/
+
+    private fun initDefaultFeed() {
+        lifecycleScope.launch {
+            val realProfileId = arguments?.getInt("realProfileId", -1)
+            try {
+                val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
+                    RetrofitClient.mainProfile.getDataAll(realProfileId!!.toLong())
+                }
+
+                if (response.isSuccessful) {
+                    val responseData: GetAllProfile? = response.body()
+                    Log.d("GETALL 성공~~", "응답 데이터: $responseData")
+                    // API 응답에서 serialNumber 값을 받아와서 초기화합니다.
+                    serialNumber = responseData?.result?.serialNumber
+                    Log.d("씨리얼", serialNumber.toString())
+                } else {
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e(
+                        "GETALL 요청 실패",
+                        "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                    )
+                }
+            } catch (e: Exception) {
+                Log.e("GETALL 요청 실패", "에러: ${e.message}")
+            }
+        }
+    }
+
 }
