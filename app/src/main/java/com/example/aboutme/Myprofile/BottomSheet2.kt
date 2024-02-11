@@ -517,64 +517,6 @@ class BottomSheet2 : DialogFragment() {
 
 
 
-/*       private val defaultFeed: FeedTemplate by lazy {
-
-            val realProfileId = arguments?.getInt("realProfileId", -1)
-
-            lifecycleScope.launch {
-                try {
-                    val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
-                        RetrofitClient.mainProfile.getDataAll(realProfileId!!.toLong())
-                    }
-
-                    if (response.isSuccessful) {
-                        val responseData: GetAllProfile? = response.body()
-                        Log.d("GETALL 성공!!!!", "응답 데이터: $responseData")
-                        val serialNumber = responseData!!.result.serialNumber
-                    } else {
-                        val errorBody = response.errorBody()?.string() ?: "No error body"
-                        Log.e("GETALL 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
-                    }
-                } catch (e: Exception) {
-                    Log.e("GETALL 요청 실패", "에러: ${e.message}")
-                }
-            }
-            // 메시지 템플릿 만들기 (피드형)
-            FeedTemplate(
-                content = Content(
-                    title = "테디님의 AboutMe 프로필을 확인해보세요.",
-                    description = "홈 화면에 있는 프로필 찾기에 일련번호를 입력하면 프로필을 찾을 수 있어요.",
-                    imageUrl = "https://i.imgur.com/PsidRUL.jpg",
-                    link = Link(
-                        webUrl = "https://play.google.com",
-                        mobileWebUrl = "https://play.google.com"
-                    )
-                ),
-                itemContent = ItemContent(
-                    profileText = "일련번호 :" + serialNumber
-
-                ),
-                buttons = listOf(
-
-                    Button(
-                        "앱 다운로드",
-                        Link(
-                            webUrl = "https://play.google.com",
-                            mobileWebUrl = "https://play.google.com"
-                        )
-                    ),
-                    Button(
-                        "앱으로 이동",
-                        Link(
-                            //이 부분을 사용해서 어떤 상세페이지를 띄울지 결정
-                            androidExecutionParams = mapOf("key1" to "value1")
-                        )
-                    )
-
-                )
-            )
-
-        }*/
 
     private fun initDefaultFeed() {
         lifecycleScope.launch {
