@@ -12,6 +12,7 @@ import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyprofile.RetrofitClient
 import com.example.aboutme.RetrofitMyprofileData.DeleteMyprofile
 import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
+import com.example.aboutme.RetrofitMyprofileData.MainProfileData
 import com.example.aboutme.RetrofitMyprofileData.PostProfile
 import com.example.aboutme.RetrofitMyprofileData.ResponsePostProfile
 import com.example.aboutme.databinding.FragmentMyprofileBinding
@@ -73,28 +74,6 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
         }
 
 
-// Coroutine을 사용하여 비동기 호출 수행
-        lifecycleScope.launch {
-            try {
-                // withContext를 사용하여 백그라운드 스레드에서 실행하도록 함
-                val response: Response<DeleteMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.deleteData(9)
-                }
-
-                if (response.isSuccessful) {
-                    val responseData: DeleteMyprofile? = response.body()
-                    Log.d("Delete 성공", "응답 데이터: $responseData")
-                    // responseData를 처리하는 로직 작성
-                } else {
-                    val errorBody = response.errorBody()?.string() ?: "No error body"
-                    Log.e("Delete 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
-
-                }
-            } catch (e: Exception) {
-                Log.e("Delete 요청 실패", "에러: ${e.message}")
-            }
-        }
-
         return binding.root
     }
 
@@ -108,12 +87,25 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
 
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
+        val positionId = arguments?.getInt("positionId", -1)
+        Log.d("MyProfileFragment", "Position ID: $positionId")
+
         //공유 버튼 클릭 시 이벤트 발생
         binding.myprofileShareBtn.setOnClickListener {
 
             val bottomSheet2 = BottomSheet2()
 
             bottomSheet2.show(childFragmentManager, bottomSheet2.tag)
+        }
+
+        profilePosion(positionId!!) { realProfileId ->
+            Log.d("realprofileID", realProfileId.toString())
+
+            binding.deleteButtonIv.setOnClickListener{
+                Log.d("delete!!","success")
+                deleteProfile(realProfileId)
+            }
+
         }
 
     }
@@ -136,11 +128,86 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
         }
     }
 
-    override fun onBottomSheetAction() {
 
+    private fun profilePosion(positionId: Int, callback: (Int) -> Unit) {
+        var realProfileId = -1 // 기본값 설정
+        RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
+            // 서버 통신 실패 시의 작업
+            override fun onFailure(call: Call<MainProfileData>, t: Throwable) {
+                Log.e("실패", t.toString())
+                callback(realProfileId) // 실패 시에도 콜백 호출
+            }
+
+            override fun onResponse(
+                call: Call<MainProfileData>,
+                response: Response<MainProfileData>
+            ) {
+                val repos: MainProfileData? = response.body()
+                if (repos != null) {
+                    val totalMyProfile = repos.getTotalMyProfile()
+                    Log.d("get!!", "응답 데이터: $repos")
+
+                    if (totalMyProfile == 1) {
+                        realProfileId = repos.result.myprofiles[0].profileId
+                    }
+                    if (totalMyProfile == 2) {
+                        val minProfileId = repos.result.myprofiles[0].profileId
+                        val maxProfileId = repos.result.myprofiles[1].profileId
+
+                        realProfileId = if (positionId == 0) {
+                            minProfileId
+                        } else {
+                            maxProfileId
+                        }
+                    }
+                    if (totalMyProfile == 3) {
+                        val minProfileId = repos.result.myprofiles[0].profileId
+                        val mediumProfileId = repos.result.myprofiles[1].profileId
+                        val maxProfileId = repos.result.myprofiles[2].profileId
+
+                        realProfileId = when {
+                            positionId == 0 -> minProfileId
+                            positionId == 1 -> mediumProfileId
+                            else -> maxProfileId
+                        }
+                    }
+                } else {
+                    Log.e("실패", "front_features 데이터가 null입니다.")
+                }
+                callback(realProfileId) // 응답 처리 후에 콜백 호출
+            }
+        })
+    }
+
+    private fun deleteProfile(profileId : Int){
+
+// Coroutine을 사용하여 비동기 호출 수행
+        lifecycleScope.launch {
+            try {
+                // withContext를 사용하여 백그라운드 스레드에서 실행하도록 함
+                val response: Response<DeleteMyprofile> = withContext(Dispatchers.IO) {
+                    RetrofitClient.mainProfile.deleteData(profileId.toLong())
+                }
+
+                if (response.isSuccessful) {
+                    val responseData: DeleteMyprofile? = response.body()
+                    Log.d("Delete 성공", "응답 데이터: $responseData")
+                    // responseData를 처리하는 로직 작성
+                } else {
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e("Delete 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
+
+                }
+            } catch (e: Exception) {
+                Log.e("Delete 요청 실패", "에러: ${e.message}")
+            }
+        }
     }
 
 
+    override fun onBottomSheetAction() {
+
+    }
 
 
 }
