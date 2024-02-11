@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyprofile.RetrofitClient
@@ -23,6 +25,8 @@ import retrofit2.Response
 class EditProfileFrontFragment : Fragment() {
 
     lateinit var binding: FragmentEditprofilefrontBinding
+    private val viewModel: MyProfileViewModel by activityViewModels()
+
 
 
     override fun onCreateView(
@@ -54,6 +58,15 @@ class EditProfileFrontFragment : Fragment() {
 
         val retrofitClient = RetrofitClient.mainProfile
 
+        viewModel.updatedData.observe(viewLifecycleOwner, { updatedData ->
+            Log.d("UpdatedData", "Updated data: $updatedData")
+            if (updatedData != null) {
+                applyUpdatedDataToUI(updatedData)
+            } else {
+                Log.e("applyUpdatedDataToUI", "Updated data is null")
+            }
+        })
+
         binding.profileEditPreviewBtn.setOnClickListener {
             lifecycleScope.launch {
                 try {
@@ -71,8 +84,9 @@ class EditProfileFrontFragment : Fragment() {
                         patchData(frontFeature1, frontFeature2)
 
                         // patchData 호출 후에 PreviewProfileActivity 시작
-                        val intent = Intent(activity, PreviewProfileActivity::class.java)
-                        intent.putExtra("profileId_to_preview", profileId1)
+                        val intent = Intent(activity, PreviewProfileActivity::class.java).apply {
+                            putExtra("profileId_to_preview", profileId1)
+                        }
                         startActivity(intent)
                     } else {
                         val errorBody = response.errorBody()?.string() ?: "No error body"
@@ -83,6 +97,7 @@ class EditProfileFrontFragment : Fragment() {
                 }
             }
         }
+
 
     }
 
@@ -100,24 +115,40 @@ class EditProfileFrontFragment : Fragment() {
 
         lifecycleScope.launch {
             try {
-                Log.d("patchData", "patchData1 호출 전")
-                // withContext를 사용하여 백그라운드 스레드에서 실행하도록 함
                 val response1: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
                     RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchData1)
                 }
-                Log.d("patchData", "patchData1 호출 후")
 
-                Log.d("patchData", "patchData2 호출 전")
                 val response2: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
                     RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchData2)
                 }
-                Log.d("patchData", "patchData2 호출 후")
 
                 if (response1.isSuccessful && response2.isSuccessful) {
                     val responseData1: PatchMyprofile? = response1.body()
                     val responseData2: PatchMyprofile? = response2.body()
                     Log.d("patch 성공", "응답 데이터1: $responseData1, 응답 데이터2: $responseData2")
-                    // responseData를 처리하는 로직 작성
+
+                    // 수정된 데이터를 받아옴
+                    val updatedResponse: Response<GetAllProfile> = withContext(Dispatchers.IO) {
+                        RetrofitClient.mainProfile.getDataAll(profileId1!!.toLong())
+                    }
+
+                    if (updatedResponse.isSuccessful) {
+                        // 최신 데이터를 받아옴
+                        val updatedData: GetAllProfile? = updatedResponse.body()
+                        Log.d("GETALL 성공", "업데이트된 데이터: $updatedData")
+
+                        // ViewModel에 수정된 데이터를 전달
+                        viewModel.updateData(updatedData)
+                        if (updatedData != null) {
+                            applyUpdatedDataToUI(updatedData)
+                        } else {
+                            Log.e("applyUpdatedDataToUI", "Updated data is null")
+                        }
+                    } else {
+                        val errorBody = updatedResponse.errorBody()?.string() ?: "No error body"
+                        Log.e("GETALL 요청 실패", "응답코드: ${updatedResponse.code()}, 응답메시지: ${updatedResponse.message()}, 오류 내용: $errorBody")
+                    }
                 } else {
                     val errorBody1 = response1.errorBody()?.string() ?: "No error body"
                     val errorBody2 = response2.errorBody()?.string() ?: "No error body"
@@ -129,4 +160,15 @@ class EditProfileFrontFragment : Fragment() {
             }
         }
     }
+
+    private fun applyUpdatedDataToUI(updatedData: GetAllProfile) {
+        // 변경된 데이터를 UI의 각 요소에 적용
+        binding.profileNameEt.setText(updatedData.result.frontFeatures[0].value)
+        binding.profileNumberEt.setText(updatedData.result.frontFeatures[1].value)
+
+
+        // 예시: 변경된 데이터가 로그에 출력되도록 함
+        Log.d("UpdatedData", "Updated data applied to UI: $updatedData")
+    }
+
 }

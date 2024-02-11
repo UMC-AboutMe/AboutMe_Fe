@@ -23,21 +23,28 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BackProfileFragment : Fragment(), RecommendBottomSheet.OnMbtiSelectedListener,
-    RecommendBottomSheet.OnSchoolSelectedListener,
-    RecommendBottomSheet.OnCompanySelectedListener, RecommendBottomSheet.OnHobbySelectedListener,
-    RecommendBottomSheet.OnJobSelectedListener {
+class BackProfileFragment : Fragment()
+{
+
+    companion object {
+        fun newInstance(positionId: Int): BackProfileFragment {
+            val fragment = BackProfileFragment()
+            val args = Bundle().apply {
+                putInt("positionId", positionId)
+            }
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     lateinit var binding : FragmentBackprofileBinding
 
     private var selectedButtonId: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        
 
 
-
-        binding = FragmentBackprofileBinding.inflate(inflater,container, false)
+        binding = FragmentBackprofileBinding.inflate(inflater, container, false)
 
         binding.turnBtn2.setOnClickListener {
             val ft = parentFragmentManager.beginTransaction()
@@ -47,10 +54,10 @@ class BackProfileFragment : Fragment(), RecommendBottomSheet.OnMbtiSelectedListe
 
 
         //연필모양 버튼 활성/비활성 구현
-        val profileEdit1 : EditText = binding.backProfileEt1
-        val profileBtn1 : ImageButton = binding.profileEdit1Btn
+        //val profileEdit1 : EditText = binding.backProfileEt1
+        //val profileBtn1 : ImageButton = binding.profileEdit1Btn
 
-        var message1 : String = ""
+        /* var message1 : String = ""
 
         profileEdit1.addTextChangedListener (object : TextWatcher{
 
@@ -395,5 +402,8 @@ class BackProfileFragment : Fragment(), RecommendBottomSheet.OnMbtiSelectedListe
                 Glide.with(requireContext()).load(R.drawable.job).into(binding.recommendEt5Iv)
             }
         }
+    }*/
+        return binding.root
+
     }
 }

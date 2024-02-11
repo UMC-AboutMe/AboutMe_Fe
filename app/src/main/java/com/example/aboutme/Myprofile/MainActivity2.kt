@@ -8,7 +8,6 @@ import com.example.aboutme.R
 
 class MainActivity2 : AppCompatActivity(), BottomSheet2.OnBottomSheetListener{
 
-    private val viewModel by lazy { ViewModelProvider(this).get(FrontProfileViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,9 +66,6 @@ class MainActivity2 : AppCompatActivity(), BottomSheet2.OnBottomSheetListener{
     override fun onBottomSheetAction() {
         // BottomSheet2에서 발생한 액션에 대한 동작
         // ...
-    }
-    fun getViewModel2(): FrontProfileViewModel {
-        return viewModel
     }
 
 

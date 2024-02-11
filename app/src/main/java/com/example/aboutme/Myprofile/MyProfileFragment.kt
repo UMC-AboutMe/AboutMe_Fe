@@ -120,16 +120,18 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
 
     private fun setFrag(fragNum : Int){
         val ft = childFragmentManager.beginTransaction()
-        when(fragNum)
-        {
+        val positionId = arguments?.getInt("positionId", -1)
+
+        when(fragNum) {
             0 -> {
                 Log.d("MyProfileFragment", "FrontProfileFragment로 교체 중")
-                ft.replace(R.id.profile_frame, FrontProfileFragment()).commit()
+                val frontProfileFragment = FrontProfileFragment.newInstance(positionId ?: -1)
+                ft.replace(R.id.profile_frame, frontProfileFragment).commit()
             }
-
             1 -> {
                 Log.d("MyProfileFragment", "BackProfileFragment로 교체 중")
-                ft.replace(R.id.profile_frame, BackProfileFragment()).commit()
+                val backProfileFragment = BackProfileFragment.newInstance(positionId ?: -1)
+                ft.replace(R.id.profile_frame, backProfileFragment).commit()
             }
         }
     }

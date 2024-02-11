@@ -40,19 +40,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <EditText
+            <TextView
                 android:id="@+id/backProfile_et1"
                 android:layout_width="250dp"
                 android:layout_height="50dp"
                 android:layout_marginBottom="24dp"
-                android:ems="12"
-                android:hint="내용1"
                 android:fontFamily="@font/gmarketsansmedium"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="180dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginLeft="50dp"
-                android:background="@color/transparent"/>
+                android:layout_marginLeft="50dp" />
 
             <ImageButton
                 android:id="@+id/profileEdit1_btn"
@@ -77,19 +74,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <EditText
+            <TextView
                 android:id="@+id/backProfile_et2"
                 android:layout_width="250dp"
                 android:layout_height="50dp"
                 android:layout_marginBottom="24dp"
-                android:ems="12"
-                android:hint="내용2"
                 android:fontFamily="@font/gmarketsansmedium"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="260dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginLeft="50dp"
-                android:background="@color/transparent"/>
+                android:layout_marginLeft="50dp" />
 
             <ImageButton
                 android:id="@+id/profileEdit2_btn"
@@ -115,19 +109,16 @@
             android:layout_height="wrap_content">
 
 
-            <EditText
+            <TextView
                 android:id="@+id/backProfile_et3"
                 android:layout_width="250dp"
                 android:layout_height="50dp"
                 android:layout_marginBottom="24dp"
-                android:ems="12"
-                android:hint="내용3"
                 android:fontFamily="@font/gmarketsansmedium"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="340dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginLeft="50dp"
-                android:background="@color/transparent"/>
+                android:layout_marginLeft="50dp" />
 
             <ImageButton
                 android:id="@+id/profileEdit3_btn"

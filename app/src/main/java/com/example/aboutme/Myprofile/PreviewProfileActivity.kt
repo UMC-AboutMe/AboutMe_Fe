@@ -4,16 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.example.aboutme.R
-import com.example.aboutme.RetrofitMyprofile.RetrofitClient
-import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
-import com.example.aboutme.databinding.ActivityEditprofileBinding
 import com.example.aboutme.databinding.ActivityPreviewprofileBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.Response
 
 class PreviewProfileActivity : AppCompatActivity() {
 
@@ -27,6 +19,8 @@ class PreviewProfileActivity : AppCompatActivity() {
 
         val profileId = intent.getStringExtra("profileId_to_preview")
         Log.d("preview_id",profileId.toString())
+
+
 
         setFrag(0, profileId.toString())
 

@@ -12,6 +12,7 @@ import com.example.aboutme.RetrofitMyprofile.RetrofitClient
 import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
 import com.example.aboutme.databinding.FragmentFrontprofileBinding
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -19,6 +20,7 @@ import retrofit2.Response
 class FrontProfilePreviewFragment : Fragment(){
 
     lateinit var binding: FragmentFrontprofileBinding
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,43 +33,44 @@ class FrontProfilePreviewFragment : Fragment(){
 
         binding.turnBtn.setOnClickListener {
             val ft = requireActivity().supportFragmentManager.beginTransaction()
-
             ft.replace(R.id.profile_frame2, BackProfilePreviewFragment()).commit()
         }
+
+        /*viewLifecycleOwner.lifecycleScope.launch {
+            delay(700) // 0.5초 지연
+            refreshData(profileId1)
+        }*/
 
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val profileId = arguments?.getString("profileId")
-        Log.d("preview_id_in_fragment", profileId.toString())
+        val profileId1 = arguments?.getString("profileId")
+        Log.d("프리뷰", profileId1.toString())
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            delay(500) // 0.5초 지연
+            refreshData(profileId1)
+        }
+    }
+
+    private fun refreshData(profileId: String?) {
         lifecycleScope.launch {
             try {
-                // 백그라운드 스레드에서 Retrofit의 patchProfile 메서드를 호출하고, 결과를 받아옴
-                // withContext를 사용하여 백그라운드 스레드에서 실행하도록 함
                 val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
                     RetrofitClient.mainProfile.getDataAll(profileId!!.toLong())
                 }
 
                 if (response.isSuccessful) {
-
-                    // 성공한 응답 데이터를 받아옴
                     val responseData: GetAllProfile? = response.body()
-                    Log.d("GETALL 성공", "응답 데이터: $responseData")
-                    // responseData를 처리하는 로직 작성
-
-                    binding.profileNameEt.text = responseData!!.result.frontFeatures[0].value
-                    //Log.d("preview_value0",responseData.result.frontFeatures[0].value)
-
-
-
+                    Log.d("GETALL 성공!!!!", "응답 데이터: $responseData")
+                    responseData?.let { applyUpdatedDataToUI(it) }
                 } else {
                     val errorBody = response.errorBody()?.string() ?: "No error body"
                     Log.e("GETALL 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
-
                 }
             } catch (e: Exception) {
                 Log.e("GETALL 요청 실패", "에러: ${e.message}")
@@ -75,5 +78,14 @@ class FrontProfilePreviewFragment : Fragment(){
         }
     }
 
+    private fun applyUpdatedDataToUI(updatedData: GetAllProfile) {
+        // 변경된 데이터를 UI의 각 요소에 적용
+        binding.profileNameEt.setText(updatedData.result.frontFeatures[0].value)
+        binding.profileNumEt.setText(updatedData.result.frontFeatures[1].value)
+
+
+        // 예시: 변경된 데이터가 로그에 출력되도록 함
+        Log.d("UpdatedData", "Updated data applied to UI: $updatedData")
+    }
 
 }

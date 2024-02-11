@@ -111,7 +111,7 @@
             android:layout_marginTop="-50dp"/>
 
         <EditText
-            android:id="@+id/profile_name_et"
+            android:id="@+id/profile_tmi_et"
             android:layout_width="350dp"
             android:layout_height="100dp"
             android:textSize="20sp"
@@ -122,6 +122,17 @@
             android:layout_marginLeft="20dp"
             android:fontFamily="@font/gmarketsansmedium"/>
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/profileEditPreview_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="미리보기"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:background="@color/transparent"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:textSize="25sp"/>
 
 
     </LinearLayout>
