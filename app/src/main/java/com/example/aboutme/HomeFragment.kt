@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.LinearSmoothScroller.SNAP_TO_START
 import com.example.aboutme.Alarm.AlarmActivity
 import com.example.aboutme.Mypage.MypageActivity
+import com.example.aboutme.Myspace.MemberFragment
 import com.example.aboutme.Search.SearchProfActivity
 import com.example.aboutme.Search.SearchSpaceActivity
 import com.example.aboutme.databinding.FragmentHomeBinding
@@ -58,17 +59,30 @@ class HomeFragment : Fragment() {
         HomeAdapter = HomeFragmentAdapter(requireContext())
         binding.homeitemRc.adapter = HomeAdapter
 
-        datas.apply {
-            add(HomeFragmentData(R.drawable.home_rc1, "Member"))
-            add(HomeFragmentData(R.drawable.home_rc2, "Member"))
-            add(HomeFragmentData(R.drawable.home_rc3, "Member"))
-            add(HomeFragmentData(R.drawable.home_rc4, "Member"))
-            add(HomeFragmentData(R.drawable.home_rc5, "Member"))
-            add(HomeFragmentData(R.drawable.home_rc6, "Member"))
-            add(HomeFragmentData(R.drawable.home_rc7, "Member"))
-            add(HomeFragmentData(R.drawable.home_rc8, "Member"))
-            add(HomeFragmentData(R.drawable.home_rc9, "Member"))
+        HomeAdapter.onItemClick = { position ->
+            // 인덱스를 다음 프래그먼트로 전달
+            val bundle = Bundle()
+            bundle.putInt("position", position)
+            val fragment = MemberFragment()
+            fragment.arguments = bundle
 
+            // 프래그먼트 전환
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.layout_home, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
+
+        datas.apply {
+            add(HomeFragmentData(R.drawable.home_rc1, "유태연"))
+            add(HomeFragmentData(R.drawable.home_rc2, "정서연"))
+            add(HomeFragmentData(R.drawable.home_rc3, "오유은"))
+            add(HomeFragmentData(R.drawable.home_rc4, "최가나"))
+            add(HomeFragmentData(R.drawable.home_rc5, "변성호"))
+            add(HomeFragmentData(R.drawable.home_rc6, "송혜음"))
+            add(HomeFragmentData(R.drawable.home_rc7, "조희수"))
+            add(HomeFragmentData(R.drawable.home_rc9, "차현정"))
+            add(HomeFragmentData(R.drawable.home_rc8, "정승원"))
             HomeAdapter.datas = datas
             HomeAdapter.notifyDataSetChanged()
         }

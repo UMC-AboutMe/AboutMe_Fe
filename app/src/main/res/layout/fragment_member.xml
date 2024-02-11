@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_myspacemain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_myspacemain"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="#FFFFFF">
 
     <ImageView
         android:id="@+id/member_logo"
@@ -18,20 +19,20 @@
         android:id="@+id/member_myspace_title_line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/myspace_title"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
-        app:layout_constraintTop_toBottomOf="@+id/member_logo"
-        app:layout_constraintStart_toStartOf="@+id/member_logo" />
+        android:src="@drawable/myspace_title"
+        app:layout_constraintStart_toStartOf="@+id/member_logo"
+        app:layout_constraintTop_toBottomOf="@+id/member_logo" />
 
     <TextView
         android:id="@+id/member_myspace_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/gmarketsansmedium"
         android:text="Member"
         android:textSize="30sp"
-        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintStart_toEndOf="@+id/member_myspace_title_line"
@@ -43,9 +44,9 @@
         android:id="@+id/member_step3_selected_room"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:foregroundGravity="center"
         android:src="@drawable/step3_room_1"
-        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/member_myspace_title_line" />
@@ -77,8 +78,8 @@
         android:layout_height="45dp"
         android:background="@color/transparent"
         android:src="@drawable/step3_photo"
-        app:layout_constraintStart_toStartOf="@id/member_step3_story"
-        app:layout_constraintBottom_toTopOf="@id/member_step3_feeling"/>
+        app:layout_constraintBottom_toTopOf="@id/member_step3_feeling"
+        app:layout_constraintStart_toStartOf="@id/member_step3_story" />
 
     <ImageButton
         android:id="@+id/member_step3_story"
@@ -99,7 +100,7 @@
         android:background="@color/transparent"
         android:src="@drawable/step3_schedule"
         app:layout_constraintBottom_toTopOf="@+id/member_step3_comment"
-        app:layout_constraintEnd_toStartOf="@+id/member_step3_comment"/>
+        app:layout_constraintEnd_toStartOf="@+id/member_step3_comment" />
 
     <ImageButton
         android:id="@+id/member_step3_comment"
@@ -129,45 +130,45 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="20dp"
         android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@+id/member_step3_selected_room"
-        app:layout_constraintStart_toStartOf="@+id/member_step3_selected_room">
+        app:layout_constraintStart_toStartOf="@+id/member_step3_selected_room"
+        app:layout_constraintTop_toBottomOf="@+id/member_step3_selected_room">
 
         <TextView
             android:id="@+id/member_step3_feeling_guide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:fontFamily="@font/gmarketsansmedium"
             android:text="@string/step3_feeling"
-            android:visibility="visible"
-            android:layout_centerHorizontal="true"/>
+            android:visibility="visible" />
 
         <EditText
             android:id="@+id/member_step3_feeling_et"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/member_step3_feeling_guide"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/myspace_step3_et"
             android:fontFamily="@font/gmarketsansmedium"
+            android:gravity="center|start"
+            android:inputType="textMultiLine"
+            android:maxLength="50"
+            android:maxLines="3"
             android:paddingStart="20dp"
             android:paddingEnd="50dp"
-            android:visibility="visible"
-            android:maxLines="3"
-            android:maxLength="50"
             android:scrollHorizontally="false"
-            android:inputType="textMultiLine"
-            android:gravity="center|start"
-            android:layout_below="@+id/member_step3_feeling_guide"
-            android:layout_centerHorizontal="true"/>
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/member_step3_feeling_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/myspacemain_ok"
-            android:layout_centerVertical="true"
+            android:layout_alignTop="@+id/member_step3_feeling_et"
             android:layout_alignEnd="@id/member_step3_feeling_et"
             android:layout_alignBottom="@id/member_step3_feeling_et"
-            android:layout_alignTop="@+id/member_step3_feeling_et"
-            android:layout_marginEnd="20dp"/>
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/myspacemain_ok" />
 
 
     </RelativeLayout>
@@ -177,47 +178,47 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:visibility="invisible"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/member_step3_selected_room"
-        app:layout_constraintStart_toStartOf="@+id/member_step3_selected_room">
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/member_step3_selected_room"
+        app:layout_constraintTop_toBottomOf="@+id/member_step3_selected_room">
 
         <TextView
             android:id="@+id/member_step3_comment_guide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:fontFamily="@font/gmarketsansmedium"
             android:text="@string/step3_comment"
-            android:visibility="visible"
-            android:layout_centerHorizontal="true"/>
+            android:visibility="visible" />
 
         <EditText
             android:id="@+id/member_step3_comment_et"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/member_step3_comment_guide"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/myspace_step3_et"
-            android:visibility="visible"
             android:fontFamily="@font/gmarketsansmedium"
+            android:gravity="center|start"
+            android:inputType="textMultiLine"
+            android:maxLength="50"
+            android:maxLines="3"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:maxLines="3"
-            android:maxLength="50"
             android:scrollHorizontally="false"
-            android:inputType="textMultiLine"
-            android:gravity="center|start"
-            android:layout_below="@+id/member_step3_comment_guide"
-            android:layout_centerHorizontal="true"/>
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/member_step3_comment_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/myspacemain_ok"
-            android:layout_centerVertical="true"
+            android:layout_alignTop="@+id/member_step3_comment_et"
             android:layout_alignEnd="@id/member_step3_comment_et"
             android:layout_alignBottom="@id/member_step3_comment_et"
-            android:layout_alignTop="@+id/member_step3_comment_et"
-            android:layout_marginEnd="20dp"/>
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/myspacemain_ok" />
 
     </RelativeLayout>
 
@@ -226,36 +227,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:visibility="invisible"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/member_step3_selected_room"
-        app:layout_constraintStart_toStartOf="@+id/member_step3_selected_room">
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/member_step3_selected_room"
+        app:layout_constraintTop_toBottomOf="@+id/member_step3_selected_room">
 
         <TextView
             android:id="@+id/member_step3_schedule_guide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:fontFamily="@font/gmarketsansmedium"
             android:text="@string/step3_schedule"
-            android:visibility="visible"
-            android:layout_centerHorizontal="true"/>
+            android:visibility="visible" />
 
         <EditText
             android:id="@+id/member_step3_schedule_et"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/member_step3_schedule_guide"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/myspace_step3_et"
-            android:visibility="visible"
             android:fontFamily="@font/gmarketsansmedium"
+            android:gravity="center|start"
+            android:inputType="textMultiLine"
+            android:maxLength="50"
+            android:maxLines="3"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:maxLines="3"
-            android:maxLength="50"
             android:scrollHorizontally="false"
-            android:inputType="textMultiLine"
-            android:gravity="center|start"
-            android:layout_below="@+id/member_step3_schedule_guide"
-            android:layout_centerHorizontal="true"/>
+            android:visibility="visible" />
 
     </RelativeLayout>
 
@@ -264,48 +265,48 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:visibility="invisible"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/member_step3_selected_room"
-        app:layout_constraintStart_toStartOf="@+id/member_step3_selected_room">
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/member_step3_selected_room"
+        app:layout_constraintTop_toBottomOf="@+id/member_step3_selected_room">
 
         <TextView
             android:id="@+id/member_step3_music_guide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:fontFamily="@font/gmarketsansmedium"
             android:text="@string/step3_music"
-            android:visibility="visible"
-            android:layout_centerHorizontal="true"/>
+            android:visibility="visible" />
 
         <EditText
             android:id="@+id/member_step3_music_et"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/member_step3_music_guide"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/myspace_step3_et"
-            android:visibility="visible"
-            android:textSize="11sp"
             android:fontFamily="@font/gmarketsansmedium"
+            android:gravity="center|start"
+            android:inputType="textMultiLine"
+            android:maxLength="100"
+            android:maxLines="3"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:maxLines="3"
-            android:maxLength="100"
             android:scrollHorizontally="false"
-            android:inputType="textMultiLine"
-            android:gravity="center|start"
-            android:layout_below="@+id/member_step3_music_guide"
-            android:layout_centerHorizontal="true"/>
+            android:textSize="11sp"
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/member_step3_music_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/myspacemain_ok"
-            android:layout_centerVertical="true"
+            android:layout_alignTop="@+id/member_step3_music_et"
             android:layout_alignEnd="@id/member_step3_music_et"
             android:layout_alignBottom="@id/member_step3_music_et"
-            android:layout_alignTop="@+id/member_step3_music_et"
-            android:layout_marginEnd="20dp"/>
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/myspacemain_ok" />
 
     </RelativeLayout>
 
@@ -314,47 +315,47 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:visibility="invisible"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/member_step3_selected_room"
-        app:layout_constraintStart_toStartOf="@+id/member_step3_selected_room">
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/member_step3_selected_room"
+        app:layout_constraintTop_toBottomOf="@+id/member_step3_selected_room">
 
         <TextView
             android:id="@+id/member_step3_story_guide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:fontFamily="@font/gmarketsansmedium"
             android:text="@string/step3_story"
-            android:visibility="visible"
-            android:layout_centerHorizontal="true"/>
+            android:visibility="visible" />
 
         <EditText
             android:id="@+id/member_step3_story_et"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/member_step3_story_guide"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/myspace_step3_et"
-            android:visibility="visible"
             android:fontFamily="@font/gmarketsansmedium"
+            android:gravity="center|start"
+            android:inputType="textMultiLine"
+            android:maxLength="50"
+            android:maxLines="3"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:maxLines="3"
-            android:maxLength="50"
             android:scrollHorizontally="false"
-            android:inputType="textMultiLine"
-            android:gravity="center|start"
-            android:layout_below="@+id/member_step3_story_guide"
-            android:layout_centerHorizontal="true"/>
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/member_step3_story_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/myspacemain_ok"
-            android:layout_centerVertical="true"
+            android:layout_alignTop="@+id/member_step3_story_et"
             android:layout_alignEnd="@id/member_step3_story_et"
             android:layout_alignBottom="@id/member_step3_story_et"
-            android:layout_alignTop="@+id/member_step3_story_et"
-            android:layout_marginEnd="20dp"/>
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/myspacemain_ok" />
 
     </RelativeLayout>
 
@@ -363,31 +364,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:visibility="invisible"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/member_step3_selected_room"
-        app:layout_constraintStart_toStartOf="@+id/member_step3_selected_room">
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/member_step3_selected_room"
+        app:layout_constraintTop_toBottomOf="@+id/member_step3_selected_room">
 
         <TextView
             android:id="@+id/member_step3_photo_guide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:fontFamily="@font/gmarketsansmedium"
             android:text="@string/step3_photo"
-            android:visibility="visible"
-            android:layout_centerHorizontal="true"/>
+            android:visibility="visible" />
 
         <EditText
             android:id="@+id/member_step3_photo_et"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/member_step3_photo_guide"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/myspace_step3_et"
-            android:visibility="visible"
             android:fontFamily="@font/gmarketsansmedium"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:layout_below="@+id/member_step3_photo_guide"
-            android:layout_centerHorizontal="true"/>
+            android:visibility="visible" />
 
     </RelativeLayout>
 
