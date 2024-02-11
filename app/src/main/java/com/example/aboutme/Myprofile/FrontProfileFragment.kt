@@ -79,10 +79,26 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
         //profileEditName = binding.profileNameEt
 
-        binding.turnBtn.setOnClickListener {
+        /*binding.turnBtn.setOnClickListener {
             val ft = parentFragmentManager.beginTransaction()
 
             ft.replace(R.id.profile_frame, BackProfileFragment()).commit()
+        }*/
+
+        binding.turnBtn.setOnClickListener {
+            // 프로필 ID 가져오기
+            val positionId = arguments?.getInt("positionId", -1)
+
+            // BackProfileFragment로 전환하기 위해 프로필 ID를 번들에 담아서 생성
+            val backProfileFragment = BackProfileFragment.newInstance(positionId ?: -1)
+
+            // 프로필 ID를 담은 번들을 BackProfileFragment로 전달
+            backProfileFragment.arguments = arguments
+
+            // BackProfileFragment로 전환
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.profile_frame, backProfileFragment)
+                .commit()
         }
 
 

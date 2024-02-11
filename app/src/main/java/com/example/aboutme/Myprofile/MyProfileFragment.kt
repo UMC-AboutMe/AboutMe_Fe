@@ -110,23 +110,27 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
 
     }
 
-    private fun setFrag(fragNum : Int){
-        val ft = childFragmentManager.beginTransaction()
+    private fun setFrag(fragNum: Int) {
         val positionId = arguments?.getInt("positionId", -1)
-
-        when(fragNum) {
-            0 -> {
-                Log.d("MyProfileFragment", "FrontProfileFragment로 교체 중")
-                val frontProfileFragment = FrontProfileFragment.newInstance(positionId ?: -1)
-                ft.replace(R.id.profile_frame, frontProfileFragment).commit()
+        if (positionId != null) { // positionId가 null이 아닌 경우에만 처리
+            val ft = childFragmentManager.beginTransaction()
+            when (fragNum) {
+                0 -> {
+                    Log.d("MyProfileFragment", "FrontProfileFragment로 교체 중")
+                    val frontProfileFragment = FrontProfileFragment.newInstance(positionId)
+                    ft.replace(R.id.profile_frame, frontProfileFragment).commit()
+                }
+                /*1 -> {
+                    Log.d("MyProfileFragment", "BackProfileFragment로 교체 중")
+                    val backProfileFragment = BackProfileFragment.newInstance(positionId)
+                    ft.replace(R.id.profile_frame, backProfileFragment).commit()
+                }*/
             }
-            1 -> {
-                Log.d("MyProfileFragment", "BackProfileFragment로 교체 중")
-                val backProfileFragment = BackProfileFragment.newInstance(positionId ?: -1)
-                ft.replace(R.id.profile_frame, backProfileFragment).commit()
-            }
+        } else {
+            Log.e("MyProfileFragment", "positionId가 null입니다.")
         }
     }
+
 
 
     private fun profilePosion(positionId: Int, callback: (Int) -> Unit) {
