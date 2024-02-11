@@ -28,6 +28,9 @@ class CustomDialogProf : DialogFragment() {
         // 다이얼로그를 하단으로 조정
         dialog?.window?.setGravity(Gravity.BOTTOM)
 
+        //다이얼로그 외부 클릭 시 종료 x
+        dialog?.setCanceledOnTouchOutside(false)
+
         return view
     }
 
