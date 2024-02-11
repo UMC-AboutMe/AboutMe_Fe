@@ -83,7 +83,7 @@ class ProfileRVAdapter(val items : MutableList<ProfileData>) :RecyclerView.Adapt
     private fun favProfiles() {
 //        private fun favProfiles(position : Int) {
         Log.d("Retrofit_Fav", "patch 함수 호출됨")
-        val call = ProfStorageObj.getRetrofitService.patchProfStorage(4, 1)
+        val call = ProfStorageObj.getRetrofitService.patchProfStorage(28, 1)
         //val call = ProfStorageObj.getRetrofitService.patchProfStorage(4, position+1)
 
         call.enqueue(object : Callback<ProfStorageResponse.ResponseFavProf> {
@@ -91,15 +91,12 @@ class ProfileRVAdapter(val items : MutableList<ProfileData>) :RecyclerView.Adapt
                 call: Call<ProfStorageResponse.ResponseFavProf>,
                 response: Response<ProfStorageResponse.ResponseFavProf>
             ) {
-                Log.d("Retrofit_Fav", response.toString())
                 if (response.isSuccessful) { // HTTP 응답 코드가 200번대인지 여부 확인
                     val response = response.body()
-                    Log.d("Retrofit", response.toString())
-
                     if (response != null) {
                         if (response.isSuccess) {
                             //성공했을 때
-                            Log.d("Retrofit_Fav", "처리에 성공함")
+                            Log.d("Retrofit_Fav", response.toString())
                         } else {
                             //실패했을 때
                             Log.d("Retrofit_Fav", "처리에 실패함")

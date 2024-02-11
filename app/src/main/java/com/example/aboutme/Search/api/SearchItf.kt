@@ -28,5 +28,4 @@ interface SearchItf {
         @Path ("space-id") spaceId:Long,
         @Header("member-id") memberId:Int
     ) : Call<SearchResponse.ResponseSpaceStorage>
-
 }

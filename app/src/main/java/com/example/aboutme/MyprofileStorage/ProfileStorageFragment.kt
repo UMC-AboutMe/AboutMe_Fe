@@ -47,7 +47,9 @@ class ProfileStorageFragment : Fragment() {
 
         rvAdapter.setOnItemClickListener(object : ProfileRVAdapter.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
-                Log.d("클릭2", "success")
+                Log.d("프로필 클릭", "$position 클릭")
+                //position인덱스의 리스트 가져오기
+                //itemList[position]
                 //startActivity(intent)
                 val fragmentTransaction = parentFragmentManager.beginTransaction()
                 val fragment = ProfileStorageDetailFragment()
@@ -66,7 +68,7 @@ class ProfileStorageFragment : Fragment() {
 
     //프로필 보관함 조회 api
     private fun getProfiles(){
-        val call = ProfStorageObj.getRetrofitService.getProfStorage(1)
+        val call = ProfStorageObj.getRetrofitService.getProfStorage(6)
 
         call.enqueue(object : Callback<ProfStorageResponse.ResponeProfStorage> {
             override fun onResponse(
@@ -80,9 +82,9 @@ class ProfileStorageFragment : Fragment() {
                             //성공했을 때
                             itemList.clear()
                             Log.d("Retrofit_Get_Success", response.toString())
-                            for (i in 1 .. response.result.total_member_profiles){
-                                Log.d("Retrofit_Get_Success", "$i 프로필 조회")
-                                itemList.add(ProfileData(R.drawable.profilestorage_profile, "프로필$i"))
+                            response.result.member_profiles.forEach { memberProfile ->
+                                val profileId = memberProfile.profile.profile_id
+                                itemList.add(ProfileData(R.drawable.avatar_basic, "프로필 $profileId"))
                             }
                             rvAdapter.notifyDataSetChanged() //얘가 없으면 아이템이 갱신되지 않는다! 중요
                         } else {
