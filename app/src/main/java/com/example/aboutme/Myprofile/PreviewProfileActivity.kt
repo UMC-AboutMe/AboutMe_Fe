@@ -37,11 +37,11 @@ class PreviewProfileActivity : AppCompatActivity() {
         setFrag(0)
 
 
-
-
         binding.editProfileBackBtn.setOnClickListener {
+
             val intent = Intent(this, EditProfileActivity::class.java)
-            //intent.putExtra("positionId",0)
+            intent.putExtra("reProfileId",profileId)
+            Log.d("reProfileId1",profileId.toString())
             startActivity(intent)
         }
 

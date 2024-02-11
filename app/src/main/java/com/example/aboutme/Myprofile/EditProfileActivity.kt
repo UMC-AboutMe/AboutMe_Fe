@@ -29,21 +29,21 @@ class EditProfileActivity : AppCompatActivity() {
                 arguments = Bundle().apply {
                     // profileId를 가져와 Bundle에 추가
                     val profileId = intent.getStringExtra("profileId")
-                    putString("profilId1", profileId)
+                    val profileId2 = intent.getStringExtra("reProfileId")
+
+                    if (profileId != null) {
+                        putString("profilId1", profileId)
+                    } else{
+                        putString("profilId1",profileId2)
+                    }
                     val dialogName = intent.getStringExtra("dialogName")
                     putString("dialogName",dialogName)
                 }
             })
             .commit()
 
-
-        setTabLayout()
-
-        /*binding.profileEditPreviewBtn.setOnClickListener {
-            val intent2 = Intent(this, PreviewProfileActivity::class.java)
-            intent2.putExtra("prodilId2",profileId)
-            startActivity(intent2)
-        }*/
+            //val profileId = intent.getStringExtra("reProfileId")
+            setTabLayout()
 
 
 
@@ -58,15 +58,34 @@ class EditProfileActivity : AppCompatActivity() {
                 when (tab?.position) {
                     0 -> {
                         supportFragmentManager.beginTransaction()
-                            .replace(R.id.tab_layout_container, EditProfileFrontFragment())
+                            .replace(R.id.tab_layout_container, EditProfileFrontFragment().apply {
+                                arguments = Bundle().apply {
+                                    val profileId1 = intent.getStringExtra("profileId")
+                                    val profileId2 = intent.getStringExtra("reProfileId")
+                                    Log.d("reProfileId",profileId2.toString())
+                                    if (profileId1 != null) {
+                                        putString("profilId1", profileId1)
+                                    } else{
+                                        putString("profilId1", profileId2)
+
+                                    }
+                                }
+                            })
                             .commit()
                     }
                     1 -> {
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.tab_layout_container, EditProfileBackFragment().apply {
                                 arguments = Bundle().apply {
-                                    val profileId = intent.getStringExtra("profileId")
-                                    putString("profilId1", profileId)
+                                    val profileId1 = intent.getStringExtra("profileId")
+                                    val profileId2 = intent.getStringExtra("reProfileId")
+                                    Log.d("reProfileId",profileId2.toString())
+                                    if (profileId1 != null) {
+                                        putString("profilId1", profileId1)
+                                    } else{
+                                        putString("profilId1", profileId2)
+
+                                    }
                                 }
                             })
                             .commit()
