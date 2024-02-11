@@ -91,12 +91,12 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
         Log.d("MyProfileFragment", "Position ID: $positionId")
 
         //공유 버튼 클릭 시 이벤트 발생
-        binding.myprofileShareBtn.setOnClickListener {
+        /*binding.myprofileShareBtn.setOnClickListener {
 
             val bottomSheet2 = BottomSheet2()
 
             bottomSheet2.show(childFragmentManager, bottomSheet2.tag)
-        }
+        }*/
 
         profilePosion(positionId!!) { realProfileId ->
             Log.d("realprofileID", realProfileId.toString())
@@ -104,6 +104,18 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
             binding.deleteButtonIv.setOnClickListener{
                 Log.d("delete!!","success")
                 deleteProfile(realProfileId)
+            }
+
+            binding.myprofileShareBtn.setOnClickListener {
+
+                val bottomSheet2 = BottomSheet2()
+
+                val bundle = Bundle().apply {
+                    putInt("realProfileId", realProfileId)
+                }
+                // 다이얼로그 프래그먼트를 호출하여 번들을 전달
+                bottomSheet2.arguments = bundle
+                bottomSheet2.show(childFragmentManager, bottomSheet2.tag)
             }
 
         }

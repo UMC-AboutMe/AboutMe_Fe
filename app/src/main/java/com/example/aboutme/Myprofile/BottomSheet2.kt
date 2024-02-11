@@ -141,11 +141,14 @@ class BottomSheet2 : DialogFragment() {
 
         return binding.root
     }
-
+그
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
+        val realProfileId = arguments?.getInt("realProfileId", -1)
+        Log.d("다이얼로그id",realProfileId.toString())
 
         binding.shareBottomSheet2ImageBtn.setOnClickListener {
             sharedViewModel.profileLayoutLiveData.value?.let { profileLayout ->
