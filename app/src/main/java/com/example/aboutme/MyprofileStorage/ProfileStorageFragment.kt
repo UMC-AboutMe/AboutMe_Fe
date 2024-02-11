@@ -51,8 +51,13 @@ class ProfileStorageFragment : Fragment() {
                 //position인덱스의 리스트 가져오기
                 //itemList[position]
                 //startActivity(intent)
-                val fragmentTransaction = parentFragmentManager.beginTransaction()
                 val fragment = ProfileStorageDetailFragment()
+
+                val bundle = Bundle()
+                bundle.putLong("profId", itemList[position].profile_id)
+                fragment.arguments = bundle // 프래그먼트에 번들 설정
+
+                val fragmentTransaction = parentFragmentManager.beginTransaction()
                 fragmentTransaction.replace(R.id.detailLayout, fragment)
                 fragmentTransaction.addToBackStack(null)
                 fragmentTransaction.commit()
