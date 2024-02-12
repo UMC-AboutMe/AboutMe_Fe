@@ -40,5 +40,5 @@ interface MainProfile {
     suspend fun patchProfile(@Path(value = "profile-id") profile_id : Long, @Body patchData: RequestPatchProfile) : Response<PatchMyprofile>
 
     @PATCH("/myprofiles/default/{profile-id}")
-    suspend fun patchDefaultProfile(@Path(value = "profileId") profileId : Long) : Response<PatchDefaultProfile>
+    suspend fun patchDefaultProfile(@Path(value = "profile-id") profileId : Long) : Response<PatchDefaultProfile>
 }
