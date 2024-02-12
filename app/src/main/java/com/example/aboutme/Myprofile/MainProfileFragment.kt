@@ -41,7 +41,6 @@ class MainProfileFragment : Fragment() {
 
 
 
-
         initViewPager()
     }
 

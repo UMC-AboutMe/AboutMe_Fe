@@ -33,6 +33,10 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
             val binding =
                 ItemMultiprofileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
+            binding.defaultNoProfileBtn.setOnClickListener {
+
+            }
+
             MainItemViewHolder(binding)
         } else {
             val binding =

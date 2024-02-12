@@ -4,7 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import com.example.aboutme.R
 import com.example.aboutme.databinding.ActivityEditprofileBinding
 import com.example.aboutme.databinding.FragmentEditprofilebackBinding
@@ -12,6 +14,8 @@ import com.example.aboutme.databinding.FragmentEditprofilefrontBinding
 import com.google.android.material.tabs.TabLayout
 
 class EditProfileActivity : AppCompatActivity() {
+
+    private val viewModel: MyProfileViewModel by viewModels()
 
     private val binding by lazy {
         ActivityEditprofileBinding.inflate(layoutInflater)

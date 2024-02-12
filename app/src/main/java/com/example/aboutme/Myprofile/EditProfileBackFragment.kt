@@ -2,12 +2,14 @@ package com.example.aboutme.Myprofile
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.aboutme.RetrofitMyprofile.RetrofitClient
 import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
@@ -81,6 +83,16 @@ class EditProfileBackFragment : Fragment() {
             }
 
         }
+
+        viewModel.updatedData.observe(viewLifecycleOwner, { updatedData ->
+            Log.d("UpdatedData", "Updated data: $updatedData")
+            if (updatedData != null) {
+                applyUpdatedDataToUI(updatedData)
+                Log.d("싱행",updatedData.toString())
+            } else {
+                Log.e("applyUpdatedDataToUI", "Updated data is null")
+            }
+        })
     }
 
     private suspend fun patchData(featureId1: Long, featureId2: Long, featureId3: Long, featureId4: Long, featureId5: Long) {
@@ -149,6 +161,18 @@ class EditProfileBackFragment : Fragment() {
         } catch (e: Exception) {
             Log.e("patch 요청 실패", "에러: ${e.message}")
         }
+    }
+
+    private fun applyUpdatedDataToUI(updatedData: GetAllProfile) {
+        // 변경된 데이터를 UI의 각 요소에 적용
+        //binding.profileNameEt.setText(updatedData.result.frontFeatures[0].value)
+        binding.feature1SchoolEt.text = Editable.Factory.getInstance().newEditable(updatedData.result.frontFeatures[0].value)
+        Log.d("edit",updatedData.result.backFeatures[0].value.toString())
+        binding.feature2CompanyEt.setText(updatedData.result.backFeatures[1].value)
+        Log.d("edit",updatedData.result.frontFeatures[1].value.toString())
+
+        // 예시: 변경된 데이터가 로그에 출력되도록 함
+        Log.d("UpdatedData", "Updated data applied to UI: $updatedData")
     }
 
 }

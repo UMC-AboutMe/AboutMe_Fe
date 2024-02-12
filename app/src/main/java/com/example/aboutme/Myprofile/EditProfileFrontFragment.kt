@@ -45,6 +45,16 @@ class EditProfileFrontFragment : Fragment() {
 
         binding.profileNameEt.setText(dialogName)
 
+        /*viewModel.updatedData.observe(viewLifecycleOwner, { updatedData ->
+            Log.d("UpdatedData", "Updated data: $updatedData")
+            if (updatedData != null) {
+                applyUpdatedDataToUI(updatedData)
+                Log.d("싱행",updatedData.toString())
+            } else {
+                Log.e("applyUpdatedDataToUI", "Updated data is null")
+            }
+        })*/
+
 
 
         return binding.root
@@ -168,9 +178,9 @@ class EditProfileFrontFragment : Fragment() {
         // 변경된 데이터를 UI의 각 요소에 적용
         //binding.profileNameEt.setText(updatedData.result.frontFeatures[0].value)
         binding.profileNameEt.text = Editable.Factory.getInstance().newEditable(updatedData.result.frontFeatures[0].value)
-        Log.d("edit",updatedData.result.frontFeatures[0].value.toString())
+        Log.d("edit2",updatedData.result.frontFeatures[0].value.toString())
         binding.profileNumberEt.setText(updatedData.result.frontFeatures[1].value)
-        Log.d("edit",updatedData.result.frontFeatures[1].value.toString())
+        Log.d("edit2",updatedData.result.frontFeatures[1].value.toString())
 
         // 예시: 변경된 데이터가 로그에 출력되도록 함
         Log.d("UpdatedData", "Updated data applied to UI: $updatedData")

@@ -3,6 +3,7 @@ package com.example.aboutme.RetrofitMyprofile
 import com.example.aboutme.RetrofitMyprofileData.DeleteMyprofile
 import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
 import com.example.aboutme.RetrofitMyprofileData.MainProfileData
+import com.example.aboutme.RetrofitMyprofileData.PatchDefaultProfile
 import com.example.aboutme.RetrofitMyprofileData.PatchMyprofile
 import com.example.aboutme.RetrofitMyprofileData.PostProfile
 import com.example.aboutme.RetrofitMyprofileData.RequestPatchProfile
@@ -37,4 +38,7 @@ interface MainProfile {
 
     @PATCH("/myprofiles/{profile-id}")
     suspend fun patchProfile(@Path(value = "profile-id") profile_id : Long, @Body patchData: RequestPatchProfile) : Response<PatchMyprofile>
-}
+
+    @PATCH("/myprofiles/default/{profile-id}")
+    suspend fun patchDefaultProfile(@Path(value = "profileId") profileId : Long) : Response<PatchDefaultProfile>
+}패
