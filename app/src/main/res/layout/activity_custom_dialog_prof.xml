@@ -11,14 +11,12 @@
         android:id="@+id/cb1"
         android:layout_width="85dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
         android:layout_marginTop="100dp"
         android:fontFamily="@font/gmarketsansmedium"
         android:text="프로필 1"
         android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/cb2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/cb_iv1"
+        app:layout_constraintStart_toStartOf="@+id/cb_iv1"
         app:layout_constraintTop_toTopOf="@+id/cb_iv1" />
 
     <CheckBox
@@ -41,9 +39,8 @@
         android:fontFamily="@font/gmarketsansmedium"
         android:text="프로필 3"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.424"
-        app:layout_constraintStart_toEndOf="@+id/cb2"
+        app:layout_constraintEnd_toEndOf="@+id/cb_iv3"
+        app:layout_constraintStart_toStartOf="@+id/cb_iv3"
         app:layout_constraintTop_toTopOf="@+id/cb_iv3" />
 
     <ImageView

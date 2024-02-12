@@ -6,6 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.PATCH
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ProfStorageItf {
     //프로필 보관함 조회
@@ -27,4 +28,11 @@ interface ProfStorageItf {
         @Path("profile-id") profileId: Long,
         @Header("member-id") memberId: Int
     ) : Call<ProfStorageResponse.ResponseFavProf>
+
+    //프로필 보관함 검색
+    @GET("/myprofiles/storage/search")
+    fun getSearchProf(
+        @Query("keyword") keyword : String? ,
+        @Header("member-id") memberId: Int
+    ) : Call <ProfStorageResponse.ResponseSearchProf>
 }

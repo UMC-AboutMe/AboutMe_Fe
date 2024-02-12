@@ -1,28 +1,21 @@
 package com.example.aboutme.Myprofile
 
-import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.aboutme.MyprofileStorage.ProfileStorageDetailActivity
-import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyprofile.RetrofitClient
-import com.example.aboutme.RetrofitMyprofileData.FrontFeature
 import com.example.aboutme.RetrofitMyprofileData.MainProfileData
 import com.example.aboutme.databinding.ItemAddProfileBinding
 import com.example.aboutme.databinding.ItemMultiprofileBinding
-import com.kakao.sdk.template.model.Content
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.coroutines.coroutineContext
 
 class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHolder>(
     MainListDiffCallback()
