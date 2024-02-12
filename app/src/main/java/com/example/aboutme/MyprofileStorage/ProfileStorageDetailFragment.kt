@@ -17,6 +17,7 @@ import retrofit2.Response
 
 class ProfileStorageDetailFragment : Fragment() {
     lateinit var binding: FragmentProfileStorageDetailBinding
+    private var items: MutableList<ProfileData>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +27,9 @@ class ProfileStorageDetailFragment : Fragment() {
         setFrag(0)
 
         binding.trashButton.setOnClickListener {
-            deleteProfiles()
+            val profileId = arguments?.getLong("profId")
+            Log.d("retro","$profileId")
+                deleteProfiles(profileId!!.toLong(),6)
         }
 
         return binding.root
@@ -48,20 +51,17 @@ class ProfileStorageDetailFragment : Fragment() {
     }
 
     //프로필 보관함 삭제 api
-    private fun deleteProfiles(){
+    private fun deleteProfiles(profId: Long, memberId: Int){
         Log.d("Retrofit","delete 함수 호출됨")
-        val call = ProfStorageObj.getRetrofitService.deleteProfStorage(4,1)
+        val call = ProfStorageObj.getRetrofitService.deleteProfStorage(profId,6)
 
         call.enqueue(object : Callback<ProfStorageResponse.ResponseDeleteProf> {
             override fun onResponse(
                 call: Call<ProfStorageResponse.ResponseDeleteProf>,
                 response: Response<ProfStorageResponse.ResponseDeleteProf>
             ) {
-                Log.d("Retrofit_Delete", response.toString())
                 if (response.isSuccessful) {
                     val response = response.body()
-                    Log.d("Retrofit_Delete", response.toString())
-
                     if (response != null) {
                         if (response.isSuccess) {
                             //성공했을 때

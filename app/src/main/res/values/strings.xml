@@ -25,5 +25,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nickname">닉네임</string>
-    <string name="agit_spacename">00\'s 스페이스</string>
+    <string name="agit_spacename">00\'s</string>
+    <string name="agitspacetitle_2">스페이스</string>
+    <string name="agitspacetitle_1">00\'s</string>
+
 </resources>

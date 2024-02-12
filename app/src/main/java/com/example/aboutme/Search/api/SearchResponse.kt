@@ -26,7 +26,7 @@ class SearchResponse {
         var result : SpaceList
             )
     data class SpaceList(
-        var spaceId : Int,
+        var spaceId : Long,
         var nickname : String,
         var characterType : Int,
         var roomType : Int
@@ -40,6 +40,6 @@ class SearchResponse {
         var result : SpaceId
     )
     data class SpaceId (
-        var spaceId : Int
+        var spaceId : Long
             )
 }

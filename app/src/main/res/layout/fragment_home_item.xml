@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_item"
+    android:layout_width="140dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/home_rc"
+        android:layout_width="125dp"
+        android:layout_height="96dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/home_tut1" />
+
+    <ImageView
+        android:id="@+id/homeImg"
+        android:layout_width="74dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/home_rc"
+        app:layout_constraintStart_toStartOf="@+id/home_rc"
+        app:layout_constraintTop_toTopOf="@+id/home_rc"
+        app:srcCompat="@drawable/home_tut2" />
+
+    <TextView
+        android:id="@+id/homeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/gmarketsanslight"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/home_rc"
+        app:layout_constraintEnd_toEndOf="@+id/home_rc"
+        app:layout_constraintStart_toStartOf="@+id/home_rc" />
+</androidx.constraintlayout.widget.ConstraintLayout>

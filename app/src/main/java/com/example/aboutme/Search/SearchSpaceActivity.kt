@@ -24,12 +24,12 @@ class SearchSpaceActivity : AppCompatActivity() {
         binding = ActivitySearchSpaceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //Dialog
-        binding.addBtn.setOnClickListener {
-            storeSpace()
-                CustomDialogSpace("내 스페이스도 공유 하시겠습니까?")
-                .show(supportFragmentManager, "SpaceDialog")
-        }
+//        //Dialog
+//        binding.addBtn.setOnClickListener {
+//            storeSpace()
+//                CustomDialogSpace("내 스페이스도 공유 하시겠습니까?")
+//                .show(supportFragmentManager, "SpaceDialog")
+//        }
         //뒤로가기
         binding.backBtn.setOnClickListener {
             finish()
@@ -45,6 +45,8 @@ class SearchSpaceActivity : AppCompatActivity() {
         Log.d("Retrofit_Search", "스페이스 검색 실행")
         val spaceName = binding.searchTv.toString()
         //val call = SearchObj.getRetrofitService.getSearchSpace(spaceName)
+
+        //짱구는 임시값
         val call = SearchObj.getRetrofitService.getSearchSpace("짱구")
 
         call.enqueue(object : Callback<SearchResponse.ResponseSearchSpace> {
@@ -62,6 +64,13 @@ class SearchSpaceActivity : AppCompatActivity() {
                             binding.spaceName.text = "${response.result.nickname}'s 스페이스"
                             roomType(response.result.roomType)
                             avatarType(response.result.characterType)
+
+                            //Dialog
+                            binding.addBtn.setOnClickListener {
+                                storeSpace(response.result.spaceId)
+                                CustomDialogSpace("내 스페이스도 공유 하시겠습니까?")
+                                    .show(supportFragmentManager, "SpaceDialog")
+                            }
                         } else {
                             //실패했을 때
                             Log.d("Retrofit_Search_Failed", response.message)
@@ -105,10 +114,11 @@ class SearchSpaceActivity : AppCompatActivity() {
         }
     }
 
-    private fun storeSpace() {
+    private fun storeSpace(spaceId : Long ) {
         Log.d("Retrofit_Search", "스페이스 저장 실행")
 
-        val call = SearchObj.getRetrofitService.postSpaceStorage(1,1)
+        //memberID는 임시값
+        val call = SearchObj.getRetrofitService.postSpaceStorage(spaceId,6)
 
         call.enqueue(object : Callback<SearchResponse.ResponseSpaceStorage> {
             override fun onResponse(
