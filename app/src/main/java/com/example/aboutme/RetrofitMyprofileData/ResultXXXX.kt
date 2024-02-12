@@ -1,7 +1,12 @@
 package com.example.aboutme.RetrofitMyprofileData
 
+import com.google.gson.annotations.SerializedName
+
 data class ResultXXXX(
-    val is_default: Boolean,
-    val profile_id: Int,
+    @SerializedName("is_default")
+    val isDefault: Boolean,
+    @SerializedName("profile_id")
+    val profile_id: Long,
+    @SerializedName("serial_number")
     val serial_number: Int
 )
