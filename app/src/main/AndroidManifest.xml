@@ -2,13 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.aboutme">
-    <!-- 인터넷 사용 권한 설정 -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 알림 허용 권한 설정 -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- 갤러리 권한 -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
 
+    <!-- 인터넷 사용 권한 설정 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 알림 허용 권한 설정 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- 갤러리 권한 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -18,7 +22,9 @@
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
         </intent>
-    </queries> <!-- queries에 카카오톡 패키지 추가 -->
+    </queries>
+
+    <!-- queries에 카카오톡 패키지 추가 -->
     <queries>
         <package android:name="com.kakao.talk" />
     </queries>
@@ -34,7 +40,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AboutMe"
         tools:targetApi="33">
-
 
         <activity
             android:name=".Tutorial.CustomDialogAlarm"
@@ -68,13 +73,13 @@
         </provider>
 
         <activity
-            android:name=".Myspace.TestActivity"
+            android:name=".Myspace.MySpaceStep1Activity"
             android:exported="true" />
         <activity
-            android:name=".Myspace.Test2Activity"
+            android:name=".Myspace.MySpaceStep2Activity"
             android:exported="true" />
         <activity
-            android:name=".Tutorial.TutorialActivity3"
+            android:name=".Myspace.MySpaceStep3Activity"
             android:exported="true" />
         <activity
             android:name=".Alarm.AlarmActivity"
@@ -108,9 +113,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Tutorial.TutorialActivity2"
-            android:exported="true" />
-        <activity
             android:name=".Tutorial.TutorialActivity1"
             android:exported="true" />
         <activity
@@ -134,6 +136,7 @@
                     android:scheme="kakao14bbf6997b475309590efc7c9a7d9b11" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
