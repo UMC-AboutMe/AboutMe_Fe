@@ -121,7 +121,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -132,7 +132,7 @@
             android:layout_width="70dp"
             android:layout_height="61dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/nav_myprof"
+            android:src="@drawable/nav_myprof2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -154,7 +154,7 @@
             android:layout_height="61dp"
             android:layout_marginStart="50dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/nav_myspace"
+            android:src="@drawable/nav_myspace2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/myprof_iv"
             app:layout_constraintTop_toTopOf="parent" />
@@ -188,6 +188,7 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
         android:fontFamily="@font/gmarketsanslight"
         android:text="검색을 통해 친구의 프로필/스페이스를 보관함에 저장하세요!"
         android:textColor="#000000"
