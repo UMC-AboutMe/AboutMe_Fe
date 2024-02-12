@@ -20,10 +20,6 @@ class TutorialActivity2 : AppCompatActivity() {
         binding = ActivityTutorial2Binding.inflate(layoutInflater)
         setContentView(binding.root)
         //binding= DataBindingUtil.setContentView(this, R.layout.activity_tutorial1)
-        binding.nextBtn2.setOnClickListener {
-            val intent= Intent(this, TutorialActivity3::class.java)
-            startActivity(intent)
-        }
     }
 
 }

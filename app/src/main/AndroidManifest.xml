@@ -74,9 +74,6 @@
         </provider>
 
         <activity
-            android:name=".Tutorial.TutorialActivity3"
-            android:exported="true" />
-        <activity
             android:name=".Alarm.AlarmActivity"
             android:exported="false" />
         <activity
