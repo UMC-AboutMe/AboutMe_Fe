@@ -118,7 +118,7 @@ class SearchSpaceActivity : AppCompatActivity() {
         Log.d("Retrofit_Search", "스페이스 저장 실행")
 
         //memberID는 임시값
-        val call = SearchObj.getRetrofitService.postSpaceStorage(spaceId,1)
+        val call = SearchObj.getRetrofitService.postSpaceStorage(spaceId,6)
 
         call.enqueue(object : Callback<SearchResponse.ResponseSpaceStorage> {
             override fun onResponse(
