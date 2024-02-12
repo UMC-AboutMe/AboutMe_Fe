@@ -130,18 +130,20 @@ class ProfileStorageFragment : Fragment() {
                     val response = response.body()
                     if (response != null) {
                         if (response.isSuccess) {
-                            //성공했을 때
+                            // 성공했을 때
                             itemList.clear()
                             Log.d("Retrofit_Get_Success", response.toString())
                             response.result.member_profiles.forEach { memberProfile ->
                                 val profileId = memberProfile.profile.profile_id
-                                itemList.add(ProfileData(R.drawable.avatar_basic, "프로필 $profileId", profileId.toLong()))
+                                val isFavorite = memberProfile.favorite // favorite 값 가져오기
+                                itemList.add(ProfileData(R.drawable.avatar_basic, "프로필 $profileId", profileId.toLong(),isFavorite))
                             }
-                            rvAdapter.notifyDataSetChanged() //얘가 없으면 아이템이 갱신되지 않는다! 중요
+                            rvAdapter.notifyDataSetChanged() // 얘가 없으면 아이템이 갱신되지 않는다! 중요
                         } else {
-                            //실패했을 때
+                            // 실패했을 때
                             Log.d("Retrofit_Get_Failed", response.toString())
                         }
+
                     }
                 }
                 else {
@@ -195,7 +197,7 @@ class ProfileStorageFragment : Fragment() {
                                     profile.image.type == "USER_IMAGE" -> R.drawable.prof_avater1
                                     else -> R.drawable.avatar_basic
                                 }
-                                itemList.add(ProfileData(imageResId, profile.profileName,profile.profileId.toLong()))
+                                itemList.add(ProfileData(imageResId, profile.profileName,profile.profileId.toLong(),profile.favorite))
                             }
 
 

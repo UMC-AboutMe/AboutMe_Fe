@@ -56,6 +56,15 @@ class ProfileRVAdapter(val items: MutableList<ProfileData>) :
             profileImage.setImageResource(profileData.profile_img)
             profileName.text = profileData.profile_name
 
+            // isFav 값에 따라서 UI 변경
+            if (profileData.isFav) {
+                profBasic.visibility = View.GONE
+                profFav.visibility = View.VISIBLE
+            } else {
+                profBasic.visibility = View.VISIBLE
+                profFav.visibility = View.GONE
+            }
+
             profBasic.setOnClickListener {
                 profBasic.visibility = View.GONE
                 profFav.visibility = View.VISIBLE
