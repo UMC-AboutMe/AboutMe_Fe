@@ -23,7 +23,8 @@ private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    private lateinit var binding : ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
+
 
 //    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 //    private val permissionResult =
@@ -37,11 +38,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 //            }
 //        }).setDeniedMessage("알림을 거부한다면 앱 사용에 지장이 있을 수 있습니다.").setPermissions(android.Manifest.permission.POST_NOTIFICATIONS).check()
 
-    //구글 로그인
-    // Google Sign In API와 호출할 구글 로그인 클라이언트
-    var mGoogleSignInClient: GoogleSignInClient? = null
-    private val RC_SIGN_IN = 123
-    var signBt: ImageView? = null
+
+//    //구글 로그인
+//    // Google Sign In API와 호출할 구글 로그인 클라이언트
+//    var mGoogleSignInClient: GoogleSignInClient? = null
+//    private val RC_SIGN_IN = 123
+//    var signBt: ImageView? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,24 +75,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         //구글 로그인
-        signBt = findViewById(R.id.google_iv)
-        signBt?.setOnClickListener(this)
+        //signBt = findViewById(R.id.google_iv)
+        //signBt?.setOnClickListener(this)
 
         // 앱에 필요한 사용자 데이터를 요청하도록 로그인 옵션을 설정한다.
         // DEFAULT_SIGN_IN parameter는 유저의 ID와 기본적인 프로필 정보를 요청하는데 사용된다.
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail() // email addresses도 요청함
-            .build()
+        //val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        //    .requestEmail() // email addresses도 요청함
+        //    .build()
 
         // 위에서 만든 GoogleSignInOptions을 사용해 GoogleSignInClient 객체를 만듬
-        mGoogleSignInClient = GoogleSignIn.getClient(this@MainActivity, gso)
+        //mGoogleSignInClient = GoogleSignIn.getClient(this@MainActivity, gso)
 
         // 기존에 로그인 했던 계정을 확인한다.
-        val gsa = GoogleSignIn.getLastSignedInAccount(this@MainActivity)
+        //val gsa = GoogleSignIn.getLastSignedInAccount(this@MainActivity)
 
         // 로그인 되있는 경우 (토큰으로 로그인 처리)
-        if (gsa != null && gsa.id != null) {
-        }
+        //if (gsa != null && gsa.id != null) {
+        //}
 
 
         updateLoginInfo();
@@ -99,7 +101,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun updateLoginInfo() {
         UserApiClient.instance.me { user, error ->
             user?.let {
-                Log.i(TAG, "updateLoginInfo: ${user.id} ${user.kakaoAccount?.email} ${user.kakaoAccount?.profile?.nickname} ${user.kakaoAccount?.profile?.thumbnailImageUrl}")
+                Log.i(
+                    TAG,
+                    "updateLoginInfo: ${user.id} ${user.kakaoAccount?.email} ${user.kakaoAccount?.profile?.nickname} ${user.kakaoAccount?.profile?.thumbnailImageUrl}"
+                )
             }
             error?.let {
 
@@ -170,36 +175,36 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        when (v.id) {
-            R.id.google_iv -> signIn()
-            //R.id.logoutBt -> mGoogleSignInClient!!.signOut()
-            //    .addOnCompleteListener(this) { task: Task<Void?>? ->
-            //        Log.d(TAG, "onClick:logout success ")
-            //        mGoogleSignInClient!!.revokeAccess()
-            //            .addOnCompleteListener(
-            //                this
-            //            ) { task1: Task<Void?>? ->
-            //                Log.d(
-            //                    TAG,
-            //                    "onClick:revokeAccess success "
-            //                )
-            //            }
-            //    }
-        }
+//        when (v.id) {
+//            R.id.google_iv -> signIn()
+    //R.id.logoutBt -> mGoogleSignInClient!!.signOut()
+    //    .addOnCompleteListener(this) { task: Task<Void?>? ->
+    //        Log.d(TAG, "onClick:logout success ")
+    //        mGoogleSignInClient!!.revokeAccess()
+    //            .addOnCompleteListener(
+    //                this
+    //            ) { task1: Task<Void?>? ->
+    //                Log.d(
+    //                    TAG,
+    //                    "onClick:revokeAccess success "
+    //                )
+    //            }
+    //    }
+//        }
     }
 
-    private fun signIn() {
-        val signInIntent = mGoogleSignInClient!!.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
-    }
-
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(task)
-        }
-    }
+//    private fun signIn() {
+//        val signInIntent = mGoogleSignInClient!!.signInIntent
+//        startActivityForResult(signInIntent, RC_SIGN_IN)
+//    }
+//
+//        public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        if (requestCode == RC_SIGN_IN) {
+//            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+//            handleSignInResult(task)
+//        }
+//    }
 
 }

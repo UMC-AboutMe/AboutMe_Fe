@@ -45,9 +45,6 @@
             android:name=".Tutorial.CustomDialogAlarm"
             android:exported="false" />
         <activity
-            android:name=".MyprofileStorage.ProfileStorageDetailActivity"
-            android:exported="true" />
-        <activity
             android:name=".Myprofile.MainActivity2"
             android:exported="true">
             <intent-filter>
@@ -82,6 +79,9 @@
             android:name=".Myspace.MySpaceStep3Activity"
             android:exported="true" />
         <activity
+            android:name=".Agit.AgitMemberSpaceActivity"
+            android:exported="true" />
+        <activity
             android:name=".Alarm.AlarmActivity"
             android:exported="false" />
         <activity
@@ -95,17 +95,17 @@
             android:exported="false" />
         <activity
             android:name=".Search.SearchSpaceActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".Search.CustomDialog"
             android:exported="false" />
         <activity
             android:name=".Search.SearchProfActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".bottomNavigationView"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="true" >
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
