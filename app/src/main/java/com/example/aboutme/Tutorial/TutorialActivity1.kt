@@ -24,7 +24,7 @@ class TutorialActivity1 : AppCompatActivity() {
         //Dialog
 
         //CustomDialogAlarm()
-        CustomDialogAlarm("알림을 보내도록 허용하시겠습니까?")
+        CustomDialogAlarm()
 
             .show(supportFragmentManager, "AlarmDialog")
         //binding= DataBindingUtil.setContentView(this, R.layout.activity_tutorial1)
