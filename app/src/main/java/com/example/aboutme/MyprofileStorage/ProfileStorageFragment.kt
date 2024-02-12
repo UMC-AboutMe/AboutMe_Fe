@@ -124,16 +124,16 @@ class ProfileStorageFragment : Fragment() {
                 response: Response<ProfStorageResponse.ResponeProfStorage>
             ) {
                 if (response.isSuccessful) {
+                    itemList.clear()
                     val response = response.body()
                     if (response != null) {
                         if (response.isSuccess) {
                             // 성공했을 때
-                            itemList.clear()
                             Log.d("Retrofit_Get_Success", response.toString())
-                            response.result.member_profiles.forEach { memberProfile ->
-                                val profileId = memberProfile.profile.profile_id
+                            response.result.memberProfileList.forEach { memberProfile ->
+                                val profileId = memberProfile.profileId
                                 val isFavorite = memberProfile.favorite // favorite 값 가져오기
-                                itemList.add(ProfileData(R.drawable.avatar_basic, "프로필 $profileId", profileId.toLong(),isFavorite))
+                                itemList.add(ProfileData(R.drawable.avatar_basic, memberProfile.profileName, profileId.toLong(),isFavorite))
                             }
                             rvAdapter.notifyDataSetChanged() // 얘가 없으면 아이템이 갱신되지 않는다! 중요
                         } else {
@@ -162,7 +162,7 @@ class ProfileStorageFragment : Fragment() {
     //프로필 보관함 검색 api
     private fun getSearchProfiles(Name : String){
     //private fun getSearchProfiles(){
-        val call = ProfStorageObj.getRetrofitService.getSearchProf("아",1)
+        val call = ProfStorageObj.getRetrofitService.getSearchProf(Name,6)
 
         call.enqueue(object : Callback<ProfStorageResponse.ResponseSearchProf> {
             override fun onResponse(
@@ -170,11 +170,11 @@ class ProfileStorageFragment : Fragment() {
                 response: Response<ProfStorageResponse.ResponseSearchProf>
             ) {
                 if (response.isSuccessful) {
+                    itemList.clear()
                     val response = response.body()
                     if (response != null) {
                         if (response.isSuccess) {
                             //성공했을 때
-                            itemList.clear()
                             Log.d("Retrofit_Get_Success", response.toString())
                             response.result.memberProfileList.forEach { profile ->
                                 val imageResId = when {
@@ -197,8 +197,6 @@ class ProfileStorageFragment : Fragment() {
                                 val isFavorite = profile.favorite // favorite 값 가져오기
                                 itemList.add(ProfileData(imageResId, profile.profileName,profile.profileId.toLong(),isFavorite))
                             }
-
-
                             rvAdapter.notifyDataSetChanged() //얘가 없으면 아이템이 갱신되지 않는다! 중요
                         } else {
                             //실패했을 때

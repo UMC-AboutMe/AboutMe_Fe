@@ -10,23 +10,18 @@ class ProfStorageResponse {
         var result : ResultList
     )
     data class ResultList(
-        var member_profiles : List<Profiles>,
-        var total_member_profiles : Int
+        var memberProfileList : List<Profiles>
     )
     data class Profiles (
-        var member_profile_id : Int,
+        var profileId : Int,
+        var profileName : String,
         var favorite : Boolean,
-        var member : MemberDetail,
-        var profile : ProfileDetail
+        var image : ImageDetail
     )
-    data class MemberDetail (
-        var social : String,
-        var email : String
-    )
-    data class ProfileDetail (
-        var profile_id : Int,
-        var serial_number : Int,
-        var is_default : Boolean
+    data class ImageDetail (
+        var type : String,
+        var characterType : Int? ,
+        var profile_image_url : String?
     )
 
     //프로필 보관함 특정 마이프로필 삭제

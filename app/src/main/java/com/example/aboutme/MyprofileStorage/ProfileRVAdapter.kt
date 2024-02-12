@@ -85,7 +85,7 @@ class ProfileRVAdapter(val items: MutableList<ProfileData>) :
             }
         }
     }
-//보관함 즐겨찾기
+    //보관함 즐겨찾기
     private fun favProfiles(profId: Long, memberId: Int) {
         Log.d("Retrofit_Fav", "patch 함수 호출됨")
         val call = ProfStorageObj.getRetrofitService.patchProfStorage(profId, memberId)
@@ -108,7 +108,6 @@ class ProfileRVAdapter(val items: MutableList<ProfileData>) :
                     }
                 }
             }
-
             override fun onFailure(
                 call: Call<ProfStorageResponse.ResponseFavProf>,
                 t: Throwable
