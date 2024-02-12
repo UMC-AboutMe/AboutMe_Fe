@@ -68,5 +68,35 @@ class ProfStorageResponse {
         val characterType: Int?,
         val profile_image_url: String?
     )
+    //마이프로필 조회 - 단건
+    data class ResponseProf (
+        val isSuccess: Boolean,
+        val code: String,
+        val message: String,
+        val result: ProfResult
+            )
+    data class ProfResult (
+        val profileId: Int,
+        val serial_number : Int,
+        val is_default : Boolean,
+        val profile_image : ImageList,
+        val front_features : List<FrontList>,
+        val back_features : List<BackList>
+            )
+    data class ImageList (
+        val type : String,
+        val charcterType : Int?,
+        val profile_image_url : String?
+            )
+    data class FrontList (
+        val key : String?,
+        val value : String?,
+        val feature_id : Long
+            )
+    data class BackList (
+        val key : String?,
+        val value : String?,
+        val feature_id : Long
+            )
 
 }
