@@ -112,6 +112,11 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
 
             }
 
+            binding.backBtn.setOnClickListener {
+                val intent = Intent(activity,bottomNavigationView::class.java)
+                startActivity(intent)
+            }
+
             binding.myprofileShareBtn.setOnClickListener {
 
                 val bottomSheet2 = BottomSheet2()
