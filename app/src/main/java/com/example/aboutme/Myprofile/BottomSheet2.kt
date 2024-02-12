@@ -65,6 +65,7 @@ class BottomSheet2 : DialogFragment() {
     private lateinit var sharedViewModel: SharedViewModel
 
     private var serialNumber: Int? = null
+    private var profileName : String? = null
 
 
     private val TAG = "BottomSheet2"
@@ -499,7 +500,7 @@ class BottomSheet2 : DialogFragment() {
         // serialNumber 값을 사용하여 defaultFeed를 초기화합니다.
         FeedTemplate(
             content = Content(
-                title = "테디님의 AboutMe 프로필을 확인해보세요.",
+                title = "${profileName}님의 AboutMe 프로필을 확인해보세요.",
                 description = "홈 화면에 있는 프로필 찾기에 일련번호를 입력하면 프로필을 찾을 수 있어요.",
                 imageUrl = "https://i.imgur.com/PsidRUL.jpg",
                 link = Link(
@@ -545,6 +546,8 @@ class BottomSheet2 : DialogFragment() {
                     Log.d("GETALL 성공~~", "응답 데이터: $responseData")
                     // API 응답에서 serialNumber 값을 받아와서 초기화합니다.
                     serialNumber = responseData?.result?.serialNumber
+                    profileName = responseData!!.result.frontFeatures[0]!!.value
+                    Log.d("이름~",profileName.toString())
                     Log.d("씨리얼", serialNumber.toString())
                 } else {
                     val errorBody = response.errorBody()?.string() ?: "No error body"
