@@ -21,8 +21,6 @@ class TutorialActivity1 : AppCompatActivity() {
             .show(supportFragmentManager, "AlarmDialog")
         //binding= DataBindingUtil.setContentView(this, R.layout.activity_tutorial1)
         binding.nextBtn1.setOnClickListener {
-            val intent= Intent(this, TutorialActivity2::class.java)
-            startActivity(intent)
         }
     }
 }
