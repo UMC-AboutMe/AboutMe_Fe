@@ -20,7 +20,8 @@ class ProfileStorageDetailFragment : Fragment() {
     private var items: MutableList<ProfileData>? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProfileStorageDetailBinding.inflate(inflater)
@@ -28,8 +29,19 @@ class ProfileStorageDetailFragment : Fragment() {
 
         binding.trashButton.setOnClickListener {
             val profileId = arguments?.getLong("profId")
-            Log.d("retro","$profileId")
-                deleteProfiles(profileId!!.toLong(),6)
+            Log.d("retro", "$profileId")
+            deleteProfiles(profileId!!.toLong(), 6)
+        }
+
+        val bundle = arguments
+        if (bundle != null) {
+            val profId = bundle.getLong("profId", -1)
+            Log.d("ProfileStorageDetail", "Received profId: $profId")
+
+            //프로필 상세 정보 조회
+            getProfile(profId)
+        } else {
+            Log.e("ProfileStorageDetail", "Bundle is null")
         }
 
         return binding.root
@@ -51,9 +63,9 @@ class ProfileStorageDetailFragment : Fragment() {
     }
 
     //프로필 보관함 삭제 api
-    private fun deleteProfiles(profId: Long, memberId: Int){
-        Log.d("Retrofit","delete 함수 호출됨")
-        val call = ProfStorageObj.getRetrofitService.deleteProfStorage(profId,6)
+    private fun deleteProfiles(profId: Long, memberId: Int) {
+        Log.d("Retrofit", "delete 함수 호출됨")
+        val call = ProfStorageObj.getRetrofitService.deleteProfStorage(profId, 6)
 
         call.enqueue(object : Callback<ProfStorageResponse.ResponseDeleteProf> {
             override fun onResponse(
@@ -80,6 +92,42 @@ class ProfileStorageDetailFragment : Fragment() {
             ) {
                 val errorMessage = "Call Failed:  ${t.message}"
                 Log.d("Retrofit_Delete", errorMessage)
+            }
+        }
+        )
+    }
+
+    //마이프로필 조회 - 단건
+    private fun getProfile(profId : Long ) {
+        val call = ProfStorageObj.getRetrofitService.getProfList(profId)
+
+        call.enqueue(object : Callback<ProfStorageResponse.ResponseProf> {
+            override fun onResponse(
+                call: Call<ProfStorageResponse.ResponseProf>,
+                response: Response<ProfStorageResponse.ResponseProf>
+            ) {
+                if (response.isSuccessful) {
+                    val response = response.body()
+                    if (response != null) {
+                        if (response.isSuccess) {
+                            // 성공했을 때
+                            Log.d("Retrofit_Get_Success", response.toString())
+                        } else {
+                            // 실패했을 때
+                            Log.d("Retrofit_Get_Failed", response.toString())
+                        }
+
+                    }
+                } else {
+                    Log.d("Retrofit_Get_Failed", response.toString())
+                }
+            }
+            override fun onFailure(
+                call: Call<ProfStorageResponse.ResponseProf>,
+                t: Throwable
+            ) {
+                val errorMessage = "Call Failed:  ${t.message}"
+                Log.d("Retrofit_Get_Error", errorMessage)
             }
         }
         )

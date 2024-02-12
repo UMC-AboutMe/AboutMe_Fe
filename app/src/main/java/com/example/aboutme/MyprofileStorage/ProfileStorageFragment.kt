@@ -93,7 +93,6 @@ class ProfileStorageFragment : Fragment() {
 
         rvAdapter.setOnItemClickListener(object : ProfileRVAdapter.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
-                Log.d("프로필 클릭", "$position 클릭")
                 val fragment = ProfileStorageDetailFragment()
 
                 val bundle = Bundle()
