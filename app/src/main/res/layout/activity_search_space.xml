@@ -35,19 +35,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="57dp" />
 
-    <ImageView
-        android:id="@+id/prof_bg"
-        android:layout_width="0dp"
-        android:layout_height="276dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/searchspace_bg2"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/search_tv"
-        tools:visibility="visible" />
-
     <ImageButton
         android:id="@+id/back_btn"
         android:layout_width="34dp"
@@ -111,33 +98,86 @@
         app:layout_constraintTop_toBottomOf="@+id/myspace_iv"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-    <ImageButton
-        android:id="@+id/add_btn"
-        android:layout_width="255dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="15dp"
-        android:background="@android:color/transparent"
-        android:scaleType="fitCenter"
-        android:src="@drawable/storagespace_btn"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/spaceView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/example_iv"
-        tools:ignore="SpeakableTextPresentCheck"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toBottomOf="@+id/search_tv"
+        tools:visibility="visible">
 
-    <ImageView
-        android:id="@+id/example_iv"
-        android:layout_width="185dp"
-        android:layout_height="153dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/searchspace_card"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="@+id/prof_bg"
-        app:layout_constraintTop_toTopOf="@+id/prof_bg"
-        tools:visibility="visible" />
+        <ImageView
+            android:id="@+id/prof_bg"
+            android:layout_width="0dp"
+            android:layout_height="276dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/searchspace_bg2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/space_bg"
+            android:layout_width="185dp"
+            android:layout_height="153dp"
+            android:layout_marginTop="35dp"
+            android:src="@drawable/searchspace_card"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/roomTypeBg"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="@+id/space_bg"
+            app:layout_constraintStart_toStartOf="@+id/space_bg"
+            app:layout_constraintTop_toTopOf="@+id/space_bg"
+            app:srcCompat="@drawable/search_room1" />
+
+        <ImageView
+            android:id="@+id/charTypeBg"
+            android:layout_width="23dp"
+            android:layout_height="26dp"
+            app:layout_constraintBottom_toTopOf="@+id/spaceName"
+            app:layout_constraintEnd_toEndOf="@+id/roomTypeBg"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="@+id/roomTypeBg"
+            app:layout_constraintTop_toTopOf="@+id/roomTypeBg"
+            app:layout_constraintVertical_bias="0.575"
+            app:srcCompat="@drawable/step2_avatar_5" />
+
+        <TextView
+            android:id="@+id/spaceName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:text="TextView"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/space_bg"
+            app:layout_constraintEnd_toEndOf="@+id/space_bg"
+            app:layout_constraintStart_toStartOf="@+id/space_bg" />
+
+        <ImageButton
+            android:id="@+id/add_btn"
+            android:layout_width="255dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="15dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/storagespace_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/space_bg"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

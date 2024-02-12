@@ -8,7 +8,12 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.aboutme.MyprofileStorage.api.ProfStorageObj
+import com.example.aboutme.MyprofileStorage.api.ProfStorageResponse
 import com.example.aboutme.R
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProfileRVAdapter(val items : MutableList<ProfileData>) :RecyclerView.Adapter<ProfileRVAdapter.ViewHolder>() {
 
@@ -41,13 +46,27 @@ class ProfileRVAdapter(val items : MutableList<ProfileData>) :RecyclerView.Adapt
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindItems(items : ProfileData){
-            val profileImage = itemView.findViewById<ImageView>(R.id.profile1_iv)
+            val profileImage = itemView.findViewById<ImageView>(R.id.avatar_iv)
             val profileName = itemView.findViewById<TextView>(R.id.profileName_tv)
+            val profBasic = itemView.findViewById<ImageView>(R.id.prof_basic)
+            val profFav = itemView.findViewById<ImageView>(R.id.prof_fav)
 
             profileImage.setImageResource(items.profile_img)
             profileName.text = items.profile_name
 
-
+            //버튼의 가시성 변경
+            profBasic.setOnClickListener {
+                profBasic.visibility = View.GONE
+                profFav.visibility =View.VISIBLE
+                //favProfiles(adapterPosition)
+                favProfiles()
+            }
+            profFav.setOnClickListener {
+                profFav.visibility = View.GONE
+                profBasic.visibility =View.VISIBLE
+                //favProfiles(adapterPosition)
+                favProfiles()
+            }
         }
 
         init {
@@ -59,9 +78,44 @@ class ProfileRVAdapter(val items : MutableList<ProfileData>) :RecyclerView.Adapt
                 }
             }
         }
-
-        
     }
+    //프로필 보관함 즐겨찾기 등록
+    private fun favProfiles() {
+//        private fun favProfiles(position : Int) {
+        Log.d("Retrofit_Fav", "patch 함수 호출됨")
+        val call = ProfStorageObj.getRetrofitService.patchProfStorage(4, 1)
+        //val call = ProfStorageObj.getRetrofitService.patchProfStorage(4, position+1)
 
+        call.enqueue(object : Callback<ProfStorageResponse.ResponseFavProf> {
+            override fun onResponse(
+                call: Call<ProfStorageResponse.ResponseFavProf>,
+                response: Response<ProfStorageResponse.ResponseFavProf>
+            ) {
+                Log.d("Retrofit_Fav", response.toString())
+                if (response.isSuccessful) { // HTTP 응답 코드가 200번대인지 여부 확인
+                    val response = response.body()
+                    Log.d("Retrofit", response.toString())
+
+                    if (response != null) {
+                        if (response.isSuccess) {
+                            //성공했을 때
+                            Log.d("Retrofit_Fav", "처리에 성공함")
+                        } else {
+                            //실패했을 때
+                            Log.d("Retrofit_Fav", "처리에 실패함")
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(
+                call: Call<ProfStorageResponse.ResponseFavProf>,
+                t: Throwable
+            ) {
+                val errorMessage = "Call Failed:  ${t.message}"
+                Log.d("Retrofit_Fav", errorMessage)
+            }
+        })
+    }
 }
 

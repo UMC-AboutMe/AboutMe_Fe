@@ -33,14 +33,47 @@
         app:layout_constraintStart_toStartOf="@+id/profile1_iv" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/avatar_iv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="45dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="@+id/profile1_iv"
+        app:layout_constraintStart_toStartOf="@+id/profile1_iv"
+        app:layout_constraintTop_toTopOf="@+id/profile1_iv"
+        app:srcCompat="@drawable/profstore_bg" />
+
+    <ImageView
+        android:id="@+id/prof_fav"
         android:layout_width="20dp"
         android:layout_height="27dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="18dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/profile1_iv"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/profstorage_star" />
+
+    <ImageView
+        android:id="@+id/prof_basic"
+        android:layout_width="22dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="17dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="@+id/profile1_iv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/profstorage_favbasic" />
+
+    <ImageView
+        android:id="@+id/prof_logo"
+        android:layout_width="30dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="@+id/profile1_iv"
+        app:layout_constraintStart_toStartOf="@+id/profile1_iv"
+        app:layout_constraintTop_toBottomOf="@+id/avatar_iv"
+        app:srcCompat="@drawable/aboutme_pink" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

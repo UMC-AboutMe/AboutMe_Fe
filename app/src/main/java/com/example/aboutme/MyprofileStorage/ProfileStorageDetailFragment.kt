@@ -10,12 +10,14 @@ import com.example.aboutme.MyprofileStorage.api.ProfStorageObj
 import com.example.aboutme.MyprofileStorage.api.ProfStorageResponse
 import com.example.aboutme.R
 import com.example.aboutme.databinding.FragmentProfileStorageDetailBinding
+import com.kakao.sdk.user.model.Profile
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class ProfileStorageDetailFragment : Fragment() {
     lateinit var binding: FragmentProfileStorageDetailBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,9 +28,7 @@ class ProfileStorageDetailFragment : Fragment() {
         binding.trashButton.setOnClickListener {
             deleteProfiles()
         }
-        binding.testbutton.setOnClickListener {
-            favProfiles()
-        }
+
         return binding.root
     }
 
@@ -83,42 +83,5 @@ class ProfileStorageDetailFragment : Fragment() {
             }
         }
         )
-    }
-
-    //프로필 보관함 즐겨찾기 등록
-    private fun favProfiles() {
-        Log.d("Retrofit_Fav", "patch 함수 호출됨")
-        val call = ProfStorageObj.getRetrofitService.patchProfStorage(4, 1)
-
-        call.enqueue(object : Callback<ProfStorageResponse.ResponseFavProf> {
-            override fun onResponse(
-                call: Call<ProfStorageResponse.ResponseFavProf>,
-                response: Response<ProfStorageResponse.ResponseFavProf>
-            ) {
-                Log.d("Retrofit_Fav", response.toString())
-                if (response.isSuccessful) { // HTTP 응답 코드가 200번대인지 여부 확인
-                    val response = response.body()
-                    Log.d("Retrofit", response.toString())
-
-                    if (response != null) {
-                        if (response.isSuccess) {
-                            //성공했을 때
-                            Log.d("Retrofit_Fav", "처리에 성공함")
-                        } else {
-                            //실패했을 때
-                            Log.d("Retrofit_Fav", "처리에 실패함")
-                        }
-                    }
-                }
-            }
-
-            override fun onFailure(
-                call: Call<ProfStorageResponse.ResponseFavProf>,
-                t: Throwable
-            ) {
-                val errorMessage = "Call Failed:  ${t.message}"
-                Log.d("Retrofit_Fav", errorMessage)
-            }
-        })
     }
 }

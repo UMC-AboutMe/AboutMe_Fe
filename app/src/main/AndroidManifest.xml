@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
-
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -34,14 +33,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AboutMe"
         tools:targetApi="33">
-
-
+        <activity
+            android:name=".MemberActivity"
+            android:exported="false" />
         <activity
             android:name=".Tutorial.CustomDialogAlarm"
             android:exported="false" />
-        <activity
-            android:name=".MyprofileStorage.ProfileStorageDetailActivity"
-            android:exported="true" />
         <activity
             android:name=".Myprofile.MainActivity2"
             android:exported="true">
@@ -68,7 +65,7 @@
         </provider>
 
         <activity
-            android:name=".Tutorial.TutorialActivity3"
+            android:name=".Agit.AgitMemberSpaceActivity"
             android:exported="true" />
         <activity
             android:name=".Alarm.AlarmActivity"
@@ -84,17 +81,17 @@
             android:exported="false" />
         <activity
             android:name=".Search.SearchSpaceActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".Search.CustomDialog"
             android:exported="false" />
         <activity
             android:name=".Search.SearchProfActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".bottomNavigationView"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="true" >
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -109,8 +106,7 @@
             android:exported="true" />
         <activity
             android:name=".SplashActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true" /> <!-- 카카오 소셜 로그인 api key 연결 -->
@@ -119,6 +115,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
