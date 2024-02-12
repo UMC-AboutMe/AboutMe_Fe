@@ -6,7 +6,7 @@ data class BackFeatureXX(
     @SerializedName("feature_id")
     val featureId: Long,
     @SerializedName("key")
-    val key: String,
+    val key: String?,
     @SerializedName("value")
-    val value: String
+    val value: String?
 )

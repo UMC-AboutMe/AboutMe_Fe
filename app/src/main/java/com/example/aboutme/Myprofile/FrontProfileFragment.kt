@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
@@ -25,6 +26,7 @@ import com.bumptech.glide.Glide
 import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyprofile.RetrofitClient
 import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
+import com.example.aboutme.RetrofitMyprofileData.MainProfileData
 import com.example.aboutme.RetrofitMyprofileData.PatchMyprofile
 import com.example.aboutme.RetrofitMyprofileData.PostProfile
 import com.example.aboutme.RetrofitMyprofileData.RequestPatchProfile
@@ -47,15 +49,23 @@ import java.util.Date
 class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
     BottomSheet.OnBasicImageSelectedListener, BottomSheet.OnCharImageSelectedListener {
 
+    companion object {
+        fun newInstance(positionId: Int): FrontProfileFragment {
+            val fragment = FrontProfileFragment()
+            val args = Bundle().apply {
+                putInt("positionId", positionId)
+            }
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
 
     lateinit var binding: FragmentFrontprofileBinding
 
 
     private lateinit var sharedViewModel: SharedViewModel
 
-
-    private lateinit var profileEditName: EditText
-    private val retrofitClient = RetrofitClient.mainProfile
 
 
     override fun onCreateView(
@@ -67,13 +77,21 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
         binding = FragmentFrontprofileBinding.inflate(inflater,container,false)
 
-        profileEditName = binding.profileNameEt
 
         binding.turnBtn.setOnClickListener {
-            val ft = parentFragmentManager.beginTransaction()
+            // 프로필 ID 가져오기
+            val positionId = arguments?.getInt("positionId", -1)
 
-            ft.replace(R.id.profile_frame, BackProfileFragment()).commit()
+            // BackProfileFragment로 전환하기 위해 프로필 ID를 번들에 담아서 생성
+            val backProfileFragment = BackProfileFragment.newInstance(positionId ?: -1)
 
+            // 프로필 ID를 담은 번들을 BackProfileFragment로 전달
+            backProfileFragment.arguments = arguments
+
+            // BackProfileFragment로 전환
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.profile_frame, backProfileFragment)
+                .commit()
         }
 
 
@@ -89,88 +107,17 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
             bottomSheet.show(childFragmentManager, bottomSheet.tag)
 
         }
-
-
-
-        val str: String = binding.profileNameEt.text.toString()
-
-
-        binding.profileNameEt.setOnClickListener {
-
-            if (str.isEmpty()) {
-                Toast.makeText(requireContext(), "이름은 필수 입력사항입니다", Toast.LENGTH_LONG).show()
-            }
-
-        }
-
-        val profileEdit1  = binding.profileNameEt
-        val profileBtn1 : ImageButton = binding.frontProfileEdit1Btn
-
-
-        var message1 : String = ""
-
-        profileEdit1.addTextChangedListener (object : TextWatcher {
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                //
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-                message1 = profileEdit1.text.toString()
-
-                if (message1.isNotEmpty()){
-                    profileBtn1.isEnabled = false
-                    profileBtn1.alpha = 0.1f
-                }else{
-                    profileBtn1.isEnabled = true
-                    profileBtn1.alpha = 1.0f
-                }
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
-
-        val profileEdit2 : EditText = binding.profileNumEt
-        val profileBtn2 : ImageButton = binding.frontProfileEdit2Btn
-
-
-        var message2 : String = ""
-
-        profileEdit2.addTextChangedListener (object : TextWatcher{
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                //
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-                message2 = profileEdit2.text.toString()
-
-                if (message2.isNotEmpty()){
-                    profileBtn2.isEnabled = false
-                    profileBtn2.alpha = 0.1f
-                }else{
-                    profileBtn2.isEnabled = true
-                    profileBtn2.alpha = 1.0f
-                }
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
-
+        val positionId = arguments?.getInt("positionId", -1)
+        Log.d("FrontProfileFragment!", "Profile ID: $positionId")
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val positionId = arguments?.getInt("positionId", -1)
+        Log.d("FrontProfileFragment!", "Profile ID: $positionId")
 
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
@@ -185,38 +132,98 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
             }
         }
 
+        profilePosion(positionId!!) { realProfileId ->
+            Log.d("realprofileID", realProfileId.toString())
+            // 여기서 realProfileId를 사용할 수 있습니다.
+            refreshData(realProfileId.toString())
+
+
+        }
+    }
+
+
+    private fun profilePosion(positionId: Int, callback: (Int) -> Unit) {
+        var realProfileId = -1 // 기본값 설정
+        RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
+            // 서버 통신 실패 시의 작업
+            override fun onFailure(call: Call<MainProfileData>, t: Throwable) {
+                Log.e("실패", t.toString())
+                callback(realProfileId) // 실패 시에도 콜백 호출
+            }
+
+            override fun onResponse(
+                call: Call<MainProfileData>,
+                response: Response<MainProfileData>
+            ) {
+                val repos: MainProfileData? = response.body()
+                if (repos != null) {
+                    val totalMyProfile = repos.getTotalMyProfile()
+                    Log.d("get!!", "응답 데이터: $repos")
+
+                    if (totalMyProfile == 1) {
+                        realProfileId = repos.result.myprofiles[0].profileId
+                    }
+                    if (totalMyProfile == 2) {
+                        val minProfileId = repos.result.myprofiles[0].profileId
+                        val maxProfileId = repos.result.myprofiles[1].profileId
+
+                        realProfileId = if (positionId == 0) {
+                            minProfileId
+                        } else {
+                            maxProfileId
+                        }
+                    }
+                    if (totalMyProfile == 3) {
+                        val minProfileId = repos.result.myprofiles[0].profileId
+                        val mediumProfileId = repos.result.myprofiles[1].profileId
+                        val maxProfileId = repos.result.myprofiles[2].profileId
+
+                        realProfileId = when {
+                            positionId == 0 -> minProfileId
+                            positionId == 1 -> mediumProfileId
+                            else -> maxProfileId
+                        }
+                    }
+                } else {
+                    Log.e("실패", "front_features 데이터가 null입니다.")
+                }
+                callback(realProfileId) // 응답 처리 후에 콜백 호출
+            }
+        })
+    }
 
 
 
-        val retrofitClient = RetrofitClient.mainProfile
 
-
-
-
-        val patchData = RequestPatchProfile(129, "mbti", "intj")
-
+    private fun refreshData(profileId: String?) {
         lifecycleScope.launch {
             try {
-                // withContext를 사용하여 백그라운드 스레드에서 실행하도록 함
-                val response: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
-                    retrofitClient.patchProfile(19, patchData)
+                val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
+                    RetrofitClient.mainProfile.getDataAll(profileId!!.toLong())
                 }
 
                 if (response.isSuccessful) {
-                    val responseData: PatchMyprofile? = response.body()
-                    Log.d("patch 성공", "응답 데이터: $responseData")
-                    // responseData를 처리하는 로직 작성
+                    val responseData: GetAllProfile? = response.body()
+                    Log.d("GETALL 성공!!!!", "응답 데이터: $responseData")
+                    responseData?.let { applyUpdatedDataToUI(it) }
                 } else {
                     val errorBody = response.errorBody()?.string() ?: "No error body"
-                    Log.e("patch 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
-
+                    Log.e("GETALL 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
                 }
             } catch (e: Exception) {
-                Log.e("patch 요청 실패", "에러: ${e.message}")
+                Log.e("GETALL 요청 실패", "에러: ${e.message}")
             }
         }
+    }
+
+    private fun applyUpdatedDataToUI(updatedData: GetAllProfile) {
+        // 변경된 데이터를 UI의 각 요소에 적용
+        binding.profileNameEt.setText(updatedData.result.frontFeatures[0].value)
+        binding.profileNumEt.setText(updatedData.result.frontFeatures[1].value)
 
 
+        // 예시: 변경된 데이터가 로그에 출력되도록 함
+        Log.d("UpdatedData", "Updated data applied to UI: $updatedData")
     }
 
 

@@ -45,6 +45,7 @@
                 android:background="@drawable/myprofile_image"/>
 
             <ImageButton
+                android:id="@+id/numberPaste_btn"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="40dp"

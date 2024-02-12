@@ -1,5 +1,6 @@
 package com.example.aboutme.Myprofile
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,8 +13,10 @@ import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyprofile.RetrofitClient
 import com.example.aboutme.RetrofitMyprofileData.DeleteMyprofile
 import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
+import com.example.aboutme.RetrofitMyprofileData.MainProfileData
 import com.example.aboutme.RetrofitMyprofileData.PostProfile
 import com.example.aboutme.RetrofitMyprofileData.ResponsePostProfile
+import com.example.aboutme.bottomNavigationView
 import com.example.aboutme.databinding.FragmentMyprofileBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -73,12 +76,144 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
         }
 
 
+        return binding.root
+    }
+
+
+
+    fun setActivity(activity: MainActivity2) {
+        mActivity = activity
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
+        val positionId = arguments?.getInt("positionId", -1)
+        Log.d("MyProfileFragment", "Position ID: $positionId")
+
+        //공유 버튼 클릭 시 이벤트 발생
+        /*binding.myprofileShareBtn.setOnClickListener {
+
+            val bottomSheet2 = BottomSheet2()
+
+            bottomSheet2.show(childFragmentManager, bottomSheet2.tag)
+        }*/
+
+        profilePosion(positionId!!) { realProfileId ->
+            Log.d("realprofileID", realProfileId.toString())
+
+            binding.deleteButtonIv.setOnClickListener{
+                Log.d("delete!!","success")
+                deleteProfile(realProfileId)
+
+                val intent = Intent(activity,bottomNavigationView::class.java)
+                startActivity(intent)
+
+            }
+
+            binding.backBtn.setOnClickListener {
+                val intent = Intent(activity,bottomNavigationView::class.java)
+                startActivity(intent)
+            }
+
+            binding.myprofileShareBtn.setOnClickListener {
+
+                val bottomSheet2 = BottomSheet2()
+
+                val bundle = Bundle().apply {
+                    putInt("realProfileId", realProfileId)
+                }
+                // 다이얼로그 프래그먼트를 호출하여 번들을 전달
+                bottomSheet2.arguments = bundle
+                bottomSheet2.show(childFragmentManager, bottomSheet2.tag)
+            }
+
+        }
+
+    }
+
+    private fun setFrag(fragNum: Int) {
+        val positionId = arguments?.getInt("positionId", -1)
+        if (positionId != null) { // positionId가 null이 아닌 경우에만 처리
+            val ft = childFragmentManager.beginTransaction()
+            when (fragNum) {
+                0 -> {
+                    Log.d("MyProfileFragment", "FrontProfileFragment로 교체 중")
+                    val frontProfileFragment = FrontProfileFragment.newInstance(positionId)
+                    ft.replace(R.id.profile_frame, frontProfileFragment).commit()
+                }
+                /*1 -> {
+                    Log.d("MyProfileFragment", "BackProfileFragment로 교체 중")
+                    val backProfileFragment = BackProfileFragment.newInstance(positionId)
+                    ft.replace(R.id.profile_frame, backProfileFragment).commit()
+                }*/
+            }
+        } else {
+            Log.e("MyProfileFragment", "positionId가 null입니다.")
+        }
+    }
+
+
+
+    private fun profilePosion(positionId: Int, callback: (Int) -> Unit) {
+        var realProfileId = -1 // 기본값 설정
+        RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
+            // 서버 통신 실패 시의 작업
+            override fun onFailure(call: Call<MainProfileData>, t: Throwable) {
+                Log.e("실패", t.toString())
+                callback(realProfileId) // 실패 시에도 콜백 호출
+            }
+
+            override fun onResponse(
+                call: Call<MainProfileData>,
+                response: Response<MainProfileData>
+            ) {
+                val repos: MainProfileData? = response.body()
+                if (repos != null) {
+                    val totalMyProfile = repos.getTotalMyProfile()
+                    Log.d("get!!", "응답 데이터: $repos")
+
+                    if (totalMyProfile == 1) {
+                        realProfileId = repos.result.myprofiles[0].profileId
+                    }
+                    if (totalMyProfile == 2) {
+                        val minProfileId = repos.result.myprofiles[0].profileId
+                        val maxProfileId = repos.result.myprofiles[1].profileId
+
+                        realProfileId = if (positionId == 0) {
+                            minProfileId
+                        } else {
+                            maxProfileId
+                        }
+                    }
+                    if (totalMyProfile == 3) {
+                        val minProfileId = repos.result.myprofiles[0].profileId
+                        val mediumProfileId = repos.result.myprofiles[1].profileId
+                        val maxProfileId = repos.result.myprofiles[2].profileId
+
+                        realProfileId = when {
+                            positionId == 0 -> minProfileId
+                            positionId == 1 -> mediumProfileId
+                            else -> maxProfileId
+                        }
+                    }
+                } else {
+                    Log.e("실패", "front_features 데이터가 null입니다.")
+                }
+                callback(realProfileId) // 응답 처리 후에 콜백 호출
+            }
+        })
+    }
+
+    private fun deleteProfile(profileId : Int){
+
 // Coroutine을 사용하여 비동기 호출 수행
         lifecycleScope.launch {
             try {
                 // withContext를 사용하여 백그라운드 스레드에서 실행하도록 함
                 val response: Response<DeleteMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.deleteData(9)
+                    RetrofitClient.mainProfile.deleteData(profileId.toLong())
                 }
 
                 if (response.isSuccessful) {
@@ -95,50 +230,12 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
             }
         }
 
-        return binding.root
     }
 
-
-
-    fun setActivity(activity: MainActivity2) {
-        mActivity = activity
-    }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-
-        //공유 버튼 클릭 시 이벤트 발생
-        binding.myprofileShareBtn.setOnClickListener {
-
-            val bottomSheet2 = BottomSheet2()
-
-            bottomSheet2.show(childFragmentManager, bottomSheet2.tag)
-        }
-
-    }
-
-    private fun setFrag(fragNum : Int){
-        val ft = childFragmentManager.beginTransaction()
-        when(fragNum)
-        {
-            0 -> {
-                Log.d("MyProfileFragment", "FrontProfileFragment로 교체 중")
-                ft.replace(R.id.profile_frame, FrontProfileFragment()).commit()
-            }
-
-            1 -> {
-                Log.d("MyProfileFragment", "BackProfileFragment로 교체 중")
-                ft.replace(R.id.profile_frame, BackProfileFragment()).commit()
-            }
-        }
-    }
 
     override fun onBottomSheetAction() {
 
     }
-
-
 
 
 }

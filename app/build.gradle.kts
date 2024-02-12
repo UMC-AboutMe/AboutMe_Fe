@@ -115,6 +115,10 @@ dependencies {
     // http3
     implementation ("com.squareup.okhttp3:logging-interceptor:4.8.1")
 
+    //탭레이아웃
+    implementation("com.google.android.material:material:1.5.0-alpha02")
+
+
     // 리사이클러뷰 아이템 shimmer effect
     implementation ("com.facebook.shimmer:shimmer:0.5.0")
 

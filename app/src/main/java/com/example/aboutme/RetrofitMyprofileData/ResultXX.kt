@@ -9,10 +9,11 @@ data class ResultXX(
     val frontFeatures: List<FrontFeatureXX>,
     @SerializedName("is_default")
     val isDefault: Boolean,
+    //profile_id
     @SerializedName("profile_id")
     val profileId: Long,
-    @SerializedName("profile_img_url")
-    val profileImgUrl: String,
+    @SerializedName("profile_image")
+    val profileImage: ProfileImage,
     @SerializedName("serial_number")
     val serialNumber: Int
 )

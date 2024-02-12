@@ -38,8 +38,8 @@ class MainProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // SharedPreferences에서 데이터를 읽어옴
-        binding.mainProfileVp.setCurrentItem(0, false)
+
+
 
 
         initViewPager()
@@ -105,7 +105,9 @@ class MainProfileFragment : Fragment() {
                     Log.e("실패", "응답 데이터가 null입니다.")
                     Log.e("Response", "${response.code()}")
                 }
-                binding.mainProfileVp.setCurrentItem(0, false)
+                binding.mainProfileVp.postDelayed({
+                    binding.mainProfileVp.setCurrentItem(0, false)
+                }, 100)
             }
         })
 

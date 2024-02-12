@@ -42,6 +42,13 @@
         tools:targetApi="33">
 
         <activity
+            android:name=".Myprofile.EditProfileActivity"
+            android:exported="true"/>
+
+        <activity android:name=".Myprofile.PreviewProfileActivity"
+            android:exported="true"/>
+
+        <activity
             android:name=".Tutorial.CustomDialogAlarm"
             android:exported="false" />
         <activity

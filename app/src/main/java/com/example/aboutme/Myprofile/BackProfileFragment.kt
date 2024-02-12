@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyprofile.RetrofitClient
 import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
+import com.example.aboutme.RetrofitMyprofileData.MainProfileData
 import com.example.aboutme.databinding.FragmentBackprofileBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,377 +24,153 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BackProfileFragment : Fragment(), RecommendBottomSheet.OnMbtiSelectedListener,
-    RecommendBottomSheet.OnSchoolSelectedListener,
-    RecommendBottomSheet.OnCompanySelectedListener, RecommendBottomSheet.OnHobbySelectedListener,
-    RecommendBottomSheet.OnJobSelectedListener {
+class BackProfileFragment : Fragment()
+{
+
+    companion object {
+        // newInstance 메서드 추가
+        fun newInstance(positionId: Int): BackProfileFragment {
+            val fragment = BackProfileFragment()
+            val args = Bundle().apply {
+                putInt("positionId", positionId)
+            }
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     lateinit var binding : FragmentBackprofileBinding
 
     private var selectedButtonId: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        
 
 
+        binding = FragmentBackprofileBinding.inflate(inflater, container, false)
 
-        binding = FragmentBackprofileBinding.inflate(inflater,container, false)
+        val positionId = arguments?.getInt("positionId", -1)
+        Log.d("FrontProfileFragment!!", "Profile ID: $positionId")
+
+
 
         binding.turnBtn2.setOnClickListener {
-            val ft = parentFragmentManager.beginTransaction()
+            // 프로필 ID 가져오기
+            val positionId = arguments?.getInt("positionId", -1)
 
-            ft.replace(R.id.profile_frame, FrontProfileFragment()).commit()
+            // BackProfileFragment로 전환하기 위해 프로필 ID를 번들에 담아서 생성
+            val frontProfileFragment = FrontProfileFragment.newInstance(positionId ?: -1)
+
+            // 프로필 ID를 담은 번들을 BackProfileFragment로 전달
+            frontProfileFragment.arguments = arguments
+
+            // BackProfileFragment로 전환
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.profile_frame, frontProfileFragment)
+                .commit()
         }
 
 
-        //연필모양 버튼 활성/비활성 구현
-        val profileEdit1 : EditText = binding.backProfileEt1
-        val profileBtn1 : ImageButton = binding.profileEdit1Btn
+        return binding.root
 
-        var message1 : String = ""
+    }
 
-        profileEdit1.addTextChangedListener (object : TextWatcher{
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                //
+        val positionId = arguments?.getInt("positionId", -1)
+        Log.d("FrontProfileFragment!!", "Profile ID: $positionId")
+
+        profilePosion(positionId!!) { realProfileId ->
+            Log.d("realprofileID", realProfileId.toString())
+            // 여기서 realProfileId를 사용할 수 있습니다.
+            refreshData(realProfileId.toString())
+        }
+    }
+
+    private fun profilePosion(positionId: Int, callback: (Int) -> Unit) {
+        var realProfileId = -1 // 기본값 설정
+        RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
+            // 서버 통신 실패 시의 작업
+            override fun onFailure(call: Call<MainProfileData>, t: Throwable) {
+                Log.e("실패", t.toString())
+                callback(realProfileId) // 실패 시에도 콜백 호출
             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun onResponse(
+                call: Call<MainProfileData>,
+                response: Response<MainProfileData>
+            ) {
+                val repos: MainProfileData? = response.body()
+                if (repos != null) {
+                    val totalMyProfile = repos.getTotalMyProfile()
+                    Log.d("get!!", "응답 데이터: $repos")
 
-                message1 = profileEdit1.text.toString()
+                    if (totalMyProfile == 1) {
+                        realProfileId = repos.result.myprofiles[0].profileId
+                    }
+                    if (totalMyProfile == 2) {
+                        val minProfileId = repos.result.myprofiles[0].profileId
+                        val maxProfileId = repos.result.myprofiles[1].profileId
 
-                if (message1.isNotEmpty()){
-                    profileBtn1.isEnabled = false
-                    profileBtn1.alpha = 0.1f
-                }else{
-                    profileBtn1.isEnabled = true
-                    profileBtn1.alpha = 1.0f
+                        realProfileId = if (positionId == 0) {
+                            minProfileId
+                        } else {
+                            maxProfileId
+                        }
+                    }
+                    if (totalMyProfile == 3) {
+                        val minProfileId = repos.result.myprofiles[0].profileId
+                        val mediumProfileId = repos.result.myprofiles[1].profileId
+                        val maxProfileId = repos.result.myprofiles[2].profileId
+
+                        realProfileId = when {
+                            positionId == 0 -> minProfileId
+                            positionId == 1 -> mediumProfileId
+                            else -> maxProfileId
+                        }
+                    }
+                } else {
+                    Log.e("실패", "front_features 데이터가 null입니다.")
                 }
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
+                callback(realProfileId) // 응답 처리 후에 콜백 호출
             }
         })
-
-        val profileEdit2 : EditText = binding.backProfileEt2
-        val profileBtn2 : ImageButton = binding.profileEdit2Btn
-
-        var message2 : String = ""
-
-        profileEdit2.addTextChangedListener (object : TextWatcher{
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // 이 경우에는 구현이 필요하지 않습니다.
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-                message2 = profileEdit2.text.toString()
-
-                if (message2.isNotEmpty()){
-                    profileBtn2.isEnabled = false
-                    profileBtn2.alpha = 0.1f
-                }else{
-                    profileBtn2.isEnabled = true
-                    profileBtn2.alpha = 1.0f
-                }
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
-
-        val profileEdit3 : EditText = binding.backProfileEt3
-        val profileBtn3 : ImageButton = binding.profileEdit3Btn
-
-        var message3 : String = ""
-
-        profileEdit3.addTextChangedListener (object : TextWatcher{
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // 이 경우에는 구현이 필요하지 않습니다.
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-                message3 = profileEdit3.text.toString()
-
-                if (message3.isNotEmpty()){
-                    profileBtn3.isEnabled = false
-                    profileBtn3.alpha = 0.1f
-                }else{
-                    profileBtn3.isEnabled = true
-                    profileBtn3.alpha = 1.0f
-                }
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
-
-        val profileEdit4 : EditText = binding.backProfileEt4
-        val profileBtn4 : ImageButton = binding.profileEdit4Btn
-
-        var message4 : String = ""
-
-        profileEdit4.addTextChangedListener (object : TextWatcher{
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // 이 경우에는 구현이 필요하지 않습니다.
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-                message4 = profileEdit4.text.toString()
-
-                if (message4.isNotEmpty()){
-                    profileBtn4.isEnabled = false
-                    profileBtn4.alpha = 0.1f
-                }else{
-                    profileBtn4.isEnabled = true
-                    profileBtn4.alpha = 1.0f
-                }
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
-
-        val profileEdit5 : EditText = binding.backProfileEt5
-        val profileBtn5 : ImageButton = binding.profileEdit5Btn
-
-        var message5 : String = ""
-
-        profileEdit5.addTextChangedListener (object : TextWatcher{
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // 이 경우에는 구현이 필요하지 않습니다.
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-                message5 = profileEdit5.text.toString()
-
-                if (message5.isNotEmpty()){
-                    profileBtn5.isEnabled = false
-                    profileBtn5.alpha = 0.1f
-                }else{
-                    profileBtn5.isEnabled = true
-                    profileBtn5.alpha = 1.0f
-                }
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
-
-        binding.profileEdit1Btn.setOnClickListener {
-
-            val bottomSheet = RecommendBottomSheet()
-            selectedButtonId = 1
-
-            bottomSheet.setOnMbtiSelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnSchoolSelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnJobSelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnHobbySelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnCompanySelectedListener(this@BackProfileFragment)
-
-            bottomSheet.show(childFragmentManager, bottomSheet.tag)
-        }
-
-        binding.profileEdit2Btn.setOnClickListener {
-
-            val bottomSheet = RecommendBottomSheet()
-            selectedButtonId = 2
-            bottomSheet.setOnMbtiSelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnSchoolSelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnJobSelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnHobbySelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnCompanySelectedListener(this@BackProfileFragment)
-
-            bottomSheet.show(childFragmentManager, bottomSheet.tag)
-        }
-
-        binding.profileEdit3Btn.setOnClickListener {
-
-            val bottomSheet = RecommendBottomSheet()
-            selectedButtonId = 3
-
-            bottomSheet.setOnMbtiSelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnSchoolSelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnJobSelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnHobbySelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnCompanySelectedListener(this@BackProfileFragment)
-            bottomSheet.show(childFragmentManager, bottomSheet.tag)
-        }
-
-        binding.profileEdit4Btn.setOnClickListener {
-
-            val bottomSheet = RecommendBottomSheet()
-            selectedButtonId = 4
-
-            bottomSheet.setOnMbtiSelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnSchoolSelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnJobSelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnHobbySelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnCompanySelectedListener(this@BackProfileFragment)
-            bottomSheet.show(childFragmentManager, bottomSheet.tag)
-        }
-
-        binding.profileEdit5Btn.setOnClickListener {
-
-            val bottomSheet = RecommendBottomSheet()
-            selectedButtonId = 5
-
-            bottomSheet.setOnMbtiSelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnSchoolSelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnJobSelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnHobbySelectedListener(this@BackProfileFragment)
-            bottomSheet.setOnCompanySelectedListener(this@BackProfileFragment)
-            bottomSheet.show(childFragmentManager, bottomSheet.tag)
-        }
-
-        if(binding.backProfileEt1.text.toString().trim().isNotEmpty()){
-            binding.backProfileEt1.isEnabled = false
-        }
+    }
 
 
-        val retrofitClient = RetrofitClient.mainProfile
 
-// Coroutine을 사용하여 비동기 호출 수행
+
+    private fun refreshData(profileId: String?) {
         lifecycleScope.launch {
             try {
-                // withContext를 사용하여 백그라운드 스레드에서 실행하도록 함
                 val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
-                    retrofitClient.getDataAll(7)
+                    RetrofitClient.mainProfile.getDataAll(profileId!!.toLong())
                 }
 
                 if (response.isSuccessful) {
                     val responseData: GetAllProfile? = response.body()
-                    Log.d("Get 성공", "응답 데이터: $responseData")
-                    // responseData를 처리하는 로직 작성
+                    Log.d("GETALL 성공!!!!", "응답 데이터: $responseData")
+                    responseData?.let { applyUpdatedDataToUI(it) }
                 } else {
                     val errorBody = response.errorBody()?.string() ?: "No error body"
-                    Log.e("Get 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
-
+                    Log.e("GETALL 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
                 }
             } catch (e: Exception) {
-                Log.e("Get 요청 실패", "에러: ${e.message}")
-            }
-        }
-
-
-
-        return binding.root
-    }
-
-    override fun onMbtiSelected() {
-        when(selectedButtonId){
-            1 -> {
-                Glide.with(requireContext()).load(R.drawable.mbti).into(binding.recommendEt1Iv)
-            }
-            2 -> {
-                Glide.with(requireContext()).load(R.drawable.mbti).into(binding.recommendEt2Iv)
-            }
-            3 -> {
-                Glide.with(requireContext()).load(R.drawable.mbti).into(binding.recommendEt3Iv)
-            }
-            4 -> {
-                Glide.with(requireContext()).load(R.drawable.mbti).into(binding.recommendEt4Iv)
-            }
-            5 -> {
-                Glide.with(requireContext()).load(R.drawable.mbti).into(binding.recommendEt5Iv)
+                Log.e("GETALL 요청 실패", "에러: ${e.message}")
             }
         }
     }
 
-    override fun onSchoolSelected() {
-        when(selectedButtonId){
-            1 -> {
-                Glide.with(requireContext()).load(R.drawable.school).into(binding.recommendEt1Iv)
-            }
-            2 -> {
-                Glide.with(requireContext()).load(R.drawable.school).into(binding.recommendEt2Iv)
-            }
-            3 -> {
-                Glide.with(requireContext()).load(R.drawable.school).into(binding.recommendEt3Iv)
-            }
-            4 -> {
-                Glide.with(requireContext()).load(R.drawable.school).into(binding.recommendEt4Iv)
-            }
-            5 -> {
-                Glide.with(requireContext()).load(R.drawable.school).into(binding.recommendEt5Iv)
-            }
-        }
-    }
+    private fun applyUpdatedDataToUI(updatedData: GetAllProfile) {
+        // 변경된 데이터를 UI의 각 요소에 적용
+        binding.backProfileEt1.setText(updatedData.result.backFeatures[0].value)
+        binding.backProfileEt2.setText(updatedData.result.backFeatures[1].value)
+        binding.backProfileEt3.setText(updatedData.result.backFeatures[2].value)
+        binding.backProfileEt4.setText(updatedData.result.backFeatures[3].value)
+        binding.backProfileEt5.setText(updatedData.result.backFeatures[4].value)
 
-    override fun onCompanySelected() {
-        when(selectedButtonId){
-            1 -> {
-                Glide.with(requireContext()).load(R.drawable.company).into(binding.recommendEt1Iv)
-            }
-            2 -> {
-                Glide.with(requireContext()).load(R.drawable.company).into(binding.recommendEt2Iv)
-            }
-            3 -> {
-                Glide.with(requireContext()).load(R.drawable.company).into(binding.recommendEt3Iv)
-            }
-            4 -> {
-                Glide.with(requireContext()).load(R.drawable.company).into(binding.recommendEt4Iv)
-            }
-            5 -> {
-                Glide.with(requireContext()).load(R.drawable.company).into(binding.recommendEt5Iv)
-            }
-        }
-    }
 
-    override fun onHobbySelected() {
-        when(selectedButtonId){
-            1 -> {
-                Glide.with(requireContext()).load(R.drawable.hobby).into(binding.recommendEt1Iv)
-            }
-            2 -> {
-                Glide.with(requireContext()).load(R.drawable.hobby).into(binding.recommendEt2Iv)
-            }
-            3 -> {
-                Glide.with(requireContext()).load(R.drawable.hobby).into(binding.recommendEt3Iv)
-            }
-            4 -> {
-                Glide.with(requireContext()).load(R.drawable.hobby).into(binding.recommendEt4Iv)
-            }
-            5 -> {
-                Glide.with(requireContext()).load(R.drawable.hobby).into(binding.recommendEt5Iv)
-            }
-        }
-    }
-
-    override fun onJobSelected() {
-        when(selectedButtonId){
-            1 -> {
-                Glide.with(requireContext()).load(R.drawable.job).into(binding.recommendEt1Iv)
-            }
-            2 -> {
-                Glide.with(requireContext()).load(R.drawable.job).into(binding.recommendEt2Iv)
-            }
-            3 -> {
-                Glide.with(requireContext()).load(R.drawable.job).into(binding.recommendEt3Iv)
-            }
-            4 -> {
-                Glide.with(requireContext()).load(R.drawable.job).into(binding.recommendEt4Iv)
-            }
-            5 -> {
-                Glide.with(requireContext()).load(R.drawable.job).into(binding.recommendEt5Iv)
-            }
-        }
+        // 예시: 변경된 데이터가 로그에 출력되도록 함
+        Log.d("UpdatedData", "Updated data applied to UI: $updatedData")
     }
 }
