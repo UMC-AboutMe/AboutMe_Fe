@@ -3,27 +3,27 @@
     <item android:id="@+id/nav_myprof"
         android:title="마이프로필"
         android:enabled = "true"
-        android:icon="@drawable/nav_myprof" />
+        android:icon="@drawable/selector_prof_icon" />
 
     <item android:id="@+id/nav_saveprof"
         android:title="프로필보관함"
         android:enabled = "true"
-        android:icon="@drawable/nav_saveprof" />
+        android:icon="@drawable/selector_storage_icon" />
 
     <item
         android:id="@+id/nav_home"
         android:checkable="true"
         android:enabled="true"
-        android:icon="@drawable/nav_home"
+        android:icon="@drawable/selector_home_icon"
         android:title="홈" />
 
     <item android:id="@+id/nav_myspace"
         android:title="마이스페이스"
         android:enabled = "true"
-        android:icon="@drawable/nav_myspace" />
+        android:icon="@drawable/selector_space_icon" />
 
     <item android:id="@+id/nav_agit"
         android:title="아지트"
         android:enabled = "true"
-        android:icon="@drawable/nav_agit" />
+        android:icon="@drawable/selector_agit_icon" />
 </menu>

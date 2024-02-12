@@ -26,9 +26,20 @@ class SearchResponse {
         var result : SpaceList
             )
     data class SpaceList(
-        var spaceId : Int,
+        var spaceId : Long,
         var nickname : String,
         var characterType : Int,
         var roomType : Int
     )
+
+    //스페이스 보관함에 추가
+    data class ResponseSpaceStorage (
+        var isSuccess: Boolean,
+        var code: String,
+        var message: String,
+        var result : SpaceId
+    )
+    data class SpaceId (
+        var spaceId : Long
+            )
 }

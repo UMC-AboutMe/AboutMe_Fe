@@ -38,14 +38,10 @@ class SearchProfActivity : AppCompatActivity() {
         //제약 조건
         binding.searchBtn.setOnClickListener {
             if (binding.searchTv.text.toString() == "123456") {
-                binding.profBg.visibility = View.VISIBLE
-                binding.addBtn.visibility = View.VISIBLE
-                binding.exampleIv.visibility = View.VISIBLE
+                binding.profView.visibility = View.VISIBLE
             }
             else {
-                binding.profBg.visibility = View.GONE
-                binding.addBtn.visibility = View.GONE
-                binding.exampleIv.visibility = View.GONE
+                binding.profView.visibility = View.GONE
             }
         }
     }
