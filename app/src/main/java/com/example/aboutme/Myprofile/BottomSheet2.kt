@@ -500,7 +500,7 @@ class BottomSheet2 : DialogFragment() {
         // serialNumber 값을 사용하여 defaultFeed를 초기화합니다.
         FeedTemplate(
             content = Content(
-                title = "${profileName}님의 AboutMe 프로필을 확인해보세요.",
+                title = "$profileName 님의 AboutMe 프로필을 확인해보세요.",
                 description = "홈 화면에 있는 프로필 찾기에 일련번호를 입력하면 프로필을 찾을 수 있어요.",
                 imageUrl = "https://i.imgur.com/PsidRUL.jpg",
                 link = Link(
