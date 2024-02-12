@@ -2,28 +2,24 @@ package com.example.aboutme.Myspace
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import com.example.aboutme.Myprofile.SharedViewModel
-import com.example.aboutme.R
 import com.example.aboutme.bottomNavigationView
 import com.example.aboutme.databinding.ActivityMyspacestep3Binding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MySpaceStep3Activity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMyspacestep3Binding
-    private lateinit var sharedViewModel: SharedViewModel
-    private val isCreatedViewModel: SharedViewModel by viewModels()
+
+    private val sharedViewModel: MyspaceViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyspacestep3Binding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        sharedViewModel = ViewModelProvider(this)[SharedViewModel::class.java]
 
         val nextButton = binding.nextIbStep3
 
@@ -75,14 +71,15 @@ class MySpaceStep3Activity : AppCompatActivity() {
                 }
 
                 // isCreated 값 변경
-                isCreatedViewModel.isCreated = true
+                sharedViewModel.setSelectedIsCreated(true)
 
-                // Step 3 액티비티로 이동
+                Log.d("isCreated", "${sharedViewModel.isCreated}")
+
                 startActivity(Intent(this, bottomNavigationView::class.java))
             }
 
             binding.back.setOnClickListener {
-                onBackPressed()
+                finish()
             }
         }
     }

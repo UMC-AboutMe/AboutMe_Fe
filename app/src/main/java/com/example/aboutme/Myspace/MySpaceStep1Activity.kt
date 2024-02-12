@@ -2,24 +2,24 @@ package com.example.aboutme.Myspace
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import com.example.aboutme.Myprofile.SharedViewModel
 import com.example.aboutme.bottomNavigationView
 import com.example.aboutme.databinding.ActivityMyspacestep1Binding
 
 class MySpaceStep1Activity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMyspacestep1Binding
-    private lateinit var sharedViewModel: SharedViewModel
+
+    private val sharedViewModel: MyspaceViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyspacestep1Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // ViewModel 초기화
-        sharedViewModel = ViewModelProvider(this)[SharedViewModel::class.java]
+        Log.d("isCreated", "${sharedViewModel.isCreated}")
 
         binding.nextIbStep1.setOnClickListener {
             // EditText에서 텍스트 가져오기
@@ -28,7 +28,6 @@ class MySpaceStep1Activity : AppCompatActivity() {
             // ViewModel에 데이터 저장
             sharedViewModel.nickname = inputText
 
-            // 데이터는 ViewModel에 저장되어 있으므로 Bundle 사용할 필요 없음
             val intent = Intent(this, MySpaceStep2Activity::class.java)
             startActivity(intent)
         }

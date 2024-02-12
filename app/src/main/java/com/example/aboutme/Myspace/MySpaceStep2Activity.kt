@@ -3,23 +3,20 @@ package com.example.aboutme.Myspace
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import com.example.aboutme.Myprofile.SharedViewModel
-import com.example.aboutme.R
 import com.example.aboutme.databinding.ActivityMyspacestep2Binding
 
 class MySpaceStep2Activity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMyspacestep2Binding
-    private lateinit var sharedViewModel: SharedViewModel
+
+    private val sharedViewModel: MyspaceViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyspacestep2Binding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        sharedViewModel = ViewModelProvider(this)[SharedViewModel::class.java]
 
         val nextButton = binding.nextIbStep2
 
