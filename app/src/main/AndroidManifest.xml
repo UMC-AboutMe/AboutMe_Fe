@@ -104,9 +104,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Tutorial.TutorialActivity2"
-            android:exported="true" />
+
         <activity
             android:name=".Tutorial.TutorialActivity1"
             android:exported="true" />

@@ -20,9 +20,6 @@ class TutorialActivity1 : AppCompatActivity() {
         CustomDialogAlarm("알림을 보내도록 허용하시겠습니까?")
             .show(supportFragmentManager, "AlarmDialog")
         //binding= DataBindingUtil.setContentView(this, R.layout.activity_tutorial1)
-        binding.nextBtn1.setOnClickListener {
-            val intent= Intent(this, TutorialActivity2::class.java)
-            startActivity(intent)
-        }
+
     }
 }
