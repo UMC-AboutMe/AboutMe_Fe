@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:src="@drawable/chooseimage"
+            android:layout_marginTop="20dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/shareBottomSheet_logo_btn"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/logo"/>
+
+            <ImageButton
+                android:id="@+id/shareBottomSheet_image_btn"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="60dp"
+                android:background="@drawable/myprofile_image"/>
+
+            <ImageButton
+                android:id="@+id/shareBottomSheet_char_btn"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="60dp"
+                android:background="@drawable/profilepreview2"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="기본이미지로\n       설정"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="@font/gmarketsansmedium"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="앨범에서\n이미지 추가"
+                android:layout_marginLeft="50dp"
+                android:fontFamily="@font/gmarketsansmedium"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="캐릭터로\n    설정"
+                android:layout_marginLeft="60dp"
+                android:fontFamily="@font/gmarketsansmedium"/>
+        </LinearLayout>
+
+
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:src="@drawable/nameedit"
+            android:layout_marginTop="30dp"/>
+
+        <ImageView
+            android:layout_width="330dp"
+            android:layout_height="100dp"
+            android:src="@drawable/editprofile_box"
+            android:layout_marginTop="-30dp"/>
+
+        <EditText
+            android:id="@+id/profile_name_et"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:textSize="20sp"
+            android:ems="12"
+            android:hint="    이름"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="-73dp"
+            android:background="@color/transparent"
+            android:fontFamily="@font/gmarketsansmedium"/>
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:src="@drawable/phonenimberedit"
+            android:layout_marginTop="30dp"/>
+
+        <ImageView
+            android:layout_width="330dp"
+            android:layout_height="100dp"
+            android:src="@drawable/editprofile_box"
+            android:layout_marginTop="-20dp"
+            android:background="@color/white"/>
+
+        <EditText
+            android:id="@+id/profile_number_et"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            android:textSize="15sp"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:ems="12"
+            android:layout_marginLeft="20dp"
+            android:hint="  전화번호 / 메일주소 / Instagram"
+            android:layout_marginTop="-73dp"
+            android:background="@color/transparent"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/profileEditPreview_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="미리보기"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:background="@color/transparent"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:textSize="25sp"/>
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

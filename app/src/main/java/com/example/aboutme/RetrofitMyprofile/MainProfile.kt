@@ -28,7 +28,6 @@ interface MainProfile {
     //@Headers("member-id: 4")
     suspend fun getDataAll(@Path(value = "profile-id") profileId : Long) : Response<GetAllProfile>
 
-
     @POST("/myprofiles")
     //@Headers("member-id: 4")
     fun submitData(@Body postData : PostProfile): Call<ResponsePostProfile>

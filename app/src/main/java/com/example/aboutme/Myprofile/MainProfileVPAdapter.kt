@@ -55,12 +55,15 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
                         if (repos != null) {
                             val totalMyProfile = repos.getTotalMyProfile()
 
-                            if (totalMyProfile == 3) {
-                                Toast.makeText(parent.context,"더 이상 프로필을 생성할 수 없습니다.", Toast.LENGTH_SHORT).show()
+                            if (totalMyProfile > 2) {
+                                val nameLimitDialog = NameLimitDialog()
+
+                                nameLimitDialog.show((parent.context as AppCompatActivity).supportFragmentManager, nameLimitDialog.tag)
                             }
                             else{
                                 val nameDialog = NameDialogFragment()
 
+                                Log.d("!!!!","success")
                                 nameDialog.show((parent.context as AppCompatActivity).supportFragmentManager, nameDialog.tag)
                             }
                         } else {
