@@ -84,7 +84,7 @@ class ProfileStorageFragment : Fragment() {
         //val intent = Intent(requireContext(), ProfileStorageDetailFragment::class.java)
 
         //프로필 보관함 조회 api
-        //getProfiles()
+        getProfiles()
 
         binding.searchBtn.setOnClickListener {
             //getSearchProfiles()
@@ -94,9 +94,6 @@ class ProfileStorageFragment : Fragment() {
         rvAdapter.setOnItemClickListener(object : ProfileRVAdapter.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 Log.d("프로필 클릭", "$position 클릭")
-                //position인덱스의 리스트 가져오기
-                //itemList[position]
-                //startActivity(intent)
                 val fragment = ProfileStorageDetailFragment()
 
                 val bundle = Bundle()
@@ -197,7 +194,8 @@ class ProfileStorageFragment : Fragment() {
                                     profile.image.type == "USER_IMAGE" -> R.drawable.prof_avater1
                                     else -> R.drawable.avatar_basic
                                 }
-                                itemList.add(ProfileData(imageResId, profile.profileName,profile.profileId.toLong(),profile.favorite))
+                                val isFavorite = profile.favorite // favorite 값 가져오기
+                                itemList.add(ProfileData(imageResId, profile.profileName,profile.profileId.toLong(),isFavorite))
                             }
 
 
