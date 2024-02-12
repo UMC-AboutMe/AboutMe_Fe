@@ -1,5 +1,6 @@
 package com.example.aboutme.Myprofile
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
 import com.example.aboutme.RetrofitMyprofileData.MainProfileData
 import com.example.aboutme.RetrofitMyprofileData.PostProfile
 import com.example.aboutme.RetrofitMyprofileData.ResponsePostProfile
+import com.example.aboutme.bottomNavigationView
 import com.example.aboutme.databinding.FragmentMyprofileBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -104,6 +106,10 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
             binding.deleteButtonIv.setOnClickListener{
                 Log.d("delete!!","success")
                 deleteProfile(realProfileId)
+
+                val intent = Intent(activity,bottomNavigationView::class.java)
+                startActivity(intent)
+
             }
 
             binding.myprofileShareBtn.setOnClickListener {
@@ -218,6 +224,7 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
                 Log.e("Delete 요청 실패", "에러: ${e.message}")
             }
         }
+
     }
 
 
