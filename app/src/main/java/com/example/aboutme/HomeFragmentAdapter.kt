@@ -13,7 +13,7 @@ class HomeFragmentAdapter(private val context: Context) :
     RecyclerView.Adapter<HomeFragmentAdapter.ViewHolder> () {
 
     var datas = mutableListOf<HomeFragmentData>()
-
+    var onItemClick: ((Int) -> Unit)? = null //
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.fragment_home_item, parent, false)
         return ViewHolder(view)
@@ -23,6 +23,9 @@ class HomeFragmentAdapter(private val context: Context) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(datas[position])
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(position) // 클릭된 아이템의 인덱스를 전달
+        }
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
