@@ -54,17 +54,17 @@ class EditProfileBackFragment : Fragment(), EditProfileActivity.TabSelectedListe
 
             binding = FragmentEditprofilebackBinding.inflate(inflater, container, false)
 
-            viewModel.updatedData.observe(this, { updatedData ->
-                updatedData?.let {
-                    Log.d("이전",updatedData.toString())
-
-                }
-            })
 
             val profileId1 = arguments?.getString("profilId1")
             Log.d("profileId_to_back", profileId1.toString())
 
+            viewModel.feature1.observe(this, { feature1 ->
+                feature1?.let {
+                    binding.feature1SchoolEt.setText(feature1)
+                    Log.d("이전",feature1.toString())
 
+                }
+            })
 
             return binding.root
         }

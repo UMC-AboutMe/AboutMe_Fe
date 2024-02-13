@@ -83,13 +83,8 @@ class EditProfileActivity : AppCompatActivity() {
                     val bundle = Bundle().apply {
                         putString("feature1", feature1)
                         putString("feature2", feature2)
-                        putString("feature3", feature3)
-                        putString("feature4", feature4)
-                        putString("feature5", feature5)
-                        putString("feature6", feature6)
-                        putString("feature7", feature7)
-
                     }
+                    viewModel.setFeatures(feature3.orEmpty(), feature4.orEmpty(),feature5.orEmpty(),feature6.orEmpty(),feature7.orEmpty())
 
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.tab_layout_container, EditProfileFrontFragment().apply {

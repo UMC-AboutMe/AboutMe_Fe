@@ -54,17 +54,8 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
         Log.d("plz", name)
         Log.d("plz2", phoneNumber)
 
-        val featureBack1 = binding.feature1SchoolEt.text.toString()
-        val featureBack2 = binding.feature2CompanyEt.text.toString()
-        val featureBack3 = binding.feature3MbtiEt.text.toString()
-        val feature4 = binding.feature4HobbyEt.text.toString()
-        val feature5 = binding.profileTmiEt.text.toString()
 
-        // ViewModel에 값을 전달합니다.
-        viewModel.setFeatures(feature1, feature2,feature3,feature4,feature5)
     }
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
