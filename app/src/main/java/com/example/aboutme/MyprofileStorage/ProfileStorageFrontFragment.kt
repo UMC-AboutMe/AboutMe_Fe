@@ -26,7 +26,7 @@ class ProfileStorageFrontFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         val profileId: Long = arguments?.getLong("profId") ?: -1
-        Log.d("ProfileStorageDetail", "Front Received profId: $profileId")
+        //Log.d("ProfileStorageDetail", "Front Received profId: $profileId")
         getProfile(profileId)
         binding = FragmentProfileStorageFrontBinding.inflate(inflater, container, false)
         binding.turnBtn.setOnClickListener {
@@ -53,7 +53,7 @@ class ProfileStorageFrontFragment : Fragment(){
                     if (response != null) {
                         if (response.isSuccess) {
                             // 성공했을 때
-                            Log.d("Retrofit_Get_Success", response.toString())
+                            //Log.d("Retrofit_Get_Success", response.toString())
                             val image = response.result.profile_image
                             val imageResId = when {
                                 image.type == "CHARACTER" && image.charcterType in 1..8 -> {

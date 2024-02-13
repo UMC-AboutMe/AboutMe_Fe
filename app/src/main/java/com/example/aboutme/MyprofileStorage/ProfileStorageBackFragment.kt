@@ -22,7 +22,7 @@ class ProfileStorageBackFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val profileId: Long = arguments?.getLong("profId") ?: -1
-        Log.d("ProfileStorageDetail", "Back Received profId: $profileId")
+        //Log.d("ProfileStorageDetail", "Back Received profId: $profileId")
         getProfile(profileId)
         binding = FragmentProfileStorageBackBinding.inflate(inflater, container, false)
         binding.turnBtn2.setOnClickListener {

@@ -123,9 +123,8 @@ class ProfileStorageDetailFragment : Fragment() {
                             response.result.front_features.forEach { feature ->
                                 if (feature.key == "name") {
                                     //작업하던 부분
-                                    bindingFront.profileNameEt.text = feature.value
-                                    Log.d("Retrofit_Get_Success", feature.value.toString())
-                                    return@forEach // 해당 조건을 만족하는 요소를 찾았으므로 반복문을 빠져나갑니다.
+                                    //bindingFront.profileNameEt.text = feature.value
+                                   //Log.d("Retrofit_Get_Success", feature.value.toString())
                                 }
                             }
                         } else {
