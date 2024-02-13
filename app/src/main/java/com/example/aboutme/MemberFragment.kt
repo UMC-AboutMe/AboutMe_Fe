@@ -49,16 +49,15 @@ class MemberFragment : Fragment() {
         }
 
         val AvTv = when(position) {
-            0-> "유태연"
-            1-> "정서연"
-            2-> "오유은"
-            3-> "최가나"
-            4-> "변성호"
-            5-> "송혜음"
-            6-> "조희수"
-            7-> "차현정"
-            8-> "정승원"
-            else-> "유태연"
+            0-> "유태연's 스페이스"
+            1-> "정서연's 스페이스"
+            2-> "오유은's 스페이스"
+            3-> "최가나's 스페이스"
+            4-> "변성호's 스페이스"
+            5-> "송혜음's 스페이스"
+            6-> "조희수's 스페이스"
+            7-> "차현정's 스페이스"
+            else-> "정승원's 스페이스"
         }
         // 이미지뷰에 이미지 설정
         binding2.memberStep3SelectedRoom.setImageResource(drawableResId)
