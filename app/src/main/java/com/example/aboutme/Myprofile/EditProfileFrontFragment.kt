@@ -32,6 +32,11 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
     private val viewModel: MyProfileViewModel by viewModels(ownerProducer = { requireActivity() })
 
 
+    var feature1 : String? = null
+    var feature2 : String? = null
+    var feature3 : String? = null
+    var feature4 : String? = null
+    var feature5 : String? = null
 
     //private var job: Job? = null // Nullable Job 변수 선언
 
@@ -124,8 +129,12 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
 
                         val frontFeature1 = responseData!!.result.frontFeatures[0].featureId
                         val frontFeature2 = responseData!!.result.frontFeatures[1].featureId
-
-                        patchData(frontFeature1, frontFeature2)
+                        val backFeature1 = responseData!!.result.backFeatures[0].featureId
+                        val backFeature2 = responseData!!.result.backFeatures[1].featureId
+                        val backFeature3 = responseData!!.result.backFeatures[2].featureId
+                        val backFeature4 = responseData!!.result.backFeatures[3].featureId
+                        val backFeature5 = responseData!!.result.backFeatures[4].featureId
+                        patchData(frontFeature1, frontFeature2, backFeature1,backFeature2, backFeature3, backFeature4, backFeature5)
                         //responseData?.let { applyUpdatedDataToUI(it) }
 
                         // patchData 호출 후에 PreviewProfileActivity 시작
@@ -152,12 +161,39 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
 
         val name = binding.profileNameEt.text.toString()
         val phoneNumber = binding.profileNumberEt.text.toString()
-        val feature1 =
+
+        viewModel.feature1.observe(viewLifecycleOwner) { viewFeature1 ->
+            feature1 = viewFeature1
+        }
+
+        Log.d("feature1!", feature1.toString())
+
+        viewModel.feature2.observe(viewLifecycleOwner) { viewFeature2 ->
+            feature2 = viewFeature2
+        }
+
+        viewModel.feature3.observe(viewLifecycleOwner) { viewFeature3 ->
+            feature3 = viewFeature3
+        }
+
+        viewModel.feature4.observe(viewLifecycleOwner) { viewFeature4 ->
+            feature4 = viewFeature4
+        }
+
+        viewModel.feature5.observe(viewLifecycleOwner) { viewFeature5 ->
+            feature5 = viewFeature5
+        }
 
         val patchData1 = RequestPatchProfile(featureId1, "name", name)
         val patchData2 = RequestPatchProfile(featureId2, "phoneNumber", phoneNumber)
+        val patchBackData1 = RequestPatchProfile(featureId3, "school", feature1.toString())
+        val patchBackData2 = RequestPatchProfile(featureId4, "company", feature2.toString())
+        val patchBackData3 = RequestPatchProfile(featureId5, "mbti", feature3.toString())
+        val patchBackData4 = RequestPatchProfile(featureId6, "hobby", feature4.toString())
+        val patchBackData5 = RequestPatchProfile(featureId7, "tmi", feature5.toString())
 
         Log.d("patchData", "Name: $name, PhoneNumber: $phoneNumber")
+        Log.d("patchdata2",feature1.toString())
 
         lifecycleScope.launch {
             try {
@@ -168,16 +204,39 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
                 val response2: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
                     RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchData2)
                 }
+                val response3: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
+                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchBackData1)
+                }
+                val response4: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
+                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchBackData2)
+                }
+                val response5: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
+                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchBackData3)
+                }
+                val response6: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
+                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchBackData4)
+                }
+                val response7: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
+                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchBackData5)
+                }
 
-                if (response1.isSuccessful && response2.isSuccessful) {
+                if (response1.isSuccessful && response2.isSuccessful && response3.isSuccessful && response4.isSuccessful && response5.isSuccessful
+                    && response6.isSuccessful && response7.isSuccessful) {
                     val responseData1: PatchMyprofile? = response1.body()
                     val responseData2: PatchMyprofile? = response2.body()
+                    val responseData3: PatchMyprofile? = response3.body()
+                    val responseData4: PatchMyprofile? = response4.body()
+                    val responseData5: PatchMyprofile? = response5.body()
+                    val responseData6: PatchMyprofile? = response6.body()
+                    val responseData7: PatchMyprofile? = response7.body()
                     Log.d("patch 성공", "응답 데이터1: $responseData1, 응답 데이터2: $responseData2")
+                    Log.d("patch 성공1", response5.toString())
 
                     // 수정된 데이터를 받아옴
                     val updatedResponse: Response<GetAllProfile> = withContext(Dispatchers.IO) {
                         RetrofitClient.mainProfile.getDataAll(profileId1!!.toLong())
                     }
+                    Log.d("수정", updatedResponse.toString())
 
                     if (updatedResponse.isSuccessful) {
                         // 최신 데이터를 받아옴
