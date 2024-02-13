@@ -61,7 +61,7 @@ class EditProfileActivity : AppCompatActivity() {
         } else{
             profileId = profileId2
         }
-
+        Log.d("이것만",profileId.toString())
         lifecycleScope.launch {
             try {
                 val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
@@ -83,6 +83,16 @@ class EditProfileActivity : AppCompatActivity() {
                     val bundle = Bundle().apply {
                         putString("feature1", feature1)
                         putString("feature2", feature2)
+                        val profileId = intent.getStringExtra("profileId")
+                        val profileId2 = intent.getStringExtra("reProfileId")
+
+                        if (profileId != null) {
+                            putString("profilId1", profileId)
+                        } else{
+                            putString("profilId1",profileId2)
+                        }
+                        val dialogName = intent.getStringExtra("dialogName")
+                        putString("dialogName",dialogName)
                     }
                     viewModel.setFeatures(feature3.orEmpty(), feature4.orEmpty(),feature5.orEmpty(),feature6.orEmpty(),feature7.orEmpty())
 
@@ -97,32 +107,10 @@ class EditProfileActivity : AppCompatActivity() {
                     Log.e("GETALL 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
                 }
             } catch (e: Exception) {
-                Log.e("GETALL 요청 실패", "에러: ${e.message}")
+                Log.e("GETALL 요청 실패@@", "에러: ${e.message}")
             }
         }
 
-        val bundle = Bundle().apply {
-
-            val profileId = intent.getStringExtra("profileId")
-            val profileId2 = intent.getStringExtra("reProfileId")
-
-            if (profileId != null) {
-                putString("profilId1", profileId)
-            } else{
-                putString("profilId1",profileId2)
-            }
-            val dialogName = intent.getStringExtra("dialogName")
-            putString("dialogName",dialogName)
-        }
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.tab_layout_container, EditProfileFrontFragment().apply {
-                arguments = bundle
-            })
-            .commit()
-
-
-            //val profileId = intent.getStringExtra("reProfileId")
         setTabLayout()
     }
 

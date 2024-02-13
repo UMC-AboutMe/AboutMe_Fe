@@ -176,7 +176,7 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
                         Log.e("GETALL 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
                     }
                 } catch (e: Exception) {
-                    Log.e("GETALL 요청 실패", "에러: ${e.message}")
+                    Log.e("GETALL 요청 실패@", "에러: ${e.message}")
                 }
             }
         }
