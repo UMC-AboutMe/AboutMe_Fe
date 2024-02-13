@@ -14,21 +14,40 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyprofile.RetrofitClient
+import com.example.aboutme.RetrofitMyprofileData.FrontFeature
 import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
 import com.example.aboutme.RetrofitMyprofileData.PatchMyprofile
 import com.example.aboutme.RetrofitMyprofileData.RequestPatchProfile
 import com.example.aboutme.databinding.FragmentEditprofilefrontBinding
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 
-class EditProfileFrontFragment : Fragment() {
+class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedListener {
 
     lateinit var binding: FragmentEditprofilefrontBinding
-    private val viewModel: MyProfileViewModel by activityViewModels()
+    private val viewModel: MyProfileViewModel by viewModels(ownerProducer = { requireActivity() })
 
 
+
+    //private var job: Job? = null // Nullable Job 변수 선언
+
+
+    override fun onTabSelected(tabPosition: Int) {
+        // 탭이 선택되었을 때의 동작 구현
+        Log.d("탭 선택", tabPosition.toString())
+
+        val name = binding.profileNameEt.text.toString()
+        val phoneNumber = binding.profileNumberEt.text.toString()
+
+        // ViewModel에 값을 전달합니다.
+        viewModel.setNameAndPhoneNumber(name, phoneNumber)
+        Log.d("plz", name)
+        Log.d("plz2", phoneNumber)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,12 +57,16 @@ class EditProfileFrontFragment : Fragment() {
 
         binding = FragmentEditprofilefrontBinding.inflate(inflater, container, false)
 
+
         //요청 바디에 들어갈 데이터
         val profileId1 = arguments?.getString("profilId1")
         Log.d("profileId1",profileId1.toString())
         val dialogName = arguments?.getString("dialogName")
 
         binding.profileNameEt.setText(dialogName)
+
+        val editName = arguments?.getString("editname1")
+        Log.d("받은 editname",editName.toString())
 
         /*viewModel.updatedData.observe(viewLifecycleOwner, { updatedData ->
             Log.d("UpdatedData", "Updated data: $updatedData")
@@ -68,6 +91,15 @@ class EditProfileFrontFragment : Fragment() {
 
 
         val retrofitClient = RetrofitClient.mainProfile
+
+
+        viewModel.name.observe(viewLifecycleOwner) { name ->
+            binding.profileNameEt.text = Editable.Factory.getInstance().newEditable(name)
+        }
+
+        viewModel.phoneNumber.observe(viewLifecycleOwner) { phoneNumber ->
+            binding.profileNumberEt.text = Editable.Factory.getInstance().newEditable(phoneNumber)
+        }
 
         viewModel.updatedData.observe(viewLifecycleOwner, { updatedData ->
             Log.d("UpdatedData", "Updated data: $updatedData")
@@ -114,12 +146,13 @@ class EditProfileFrontFragment : Fragment() {
 
     }
 
-    private fun patchData(featureId1: Long, featureId2: Long) {
+    private fun patchData(featureId1: Long, featureId2: Long, featureId3: Long, featureId4: Long, featureId5: Long, featureId6: Long, featureId7: Long) {
         val profileId1 = arguments?.getString("profilId1")
         Log.d("profileId1", profileId1.toString())
 
         val name = binding.profileNameEt.text.toString()
         val phoneNumber = binding.profileNumberEt.text.toString()
+        val feature1 =
 
         val patchData1 = RequestPatchProfile(featureId1, "name", name)
         val patchData2 = RequestPatchProfile(featureId2, "phoneNumber", phoneNumber)
@@ -174,6 +207,13 @@ class EditProfileFrontFragment : Fragment() {
         }
     }
 
+/*    override fun onDestroy() {
+        super.onDestroy()
+        job?.cancel() // job이 null이 아닐 때만 취소
+        Log.d("CoroutineCancelled", "Coroutine job cancelled in onDestroy()")
+    }*/
+
+
     private fun applyUpdatedDataToUI(updatedData: GetAllProfile) {
         // 변경된 데이터를 UI의 각 요소에 적용
         //binding.profileNameEt.setText(updatedData.result.frontFeatures[0].value)
@@ -185,5 +225,7 @@ class EditProfileFrontFragment : Fragment() {
         // 예시: 변경된 데이터가 로그에 출력되도록 함
         Log.d("UpdatedData", "Updated data applied to UI: $updatedData")
     }
+
+
 
 }
