@@ -154,6 +154,7 @@ class ProfileStorageFragment : Fragment() {
     private fun getSearchProfiles(Name : String){
     //private fun getSearchProfiles(){
         val call = ProfStorageObj.getRetrofitService.getSearchProf(Name,6)
+        Log.d("Retrofit_Get_Success", "검색 실행 $Name")
 
         call.enqueue(object : Callback<ProfStorageResponse.ResponseSearchProf> {
             override fun onResponse(
