@@ -28,8 +28,8 @@ class SearchProfActivity : AppCompatActivity() {
             postProfStorage()
 
             //상대방 마이프로필 내 보관함에 추가하기
-            CustomDialog("내 프로필도 공유 하시겠습니까?")
-                .show(supportFragmentManager, "ProfDialog")
+            //CustomDialog("내 프로필도 공유 하시겠습니까?")
+            //    .show(supportFragmentManager, "ProfDialog")
         }
         //뒤로 가기
         binding.backBtn.setOnClickListener {
@@ -49,8 +49,8 @@ class SearchProfActivity : AppCompatActivity() {
     //상대방 마이프로필 내 보관함에 추가하기
     private fun postProfStorage(){
         Log.d("Retrofit_Add","보관함 추가 실행")
-        val requestStoreProf = SearchResponse.RequestStoreProf(listOf(123456, 987654))
-        val call = SearchObj.getRetrofitService.postProfStorage(1, requestStoreProf)
+        val requestStoreProf = SearchResponse.RequestStoreProf(listOf(87694))
+        val call = SearchObj.getRetrofitService.postProfStorage(6, requestStoreProf)
 
         call.enqueue(object : Callback<SearchResponse.ResponseStoreProf> {
             override fun onResponse(
@@ -74,6 +74,41 @@ class SearchProfActivity : AppCompatActivity() {
                 }
             }
             override fun onFailure(call:Call<SearchResponse.ResponseStoreProf>, t:Throwable) {
+                val errorMessage = "Call Failed:  ${t.message}"
+                Log.d("Retrofit_Add",errorMessage)
+            }
+        })
+    }
+
+    //마이프로필 상대방에게 공유
+    private fun postShareProf(){
+        Log.d("Retrofit_Add","프로필 공유 실행")
+        val requestShareProf = SearchResponse.RequestShareProf(6,listOf(109349))
+        val call = SearchObj.getRetrofitService.postShareProf(6, requestShareProf)
+
+        call.enqueue(object : Callback<SearchResponse.ResponseShareProf> {
+            override fun onResponse(
+                call: Call<SearchResponse.ResponseShareProf>,
+                response: Response<SearchResponse.ResponseShareProf>
+            ) {
+                Log.d("Retrofit_Add",response.toString())
+                if(response.isSuccessful){
+                    val response=response.body()
+                    Log.d("Retrofit_Add",response.toString())
+
+                    if(response != null) {
+                        if(response.isSuccess){
+                            //성공했을 때
+                        }
+                        else{
+                            //실패했을 때
+                            Log.d("Retrofit_Add",response.message)
+
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call:Call<SearchResponse.ResponseShareProf>, t:Throwable) {
                 val errorMessage = "Call Failed:  ${t.message}"
                 Log.d("Retrofit_Add",errorMessage)
             }

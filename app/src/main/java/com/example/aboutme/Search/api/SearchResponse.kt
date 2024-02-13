@@ -42,4 +42,48 @@ class SearchResponse {
     data class SpaceId (
         var spaceId : Long
             )
+
+    //내 마이프로필 상대방에게 공유
+    data class ResponseShareProf (
+        var isSuccess: Boolean,
+        val code: String,
+        val message: String
+            )
+    data class RequestShareProf (
+        var member_id : Int,
+        var profile_serial_numbers: List<Int>
+            )
+
+    //내 마이프로필 조회(목록)
+    data class ResponseGetProfiles(
+        var isSuccess: Boolean,
+        var code: String,
+        var message: String,
+        var result: Result
+    )
+
+    data class Result(
+        var myprofiles: List<Profile>,
+        var total_myprofile: Int
+    )
+
+    data class Profile(
+        var profile_id: Int,
+        var serial_number: Int,
+        var is_default: Boolean,
+        var profile_image: ProfileImage,
+        var front_features: List<FrontFeature>
+    )
+
+    data class ProfileImage(
+        var type: String,
+        var characterType: Int?,
+        var profile_image_url: String?
+    )
+
+    data class FrontFeature(
+        var key: String?,
+        var value: String,
+        var feature_id: Int
+    )
 }
