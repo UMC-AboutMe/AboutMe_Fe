@@ -25,14 +25,18 @@ class ProfileStorageFrontFragment : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        val profileId: Long = arguments?.getLong("profId") ?: -1
+        Log.d("ProfileStorageDetail", "Front Received profId: $profileId")
 
         binding = FragmentProfileStorageFrontBinding.inflate(inflater, container, false)
 
         binding.turnBtn.setOnClickListener {
             val ft = parentFragmentManager.beginTransaction()
-
-            ft.replace(R.id.profileStorage_frame, ProfileStorageBackFragment()).commit()
+            val fragment = ProfileStorageBackFragment()
+            val bundle = Bundle()
+            bundle.putLong("profId", profileId)
+            fragment.arguments = bundle
+            ft.replace(R.id.profileStorage_frame, fragment).commit()
 
         }
 
