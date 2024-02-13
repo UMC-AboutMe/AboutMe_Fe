@@ -76,14 +76,10 @@ class ProfileStorageFragment : Fragment() {
             binding.profileStorageRv.visibility = View.VISIBLE
         }
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initRecycler()
-        //val intent = Intent(requireContext(), ProfileStorageDetailFragment::class.java)
-
-        //프로필 보관함 조회 api
         getProfiles()
 
         binding.searchBtn.setOnClickListener {
@@ -106,15 +102,13 @@ class ProfileStorageFragment : Fragment() {
             }
         })
     }
-
     private fun initRecycler() {
         rvAdapter = ProfileRVAdapter(itemList) // rvAdapter 초기화
         binding.profileStorageRv.adapter = rvAdapter
         binding.profileStorageRv.layoutManager = GridLayoutManager(requireContext(), 2)
     }
-
     //프로필 보관함 조회 api
-    private fun getProfiles(){
+    public fun getProfiles(){
         val call = ProfStorageObj.getRetrofitService.getProfStorage(6)
 
         call.enqueue(object : Callback<ProfStorageResponse.ResponeProfStorage> {
@@ -146,7 +140,6 @@ class ProfileStorageFragment : Fragment() {
                     Log.d("Retrofit_Get_Failed", response.toString())
                 }
             }
-
             override fun onFailure(
                 call: Call<ProfStorageResponse.ResponeProfStorage>,
                 t: Throwable
@@ -157,7 +150,6 @@ class ProfileStorageFragment : Fragment() {
         }
         )
     }
-
     //프로필 보관함 검색 api
     private fun getSearchProfiles(Name : String){
     //private fun getSearchProfiles(){
@@ -207,7 +199,6 @@ class ProfileStorageFragment : Fragment() {
                     Log.d("Retrofit_Get_Failed", response.toString())
                 }
             }
-
             override fun onFailure(
                 call: Call<ProfStorageResponse.ResponseSearchProf>,
                 t: Throwable

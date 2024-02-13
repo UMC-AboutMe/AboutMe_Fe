@@ -34,41 +34,38 @@ class ProfileStorageDetailFragment : Fragment() {
         setFrag(0,profileId)
 
         binding.trashButton.setOnClickListener {
-            Log.d("retro", "$profileId")
+            //Log.d("retro", "$profileId")
             deleteProfiles(profileId!!.toLong(), 6)
+            parentFragmentManager.popBackStack()
         }
         return binding.root
     }
-
     private fun setFrag(fragNum: Int, profId: Long) {
         val ft = childFragmentManager.beginTransaction()
         when (fragNum) {
             0 -> {
-                Log.d("MyProfileFragment", "FrontProfileFragment로 교체 중")
-                //새로 추가
+                //Log.d("MyProfileFragment", "FrontProfileFragment로 교체 중")
                 val fragment = ProfileStorageFrontFragment()
                 val bundle = Bundle()
                 bundle.putLong("profId", profId)
                 getProfile(profId)
                 fragment.arguments = bundle
                 ft.replace(R.id.profileStorage_frame, fragment).commit()
-                Log.d("ProfileStorageDetail2", "Received profId: $profId")
+                //Log.d("ProfileStorageDetail2", "Received profId: $profId")
             }
 
             1 -> {
-                Log.d("MyProfileFragment", "BackProfileFragment로 교체 중")
-                //새로 추가
+                //Log.d("MyProfileFragment", "BackProfileFragment로 교체 중")
                 val fragment = ProfileStorageBackFragment()
                 val bundle = Bundle()
                 bundle.putLong("profId", profId)
                 getProfile(profId)
                 fragment.arguments = bundle
                 ft.replace(R.id.profileStorage_frame, fragment).commit()
-                Log.d("ProfileStorageDetail3", "Received profId: $profId")
+                //Log.d("ProfileStorageDetail3", "Received profId: $profId")
             }
         }
     }
-
     //프로필 보관함 삭제 api
     private fun deleteProfiles(profId: Long, memberId: Int) {
         Log.d("Retrofit", "delete 함수 호출됨")
@@ -92,7 +89,6 @@ class ProfileStorageDetailFragment : Fragment() {
                     }
                 }
             }
-
             override fun onFailure(
                 call: Call<ProfStorageResponse.ResponseDeleteProf>,
                 t: Throwable
@@ -103,7 +99,6 @@ class ProfileStorageDetailFragment : Fragment() {
         }
         )
     }
-
     //마이프로필 조회 - 단건
     private fun getProfile(profId : Long ) {
         val call = ProfStorageObj.getRetrofitService.getProfList(profId)
