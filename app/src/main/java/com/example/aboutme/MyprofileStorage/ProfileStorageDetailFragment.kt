@@ -10,6 +10,7 @@ import com.example.aboutme.MyprofileStorage.api.ProfStorageObj
 import com.example.aboutme.MyprofileStorage.api.ProfStorageResponse
 import com.example.aboutme.R
 import com.example.aboutme.databinding.FragmentProfileStorageDetailBinding
+import com.example.aboutme.databinding.FragmentProfileStorageFrontBinding
 import com.kakao.sdk.user.model.Profile
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,46 +19,52 @@ import retrofit2.Response
 class ProfileStorageDetailFragment : Fragment() {
     lateinit var binding: FragmentProfileStorageDetailBinding
     private var items: MutableList<ProfileData>? = null
-
+    lateinit var bindingFront : FragmentProfileStorageFrontBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        //새로 추가
+        val profileId: Long = arguments?.getLong("profId") ?: -1
+
         binding = FragmentProfileStorageDetailBinding.inflate(inflater)
-        setFrag(0)
+        bindingFront = FragmentProfileStorageFrontBinding.inflate(inflater)
+
+        setFrag(0,profileId)
 
         binding.trashButton.setOnClickListener {
-            val profileId = arguments?.getLong("profId")
             Log.d("retro", "$profileId")
             deleteProfiles(profileId!!.toLong(), 6)
         }
-
-        val bundle = arguments
-        if (bundle != null) {
-            val profId = bundle.getLong("profId", -1)
-            Log.d("ProfileStorageDetail", "Received profId: $profId")
-
-            //프로필 상세 정보 조회
-            getProfile(profId)
-        } else {
-            Log.e("ProfileStorageDetail", "Bundle is null")
-        }
-
         return binding.root
     }
 
-    private fun setFrag(fragNum: Int) {
+    private fun setFrag(fragNum: Int, profId: Long) {
         val ft = childFragmentManager.beginTransaction()
         when (fragNum) {
             0 -> {
                 Log.d("MyProfileFragment", "FrontProfileFragment로 교체 중")
-                ft.replace(R.id.profileStorage_frame, ProfileStorageFrontFragment()).commit()
+                //새로 추가
+                val fragment = ProfileStorageFrontFragment()
+                val bundle = Bundle()
+                bundle.putLong("profId", profId)
+                getProfile(profId)
+                fragment.arguments = bundle
+                ft.replace(R.id.profileStorage_frame, fragment).commit()
+                Log.d("ProfileStorageDetail2", "Received profId: $profId")
             }
 
             1 -> {
                 Log.d("MyProfileFragment", "BackProfileFragment로 교체 중")
-                ft.replace(R.id.profileStorage_frame, ProfileStorageBackFragment()).commit()
+                //새로 추가
+                val fragment = ProfileStorageBackFragment()
+                val bundle = Bundle()
+                bundle.putLong("profId", profId)
+                getProfile(profId)
+                fragment.arguments = bundle
+                ft.replace(R.id.profileStorage_frame, fragment).commit()
+                Log.d("ProfileStorageDetail3", "Received profId: $profId")
             }
         }
     }
@@ -112,11 +119,19 @@ class ProfileStorageDetailFragment : Fragment() {
                         if (response.isSuccess) {
                             // 성공했을 때
                             Log.d("Retrofit_Get_Success", response.toString())
+                            //새로 추가
+                            response.result.front_features.forEach { feature ->
+                                if (feature.key == "name") {
+                                    //작업하던 부분
+                                    bindingFront.profileNameEt.text = feature.value
+                                    Log.d("Retrofit_Get_Success", feature.value.toString())
+                                    return@forEach // 해당 조건을 만족하는 요소를 찾았으므로 반복문을 빠져나갑니다.
+                                }
+                            }
                         } else {
                             // 실패했을 때
                             Log.d("Retrofit_Get_Failed", response.toString())
                         }
-
                     }
                 } else {
                     Log.d("Retrofit_Get_Failed", response.toString())
@@ -129,7 +144,6 @@ class ProfileStorageDetailFragment : Fragment() {
                 val errorMessage = "Call Failed:  ${t.message}"
                 Log.d("Retrofit_Get_Error", errorMessage)
             }
-        }
-        )
+        })
     }
 }
