@@ -14,7 +14,7 @@ class SearchResponse {
         var result : NumberList
     )
     data class NumberList(
-        var profileSerialNumberList : String
+        var member_id : Int
     )
 
 
