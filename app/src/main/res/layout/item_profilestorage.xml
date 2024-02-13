@@ -32,16 +32,16 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="@+id/profile1_iv" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatar_iv"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="45dp"
         android:scaleType="fitCenter"
+        android:src="@drawable/profstore_bg"
         app:layout_constraintEnd_toEndOf="@+id/profile1_iv"
         app:layout_constraintStart_toStartOf="@+id/profile1_iv"
-        app:layout_constraintTop_toTopOf="@+id/profile1_iv"
-        app:srcCompat="@drawable/profstore_bg" />
+        app:layout_constraintTop_toTopOf="@+id/profile1_iv" />
 
     <ImageView
         android:id="@+id/prof_fav"
