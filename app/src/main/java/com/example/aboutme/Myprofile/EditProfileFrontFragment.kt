@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils.replace
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -52,7 +53,18 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
         viewModel.setNameAndPhoneNumber(name, phoneNumber)
         Log.d("plz", name)
         Log.d("plz2", phoneNumber)
+
+        val featureBack1 = binding.feature1SchoolEt.text.toString()
+        val featureBack2 = binding.feature2CompanyEt.text.toString()
+        val featureBack3 = binding.feature3MbtiEt.text.toString()
+        val feature4 = binding.feature4HobbyEt.text.toString()
+        val feature5 = binding.profileTmiEt.text.toString()
+
+        // ViewModel에 값을 전달합니다.
+        viewModel.setFeatures(feature1, feature2,feature3,feature4,feature5)
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,13 +74,24 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
 
         binding = FragmentEditprofilefrontBinding.inflate(inflater, container, false)
 
-
-        //요청 바디에 들어갈 데이터
         val profileId1 = arguments?.getString("profilId1")
-        Log.d("profileId1",profileId1.toString())
-        val dialogName = arguments?.getString("dialogName")
 
-        binding.profileNameEt.setText(dialogName)
+        //binding.profileNameEt.addTextChangedListener(MyTextWatcher(profileId1))
+
+
+        val frontFeature1 = arguments?.getString("feature1")
+        Log.d("frontfeature~~",frontFeature1.toString())
+        val frontFeature2 = arguments?.getString("feature2")
+
+        val dialogName = arguments?.getString("dialogName")
+        Log.d("frontfeature~",dialogName.toString())
+
+        if (frontFeature1 != null){
+            binding.profileNameEt.setText(frontFeature1)
+            binding.profileNumberEt.setText(frontFeature2)
+        } else {
+            binding.profileNameEt.setText(dialogName)
+        }
 
         val editName = arguments?.getString("editname1")
         Log.d("받은 editname",editName.toString())
@@ -84,8 +107,23 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
         })*/
 
 
-
         return binding.root
+    }
+
+    inner class MyTextWatcher(private val profileId1: String?) : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            // 텍스트가 변경될 때마다 호출
+            val newText = s.toString()
+            Log.d("EditText 변경", "새로운 텍스트: $newText")
+
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            // 텍스트 입력이 끝난 후 호출
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -279,7 +317,5 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
         // 예시: 변경된 데이터가 로그에 출력되도록 함
         Log.d("UpdatedData", "Updated data applied to UI: $updatedData")
     }
-
-
 
 }

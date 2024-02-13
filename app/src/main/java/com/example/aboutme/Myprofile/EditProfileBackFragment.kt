@@ -54,10 +54,16 @@ class EditProfileBackFragment : Fragment(), EditProfileActivity.TabSelectedListe
 
             binding = FragmentEditprofilebackBinding.inflate(inflater, container, false)
 
+            viewModel.updatedData.observe(this, { updatedData ->
+                updatedData?.let {
+                    Log.d("이전",updatedData.toString())
 
+                }
+            })
 
             val profileId1 = arguments?.getString("profilId1")
             Log.d("profileId_to_back", profileId1.toString())
+
 
 
             return binding.root
@@ -273,6 +279,9 @@ class EditProfileBackFragment : Fragment(), EditProfileActivity.TabSelectedListe
             Log.d("edit", updatedData.result.backFeatures[0].value.toString())
             binding.feature2CompanyEt.setText(updatedData.result.backFeatures[1].value)
             Log.d("edit", updatedData.result.frontFeatures[1].value.toString())
+            binding.feature3MbtiEt.setText(updatedData.result.backFeatures[2].value)
+            binding.feature4HobbyEt.setText(updatedData.result.backFeatures[3].value)
+            binding.profileTmiEt.setText(updatedData.result.backFeatures[4].value)
 
             // 예시: 변경된 데이터가 로그에 출력되도록 함
             Log.d("UpdatedData", "Updated data applied to UI: $updatedData")

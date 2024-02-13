@@ -27,6 +27,14 @@ import retrofit2.Response
 
 class EditProfileActivity : AppCompatActivity() {
 
+    var feature1 : String? = null
+    var feature2 : String? = null
+    var feature3 : String? = null
+    var feature4 : String? = null
+    var feature5 : String? = null
+    var feature6 : String? = null
+    var feature7 : String? = null
+
     interface TabSelectedListener {
         fun onTabSelected(tabPosition: Int)
     }
@@ -43,60 +51,78 @@ class EditProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        //viewModel = ViewModelProvider(this).get(MyProfileViewModel::class.java)
+        val profileId: String?
 
+        val profileId1 = intent.getStringExtra("profileId")
+        val profileId2 = intent.getStringExtra("reProfileId")
+        Log.d("reProfileId",profileId2.toString())
+        if (profileId1 != null) {
+            profileId = profileId1
+        } else{
+            profileId = profileId2
+        }
 
+        lifecycleScope.launch {
+            try {
+                val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
+                    RetrofitClient.mainProfile.getDataAll(profileId!!.toLong())
+                }
 
-        val profileId = intent.getStringExtra("profileId")
-        Log.d("intent데이터",profileId.toString())
+                if (response.isSuccessful) {
+                    val responseData: GetAllProfile? = response.body()
+                    Log.d("GETALL 성공!!!!", "응답 데이터: $responseData")
+                    feature1 = responseData!!.result.frontFeatures[0].value
+                    feature2 = responseData!!.result.frontFeatures[1].value
+                    feature3 = responseData!!.result.backFeatures[0].value
+                    feature4 = responseData!!.result.backFeatures[1].value
+                    feature5 = responseData!!.result.backFeatures[2].value
+                    feature6 = responseData!!.result.backFeatures[3].value
+                    feature7 = responseData!!.result.backFeatures[4].value
+                    Log.d("frontfeature~~~",feature1.toString())
 
-        viewModel.updatedData.observe(this, { updatedData ->
-            updatedData?.let {
-                // 데이터 업데이트 시 필요한 작업 수행
-                Log.d("gd",updatedData.toString())
-                editName = updatedData.result.frontFeatures[0].value
-                editNumber = updatedData.result.frontFeatures[1].value
+                    val bundle = Bundle().apply {
+                        putString("feature1", feature1)
+                        putString("feature2", feature2)
+                        putString("feature3", feature3)
+                        putString("feature4", feature4)
+                        putString("feature5", feature5)
+                        putString("feature6", feature6)
+                        putString("feature7", feature7)
 
-                Log.d("editname~", editName.toString())
+                    }
 
-                var fragment1 = EditProfileFrontFragment()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.tab_layout_container, EditProfileFrontFragment().apply {
+                            arguments = bundle
+                        })
+                        .commit()
 
-                var bundle = Bundle()
-
-
-                bundle.putString("editname1",editName)
-
-//fragment1의 arguments에 데이터를 담은 bundle을 넘겨줌
-                fragment1.arguments = bundle
-
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.tab_layout_container, fragment1)
-                    .commit()
-
-                Log.d("1에 넘겨주는 이름",editName.toString())
-
+                } else {
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e("GETALL 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
+                }
+            } catch (e: Exception) {
+                Log.e("GETALL 요청 실패", "에러: ${e.message}")
             }
-        })
+        }
 
+        val bundle = Bundle().apply {
+
+            val profileId = intent.getStringExtra("profileId")
+            val profileId2 = intent.getStringExtra("reProfileId")
+
+            if (profileId != null) {
+                putString("profilId1", profileId)
+            } else{
+                putString("profilId1",profileId2)
+            }
+            val dialogName = intent.getStringExtra("dialogName")
+            putString("dialogName",dialogName)
+        }
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.tab_layout_container, EditProfileFrontFragment().apply {
-                arguments = Bundle().apply {
-
-                    // profileId를 가져와 Bundle에 추가
-                    val profileId = intent.getStringExtra("profileId")
-                    val profileId2 = intent.getStringExtra("reProfileId")
-
-                    if (profileId != null) {
-                        putString("profilId1", profileId)
-                    } else{
-                        putString("profilId1",profileId2)
-                    }
-                    val dialogName = intent.getStringExtra("dialogName")
-                    putString("dialogName",dialogName)
-
-
-                }
+                arguments = bundle
             })
             .commit()
 
@@ -106,20 +132,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
 
-    /*override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        // EditText의 텍스트를 저장합니다.
-        outState.putString("editName", editName)
-        Log.d("제발", editName.toString())
-        outState.putString("editNumber", editNumber)
-    }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        // 저장된 EditText의 텍스트를 복원합니다.
-        editName = savedInstanceState.getString("editName")
-        editNumber = savedInstanceState.getString("editNumber")
-    }*/
 
 
     private fun setTabLayout() {
