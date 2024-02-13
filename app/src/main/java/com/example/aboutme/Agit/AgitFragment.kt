@@ -1,6 +1,8 @@
 package com.example.aboutme.Agit
 
 import android.annotation.SuppressLint
+import android.app.ActivityOptions
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +17,7 @@ import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyspaceAgit.ResultModel
 import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClient
 import com.example.aboutme.RetrofitMyspaceAgit.YourResponseType
+import com.example.aboutme.bottomNavigationView
 import com.example.aboutme.databinding.FragmentAgitBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,6 +39,13 @@ class AgitFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAgitBinding.inflate(inflater, container, false)
+
+        binding.homeLogo.setOnClickListener {
+            // 홈화면 이동시 애니메이션 효과
+            val intent = Intent(activity, bottomNavigationView::class.java)
+            val options = ActivityOptions.makeCustomAnimation(requireContext(), R.anim.fade_in, R.anim.fade_out)
+            requireActivity().startActivity(intent, options.toBundle())
+        }
 
         // 스와이프 리프레쉬 레이아웃 초기화
         swipeRefreshLayout = binding.swipeRefreshLayout

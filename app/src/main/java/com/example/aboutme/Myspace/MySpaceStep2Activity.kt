@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.aboutme.R
 import com.example.aboutme.databinding.ActivityMyspacestep2Binding
 
 class MySpaceStep2Activity : AppCompatActivity() {
@@ -80,6 +81,9 @@ class MySpaceStep2Activity : AppCompatActivity() {
                 // Step 3 액티비티로 이동
                 val intent = Intent(this, MySpaceStep3Activity::class.java)
                 startActivity(intent)
+
+                // 애니메이션 설정
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
 
             binding.back.setOnClickListener {

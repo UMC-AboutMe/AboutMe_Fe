@@ -1,6 +1,8 @@
 package com.example.aboutme.Myspace
 
+import android.app.ActivityOptions
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,6 +20,7 @@ import com.example.aboutme.RetrofitMyspaceAgit.MyspaceCheckResult
 import com.example.aboutme.RetrofitMyspaceAgit.ResultModelmsc
 import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClient2
 import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClientMyspace
+import com.example.aboutme.bottomNavigationView
 import com.example.aboutme.databinding.FragmentMyspacemainBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,11 +38,10 @@ class MySpaceMainFragment : Fragment() {
         binding = FragmentMyspacemainBinding.inflate(inflater, container, false)
 
         binding.logo.setOnClickListener {
-            // 데이터는 ViewModel에 저장되어 있으므로 Bundle 사용할 필요 없음
-            requireActivity().supportFragmentManager.beginTransaction()
-                .detach(this)
-                .commit()
-            return@setOnClickListener
+            // 홈화면 이동시 애니메이션 효과
+            val intent = Intent(activity, bottomNavigationView::class.java)
+            val options = ActivityOptions.makeCustomAnimation(requireContext(), R.anim.fade_in, R.anim.fade_out)
+            requireActivity().startActivity(intent, options.toBundle())
         }
 
         return binding.root

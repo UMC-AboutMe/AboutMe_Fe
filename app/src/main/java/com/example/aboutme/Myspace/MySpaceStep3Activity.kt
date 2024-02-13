@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.aboutme.R
 import com.example.aboutme.bottomNavigationView
 import com.example.aboutme.databinding.ActivityMyspacestep3Binding
 
@@ -76,6 +77,9 @@ class MySpaceStep3Activity : AppCompatActivity() {
                 Log.d("isCreated", "${sharedViewModel.isCreated}")
 
                 startActivity(Intent(this, bottomNavigationView::class.java))
+
+                // 애니메이션 설정
+                overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out)
             }
 
             binding.back.setOnClickListener {

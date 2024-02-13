@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.aboutme.R
 import com.example.aboutme.bottomNavigationView
 import com.example.aboutme.databinding.ActivityMyspacestep1Binding
 
@@ -21,6 +22,7 @@ class MySpaceStep1Activity : AppCompatActivity() {
 
         Log.d("isCreated", "${sharedViewModel.isCreated}")
 
+        // 다음 버튼 클릭시
         binding.nextIbStep1.setOnClickListener {
             // EditText에서 텍스트 가져오기
             val inputText = binding.nickname.text.toString()
@@ -30,6 +32,18 @@ class MySpaceStep1Activity : AppCompatActivity() {
 
             val intent = Intent(this, MySpaceStep2Activity::class.java)
             startActivity(intent)
+
+            // 애니메이션 설정
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+
+        // 홈로고 클릭시
+        binding.memberLogo.setOnClickListener {
+            val intent = Intent(this, bottomNavigationView::class.java)
+            startActivity(intent)
+
+            // 애니메이션 설정
+            overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out)
         }
     }
 
