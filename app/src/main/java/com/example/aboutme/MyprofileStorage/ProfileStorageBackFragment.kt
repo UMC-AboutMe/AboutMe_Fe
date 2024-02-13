@@ -51,16 +51,12 @@ class ProfileStorageBackFragment : Fragment() {
                             // 성공했을 때
                             Log.d("Retrofit_Get_Success", response.toString())
                             //새로 추가
-                            response.result.front_features.forEach { feature ->
-                                if (feature.key == "name") {
-                                    //작업하던 부분
-                                    //binding.p.text = feature.value
-                                    Log.d("Retrofit_Get_Success", feature.value.toString())
-                                    return@forEach // 해당 조건을 만족하는 요소를 찾았으므로 반복문을 빠져나갑니다.
-                                } else if (feature.key == null) {
+                            binding.backProfileEt1.text = response.result.back_features[0].key
+                            binding.backProfileEt2.text = response.result.back_features[1].key
+                            binding.backProfileEt3.text = response.result.back_features[2].key
+                            binding.backProfileEt4.text = response.result.back_features[3].key
+                            binding.backProfileEt5.text = response.result.back_features[4].key
 
-                                }
-                            }
                         } else {
                             // 실패했을 때
                             Log.d("Retrofit_Get_Failed", response.toString())
