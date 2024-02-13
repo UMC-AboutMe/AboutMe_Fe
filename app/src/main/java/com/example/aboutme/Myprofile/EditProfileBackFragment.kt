@@ -88,7 +88,7 @@ class EditProfileBackFragment : Fragment() {
             Log.d("UpdatedData", "Updated data: $updatedData")
             if (updatedData != null) {
                 applyUpdatedDataToUI(updatedData)
-                Log.d("싱행",updatedData.toString())
+                Log.d("싱행행!!",updatedData.toString())
             } else {
                 Log.e("applyUpdatedDataToUI", "Updated data is null")
             }
@@ -147,6 +147,8 @@ class EditProfileBackFragment : Fragment() {
                     // 최신 데이터를 받아옴
                     val updatedData: GetAllProfile? = updatedResponse.body()
                     Log.d("GETALL 성공", "업데이트된 데이터: $updatedData")
+
+                    viewModel.updateData(updatedData)
                     // 업데이트된 데이터를 처리하는 로직 작성
                 } else {
                     val errorBody = updatedResponse.errorBody()?.string() ?: "No error body"

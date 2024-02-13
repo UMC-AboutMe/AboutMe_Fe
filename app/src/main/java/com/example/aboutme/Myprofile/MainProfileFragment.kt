@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
 import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyprofileData.FrontFeature
 import com.example.aboutme.RetrofitMyprofileData.MainProfileData
@@ -30,7 +33,7 @@ class MainProfileFragment : Fragment() {
 
         binding = FragmentMainprofileBinding.inflate(inflater, container, false)
 
-
+        //binding.mainProfileVp.pageMargin = resources.getDimensionPixelOffset(R.dimen.viewpager_page_margin)
 
         return binding.root
     }
@@ -42,6 +45,19 @@ class MainProfileFragment : Fragment() {
 
 
         initViewPager()
+
+        binding.mainProfileVp.offscreenPageLimit=3
+
+        /*var transform = CompositePageTransformer()
+        transform.addTransformer(MarginPageTransformer(8))
+
+        transform.addTransformer(ViewPager2.PageTransformer{ view: View, fl: Float ->
+            var v = 1-Math.abs(fl)
+            view.scaleY = 0.8f + v * 0.2f
+        })
+
+        binding.mainProfileVp.setPageTransformer(transform)*/
+
     }
 
     private fun initViewPager() {
@@ -50,6 +66,8 @@ class MainProfileFragment : Fragment() {
 
         binding.mainProfileVp.adapter = vpadapter
 
+
+        //binding.mainProfileVp.setPageTransformer(MarginPageTransformer(resources.getDimensionPixelOffset(R.dimen.viewpager_page_margin)))
 
 
         RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
@@ -106,7 +124,7 @@ class MainProfileFragment : Fragment() {
                 }
                 binding.mainProfileVp.postDelayed({
                     binding.mainProfileVp.setCurrentItem(0, false)
-                }, 100)
+                }, 50)
             }
         })
 
