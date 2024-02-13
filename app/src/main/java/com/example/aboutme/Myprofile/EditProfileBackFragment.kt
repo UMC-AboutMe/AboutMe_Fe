@@ -27,7 +27,8 @@ class EditProfileBackFragment : Fragment(), EditProfileActivity.TabSelectedListe
     lateinit var binding: FragmentEditprofilebackBinding
     private val viewModel: MyProfileViewModel by viewModels(ownerProducer = { requireActivity() })
 
-
+    var frontFeature1 : String? = null
+    var frontFeature2 : String? = null
 
     override fun onTabSelected(tabPosition: Int) {
         // 탭이 선택되었을 때의 동작 구현
@@ -112,13 +113,17 @@ class EditProfileBackFragment : Fragment(), EditProfileActivity.TabSelectedListe
                             val frontFeature3 = responseData!!.result.backFeatures[2].featureId
                             val frontFeature4 = responseData!!.result.backFeatures[3].featureId
                             val frontFeature5 = responseData!!.result.backFeatures[4].featureId
+                            val frontFeature6 = responseData!!.result.frontFeatures[0].featureId
+                            val frontFeature7 = responseData!!.result.frontFeatures[1].featureId
 
                             patchData(
                                 frontFeature1,
                                 frontFeature2,
                                 frontFeature3,
                                 frontFeature4,
-                                frontFeature5
+                                frontFeature5,
+                                frontFeature6,
+                                frontFeature7
                             )
                             val intent = Intent(activity, PreviewProfileActivity::class.java)
                             intent.putExtra("profileId_to_preview", profileId1)
@@ -154,7 +159,9 @@ class EditProfileBackFragment : Fragment(), EditProfileActivity.TabSelectedListe
             featureId2: Long,
             featureId3: Long,
             featureId4: Long,
-            featureId5: Long
+            featureId5: Long,
+            featureId6: Long,
+            featureId7: Long
         ) {
             val profileId1 = arguments?.getString("profilId1")
             Log.d("profileId1", profileId1.toString())
@@ -165,11 +172,23 @@ class EditProfileBackFragment : Fragment(), EditProfileActivity.TabSelectedListe
             val hobbyEt = binding.feature4HobbyEt.text.toString()
             val tmiEt = binding.profileTmiEt.text.toString()
 
+            viewModel.name.observe(viewLifecycleOwner) { viewFeature1 ->
+                frontFeature1 = viewFeature1
+            }
+
+            Log.d("feature1!!", frontFeature1.toString())
+
+            viewModel.phoneNumber.observe(viewLifecycleOwner) { viewFeature2 ->
+                frontFeature2 = viewFeature2
+            }
+
             val patchData1 = RequestPatchProfile(featureId1, "school", schoolEt)
             val patchData2 = RequestPatchProfile(featureId2, "company", companyEt)
             val patchData3 = RequestPatchProfile(featureId3, "mbti", mbtiEt)
             val patchData4 = RequestPatchProfile(featureId4, "hobby", hobbyEt)
             val patchData5 = RequestPatchProfile(featureId5, "tmi", tmiEt)
+            val patchFrontData6 = RequestPatchProfile(featureId6, "name", frontFeature1.toString())
+            val patchFrontData7 = RequestPatchProfile(featureId7, "phoneNumber", frontFeature2.toString())
 
             try {
                 Log.d("patchData", "patchData1 호출 전")
@@ -188,17 +207,27 @@ class EditProfileBackFragment : Fragment(), EditProfileActivity.TabSelectedListe
                 val response5: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
                     RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchData5)
                 }
+                val response6: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
+                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchFrontData6)
+                }
+                val response7: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
+                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchFrontData7)
+                }
 
-                if (response1.isSuccessful && response2.isSuccessful && response3.isSuccessful && response4.isSuccessful && response5.isSuccessful) {
+                if (response1.isSuccessful && response2.isSuccessful && response3.isSuccessful && response4.isSuccessful && response5.isSuccessful
+                    && response6.isSuccessful && response7.isSuccessful) {
                     val responseData1: PatchMyprofile? = response1.body()
                     val responseData2: PatchMyprofile? = response2.body()
                     val responseData3: PatchMyprofile? = response3.body()
                     val responseData4: PatchMyprofile? = response4.body()
                     val responseData5: PatchMyprofile? = response5.body()
+                    val responseData6: PatchMyprofile? = response6.body()
+                    val responseData7: PatchMyprofile? = response7.body()
                     Log.d(
                         "patch 성공",
                         "응답 데이터1: $responseData1, 응답 데이터2: $responseData2, $responseData3, $responseData4, $responseData5"
                     )
+                    Log.d("patchback!",response4.toString())
                     // responseData를 처리하는 로직 작성
 
                     // PATCH 요청이 성공한 후에 GET 요청을 보내어 최신 데이터를 받아옴

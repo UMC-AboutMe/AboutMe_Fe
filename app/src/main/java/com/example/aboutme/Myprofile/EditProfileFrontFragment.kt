@@ -266,11 +266,6 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
         }
     }
 
-/*    override fun onDestroy() {
-        super.onDestroy()
-        job?.cancel() // job이 null이 아닐 때만 취소
-        Log.d("CoroutineCancelled", "Coroutine job cancelled in onDestroy()")
-    }*/
 
 
     private fun applyUpdatedDataToUI(updatedData: GetAllProfile) {
