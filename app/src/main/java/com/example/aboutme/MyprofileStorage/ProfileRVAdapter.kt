@@ -63,7 +63,7 @@ class ProfileRVAdapter(val items: MutableList<ProfileData>) :
                 // 리소스 아이디인 경우 setImageResource() 메서드를 사용하여 이미지 설정
                 profileImage.setImageResource(profileData.profile_img.toInt())
             }
-
+            profileName.text = profileData.profile_name
             // isFav 값에 따라서 UI 변경
             if (profileData.isFav) {
                 profBasic.visibility = View.GONE
