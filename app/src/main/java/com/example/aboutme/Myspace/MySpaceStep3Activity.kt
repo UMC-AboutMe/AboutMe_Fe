@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.aboutme.R
 import com.example.aboutme.bottomNavigationView
 import com.example.aboutme.databinding.ActivityMyspacestep3Binding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MySpaceStep3Activity : AppCompatActivity() {
 
@@ -125,9 +131,10 @@ class MySpaceStep3Activity : AppCompatActivity() {
                 // isCreated 값 변경
                 sharedViewModel.setSelectedIsCreated(true)
 
-                Log.d("isCreated", "${sharedViewModel.isCreated}")
-
-                startActivity(Intent(this, bottomNavigationView::class.java))
+                // step 진행이 모두 완료되었음을 바텀네비게이션뷰에 전달
+                val intent = Intent(this, bottomNavigationView::class.java)
+                intent.putExtra("stepCompleted", "stepCompleted")
+                startActivity(intent)
 
                 // 애니메이션 설정
                 overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out)
