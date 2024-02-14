@@ -115,9 +115,32 @@ class FrontProfilePreviewFragment : Fragment(){
                     .into(binding.profileIv)
             }
         } else if(updatedData.result.profileImage.type == "DEFAULT"){
-            Glide.with(this)
-                .load(R.drawable.)
-                .into(binding.profileIv)
+            Glide.with(requireContext()).load(R.drawable.profiledefault).into(binding.profileIv)
+        } else if (updatedData.result.profileImage.type == "CHARACTER"){
+            if (updatedData.result.profileImage.characterType == "2") {
+                Glide.with(requireContext()).load(R.drawable.prof_avater2).into(binding.profileIv)
+            }
+            if (updatedData.result.profileImage.characterType == "3") {
+                Glide.with(requireContext()).load(R.drawable.prof_avater3).into(binding.profileIv)
+            }
+            if (updatedData.result.profileImage.characterType == "4") {
+                Glide.with(requireContext()).load(R.drawable.prof_avater4).into(binding.profileIv)
+            }
+            if (updatedData.result.profileImage.characterType == "5") {
+                Glide.with(requireContext()).load(R.drawable.prof_avater5).into(binding.profileIv)
+            }
+            if (updatedData.result.profileImage.characterType == "6") {
+                Glide.with(requireContext()).load(R.drawable.prof_avater6).into(binding.profileIv)
+            }
+            if (updatedData.result.profileImage.characterType == "7") {
+                Glide.with(requireContext()).load(R.drawable.prof_avater7).into(binding.profileIv)
+            }
+            if (updatedData.result.profileImage.characterType == "8") {
+                Glide.with(requireContext()).load(R.drawable.prof_avater8).into(binding.profileIv)
+            }
+            if (updatedData.result.profileImage.characterType == "9") {
+                Glide.with(requireContext()).load(R.drawable.prof_avater9).into(binding.profileIv)
+            }
         }
 
         // 예시: 변경된 데이터가 로그에 출력되도록 함
