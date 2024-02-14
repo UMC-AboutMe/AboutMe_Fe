@@ -7,6 +7,7 @@ import com.example.aboutme.RetrofitMyprofileData.PatchDefaultProfile
 import com.example.aboutme.RetrofitMyprofileData.PatchMyprofile
 import com.example.aboutme.RetrofitMyprofileData.PostProfile
 import com.example.aboutme.RetrofitMyprofileData.RequestPatchProfile
+import com.example.aboutme.RetrofitMyprofileData.RequestProfileImage
 import com.example.aboutme.RetrofitMyprofileData.ResponsePostProfile
 import com.google.android.gms.fido.u2f.api.common.ResponseData
 import retrofit2.Call
@@ -41,4 +42,7 @@ interface MainProfile {
 
     @PATCH("/myprofiles/default/{profile-id}")
     suspend fun patchDefaultProfile(@Path(value = "profile-id") profileId : Long) : Response<PatchDefaultProfile>
+
+    @PATCH("/myprofiles/{profile-id}/image")
+    suspend fun patchProfileImage(@Path(value = "profile-id") profileId: Long, @Body patchImage: RequestProfileImage):Response<>
 }
