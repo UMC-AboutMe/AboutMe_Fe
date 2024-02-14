@@ -120,6 +120,14 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
         val editName = arguments?.getString("editname1")
         Log.d("받은 editname", editName.toString())
 
+        binding.imageCharBtn.setOnClickListener {
+            patchProfileImage2(profileId1!!.toLong(),"CHARACTER")
+        }
+
+        binding.imageLogoBtn.setOnClickListener {
+            patchProfileImage2(profileId1!!.toLong(),"DEFAULT")
+        }
+
         binding.imageImageBtn.setOnClickListener {
             goGallery()
         }
@@ -163,15 +171,6 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
                 Log.e("applyUpdatedDataToUI", "Updated data is null")
             }
         })
-
-        binding.imageLogoBtn.setOnClickListener {
-
-            //patchProfileImage(0)
-        }
-
-        binding.imageCharBtn.setOnClickListener {
-            //patchProfileImage(1)
-        }
 
 
 
@@ -475,6 +474,43 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
         })
     }
 
+    private fun patchProfileImage2(profileId: Long, type: String) {
+        val json = JSONObject()
+        json.put("profile_image_type", type)
+
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+        val requestBody = json.toString().toRequestBody(mediaType)
+
+        Log.d("경로4",json.toString())
+        Log.d("경로5",mediaType.toString())
+        Log.d("경로6",requestBody.toString())
+
+
+        val call: Call<PatchProfileImage> =
+            RetrofitClient.mainProfile.patchProfileImage(profileId, requestBody, null)
+        call.enqueue(object : Callback<PatchProfileImage> {
+            override fun onResponse(
+                call: Call<PatchProfileImage>,
+                response: Response<PatchProfileImage>
+            ) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body() // 응답 본문 가져오기
+                    if (responseBody != null) {
+                        Log.d("서버 응답 본문", responseBody.toString()) // 응답 본문 출력
+                    } else {
+                        Log.d("서버 응답 본문", "응답 본문이 비어있습니다.")
+                    }
+                } else {
+                    Log.d("서버 응답 오류", "서버 응답이 실패했습니다.")
+                }
+            }
+
+            override fun onFailure(call: Call<PatchProfileImage>, t: Throwable) {
+                // 통신 실패 처리
+                Log.e("통신 실패", "요청 실패: ${t.message}", t)
+            }
+        })
+    }
 
 
 }
