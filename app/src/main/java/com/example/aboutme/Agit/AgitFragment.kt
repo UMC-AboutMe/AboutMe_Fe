@@ -1,14 +1,20 @@
 package com.example.aboutme.Agit
 
-import android.annotation.SuppressLint
 import android.app.ActivityOptions
+import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -33,6 +39,8 @@ class AgitFragment : Fragment() {
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var rvAdapter: AgitSpaceRVAdapter
     private val itemList = mutableListOf<AgitSpaceData>()
+    private val filteredItemList = mutableListOf<AgitSpaceData>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,6 +83,7 @@ class AgitFragment : Fragment() {
         return binding.root
     }
 
+
     // 새로고침 상태 여부에 따른 shimmer effect 나타내기
     private fun isLoading(isLoading: Boolean) {
         if (isLoading) {
@@ -89,6 +98,7 @@ class AgitFragment : Fragment() {
         }
     }
 
+    // API 호출
     private fun fetchData() {
         // retrofitclient에서 통신 방법 설정(GET, POST, DELETE, PATCH)
         val call = RetrofitClient.apitest.getMySpaces("4")
@@ -113,6 +123,7 @@ class AgitFragment : Fragment() {
         })
     }
 
+    // API 호출 후 가져온 결과값을 바탕으로 UI를 최신화
     private fun updateUI(result: ResultModel) {
         // 서버에서 memberSpaceList 추출
         val dataList = result.memberSpaceList
@@ -133,9 +144,13 @@ class AgitFragment : Fragment() {
             Log.d("API TEST", "Favorite: ${spaceModel.favorite}")
         }
 
+        // 아이템들이 새롭게 추가된 itemList로 설정
         rvAdapter = AgitSpaceRVAdapter(itemList)
 
+        // 실제 리사이클러뷰에 해당하는 spaceStorageRv에 새롭게 반영한 itemList 어댑터 연결
         binding.spaceStorageRv.adapter = rvAdapter
+
+        // 리사이클러뷰 표시 형태 설정
         binding.spaceStorageRv.layoutManager = GridLayoutManager(requireContext(), 2)
     }
 
@@ -147,5 +162,68 @@ class AgitFragment : Fragment() {
     // API ERROR 표시
     private fun handleApiFailure(t: Throwable) {
         Log.e("handleApiFailure", "API 호출 실패: ${t.message}")
+    }
+
+
+    // 아지트 최신화가 되어있는 상태에서 검색을 하므로 onViewCreated에서 필터링을 진행하는 함수 설정
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // 기존의 리사이클러뷰 아이템 목록을 복사하여 filteredItemList에 저장
+        filteredItemList.addAll(itemList)
+
+        // 검색창 EditText에 텍스트가 입력될 때마다 호출되는 TextWatcher 설정
+        binding.agitSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // 입력 전
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // 텍스트가 바뀔 때마다 호출되는 메서드
+                val filterText = s.toString().trim()
+                filterItems(filterText)
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // 입력 후
+            }
+        })
+        
+        // 검색창 edittext에서 키보드상으로 완료 버튼을 누를 경우 검색버튼을 누른 것과 같은 효과
+        binding.agitSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                // 검색버튼을 누를 경우 발동되는 검색 효과
+                // 사실상 검색 효과에 해당하는 필터링이 텍스트를 입력할 때마다 발동되므로 적을 필요가 없음
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+    }
+
+    // 실시간 필터링 효과
+    private fun filterItems(filterText: String) {
+        // filteredItemList을 초기화하여 이전 필터링 결과를 제거
+        filteredItemList.clear()
+
+        // 검색어가 비어있으면 전체 아이템을 보여줌
+        if (filterText.isEmpty()) {
+            filteredItemList.addAll(itemList)
+        } else {
+            // onCreatView에서 처음 생성한 itemList를 순회하면서 검색어와 일치하는 아이템만 filteredItemList에 추가
+            for (item in itemList) {
+                if (item.spaceName.contains(filterText, ignoreCase = true)) {
+                    filteredItemList.add(item)
+                }
+            }
+        }
+
+        // 아이템들이 새롭게 추가된 filteredItemList로 설정
+        rvAdapter = AgitSpaceRVAdapter(filteredItemList)
+
+        // 실제 리사이클러뷰에 해당하는 spaceStorageRv에 새롭게 반영한 itemList 어댑터 연결
+        binding.spaceStorageRv.adapter = rvAdapter
+
+        // 리사이클러뷰 표시 형태 설정
+        binding.spaceStorageRv.layoutManager = GridLayoutManager(requireContext(), 2)
     }
 }
