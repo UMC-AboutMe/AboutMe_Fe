@@ -144,6 +144,9 @@ class AgitFragment : Fragment() {
             Log.d("API TEST", "Favorite: ${spaceModel.favorite}")
         }
 
+        // 북마크가 표시되어있는 아이템부터 정렬
+        itemList.sortByDescending { it.isBookmarked }
+
         // 아이템들이 새롭게 추가된 itemList로 설정
         rvAdapter = AgitSpaceRVAdapter(itemList)
 
