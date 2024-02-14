@@ -10,16 +10,14 @@ import android.util.Log
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.aboutme.R
 import com.example.aboutme.bottomNavigationView
 import com.example.aboutme.databinding.ActivityMyspacestep1Binding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 
 class MySpaceStep1Activity : AppCompatActivity() {
 
@@ -87,6 +85,7 @@ class MySpaceStep1Activity : AppCompatActivity() {
             }, 2000)
         }
 
+        // progress bar 위의 캐릭터 실시간 애니메이션 효과 주기
         handler.postDelayed(object : Runnable {
             override fun run() {
                 // 애니메이션 재생
@@ -96,6 +95,23 @@ class MySpaceStep1Activity : AppCompatActivity() {
                 handler.postDelayed(this, animationInterval)
             }
         }, animationInterval) // 1초 뒤에 첫 번째 애니메이션 실행
+
+        // 화면 빈공간 클릭시 키보드 숨기기
+        binding.fragmentMyspacestep1.setOnClickListener {
+            val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(binding.fragmentMyspacestep1.windowToken, 0)
+        }
+
+        // 닉네임 edittext에서 텍스트 입력 후 다음 버튼 클릭시 키보드 숨기기
+        binding.nickname.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(binding.nickname.windowToken, 0)
+
+                return@setOnEditorActionListener true
+            }
+            false
+        }
 
         // 다음 버튼 클릭시
         binding.nextIbStep1.setOnClickListener {
