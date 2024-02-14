@@ -62,9 +62,44 @@ class SearchProfActivity : AppCompatActivity() {
                     }
                 }
             }
-            override fun onFailure(call: Call<SearchResponse.ResponseStoreProf>, t: Throwable) {
+            override fun onFailure(call:Call<SearchResponse.ResponseStoreProf>, t:Throwable) {
                 val errorMessage = "Call Failed:  ${t.message}"
-                Log.d("Retrofit_Add", errorMessage)
+                Log.d("Retrofit_Add",errorMessage)
+            }
+        })
+    }
+
+    //마이프로필 상대방에게 공유
+    private fun postShareProf(){
+        Log.d("Retrofit_Add","프로필 공유 실행")
+        val requestShareProf = SearchResponse.RequestShareProf(6,listOf(109349))
+        val call = SearchObj.getRetrofitService.postShareProf(6, requestShareProf)
+
+        call.enqueue(object : Callback<SearchResponse.ResponseShareProf> {
+            override fun onResponse(
+                call: Call<SearchResponse.ResponseShareProf>,
+                response: Response<SearchResponse.ResponseShareProf>
+            ) {
+                Log.d("Retrofit_Add",response.toString())
+                if(response.isSuccessful){
+                    val response=response.body()
+                    Log.d("Retrofit_Add",response.toString())
+
+                    if(response != null) {
+                        if(response.isSuccess){
+                            //성공했을 때
+                        }
+                        else{
+                            //실패했을 때
+                            Log.d("Retrofit_Add",response.message)
+
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call:Call<SearchResponse.ResponseShareProf>, t:Throwable) {
+                val errorMessage = "Call Failed:  ${t.message}"
+                Log.d("Retrofit_Add",errorMessage)
             }
         })
     }
