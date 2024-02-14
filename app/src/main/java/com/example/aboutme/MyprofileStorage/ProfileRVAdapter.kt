@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.aboutme.MyprofileStorage.api.ProfStorageObj
 import com.example.aboutme.MyprofileStorage.api.ProfStorageResponse
 import com.example.aboutme.R
@@ -53,8 +54,15 @@ class ProfileRVAdapter(val items: MutableList<ProfileData>) :
         }
 
         fun bindItems(profileData: ProfileData) {
-            profileImage.setImageResource(profileData.profile_img)
-            profileName.text = profileData.profile_name
+            if (profileData.profile_img.startsWith("http")) {
+                // URL인 경우 Glide를 사용하여 이미지 로드 및 표시
+                Glide.with(itemView.context)
+                    .load(profileData.profile_img)
+                    .into(profileImage)
+            } else {
+                // 리소스 아이디인 경우 setImageResource() 메서드를 사용하여 이미지 설정
+                profileImage.setImageResource(profileData.profile_img.toInt())
+            }
 
             // isFav 값에 따라서 UI 변경
             if (profileData.isFav) {
