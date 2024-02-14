@@ -10,11 +10,7 @@ class SearchResponse {
     data class ResponseStoreProf(
         var isSuccess : Boolean,
         var code : String,
-        var message : String,
-        var result : NumberList
-    )
-    data class NumberList(
-        var profileSerialNumberList : String
+        var message : String
     )
 
 
