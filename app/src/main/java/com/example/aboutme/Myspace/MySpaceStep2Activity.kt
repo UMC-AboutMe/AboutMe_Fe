@@ -1,10 +1,16 @@
 package com.example.aboutme.Myspace
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.aboutme.R
 import com.example.aboutme.databinding.ActivityMyspacestep2Binding
 
@@ -14,12 +20,58 @@ class MySpaceStep2Activity : AppCompatActivity() {
 
     private val sharedViewModel: MyspaceViewModel by viewModels()
 
+    private val handler = Handler(Looper.getMainLooper())
+    private val animationInterval = 400L
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyspacestep2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val nextButton = binding.nextIbStep2
+
+        binding.progressBar.progress = 50
+
+        // progress bar의 애니메이션 리스너 생성
+        val animatorListener = object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator) {
+                // 애니메이션이 시작될 때 필요한 동작 수행
+                // 캐릭터의 위치를 업데이트
+                val layoutParams = binding.animationView.layoutParams as ConstraintLayout.LayoutParams
+                val marginStartInPixels = (90 * resources.displayMetrics.density).toInt() // 20dp를 픽셀 값으로 변환
+                layoutParams.marginStart = marginStartInPixels
+                binding.animationView.layoutParams = layoutParams
+            }
+
+            override fun onAnimationEnd(animation: Animator) {
+                // 애니메이션이 끝날 때 필요한 동작 수행
+            }
+
+            override fun onAnimationCancel(animation: Animator) {
+                // 애니메이션이 취소될 때 필요한 동작 수행
+            }
+
+            override fun onAnimationRepeat(animation: Animator) {
+                // 애니메이션이 반복될 때 필요한 동작 수행
+            }
+        }
+
+        // 애니메이션 효과 추가
+        val animation = ObjectAnimator.ofInt(binding.progressBar, "progress", 25, 50)
+        animation.duration = 1500 // 애니메이션 지속 시간 (밀리초)
+        animation.interpolator = AccelerateDecelerateInterpolator() // 가속 및 감속 인터폴레이터 사용
+        animation.addListener(animatorListener) // 애니메이션 리스너 추가
+        animation.start()
+
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                // 애니메이션 재생
+                binding.animationView.playAnimation()
+
+                // 다음 애니메이션을 1초 뒤에 실행
+                handler.postDelayed(this, animationInterval)
+            }
+        }, animationInterval) // 1초 뒤에 첫 번째 애니메이션 실행
 
         // 체크박스에 해당하는 이미지뷰들을 리스트에 추가
         val checkBoxList = listOf(
