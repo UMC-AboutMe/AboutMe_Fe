@@ -90,26 +90,226 @@ class MainProfileFragment : Fragment() {
                         for (profile in repos.result.myprofiles) {
                             val frontFeatures = profile.frontFeatures
                                 if (frontFeatures.size > 1) {
+
+                                    if (profile.profileImage.type == "USER_IMAGE"){
+                                        if (profile.profileImage.profileImageUrl != null) {
+                                            multiList.add(MultiProfileData(
+                                                R.drawable.prof_avater1,
+                                                frontFeatures[0].value,
+                                                frontFeatures[1].value
+                                            ))
+                                        }
+                                    } else if(profile.profileImage.type == "DEFAULT"){
+                                        multiList.add(MultiProfileData(
+                                            R.drawable.profiledefault,
+                                            frontFeatures[0].value,
+                                            frontFeatures[1].value
+
+                                        ))} else if (profile.profileImage.type == "CHARACTER"){
+                                        if (profile.profileImage.characterType == "1") {
+                                            multiList.add(MultiProfileData(
+                                                R.drawable.prof_avater1,
+                                                frontFeatures[0].value,
+                                                frontFeatures[1].value
+
+                                            ))
+                                        }
+                                        if (profile.profileImage.characterType == "2") {
+                                            multiList.add(MultiProfileData(
+                                                R.drawable.prof_avater2,
+                                                frontFeatures[0].value,
+                                                frontFeatures[1].value
+
+                                            ))
+                                        }
+                                        if (profile.profileImage.characterType == "3") {
+                                            multiList.add(MultiProfileData(
+                                                R.drawable.prof_avater3,
+                                                frontFeatures[0].value,
+                                                frontFeatures[1].value
+
+                                            ))
+                                        }
+                                        if (profile.profileImage.characterType == "4") {
+                                            multiList.add(MultiProfileData(
+                                                R.drawable.prof_avater4,
+                                                frontFeatures[0].value,
+                                                frontFeatures[1].value
+
+                                            ))
+                                        }
+                                        if (profile.profileImage.characterType == "5") {
+                                            multiList.add(MultiProfileData(
+                                                R.drawable.prof_avater5,
+                                                frontFeatures[0].value,
+                                                frontFeatures[1].value
+
+                                            ))
+                                        }
+                                        if (profile.profileImage.characterType == "6") {
+                                            multiList.add(MultiProfileData(
+                                                R.drawable.prof_avater6,
+                                                frontFeatures[0].value,
+                                                frontFeatures[1].value
+
+                                            ))
+                                        }
+                                        if (profile.profileImage.characterType == "7") {
+                                            multiList.add(MultiProfileData(
+                                                R.drawable.prof_avater7,
+                                                frontFeatures[0].value,
+                                                frontFeatures[1].value
+
+                                            ))
+                                        }
+                                        if (profile.profileImage.characterType == "8") {
+                                            multiList.add(MultiProfileData(
+                                                R.drawable.prof_avater8,
+                                                frontFeatures[0].value,
+                                                frontFeatures[1].value
+
+                                            ))
+                                        }
+                                        if (profile.profileImage.characterType == "9") {
+                                            multiList.add(MultiProfileData(
+                                                R.drawable.prof_avater9,
+                                                frontFeatures[0].value,
+                                                frontFeatures[1].value
+
+                                            ))
+                                        }
+                                    }else{
                                     multiList.add(MultiProfileData(
-                                            R.drawable.myprofile_character,
+                                            R.drawable.frontprofile_basic,
                                             frontFeatures[0].value,
                                             frontFeatures[1].value
 
                                         )
-                                    )
-                                }else{
-                                    multiList.add(
-                                        MultiProfileData(
-                                            R.drawable.myprofile_character,
-                                            frontFeatures[0].value,
-                                            ""
+                                    )}
+                                }else {
 
+                                    if (profile.profileImage.type == "USER_IMAGE") {
+                                        if (profile.profileImage.profileImageUrl != null) {
+                                            multiList.add(
+                                                MultiProfileData(
+                                                    R.drawable.prof_avater1,
+                                                    frontFeatures[0].value,
+                                                    ""
+                                                )
+                                            )
+                                        }
+                                    } else if (profile.profileImage.type == "DEFAULT") {
+                                        multiList.add(
+                                            MultiProfileData(
+                                                R.drawable.profiledefault,
+                                                frontFeatures[0].value,
+                                                ""
+
+                                            )
                                         )
-                                    )
+                                    } else if (profile.profileImage.type == "CHARACTER") {
+                                        if (profile.profileImage.characterType == "1") {
+                                            multiList.add(
+                                                MultiProfileData(
+                                                    R.drawable.prof_avater1,
+                                                    frontFeatures[0].value,
+                                                    ""
+                                                )
+                                            )
+                                        }
+                                        if (profile.profileImage.characterType == "2") {
+                                            multiList.add(
+                                                MultiProfileData(
+                                                    R.drawable.prof_avater2,
+                                                    frontFeatures[0].value,
+                                                    ""
+
+                                                )
+                                            )
+                                        }
+                                        if (profile.profileImage.characterType == "3") {
+                                            multiList.add(
+                                                MultiProfileData(
+                                                    R.drawable.prof_avater3,
+                                                    frontFeatures[0].value,
+                                                    ""
+
+                                                )
+                                            )
+                                        }
+                                        if (profile.profileImage.characterType == "4") {
+                                            multiList.add(
+                                                MultiProfileData(
+                                                    R.drawable.prof_avater4,
+                                                    frontFeatures[0].value,
+                                                    ""
+
+                                                )
+                                            )
+                                        }
+                                        if (profile.profileImage.characterType == "5") {
+                                            multiList.add(
+                                                MultiProfileData(
+                                                    R.drawable.prof_avater5,
+                                                    frontFeatures[0].value,
+                                                    ""
+
+                                                )
+                                            )
+                                        }
+                                        if (profile.profileImage.characterType == "6") {
+                                            multiList.add(
+                                                MultiProfileData(
+                                                    R.drawable.prof_avater6,
+                                                    frontFeatures[0].value,
+                                                    ""
+
+                                                )
+                                            )
+                                        }
+                                        if (profile.profileImage.characterType == "7") {
+                                            multiList.add(
+                                                MultiProfileData(
+                                                    R.drawable.prof_avater7,
+                                                    frontFeatures[0].value,
+                                                    ""
+
+                                                )
+                                            )
+                                        }
+                                        if (profile.profileImage.characterType == "8") {
+                                            multiList.add(
+                                                MultiProfileData(
+                                                    R.drawable.prof_avater8,
+                                                    frontFeatures[0].value,
+                                                    ""
+
+                                                )
+                                            )
+                                        }
+                                        if (profile.profileImage.characterType == "9") {
+                                            multiList.add(
+                                                MultiProfileData(
+                                                    R.drawable.prof_avater9,
+                                                    frontFeatures[0].value,
+                                                    ""
+
+                                                )
+                                            )
+                                        }
+                                    } else {
+                                        multiList.add(
+                                            MultiProfileData(
+                                                R.drawable.frontprofile_basic,
+                                                frontFeatures[0].value,
+                                                ""
+
+                                            )
+                                        )
+                                    }
                                 }
+
                             }
-
-
 
                         // 어댑터에 업데이트된 multiList를 제출합니다.
                         vpadapter.submitList(multiList)
