@@ -1,7 +1,6 @@
 package com.example.aboutme.Agit
 
 import android.app.ActivityOptions
-import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.os.Bundle
@@ -14,7 +13,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -197,9 +195,33 @@ class AgitFragment : Fragment() {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 // 검색버튼을 누를 경우 발동되는 검색 효과
                 // 사실상 검색 효과에 해당하는 필터링이 텍스트를 입력할 때마다 발동되므로 적을 필요가 없음
+
+                // 키보드 숨기기
+                val inputMethodManager = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(binding.agitSearch.windowToken, 0)
+
                 return@setOnEditorActionListener true
             }
             false
+        }
+
+        // 검색창 검색 버튼 클릭시 키보드 숨김처리
+        binding.spaceStorageSearchIcon.setOnClickListener {
+            // 키보드 숨기기
+            val inputMethodManager = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(binding.agitSearch.windowToken, 0)
+        }
+
+        // 화면 내 빈 공간 클릭시 키보드 숨김처리
+        binding.fragmentContainer.setOnClickListener {
+            val inputMethodManager = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+
+        // 화면 내 빈 공간 클릭시 키보드 숨김처리
+        binding.swipeRefreshLayout.setOnClickListener {
+            val inputMethodManager = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
 
