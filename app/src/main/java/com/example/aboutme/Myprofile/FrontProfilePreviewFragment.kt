@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyprofile.RetrofitClient
 import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
@@ -77,6 +78,8 @@ class FrontProfilePreviewFragment : Fragment(){
             delay(200) // 0.2초 지연
             refreshData(profileId1.toString())
         }
+
+
     }
 
     private fun refreshData(profileId: String?) {
@@ -105,6 +108,17 @@ class FrontProfilePreviewFragment : Fragment(){
         binding.profileNameEt.setText(updatedData.result.frontFeatures[0].value.toString())
         binding.profileNumEt.setText(updatedData.result.frontFeatures[1].value.toString())
 
+        if (updatedData.result.profileImage.type == "USER_IMAGE"){
+            if (updatedData.result.profileImage.profileImageUrl != null) {
+                Glide.with(this)
+                    .load(updatedData.result.profileImage.profileImageUrl)
+                    .into(binding.profileIv)
+            }
+        } else if(updatedData.result.profileImage.type == "DEFAULT"){
+            Glide.with(this)
+                .load(R.drawable.)
+                .into(binding.profileIv)
+        }
 
         // 예시: 변경된 데이터가 로그에 출력되도록 함
         Log.d("UpdatedData", "Updated data applied to UI: $updatedData")
