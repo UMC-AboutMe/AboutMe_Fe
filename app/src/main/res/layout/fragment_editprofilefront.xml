@@ -22,21 +22,21 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageButton
-                android:id="@+id/shareBottomSheet_logo_btn"
+                android:id="@+id/image_logo_btn"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/logo"/>
 
             <ImageButton
-                android:id="@+id/shareBottomSheet_image_btn"
+                android:id="@+id/image_image_btn"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginLeft="60dp"
                 android:background="@drawable/myprofile_image"/>
 
             <ImageButton
-                android:id="@+id/shareBottomSheet_char_btn"
+                android:id="@+id/image_char_btn"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="60dp"

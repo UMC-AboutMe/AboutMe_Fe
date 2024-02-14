@@ -1,44 +1,77 @@
 package com.example.aboutme.Myprofile
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextUtils.replace
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyprofile.RetrofitClient
 import com.example.aboutme.RetrofitMyprofileData.FrontFeature
 import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
 import com.example.aboutme.RetrofitMyprofileData.PatchMyprofile
+import com.example.aboutme.RetrofitMyprofileData.PatchProfileImage
 import com.example.aboutme.RetrofitMyprofileData.RequestPatchProfile
+import com.example.aboutme.RetrofitMyprofileData.RequestProfileImage
 import com.example.aboutme.databinding.FragmentEditprofilefrontBinding
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedListener {
+
 
     lateinit var binding: FragmentEditprofilefrontBinding
     private val viewModel: MyProfileViewModel by viewModels(ownerProducer = { requireActivity() })
 
+    lateinit var getResult: ActivityResultLauncher<Intent>
 
-    var feature1 : String? = null
-    var feature2 : String? = null
-    var feature3 : String? = null
-    var feature4 : String? = null
-    var feature5 : String? = null
+    lateinit var filePath: String
 
+    var feature1: String? = null
+    var feature2: String? = null
+    var feature3: String? = null
+    var feature4: String? = null
+    var feature5: String? = null
+
+    var patchImage: RequestProfileImage? = null
     //private var job: Job? = null // Nullable Job 변수 선언
 
 
@@ -71,13 +104,13 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
 
 
         val frontFeature1 = arguments?.getString("feature1")
-        Log.d("frontfeature~~",frontFeature1.toString())
+        Log.d("frontfeature~~", frontFeature1.toString())
         val frontFeature2 = arguments?.getString("feature2")
 
         val dialogName = arguments?.getString("dialogName")
-        Log.d("frontfeature~",dialogName.toString())
+        Log.d("frontfeature~", dialogName.toString())
 
-        if (frontFeature1 != null){
+        if (frontFeature1 != null) {
             binding.profileNameEt.setText(frontFeature1)
             binding.profileNumberEt.setText(frontFeature2)
         } else {
@@ -85,43 +118,29 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
         }
 
         val editName = arguments?.getString("editname1")
-        Log.d("받은 editname",editName.toString())
+        Log.d("받은 editname", editName.toString())
 
-        /*viewModel.updatedData.observe(viewLifecycleOwner, { updatedData ->
-            Log.d("UpdatedData", "Updated data: $updatedData")
-            if (updatedData != null) {
-                applyUpdatedDataToUI(updatedData)
-                Log.d("싱행",updatedData.toString())
-            } else {
-                Log.e("applyUpdatedDataToUI", "Updated data is null")
+        binding.imageImageBtn.setOnClickListener {
+            goGallery()
+        }
+
+        // Initialize getResult here
+        getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                filePath = getRealPathFromURI(it.data?.data!!)
+                Log.d("경로", filePath)
+
+                patchProfileImage(profileId1!!.toLong(), "USER_IMAGE", filePath)
             }
-        })*/
-
-
+        }
         return binding.root
-    }
-
-    inner class MyTextWatcher(private val profileId1: String?) : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        }
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            // 텍스트가 변경될 때마다 호출
-            val newText = s.toString()
-            Log.d("EditText 변경", "새로운 텍스트: $newText")
-
-        }
-
-        override fun afterTextChanged(s: Editable?) {
-            // 텍스트 입력이 끝난 후 호출
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val profileId1 = arguments?.getString("profilId1")
-        Log.d("profileId1",profileId1.toString())
+        Log.d("profileId1", profileId1.toString())
 
 
         val retrofitClient = RetrofitClient.mainProfile
@@ -139,11 +158,22 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
             Log.d("UpdatedData", "Updated data: $updatedData")
             if (updatedData != null) {
                 applyUpdatedDataToUI(updatedData)
-                Log.d("싱행",updatedData.toString())
+                Log.d("싱행", updatedData.toString())
             } else {
                 Log.e("applyUpdatedDataToUI", "Updated data is null")
             }
         })
+
+        binding.imageLogoBtn.setOnClickListener {
+
+            //patchProfileImage(0)
+        }
+
+        binding.imageCharBtn.setOnClickListener {
+            //patchProfileImage(1)
+        }
+
+
 
         binding.profileEditPreviewBtn.setOnClickListener {
             lifecycleScope.launch {
@@ -163,7 +193,15 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
                         val backFeature3 = responseData!!.result.backFeatures[2].featureId
                         val backFeature4 = responseData!!.result.backFeatures[3].featureId
                         val backFeature5 = responseData!!.result.backFeatures[4].featureId
-                        patchData(frontFeature1, frontFeature2, backFeature1,backFeature2, backFeature3, backFeature4, backFeature5)
+                        patchData(
+                            frontFeature1,
+                            frontFeature2,
+                            backFeature1,
+                            backFeature2,
+                            backFeature3,
+                            backFeature4,
+                            backFeature5
+                        )
                         //responseData?.let { applyUpdatedDataToUI(it) }
 
                         // patchData 호출 후에 PreviewProfileActivity 시작
@@ -173,7 +211,10 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
                         startActivity(intent)
                     } else {
                         val errorBody = response.errorBody()?.string() ?: "No error body"
-                        Log.e("GETALL 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
+                        Log.e(
+                            "GETALL 요청 실패",
+                            "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                        )
                     }
                 } catch (e: Exception) {
                     Log.e("GETALL 요청 실패@", "에러: ${e.message}")
@@ -184,7 +225,16 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
 
     }
 
-    private fun patchData(featureId1: Long, featureId2: Long, featureId3: Long, featureId4: Long, featureId5: Long, featureId6: Long, featureId7: Long) {
+
+    private fun patchData(
+        featureId1: Long,
+        featureId2: Long,
+        featureId3: Long,
+        featureId4: Long,
+        featureId5: Long,
+        featureId6: Long,
+        featureId7: Long
+    ) {
         val profileId1 = arguments?.getString("profilId1")
         Log.d("profileId1", profileId1.toString())
 
@@ -222,7 +272,7 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
         val patchBackData5 = RequestPatchProfile(featureId7, "tmi", feature5.toString())
 
         Log.d("patchData", "Name: $name, PhoneNumber: $phoneNumber")
-        Log.d("patchdata2",feature1.toString())
+        Log.d("patchdata2", feature1.toString())
 
         lifecycleScope.launch {
             try {
@@ -250,7 +300,8 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
                 }
 
                 if (response1.isSuccessful && response2.isSuccessful && response3.isSuccessful && response4.isSuccessful && response5.isSuccessful
-                    && response6.isSuccessful && response7.isSuccessful) {
+                    && response6.isSuccessful && response7.isSuccessful
+                ) {
                     val responseData1: PatchMyprofile? = response1.body()
                     val responseData2: PatchMyprofile? = response2.body()
                     val responseData3: PatchMyprofile? = response3.body()
@@ -281,13 +332,22 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
                         }
                     } else {
                         val errorBody = updatedResponse.errorBody()?.string() ?: "No error body"
-                        Log.e("GETALL 요청 실패", "응답코드: ${updatedResponse.code()}, 응답메시지: ${updatedResponse.message()}, 오류 내용: $errorBody")
+                        Log.e(
+                            "GETALL 요청 실패",
+                            "응답코드: ${updatedResponse.code()}, 응답메시지: ${updatedResponse.message()}, 오류 내용: $errorBody"
+                        )
                     }
                 } else {
                     val errorBody1 = response1.errorBody()?.string() ?: "No error body"
                     val errorBody2 = response2.errorBody()?.string() ?: "No error body"
-                    Log.e("patch 요청 실패", "응답코드1: ${response1.code()}, 응답메시지1: ${response1.message()}, 오류 내용1: $errorBody1")
-                    Log.e("patch 요청 실패", "응답코드2: ${response2.code()}, 응답메시지2: ${response2.message()}, 오류 내용2: $errorBody2")
+                    Log.e(
+                        "patch 요청 실패",
+                        "응답코드1: ${response1.code()}, 응답메시지1: ${response1.message()}, 오류 내용1: $errorBody1"
+                    )
+                    Log.e(
+                        "patch 요청 실패",
+                        "응답코드2: ${response2.code()}, 응답메시지2: ${response2.message()}, 오류 내용2: $errorBody2"
+                    )
                 }
             } catch (e: Exception) {
                 Log.e("patch 요청 실패", "에러: ${e.message}")
@@ -296,17 +356,125 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
     }
 
 
-
     private fun applyUpdatedDataToUI(updatedData: GetAllProfile) {
         // 변경된 데이터를 UI의 각 요소에 적용
         //binding.profileNameEt.setText(updatedData.result.frontFeatures[0].value)
-        binding.profileNameEt.text = Editable.Factory.getInstance().newEditable(updatedData.result.frontFeatures[0].value)
-        Log.d("edit2",updatedData.result.frontFeatures[0].value.toString())
+        binding.profileNameEt.text =
+            Editable.Factory.getInstance().newEditable(updatedData.result.frontFeatures[0].value)
+        Log.d("edit2", updatedData.result.frontFeatures[0].value.toString())
         binding.profileNumberEt.setText(updatedData.result.frontFeatures[1].value)
-        Log.d("edit2",updatedData.result.frontFeatures[1].value.toString())
+        Log.d("edit2", updatedData.result.frontFeatures[1].value.toString())
 
         // 예시: 변경된 데이터가 로그에 출력되도록 함
         Log.d("UpdatedData", "Updated data applied to UI: $updatedData")
     }
+
+
+    private fun getRealPathFromURI(uri: Uri): String {
+        val buildName = Build.MANUFACTURER
+        if (buildName.equals("Xiaomi")) {
+            return uri.path.toString()
+        }
+
+        var columnIndex = 0
+        val proj = arrayOf(MediaStore.Images.Media.DATA)
+        var cursor = requireActivity().contentResolver.query(uri, proj, null, null, null)
+
+        if (cursor!!.moveToFirst()) {
+            columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        }
+
+        return cursor.getString(columnIndex)
+    }
+
+
+    private fun goGallery() {
+
+        // 현재 기기에 설정된 쓰기 권한을 가져오기 위한 변수
+        var writePermission = ContextCompat.checkSelfPermission(
+            requireContext(),
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+
+// 현재 기기에 설정된 읽기 권한을 가져오기 위한 변수
+        var readPermission = ContextCompat.checkSelfPermission(
+            requireContext(),
+            android.Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+
+// 읽기 권한과 쓰기 권한에 대해서 설정이 되어있지 않다면
+        if (writePermission == PackageManager.PERMISSION_DENIED || readPermission == PackageManager.PERMISSION_DENIED) {
+            // 읽기, 쓰기 권한을 요청합니다.
+            Log.d("go", "su")
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                ),
+                1
+            )
+        }
+// 위 경우가 아니라면 권한에 대해서 설정이 되어 있으므로
+        else {
+            var state = Environment.getExternalStorageState()
+
+            // 갤러리를 열어서 파일을 선택할 수 있도록 합니다.
+            if (TextUtils.equals(state, Environment.MEDIA_MOUNTED)) {
+                val intent = Intent(Intent.ACTION_PICK)
+                intent.type = "image/*"
+                getResult.launch(intent)
+            }
+        }
+    }
+
+
+    private fun patchProfileImage(profileId: Long, type: String, filPath : String) {
+        val json = JSONObject()
+        json.put("profile_image_type", type)
+
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+        val requestBody = json.toString().toRequestBody(mediaType)
+
+        Log.d("경로4",json.toString())
+        Log.d("경로5",mediaType.toString())
+        Log.d("경로6",requestBody.toString())
+
+        val file = File(filePath)
+        val requestFile = "image/*".toMediaTypeOrNull()?.let { RequestBody.create(it, file) }
+        val body: MultipartBody.Part =
+            MultipartBody.Part.createFormData("image", file.name, requestFile!!)
+        Log.d("경로1", filePath)
+        Log.d("경로2", requestFile.toString())
+        Log.d("경로3", body.toString())
+
+
+        val call: Call<PatchProfileImage> =
+            RetrofitClient.mainProfile.patchProfileImage(profileId, requestBody, body)
+        call.enqueue(object : Callback<PatchProfileImage> {
+            override fun onResponse(
+                call: Call<PatchProfileImage>,
+                response: Response<PatchProfileImage>
+            ) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body() // 응답 본문 가져오기
+                    if (responseBody != null) {
+                        Log.d("서버 응답 본문", responseBody.toString()) // 응답 본문 출력
+                    } else {
+                        Log.d("서버 응답 본문", "응답 본문이 비어있습니다.")
+                    }
+                } else {
+                    Log.d("서버 응답 오류", "서버 응답이 실패했습니다.")
+                }
+            }
+
+            override fun onFailure(call: Call<PatchProfileImage>, t: Throwable) {
+                // 통신 실패 처리
+                Log.e("통신 실패", "요청 실패: ${t.message}", t)
+            }
+        })
+    }
+
+
 
 }
