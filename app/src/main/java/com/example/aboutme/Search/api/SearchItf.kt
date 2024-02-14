@@ -28,4 +28,10 @@ interface SearchItf {
         @Path ("space-id") spaceId:Long,
         @Header("member-id") memberId:Int
     ) : Call<SearchResponse.ResponseSpaceStorage>
+
+    //마이프로필 검색
+    @GET ("/myprofiles/search")
+    fun getSearchProf (
+        @Query("q") q:Int
+    ) : Call<SearchResponse.ResponseSearchProf>
 }

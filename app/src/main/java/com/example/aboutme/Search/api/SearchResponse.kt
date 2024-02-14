@@ -42,4 +42,28 @@ class SearchResponse {
     data class SpaceId (
         var spaceId : Long
             )
+
+    //마이프로필 검색
+    data class ResponseSearchProf (
+        var isSuccess: Boolean,
+        var code: String,
+        var message: String,
+        var result : Profile
+            )
+    data class Profile (
+        var profile_id : Long,
+        var serial_number : Int,
+        var profile_image : Image,
+        var front_features  : List<Front>
+            )
+    data class Image (
+        var type : String,
+        var characterType : Int?,
+        var profile_image_url : String?
+            )
+    data class Front (
+        var key : String,
+        var value : String,
+        var feature_id : Long
+            )
 }
