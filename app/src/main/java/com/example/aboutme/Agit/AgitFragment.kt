@@ -71,6 +71,13 @@ class AgitFragment : Fragment() {
                 isLoading(false)
                 swipeRefreshLayout.isRefreshing = false // 새로고침 완료 시 리프레시 아이콘 감춤
             }
+
+            // 새로고침할 때 검색창의 텍스트 초기화
+            binding.agitSearch.text.clear()
+
+            // 새로고침할 때 키보드 숨기기
+            val inputMethodManager = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(binding.agitSearch.windowToken, 0)
         }
 
         // 초기 화면은 항상 최신화 상태 유지
