@@ -18,10 +18,12 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.bumptech.glide.GlideBuilder
 import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyprofileData.FrontFeature
 import com.example.aboutme.RetrofitMyprofileData.MainProfileData
 import com.example.aboutme.databinding.FragmentMainprofileBinding
+import com.example.aboutme.databinding.ItemMultiprofileBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -37,6 +39,7 @@ import java.net.URL
 class MainProfileFragment : Fragment() {
 
     lateinit var binding: FragmentMainprofileBinding
+    lateinit var binding2: ItemMultiprofileBinding
     private val multiList = mutableListOf<MultiProfileData>() // 전역 변수로 multiList 선언
     private lateinit var vpadapter : MainProfileVPAdapter
 
@@ -49,7 +52,7 @@ class MainProfileFragment : Fragment() {
 
         binding = FragmentMainprofileBinding.inflate(inflater, container, false)
 
-
+        binding2 = ItemMultiprofileBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -97,18 +100,16 @@ class MainProfileFragment : Fragment() {
 
                                     if (profile.profileImage.type == "USER_IMAGE"){
                                         if (profile.profileImage.profileImageUrl != null) {
-
-
-                                            //getBitmapFromURL(profile.profileImage.profileImageUrl) { galleryImage ->
-
-                                                multiList.add(
-                                                    MultiProfileData(
-                                                        R.drawable.prof_avater2.toString(),
+                                            //getBitmapFromURL(profile.profileImage.profileImageUrl) { bitmap ->
+                                                //Log.d("비트맵", bitmap.toString())
+                                                multiList.add(MultiProfileData(
+                                                    profile.profileImage.profileImageUrl,
                                                         frontFeatures[0].value,
                                                         frontFeatures[1].value
                                                     )
                                                 )
-                                            }
+                                            //}
+                                        }
                                         //}
                                     } else if(profile.profileImage.type == "DEFAULT"){
                                         multiList.add(MultiProfileData(
@@ -206,7 +207,8 @@ class MainProfileFragment : Fragment() {
 
                                                 multiList.add(
                                                     MultiProfileData(
-                                                       R.drawable.prof_avater2.toString(),
+                                                       profile.profileImage.profileImageUrl,
+                                                        //R.drawable.prof_avater2.toString(),
                                                         frontFeatures[0].value,
                                                         ""
                                                     )

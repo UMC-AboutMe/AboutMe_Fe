@@ -10,7 +10,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyprofile.RetrofitClient
+import com.example.aboutme.RetrofitMyprofileData.FrontFeature
 import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
 import com.example.aboutme.RetrofitMyprofileData.MainProfileData
 import com.example.aboutme.RetrofitMyprofileData.PatchMyprofile
@@ -171,7 +174,14 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
 
         }
         fun bind(item: MultiProfileData) {
-            binding.multiProfileCharIv.setImageResource(item.profileImageResId.toInt())
+            if(item.profileImageResId.startsWith("http")) {
+                Glide.with(itemView.context)
+                    .load(item.profileImageResId)
+                    .into(binding.multiProfileCharIv)
+            } else {
+                binding.multiProfileCharIv.setImageResource(item.profileImageResId.toInt())
+            }
+            //binding.multiProfileCharIv.setImageResource(item.profileImageResId.toInt())
             binding.multiProfileNameTv.text = item.name
             binding.multiProfileNumberTv.text = item.phoneNumber
         }
