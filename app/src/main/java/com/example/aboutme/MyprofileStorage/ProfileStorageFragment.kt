@@ -123,12 +123,37 @@ class ProfileStorageFragment : Fragment() {
                         if (response.isSuccess) {
                             // 성공했을 때
                             Log.d("Retrofit_Get_Success", response.toString())
-                            response.result.memberProfileList.forEach { memberProfile ->
-                                val profileId = memberProfile.profileId
-                                val isFavorite = memberProfile.favorite // favorite 값 가져오기
-                                itemList.add(ProfileData(R.drawable.avatar_basic, memberProfile.profileName, profileId.toLong(),isFavorite))
+                            response.result.memberProfileList.forEach { profile ->
+                                val imageResId = when {
+                                    profile.image.type == "CHARACTER" && profile.image.characterType in 1..8 -> {
+                                        when (profile.image.characterType) {
+                                            1 -> R.drawable.prof_avater1.toString()
+                                            2 -> R.drawable.prof_avater2.toString()
+                                            3 -> R.drawable.prof_avater3.toString()
+                                            4 -> R.drawable.prof_avater4.toString()
+                                            5 -> R.drawable.prof_avater5.toString()
+                                            6 -> R.drawable.prof_avater6.toString()
+                                            7 -> R.drawable.prof_avater7.toString()
+                                            8 -> R.drawable.prof_avater8.toString()
+                                            else -> R.drawable.prof_avater9.toString()
+                                        }
+                                    }
+                                    profile.image.type == "USER_IMAGE" -> R.drawable.prof_avater1.toString()
+                                    else -> R.drawable.avatar_basic.toString()
+                                }
+                                val profileId = profile.profileId.toLong() // favorite 값 가져오기
+                                val isFavorite = profile.favorite // favorite 값 가져오기
+                                val profileName = profile.profileName // favorite 값 가져오기
+                                itemList.add(
+                                    ProfileData(
+                                        imageResId,
+                                        profileName,
+                                        profileId,
+                                        isFavorite
+                                    )
+                                )
+                                rvAdapter.notifyDataSetChanged() // 얘가 없으면 아이템이 갱신되지 않는다! 중요
                             }
-                            rvAdapter.notifyDataSetChanged() // 얘가 없으면 아이템이 갱신되지 않는다! 중요
                         } else {
                             // 실패했을 때
                             Log.d("Retrofit_Get_Failed", response.toString())
@@ -153,7 +178,9 @@ class ProfileStorageFragment : Fragment() {
     //프로필 보관함 검색 api
     private fun getSearchProfiles(Name : String){
     //private fun getSearchProfiles(){
-        val call = ProfStorageObj.getRetrofitService.getSearchProf(Name,6)
+        //val call = ProfStorageObj.getRetrofitService.getSearchProf(Name,6)
+        val call = ProfStorageObj.getRetrofitService.getSearchProf("아",1)
+        Log.d("Retrofit_Get_Success", "검색 실행 $Name")
 
         call.enqueue(object : Callback<ProfStorageResponse.ResponseSearchProf> {
             override fun onResponse(
@@ -171,19 +198,19 @@ class ProfileStorageFragment : Fragment() {
                                 val imageResId = when {
                                     profile.image.type == "CHARACTER" && profile.image.characterType in 1..8 -> {
                                         when (profile.image.characterType) {
-                                            1 -> R.drawable.prof_avater1
-                                            2 -> R.drawable.prof_avater2
-                                            3 -> R.drawable.prof_avater3
-                                            4 -> R.drawable.prof_avater4
-                                            5 -> R.drawable.prof_avater5
-                                            6 -> R.drawable.prof_avater6
-                                            7 -> R.drawable.prof_avater7
-                                            8 -> R.drawable.prof_avater8
-                                            else -> R.drawable.prof_avater9
+                                            1 -> R.drawable.prof_avater1.toString()
+                                            2 -> R.drawable.prof_avater2.toString()
+                                            3 -> R.drawable.prof_avater3.toString()
+                                            4 -> R.drawable.prof_avater4.toString()
+                                            5 -> R.drawable.prof_avater5.toString()
+                                            6 -> R.drawable.prof_avater6.toString()
+                                            7 -> R.drawable.prof_avater7.toString()
+                                            8 -> R.drawable.prof_avater8.toString()
+                                            else -> R.drawable.prof_avater9.toString()
                                         }
                                     }
-                                    profile.image.type == "USER_IMAGE" -> R.drawable.prof_avater1
-                                    else -> R.drawable.avatar_basic
+                                    profile.image.type == "USER_IMAGE" -> profile.image.profile_image_url ?: ""
+                                    else -> R.drawable.avatar_basic.toString()
                                 }
                                 val isFavorite = profile.favorite // favorite 값 가져오기
                                 itemList.add(ProfileData(imageResId, profile.profileName,profile.profileId.toLong(),isFavorite))

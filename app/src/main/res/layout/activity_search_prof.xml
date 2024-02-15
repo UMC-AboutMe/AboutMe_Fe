@@ -105,7 +105,8 @@
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/search_tv">
+        app:layout_constraintTop_toBottomOf="@+id/search_tv"
+        tools:visibility="visible">
 
         <ImageView
             android:id="@+id/prof_bg"
@@ -134,10 +135,61 @@
             android:id="@+id/space_bg"
             android:layout_width="145dp"
             android:layout_height="250dp"
-            android:src="@drawable/searprof_card"
+            android:src="@drawable/myprofile_bg"
             app:layout_constraintEnd_toEndOf="@+id/prof_bg"
             app:layout_constraintStart_toStartOf="@+id/prof_bg"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageView2"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="32dp"
+            app:civ_border_color="@color/transparent"
+            app:civ_border_width="0dp"
+            app:layout_constraintEnd_toEndOf="@+id/space_bg"
+            app:layout_constraintStart_toStartOf="@+id/space_bg"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/frontprofile" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="50dp"
+            android:layout_height="15dp"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toTopOf="@+id/add_btn"
+            app:layout_constraintEnd_toEndOf="@+id/space_bg"
+            app:layout_constraintStart_toStartOf="@+id/space_bg"
+            app:srcCompat="@drawable/aboutme_pink" />
+
+        <TextView
+            android:id="@+id/profName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="7sp"
+            app:layout_constraintEnd_toEndOf="@+id/space_bg"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="@+id/space_bg"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+        <TextView
+            android:id="@+id/profNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="7sp"
+            app:layout_constraintEnd_toEndOf="@+id/space_bg"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="@+id/space_bg"
+            app:layout_constraintTop_toBottomOf="@+id/profName" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

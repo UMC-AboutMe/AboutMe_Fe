@@ -7,84 +7,23 @@
     android:background="@drawable/search_share_bg1"
     tools:context=".Search.CustomDialogProf">
 
-    <CheckBox
-        android:id="@+id/cb1"
-        android:layout_width="85dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/DialogProf_rc"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:fontFamily="@font/gmarketsansmedium"
-        android:text="프로필 1"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/cb_iv1"
-        app:layout_constraintStart_toStartOf="@+id/cb_iv1"
-        app:layout_constraintTop_toTopOf="@+id/cb_iv1" />
-
-    <CheckBox
-        android:id="@+id/cb2"
-        android:layout_width="88dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:fontFamily="@font/gmarketsansmedium"
-        android:text="프로필 2"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/cb_iv2"
-        app:layout_constraintStart_toStartOf="@+id/cb_iv2"
-        app:layout_constraintTop_toTopOf="@+id/cb_iv2" />
-
-    <CheckBox
-        android:id="@+id/cb3"
-        android:layout_width="88dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:fontFamily="@font/gmarketsansmedium"
-        android:text="프로필 3"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/cb_iv3"
-        app:layout_constraintStart_toStartOf="@+id/cb_iv3"
-        app:layout_constraintTop_toTopOf="@+id/cb_iv3" />
-
-    <ImageView
-        android:id="@+id/cb_iv1"
-        android:layout_width="59dp"
-        android:layout_height="112dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="60dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toStartOf="@+id/cb_iv2"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/searchspace_card2" />
-
-    <ImageView
-        android:id="@+id/cb_iv2"
-        android:layout_width="59dp"
-        android:layout_height="112dp"
-        android:layout_marginTop="10dp"
-        android:scaleType="centerCrop"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/searchspace_card2" />
-
-    <ImageView
-        android:id="@+id/cb_iv3"
-        android:layout_width="59dp"
-        android:layout_height="112dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="10dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/cb_iv2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/searchspace_card2" />
+        tools:listitem="@layout/item_profile" />
 
     <Button
         android:id="@+id/yes_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         android:background="@android:color/transparent"
         android:fontFamily="@font/gmarketsansmedium"
@@ -94,5 +33,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/DialogProf_rc" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -79,15 +79,15 @@ class HomeFragment : Fragment() {
         }
 
         datas.apply {
-            add(HomeFragmentData(R.drawable.home_rc1, "유태연"))
-            add(HomeFragmentData(R.drawable.home_rc2, "정서연"))
-            add(HomeFragmentData(R.drawable.home_rc3, "오유은"))
-            add(HomeFragmentData(R.drawable.home_rc4, "최가나"))
-            add(HomeFragmentData(R.drawable.home_rc5, "변성호"))
-            add(HomeFragmentData(R.drawable.home_rc6, "송혜음"))
-            add(HomeFragmentData(R.drawable.home_rc7, "조희수"))
-            add(HomeFragmentData(R.drawable.home_rc9, "차현정"))
-            add(HomeFragmentData(R.drawable.home_rc8, "정승원"))
+            add(HomeFragmentData(R.drawable.home_rc1, "테디 | 유태연"))
+            add(HomeFragmentData(R.drawable.home_rc2, "파스텔 | 정서연"))
+            add(HomeFragmentData(R.drawable.home_rc3, "윤 | 오유은"))
+            add(HomeFragmentData(R.drawable.home_rc4, "하나 | 최가나"))
+            add(HomeFragmentData(R.drawable.home_rc5, "렉스 | 변성호"))
+            add(HomeFragmentData(R.drawable.home_rc6, "혬 | 송혜음"))
+            add(HomeFragmentData(R.drawable.home_rc7, "모아 | 조희수"))
+            add(HomeFragmentData(R.drawable.home_rc9, "쩡 | 차현정"))
+            add(HomeFragmentData(R.drawable.home_rc8, "다에몬 | 정승원"))
             HomeAdapter.datas = datas
             HomeAdapter.notifyDataSetChanged()
         }

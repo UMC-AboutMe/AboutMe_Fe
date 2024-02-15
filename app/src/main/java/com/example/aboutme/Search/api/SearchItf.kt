@@ -39,4 +39,23 @@ interface SearchItf {
         @Path ("space-id") spaceId:Long,
         @Header("member-id") memberId:Int
     ) : Call<SearchResponse.ResponseSpaceStorage>
+
+    //내 프로필 상대방에게 공유
+    @POST ("/myprofiles/send")
+    fun postShareProf(
+    @Header("member-id") memberId:Long,
+    @Body requestShareProf : SearchResponse.RequestShareProf
+    ) : Call<SearchResponse.ResponseShareProf>
+
+    //내 마이프로필 조회
+    @GET ("/myprofiles")
+    fun getProfileList (
+        @Header ("member-id") memberId: Long
+    ) : Call<SearchResponse.ResponseGetProfiles>
+
+    //마이프로필 검색
+    @GET ("/myprofiles/search")
+    fun getSearchProf (
+        @Query("q") q:Int
+    ) : Call<SearchResponse.ResponseSearchProf>
 }
