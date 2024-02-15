@@ -20,8 +20,8 @@
 
         <ImageButton
             android:id="@+id/myprofile_share_btn"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:src="@drawable/myprofile_share"
             android:background="@color/white"
             app:layout_constraintTop_toTopOf="parent"
