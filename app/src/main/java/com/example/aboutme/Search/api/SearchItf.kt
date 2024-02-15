@@ -58,4 +58,11 @@ interface SearchItf {
     fun getSearchProf (
         @Query("q") q:Int
     ) : Call<SearchResponse.ResponseSearchProf>
+
+    //마이스페이스 공유 - 알림 데이터 생성
+    @POST ("/myspaces/share")
+    fun postShareSpace (
+        @Header("Authorization") Authorization:String,
+        @Body requestShareSpace : SearchResponse.RequestShareSpace
+    ) : Call<SearchResponse.ResponseShareSpace>
 }

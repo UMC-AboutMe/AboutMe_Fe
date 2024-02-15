@@ -95,4 +95,19 @@ class SearchResponse {
         var value: String,
         var feature_id: Int
     )
+
+    //마이스페이스 공유 - 알림 데이터 생성
+    data class ResponseShareSpace (
+        var isSuccess: Boolean,
+        var code: String,
+        var result : ShareSpace
+            )
+    data class ShareSpace (
+        var content : String,
+        var subscriberNickname : String,
+        var read : Boolean
+            )
+    data class RequestShareSpace (
+        var member_id : Long
+            )
 }

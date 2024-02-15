@@ -7,6 +7,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.aboutme.R
 import com.example.aboutme.Search.api.SearchObj
 import com.example.aboutme.Search.api.SearchResponse
@@ -94,8 +95,12 @@ class SearchSpaceActivity : AppCompatActivity() {
 
                             //Dialog
                             binding.addBtn.setOnClickListener {
+                                Toast.makeText(this@SearchSpaceActivity, "스페이스가 아지트에 추가되었습니다.", Toast.LENGTH_SHORT).show()
                                 storeSpace(response.result.spaceId)
-                                CustomDialogSpace("내 스페이스도 공유 하시겠습니까?")
+                                //서버로부터 멤버아이디를 받아와야함.
+                                //CustomDialogSpace("내 스페이스도 공유 하시겠습니까?",memberId)
+                                //일단 임의값 1로 설정
+                                CustomDialogSpace("내 스페이스도 공유 하시겠습니까?",1)
                                     .show(supportFragmentManager, "SpaceDialog")
                             }
                         } else {
@@ -140,7 +145,7 @@ class SearchSpaceActivity : AppCompatActivity() {
             9-> binding.charTypeBg.setImageResource(R.drawable.step2_avatar_9)
         }
     }
-
+    //스페이스 저장 api
     private fun storeSpace(spaceId : Long ) {
         Log.d("Retrofit_Search", "스페이스 저장 실행")
 
