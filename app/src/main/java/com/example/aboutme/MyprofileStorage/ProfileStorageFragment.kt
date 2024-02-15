@@ -126,6 +126,16 @@ class ProfileStorageFragment : Fragment() {
                 // 입력 후
             }
         })
+        // 화면 내 빈 공간 클릭시 키보드 숨김처리
+        binding.swipeRefreshLayout.setOnClickListener {
+            val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+        // 화면 내 빈 공간 클릭시 키보드 숨김처리
+        binding.searchBtn.setOnClickListener {
+            val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 
     private fun initRecycler() {
