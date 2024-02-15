@@ -76,15 +76,11 @@ class ProfileStorageFragment : Fragment() {
             binding.profileStorageRv.visibility = View.VISIBLE
         }
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initRecycler()
-        //val intent = Intent(requireContext(), ProfileStorageDetailFragment::class.java)
-
-        //프로필 보관함 조회 api
-        //getProfiles()
+        getProfiles()
 
         binding.searchBtn.setOnClickListener {
             //getSearchProfiles()
@@ -93,10 +89,6 @@ class ProfileStorageFragment : Fragment() {
 
         rvAdapter.setOnItemClickListener(object : ProfileRVAdapter.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
-                Log.d("프로필 클릭", "$position 클릭")
-                //position인덱스의 리스트 가져오기
-                //itemList[position]
-                //startActivity(intent)
                 val fragment = ProfileStorageDetailFragment()
 
                 val bundle = Bundle()
@@ -110,15 +102,13 @@ class ProfileStorageFragment : Fragment() {
             }
         })
     }
-
     private fun initRecycler() {
         rvAdapter = ProfileRVAdapter(itemList) // rvAdapter 초기화
         binding.profileStorageRv.adapter = rvAdapter
         binding.profileStorageRv.layoutManager = GridLayoutManager(requireContext(), 2)
     }
-
     //프로필 보관함 조회 api
-    private fun getProfiles(){
+    public fun getProfiles(){
         val call = ProfStorageObj.getRetrofitService.getProfStorage(6)
 
         call.enqueue(object : Callback<ProfStorageResponse.ResponeProfStorage> {
@@ -127,16 +117,16 @@ class ProfileStorageFragment : Fragment() {
                 response: Response<ProfStorageResponse.ResponeProfStorage>
             ) {
                 if (response.isSuccessful) {
+                    itemList.clear()
                     val response = response.body()
                     if (response != null) {
                         if (response.isSuccess) {
                             // 성공했을 때
-                            itemList.clear()
                             Log.d("Retrofit_Get_Success", response.toString())
-                            response.result.member_profiles.forEach { memberProfile ->
-                                val profileId = memberProfile.profile.profile_id
+                            response.result.memberProfileList.forEach { memberProfile ->
+                                val profileId = memberProfile.profileId
                                 val isFavorite = memberProfile.favorite // favorite 값 가져오기
-                                itemList.add(ProfileData(R.drawable.avatar_basic, "프로필 $profileId", profileId.toLong(),isFavorite))
+                                itemList.add(ProfileData(R.drawable.avatar_basic, memberProfile.profileName, profileId.toLong(),isFavorite))
                             }
                             rvAdapter.notifyDataSetChanged() // 얘가 없으면 아이템이 갱신되지 않는다! 중요
                         } else {
@@ -150,7 +140,6 @@ class ProfileStorageFragment : Fragment() {
                     Log.d("Retrofit_Get_Failed", response.toString())
                 }
             }
-
             override fun onFailure(
                 call: Call<ProfStorageResponse.ResponeProfStorage>,
                 t: Throwable
@@ -161,11 +150,10 @@ class ProfileStorageFragment : Fragment() {
         }
         )
     }
-
     //프로필 보관함 검색 api
     private fun getSearchProfiles(Name : String){
     //private fun getSearchProfiles(){
-        val call = ProfStorageObj.getRetrofitService.getSearchProf("아",1)
+        val call = ProfStorageObj.getRetrofitService.getSearchProf(Name,6)
 
         call.enqueue(object : Callback<ProfStorageResponse.ResponseSearchProf> {
             override fun onResponse(
@@ -173,11 +161,11 @@ class ProfileStorageFragment : Fragment() {
                 response: Response<ProfStorageResponse.ResponseSearchProf>
             ) {
                 if (response.isSuccessful) {
+                    itemList.clear()
                     val response = response.body()
                     if (response != null) {
                         if (response.isSuccess) {
                             //성공했을 때
-                            itemList.clear()
                             Log.d("Retrofit_Get_Success", response.toString())
                             response.result.memberProfileList.forEach { profile ->
                                 val imageResId = when {
@@ -197,10 +185,9 @@ class ProfileStorageFragment : Fragment() {
                                     profile.image.type == "USER_IMAGE" -> R.drawable.prof_avater1
                                     else -> R.drawable.avatar_basic
                                 }
-                                itemList.add(ProfileData(imageResId, profile.profileName,profile.profileId.toLong(),profile.favorite))
+                                val isFavorite = profile.favorite // favorite 값 가져오기
+                                itemList.add(ProfileData(imageResId, profile.profileName,profile.profileId.toLong(),isFavorite))
                             }
-
-
                             rvAdapter.notifyDataSetChanged() //얘가 없으면 아이템이 갱신되지 않는다! 중요
                         } else {
                             //실패했을 때
@@ -212,7 +199,6 @@ class ProfileStorageFragment : Fragment() {
                     Log.d("Retrofit_Get_Failed", response.toString())
                 }
             }
-
             override fun onFailure(
                 call: Call<ProfStorageResponse.ResponseSearchProf>,
                 t: Throwable

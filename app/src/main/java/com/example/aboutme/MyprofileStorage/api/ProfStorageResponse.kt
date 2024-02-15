@@ -10,23 +10,18 @@ class ProfStorageResponse {
         var result : ResultList
     )
     data class ResultList(
-        var member_profiles : List<Profiles>,
-        var total_member_profiles : Int
+        var memberProfileList : List<Profiles>
     )
     data class Profiles (
-        var member_profile_id : Int,
+        var profileId : Int,
+        var profileName : String,
         var favorite : Boolean,
-        var member : MemberDetail,
-        var profile : ProfileDetail
+        var image : ImageDetail
     )
-    data class MemberDetail (
-        var social : String,
-        var email : String
-    )
-    data class ProfileDetail (
-        var profile_id : Int,
-        var serial_number : Int,
-        var is_default : Boolean
+    data class ImageDetail (
+        var type : String,
+        var characterType : Int? ,
+        var profile_image_url : String?
     )
 
     //프로필 보관함 특정 마이프로필 삭제
@@ -73,5 +68,35 @@ class ProfStorageResponse {
         val characterType: Int?,
         val profile_image_url: String?
     )
+    //마이프로필 조회 - 단건
+    data class ResponseProf (
+        val isSuccess: Boolean,
+        val code: String,
+        val message: String,
+        val result: ProfResult
+            )
+    data class ProfResult (
+        val profileId: Int,
+        val serial_number : Int,
+        val is_default : Boolean,
+        val profile_image : ImageList,
+        val front_features : List<FrontList>,
+        val back_features : List<BackList>
+            )
+    data class ImageList (
+        val type : String,
+        val charcterType : Int?,
+        val profile_image_url : String?
+            )
+    data class FrontList (
+        val key : String?,
+        val value : String?,
+        val feature_id : Long
+            )
+    data class BackList (
+        val key : String?,
+        val value : String?,
+        val feature_id : Long
+            )
 
 }
