@@ -68,41 +68,6 @@ class SearchProfActivity : AppCompatActivity() {
             }
         })
     }
-
-    //마이프로필 상대방에게 공유
-    private fun postShareProf(){
-        Log.d("Retrofit_Add","프로필 공유 실행")
-        val requestShareProf = SearchResponse.RequestShareProf(6,listOf(109349))
-        val call = SearchObj.getRetrofitService.postShareProf(6, requestShareProf)
-
-        call.enqueue(object : Callback<SearchResponse.ResponseShareProf> {
-            override fun onResponse(
-                call: Call<SearchResponse.ResponseShareProf>,
-                response: Response<SearchResponse.ResponseShareProf>
-            ) {
-                Log.d("Retrofit_Add",response.toString())
-                if(response.isSuccessful){
-                    val response=response.body()
-                    Log.d("Retrofit_Add",response.toString())
-
-                    if(response != null) {
-                        if(response.isSuccess){
-                            //성공했을 때
-                        }
-                        else{
-                            //실패했을 때
-                            Log.d("Retrofit_Add",response.message)
-
-                        }
-                    }
-                }
-            }
-            override fun onFailure(call:Call<SearchResponse.ResponseShareProf>, t:Throwable) {
-                val errorMessage = "Call Failed:  ${t.message}"
-                Log.d("Retrofit_Add",errorMessage)
-            }
-        })
-    }
     //마이프로필 검색
     private fun getSearchProf(Number : Int ) {
         val call = SearchObj.getRetrofitService.getSearchProf(Number)
@@ -162,7 +127,7 @@ class SearchProfActivity : AppCompatActivity() {
                                 //보관함 추가하기 api
                                 postProfStorage(Number)
                                 //상대방 마이프로필 내 보관함에 추가하기
-                                CustomDialog("내 프로필도 공유 하시겠습니까?")
+                                CustomDialog("내 프로필도 공유 하시겠습니까?",Number)
                                     .show(supportFragmentManager, "ProfDialog")
                             }
                         } else {

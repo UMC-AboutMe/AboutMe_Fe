@@ -12,7 +12,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.aboutme.databinding.ActivityCustomDialogBinding
 
 // 커스텀 다이얼로그
-class CustomDialog(val content: String) : DialogFragment() {
+class CustomDialog(val content: String, val serial : Int ) : DialogFragment() {
     private var _binding: ActivityCustomDialogBinding? = null
     private val binding get() = _binding!!
 
@@ -33,7 +33,7 @@ class CustomDialog(val content: String) : DialogFragment() {
         binding.yesBtn.setOnClickListener {
             dismiss()
             // 다음 다이얼로그
-            CustomDialogProf().show(requireFragmentManager(), "SecondDialog")
+            CustomDialogProf(serial).show(requireFragmentManager(), "SecondDialog")
         }
         // 다이얼로그를 하단으로 조정
         dialog?.window?.setGravity(Gravity.BOTTOM)

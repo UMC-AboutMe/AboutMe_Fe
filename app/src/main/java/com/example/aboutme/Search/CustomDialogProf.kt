@@ -18,7 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CustomDialogProf : DialogFragment() {
+class CustomDialogProf(private val serial : Int) : DialogFragment() {
     private var _binding: ActivityCustomDialogProfBinding? = null
     private val binding get() = _binding!!
     lateinit var profileAdapter: DialogProfAdapter
@@ -28,11 +28,6 @@ class CustomDialogProf : DialogFragment() {
         val view = binding.root
         // 레이아웃 배경을 투명하게
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        // 확인 버튼
-        binding.yesBtn.setOnClickListener {
-            dismiss()
-        }
         // 다이얼로그를 하단으로 조정
         dialog?.window?.setGravity(Gravity.BOTTOM)
 
@@ -107,7 +102,7 @@ class CustomDialogProf : DialogFragment() {
                                     DialogProfData(
                                         profile_img = imageResId,
                                         profile_name = profileName,
-                                        profile_num = "IU(아이유)", //일단 임의값
+                                        profile_num = "IU(아이유)", //일단 임의값 - 전화번호 부분
                                         member_id = 1, //임의값 - 내 프로필을 보낼 멤버의 아이디
                                         serial_number = profile.serial_number,
                                         isChecked = false
@@ -116,6 +111,11 @@ class CustomDialogProf : DialogFragment() {
                             }
                             // 어댑터의 데이터가 변경되었음을 알리고 화면을 업데이트합니다.
                             profileAdapter.notifyDataSetChanged()
+                            // 확인 버튼
+                            binding.yesBtn.setOnClickListener {
+                                postShareProf()
+                                dismiss()
+                            }
                         } else {
                             //실패했을 때
                             Log.d("Retrofit_Add", response.message)
@@ -126,6 +126,40 @@ class CustomDialogProf : DialogFragment() {
             }
 
             override fun onFailure(call: Call<SearchResponse.ResponseGetProfiles>, t: Throwable) {
+                val errorMessage = "Call Failed:  ${t.message}"
+                Log.d("Retrofit_Add", errorMessage)
+            }
+        })
+    }
+    //마이프로필 상대방에게 공유
+    private fun postShareProf() {
+        Log.d("Retrofit_Add", "프로필 공유 실행")
+        val requestShareProf = SearchResponse.RequestShareProf(listOf(serial), listOf(109349))
+        val call = SearchObj.getRetrofitService.postShareProf(6, requestShareProf)
+
+        call.enqueue(object : Callback<SearchResponse.ResponseShareProf> {
+            override fun onResponse(
+                call: Call<SearchResponse.ResponseShareProf>,
+                response: Response<SearchResponse.ResponseShareProf>
+            ) {
+                Log.d("Retrofit_Add", response.toString())
+                if (response.isSuccessful) {
+                    val response = response.body()
+                    Log.d("Retrofit_Add", response.toString())
+
+                    if (response != null) {
+                        if (response.isSuccess) {
+                            //성공했을 때
+                            Log.d("Retrofit_Add","내 프로필 공유 성공")
+                        } else {
+                            //실패했을 때
+                            Log.d("Retrofit_Add", response.message)
+
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call: Call<SearchResponse.ResponseShareProf>, t: Throwable) {
                 val errorMessage = "Call Failed:  ${t.message}"
                 Log.d("Retrofit_Add", errorMessage)
             }

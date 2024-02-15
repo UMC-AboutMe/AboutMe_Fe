@@ -30,9 +30,9 @@ interface SearchItf {
     ) : Call<SearchResponse.ResponseSpaceStorage>
 
     //내 프로필 상대방에게 공유
-    @POST ("/myprofiles/share/mine")
+    @POST ("/myprofiles/send")
     fun postShareProf(
-    @Header("member-id") memberId:Int,
+    @Header("member-id") memberId:Long,
     @Body requestShareProf : SearchResponse.RequestShareProf
     ) : Call<SearchResponse.ResponseShareProf>
 
