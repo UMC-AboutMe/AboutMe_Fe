@@ -11,12 +11,9 @@
 
         <ImageView
             android:id="@+id/mainProfileLogo_iv"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/logo"/>
-
-
-
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/logo3"/>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/mainProfile_vp"

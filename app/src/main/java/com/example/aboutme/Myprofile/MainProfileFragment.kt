@@ -49,7 +49,6 @@ class MainProfileFragment : Fragment() {
 
         binding = FragmentMainprofileBinding.inflate(inflater, container, false)
 
-        //binding.mainProfileVp.pageMargin = resources.getDimensionPixelOffset(R.dimen.viewpager_page_margin)
 
         return binding.root
     }
