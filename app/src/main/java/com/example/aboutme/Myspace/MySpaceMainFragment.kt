@@ -9,9 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.aboutme.HomeFragment
 import com.example.aboutme.RetrofitMyspaceAgit.MySpaceCreate
 import com.example.aboutme.RetrofitMyspaceAgit.MySpaceCreateRequest
 import com.example.aboutme.R
@@ -22,6 +22,7 @@ import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClient2
 import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClientMyspace
 import com.example.aboutme.bottomNavigationView
 import com.example.aboutme.databinding.FragmentMyspacemainBinding
+import com.github.matteobattilana.weather.PrecipType
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,6 +31,10 @@ class MySpaceMainFragment : Fragment() {
 
     private lateinit var binding: FragmentMyspacemainBinding
     private val sharedViewModel: MyspaceViewModel by viewModels()
+
+    private lateinit var weather: PrecipType
+    private lateinit var weatherText: String
+    private var number = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +49,54 @@ class MySpaceMainFragment : Fragment() {
             requireActivity().startActivity(intent, options.toBundle())
         }
 
+        changeWeather()
+
         return binding.root
+    }
+
+    private fun changeWeather() {
+
+        var weatherSpeed = 0
+        var weatherParticles = 0f
+
+        // number 상수값으로 날씨 결정
+        when (number) {
+            0 -> {
+                weather = PrecipType.CLEAR
+                weatherText = "Clear"
+            }
+            1 -> {
+                weather = PrecipType.SNOW
+                weatherText = "Snow"
+                weatherParticles = 50f
+                weatherSpeed = 200
+            }
+            2 -> {
+                weather = PrecipType.RAIN
+                weatherText = "Rain"
+                weatherParticles = 100f
+                weatherSpeed = 600
+            }
+        }
+
+        //Update animation UI for weather
+        binding.weatherView.apply {
+            setWeatherData(weather)
+            speed = weatherSpeed  // 입자가 내리는 속도
+            emissionRate = weatherParticles  // 입자수
+            angle = 0 // 입자가 내리는 각도
+            fadeOutPercent = .8f  // 입자가 사라지는 임계값 (0.0f-1.0f) -> 수치가 낮을수록 빨리 사라짐
+        }
+
+        // 입자가 하얀색이므로 프래그먼트 및 기존 검정 텍스트의 색깔 변경
+        binding.fragmentMyspacemain.apply {
+            // 배경색 변경
+            binding.fragmentMyspacemain.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.black))
+
+            // 특정 이미지뷰의 텍스트 색상 변경
+            binding.myspaceTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            binding.myspaceTitleName.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        }
     }
 
     private fun fetchData() {

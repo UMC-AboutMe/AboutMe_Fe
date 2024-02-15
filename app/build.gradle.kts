@@ -126,4 +126,7 @@ dependencies {
 
     // lottie 애니메이션
     implementation ("com.airbnb.android:lottie:6.3.0")
+
+    // 날씨 애니메이션
+    implementation ("com.github.MatteoBattilana:WeatherView:3.0.0")
 }
