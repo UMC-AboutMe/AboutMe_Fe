@@ -24,8 +24,8 @@ object MyspaceViewModel : ViewModel(){
     // 이야기에 해당하는 텍스트를 저장할 변수
     var storyText: String? = null
 
-    // 감정에 해당하는 텍스트를 저장할 변수
-    var feelingText: String? = null
+    // 감정 아이콘의 인덱스를 저장할 변수
+    private val selectedFeelingId = MutableLiveData<Int>()
 
     // 선택된 Avatar의 인덱스를 저장하는 메서드
     fun setSelectedAvatarIndex(index: Int) {
@@ -47,8 +47,11 @@ object MyspaceViewModel : ViewModel(){
             "commentText" -> commentText = text
             "musicText" -> musicText = text
             "storyText" -> storyText = text
-            "feelingText" -> feelingText = text
             // 다른 변수에 대한 처리를 추가할 수 있습니다.
         }
+    }
+
+    fun setSelectedFeeling(feelingId: Int) {
+        selectedFeelingId.value = feelingId
     }
 }

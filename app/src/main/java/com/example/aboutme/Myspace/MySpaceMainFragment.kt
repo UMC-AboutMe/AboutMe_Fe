@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -33,7 +35,6 @@ class MySpaceMainFragment : Fragment() {
     private val sharedViewModel: MyspaceViewModel by viewModels()
 
     private lateinit var weather: PrecipType
-    private lateinit var weatherText: String
     private var number = 1
 
     override fun onCreateView(
@@ -63,17 +64,14 @@ class MySpaceMainFragment : Fragment() {
         when (number) {
             0 -> {
                 weather = PrecipType.CLEAR
-                weatherText = "Clear"
             }
             1 -> {
                 weather = PrecipType.SNOW
-                weatherText = "Snow"
                 weatherParticles = 50f
                 weatherSpeed = 200
             }
             2 -> {
                 weather = PrecipType.RAIN
-                weatherText = "Rain"
                 weatherParticles = 100f
                 weatherSpeed = 600
             }
@@ -86,6 +84,7 @@ class MySpaceMainFragment : Fragment() {
             emissionRate = weatherParticles  // 입자수
             angle = 0 // 입자가 내리는 각도
             fadeOutPercent = .8f  // 입자가 사라지는 임계값 (0.0f-1.0f) -> 수치가 낮을수록 빨리 사라짐
+            // 입자의 크기는 조정불가
         }
 
         // 입자가 하얀색이므로 프래그먼트 및 기존 검정 텍스트의 색깔 변경
@@ -167,6 +166,7 @@ class MySpaceMainFragment : Fragment() {
             if (isCreated) {
                 fetchData()
 
+                // 아이콘 클릭시 등장하는 입력란 전체를 감싸고 있는 레이아웃
                 val layouts = listOf(
                     binding.step3FeelingLayout,
                     binding.step3CommentLayout,
@@ -176,6 +176,7 @@ class MySpaceMainFragment : Fragment() {
                     binding.step3PhotoLayout
                 )
 
+                // 마이스페이스 아이콘 목록
                 val buttons = listOf(
                     binding.step3Feeling,
                     binding.step3Comment,
@@ -185,6 +186,7 @@ class MySpaceMainFragment : Fragment() {
                     binding.step3Photo
                 )
 
+                // 아이콘 클릭시 등장하는 입력란 표시
                 buttons.forEachIndexed { index, button ->
                     button.setOnClickListener {
                         // 기존에 선택된 레이아웃들을 모두 숨김
@@ -195,28 +197,31 @@ class MySpaceMainFragment : Fragment() {
                     }
                 }
 
-                // Edittext와 Ok 버튼을 포함한 레이아웃에 대한 리스트
+                // *문자를 입력해야하는 아이콘들에 대한 정의*
+                // Edittext와 Ok 버튼이 존재하는 레이아웃에 대한 리스트
                 val layoutsWithEditTextAndOkButton = listOf(
                     Pair(binding.step3CommentEt, binding.step3CommentOk),
                     Pair(binding.step3MusicEt, binding.step3MusicOk),
                     Pair(binding.step3StoryEt, binding.step3StoryOk),
-                    Pair(binding.step3FeelingEt, binding.step3FeelingOk)
                 )
 
+                // *문자를 입력해야하는 아이콘들에 대한 정의*
+                // Edittext 주소 매핑
                 val editTextToVariableMap = mapOf(
                     R.id.step3_comment_et to "commentText",
                     R.id.step3_music_et to "musicText",
                     R.id.step3_story_et to "storyText",
-                    R.id.step3_feeling_et to "feelingText"
                 )
 
+                // *문자를 입력해야하는 아이콘들에 대한 정의*
+                // Ok 버튼 주소 매핑
                 val okButtons = listOf(
                     binding.step3CommentOk,
                     binding.step3MusicOk,
                     binding.step3StoryOk,
-                    binding.step3FeelingOk
                 )
 
+                // *문자를 입력해야하는 아이콘들에 대한 정의*
                 // Ok 버튼에 대한 클릭 이벤트 처리
                 okButtons.forEachIndexed { index, okButton ->
                     okButton.setOnClickListener {
@@ -238,12 +243,49 @@ class MySpaceMainFragment : Fragment() {
                     }
                 }
 
+                // *문자를 입력해야하는 아이콘들에 대한 정의*
                 // EditText를 클릭할 때 Ok 버튼 보이도록 설정
                 layoutsWithEditTextAndOkButton.forEach { (editText, okButton) ->
                     editText.setOnClickListener {
                         okButton.visibility = View.VISIBLE
                     }
                 }
+
+                // *문자를 입력하지 않는 아이콘들에 대한 정의*
+                // 클릭한 이미지뷰를 저장할 변수 선언
+                var selectedImageView: ImageView? = null
+
+                // *문자를 입력하지 않는 아이콘들에 대한 정의*
+                // feeling 아이콘 주소 매핑
+                val feelingIcons = listOf(
+                    binding.feeling1,
+                    binding.feeling2,
+                    binding.feeling3,
+                    binding.feeling4,
+                    binding.feeling5,
+                )
+
+                // Ok 버튼에 대한 클릭 이벤트 처리
+                feelingIcons.forEach { imageView ->
+                    imageView.setOnClickListener {
+                        // 클릭한 이미지뷰를 제외한 나머지 이미지뷰들을 숨김
+                        feelingIcons.filter { it != imageView }.forEach { it.visibility = View.GONE }
+
+                        // 클릭한 이미지뷰를 feeling_3 아이콘 자리로 이동
+                        val layoutParams = imageView.layoutParams as RelativeLayout.LayoutParams
+                        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL)
+                        layoutParams.addRule(RelativeLayout.BELOW, R.id.step3_feeling_guide)
+                        imageView.layoutParams = layoutParams
+
+                        // 클릭한 이미지뷰를 selectedImageView에 저장
+                        selectedImageView = imageView
+
+                        // 클릭한 이미지뷰를 뷰모델에 저장
+                        sharedViewModel.setSelectedFeeling(imageView.id)
+                    }
+                }
+
+
             } else {
                 // 이전 step 데이터들을 서버에 저장하고 로컬 뷰모델에 저장되어있는 정보 추출
                 val nickname = sharedViewModel.nickname
