@@ -71,11 +71,11 @@ class SearchSpaceActivity : AppCompatActivity() {
 
     private fun getSearchSpace() {
         Log.d("Retrofit_Search", "스페이스 검색 실행")
-        val spaceName = binding.searchTv.toString()
-        //val call = SearchObj.getRetrofitService.getSearchSpace(spaceName)
+        val spaceName = binding.searchTv.text.toString()
+        val call = SearchObj.getRetrofitService.getSearchSpace(spaceName)
 
         //짱구는 임시값
-        val call = SearchObj.getRetrofitService.getSearchSpace("짱구")
+        //val call = SearchObj.getRetrofitService.getSearchSpace("짱구")
 
         call.enqueue(object : Callback<SearchResponse.ResponseSearchSpace> {
             override fun onResponse(
