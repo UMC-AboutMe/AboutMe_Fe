@@ -35,17 +35,16 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     dataBinding{
         enable = true
     }
-
     viewBinding{
         enable = true
     }
     buildFeatures {
         viewBinding = true
     }
-
 }
 
 dependencies {
@@ -118,7 +117,6 @@ dependencies {
     //탭레이아웃
     implementation("com.google.android.material:material:1.5.0-alpha02")
 
-
     // 리사이클러뷰 아이템 shimmer effect
     implementation ("com.facebook.shimmer:shimmer:0.5.0")
 
@@ -127,4 +125,9 @@ dependencies {
 
     implementation ("com.squareup.okhttp3:okhttp:4.9.3")
 
+    // lottie 애니메이션
+    implementation ("com.airbnb.android:lottie:6.3.0")
+
+    // 날씨 애니메이션
+    implementation ("com.github.MatteoBattilana:WeatherView:3.0.0")
 }

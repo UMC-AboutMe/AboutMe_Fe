@@ -8,9 +8,10 @@
     <!-- 알림 허용 권한 설정 -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- 갤러리 권한 -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -81,6 +82,9 @@
         </provider>
 
         <activity
+            android:name=".Myspace.LottieAnimationActivity"
+            android:exported="true" />
+        <activity
             android:name=".Myspace.MySpaceStep1Activity"
             android:exported="true" />
         <activity
@@ -132,7 +136,10 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true" /> <!-- 카카오 소셜 로그인 api key 연결 -->
+            android:exported="true" >
+        </activity>
+
+        <!-- 카카오 소셜 로그인 api key 연결 -->
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">

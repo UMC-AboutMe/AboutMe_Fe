@@ -1,15 +1,19 @@
 package com.example.aboutme.Myspace
 
+import android.app.ActivityOptions
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.aboutme.HomeFragment
 import com.example.aboutme.RetrofitMyspaceAgit.MySpaceCreate
 import com.example.aboutme.RetrofitMyspaceAgit.MySpaceCreateRequest
 import com.example.aboutme.R
@@ -18,7 +22,9 @@ import com.example.aboutme.RetrofitMyspaceAgit.MyspaceCheckResult
 import com.example.aboutme.RetrofitMyspaceAgit.ResultModelmsc
 import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClient2
 import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClientMyspace
+import com.example.aboutme.bottomNavigationView
 import com.example.aboutme.databinding.FragmentMyspacemainBinding
+import com.github.matteobattilana.weather.PrecipType
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,6 +34,9 @@ class MySpaceMainFragment : Fragment() {
     private lateinit var binding: FragmentMyspacemainBinding
     private val sharedViewModel: MyspaceViewModel by viewModels()
 
+    private lateinit var weather: PrecipType
+    private var number = 1
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,14 +44,85 @@ class MySpaceMainFragment : Fragment() {
         binding = FragmentMyspacemainBinding.inflate(inflater, container, false)
 
         binding.logo.setOnClickListener {
-            // 데이터는 ViewModel에 저장되어 있으므로 Bundle 사용할 필요 없음
-            requireActivity().supportFragmentManager.beginTransaction()
-                .detach(this)
-                .commit()
-            return@setOnClickListener
+            // 홈화면 이동시 애니메이션 효과
+            val intent = Intent(activity, bottomNavigationView::class.java)
+            val options = ActivityOptions.makeCustomAnimation(requireContext(), R.anim.fade_in, R.anim.fade_out)
+            requireActivity().startActivity(intent, options.toBundle())
+        }
+
+        binding.myspaceTitle.setOnClickListener {
+            changeWeather()
+        }
+
+        binding.myspaceTitleName.setOnClickListener {
+            cancelWeather()
         }
 
         return binding.root
+    }
+
+    private fun changeWeather() {
+        binding.weatherView.visibility = View.VISIBLE
+
+        var weatherSpeed = 0
+        var weatherParticles = 0f
+
+        // 사이클 돌리기
+        if (number < 2) {
+            ++number
+        } else {
+            number = 0
+        }
+
+        // number 상수값으로 날씨 결정
+        when (number) {
+            0 -> {
+                weather = PrecipType.CLEAR
+            }
+            1 -> {
+                weather = PrecipType.SNOW
+                weatherParticles = 50f
+                weatherSpeed = 200
+            }
+            2 -> {
+                weather = PrecipType.RAIN
+                weatherParticles = 100f
+                weatherSpeed = 600
+            }
+        }
+
+        //Update animation UI for weather
+        binding.weatherView.apply {
+            setWeatherData(weather)
+            speed = weatherSpeed  // 입자가 내리는 속도
+            emissionRate = weatherParticles  // 입자수
+            angle = 0 // 입자가 내리는 각도
+            fadeOutPercent = .8f  // 입자가 사라지는 임계값 (0.0f-1.0f) -> 수치가 낮을수록 빨리 사라짐
+            // 입자의 크기는 조정불가
+        }
+
+        // 입자가 하얀색이므로 프래그먼트 및 기존 검정 텍스트의 색깔 변경
+        binding.fragmentMyspacemain.apply {
+            // 배경색 변경
+            binding.fragmentMyspacemain.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.black))
+
+            // 특정 이미지뷰의 텍스트 색상 변경
+            binding.myspaceTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            binding.myspaceTitleName.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        }
+    }
+
+    private fun cancelWeather() {
+        binding.weatherView.visibility = View.GONE
+
+        binding.fragmentMyspacemain.apply {
+            // 배경색 변경
+            binding.fragmentMyspacemain.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
+
+            // 특정 이미지뷰의 텍스트 색상 변경
+            binding.myspaceTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            binding.myspaceTitleName.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+        }
     }
 
     private fun fetchData() {
@@ -113,6 +193,7 @@ class MySpaceMainFragment : Fragment() {
             if (isCreated) {
                 fetchData()
 
+                // 아이콘 클릭시 등장하는 입력란 전체를 감싸고 있는 레이아웃
                 val layouts = listOf(
                     binding.step3FeelingLayout,
                     binding.step3CommentLayout,
@@ -122,6 +203,7 @@ class MySpaceMainFragment : Fragment() {
                     binding.step3PhotoLayout
                 )
 
+                // 마이스페이스 아이콘 목록
                 val buttons = listOf(
                     binding.step3Feeling,
                     binding.step3Comment,
@@ -131,6 +213,7 @@ class MySpaceMainFragment : Fragment() {
                     binding.step3Photo
                 )
 
+                // 아이콘 클릭시 등장하는 입력란 표시
                 buttons.forEachIndexed { index, button ->
                     button.setOnClickListener {
                         // 기존에 선택된 레이아웃들을 모두 숨김
@@ -141,28 +224,31 @@ class MySpaceMainFragment : Fragment() {
                     }
                 }
 
-                // Edittext와 Ok 버튼을 포함한 레이아웃에 대한 리스트
+                // *문자를 입력해야하는 아이콘들에 대한 정의*
+                // Edittext와 Ok 버튼이 존재하는 레이아웃에 대한 리스트
                 val layoutsWithEditTextAndOkButton = listOf(
                     Pair(binding.step3CommentEt, binding.step3CommentOk),
                     Pair(binding.step3MusicEt, binding.step3MusicOk),
                     Pair(binding.step3StoryEt, binding.step3StoryOk),
-                    Pair(binding.step3FeelingEt, binding.step3FeelingOk)
                 )
 
+                // *문자를 입력해야하는 아이콘들에 대한 정의*
+                // Edittext 주소 매핑
                 val editTextToVariableMap = mapOf(
                     R.id.step3_comment_et to "commentText",
                     R.id.step3_music_et to "musicText",
                     R.id.step3_story_et to "storyText",
-                    R.id.step3_feeling_et to "feelingText"
                 )
 
+                // *문자를 입력해야하는 아이콘들에 대한 정의*
+                // Ok 버튼 주소 매핑
                 val okButtons = listOf(
                     binding.step3CommentOk,
                     binding.step3MusicOk,
                     binding.step3StoryOk,
-                    binding.step3FeelingOk
                 )
 
+                // *문자를 입력해야하는 아이콘들에 대한 정의*
                 // Ok 버튼에 대한 클릭 이벤트 처리
                 okButtons.forEachIndexed { index, okButton ->
                     okButton.setOnClickListener {
@@ -184,12 +270,49 @@ class MySpaceMainFragment : Fragment() {
                     }
                 }
 
+                // *문자를 입력해야하는 아이콘들에 대한 정의*
                 // EditText를 클릭할 때 Ok 버튼 보이도록 설정
                 layoutsWithEditTextAndOkButton.forEach { (editText, okButton) ->
                     editText.setOnClickListener {
                         okButton.visibility = View.VISIBLE
                     }
                 }
+
+                // *문자를 입력하지 않는 아이콘들에 대한 정의*
+                // 클릭한 이미지뷰를 저장할 변수 선언
+                var selectedImageView: ImageView? = null
+
+                // *문자를 입력하지 않는 아이콘들에 대한 정의*
+                // feeling 아이콘 주소 매핑
+                val feelingIcons = listOf(
+                    binding.feeling1,
+                    binding.feeling2,
+                    binding.feeling3,
+                    binding.feeling4,
+                    binding.feeling5,
+                )
+
+                // Ok 버튼에 대한 클릭 이벤트 처리
+                feelingIcons.forEach { imageView ->
+                    imageView.setOnClickListener {
+                        // 클릭한 이미지뷰를 제외한 나머지 이미지뷰들을 숨김
+                        feelingIcons.filter { it != imageView }.forEach { it.visibility = View.GONE }
+
+                        // 클릭한 이미지뷰를 feeling_3 아이콘 자리로 이동
+                        val layoutParams = imageView.layoutParams as RelativeLayout.LayoutParams
+                        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL)
+                        layoutParams.addRule(RelativeLayout.BELOW, R.id.step3_feeling_guide)
+                        imageView.layoutParams = layoutParams
+
+                        // 클릭한 이미지뷰를 selectedImageView에 저장
+                        selectedImageView = imageView
+
+                        // 클릭한 이미지뷰를 뷰모델에 저장
+                        sharedViewModel.setSelectedFeeling(imageView.id)
+                    }
+                }
+
+
             } else {
                 // 이전 step 데이터들을 서버에 저장하고 로컬 뷰모델에 저장되어있는 정보 추출
                 val nickname = sharedViewModel.nickname
