@@ -27,29 +27,29 @@
                 android:id="@+id/shareBottomSheet2_instargram_btn"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginLeft="40dp"
-                android:background="@drawable/myprofile_instargram"/>
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/insta2"/>
 
             <ImageButton
                 android:id="@+id/shareBottomSheet2_kakao_btn"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="40dp"
-                android:background="@drawable/login_kakao"/>
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/kakao2"/>
 
             <ImageButton
                 android:id="@+id/shareBottomSheet2_image_btn"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginLeft="40dp"
-                android:background="@drawable/myprofile_image"/>
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/imageshare2"/>
 
             <ImageButton
                 android:id="@+id/numberPaste_btn"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginLeft="40dp"
-                android:background="@drawable/myprofile_paste"/>
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/serialpaste2"/>
 
         </LinearLayout>
 
@@ -63,28 +63,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="인스타그램\n    공유"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="30dp"
                 android:fontFamily="@font/gmarketsansmedium"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="카카오톡\n   공유"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="30dp"
                 android:fontFamily="@font/gmarketsansmedium"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="이미지\n  저장"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="45dp"
                 android:fontFamily="@font/gmarketsansmedium"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="일련번호\n   복사"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="45dp"
                 android:fontFamily="@font/gmarketsansmedium"/>
         </LinearLayout>
 
