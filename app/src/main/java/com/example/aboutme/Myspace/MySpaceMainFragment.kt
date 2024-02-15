@@ -62,6 +62,7 @@ class MySpaceMainFragment : Fragment() {
     }
 
     private fun changeWeather() {
+        binding.weatherView.visibility = View.VISIBLE
 
         var weatherSpeed = 0
         var weatherParticles = 0f
