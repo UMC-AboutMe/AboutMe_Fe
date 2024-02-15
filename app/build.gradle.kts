@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId = "com.example.aboutme"
         minSdk = 29
-        targetSdk = 33
+        targetSdk = 32
         versionCode = 1
         versionName = "1.0"
 
@@ -124,4 +124,7 @@ dependencies {
 
     // swipe refresh
     implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
+    implementation ("com.squareup.okhttp3:okhttp:4.9.3")
+
 }

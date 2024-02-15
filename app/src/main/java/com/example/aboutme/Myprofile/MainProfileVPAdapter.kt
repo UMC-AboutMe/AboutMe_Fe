@@ -6,13 +6,23 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyprofile.RetrofitClient
+import com.example.aboutme.RetrofitMyprofileData.FrontFeature
+import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
 import com.example.aboutme.RetrofitMyprofileData.MainProfileData
+import com.example.aboutme.RetrofitMyprofileData.PatchMyprofile
 import com.example.aboutme.databinding.ItemAddProfileBinding
 import com.example.aboutme.databinding.ItemMultiprofileBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,6 +30,9 @@ import retrofit2.Response
 class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHolder>(
     MainListDiffCallback()
 ) {
+
+
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     companion object {
         private const val VIEW_TYPE_ITEM = 0
@@ -32,6 +45,7 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
         return if (viewType == VIEW_TYPE_ITEM) {
             val binding =
                 ItemMultiprofileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
 
             MainItemViewHolder(binding)
         } else {
@@ -103,6 +117,8 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
     inner class MainItemViewHolder(private val binding: ItemMultiprofileBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+
+
         init {
             itemView.setOnClickListener {
                 val position = adapterPosition
@@ -129,9 +145,43 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
 
                 }
             }
+
+
+            profilePosion(position) { realProfileId ->
+                Log.d("realprofileID!", realProfileId.toString())
+
+                binding.defaultNoProfileBtn.setOnClickListener {
+                    Log.d("click!!","success")
+                        coroutineScope.launch {
+                            try {
+                                val response = RetrofitClient.mainProfile.patchDefaultProfile(realProfileId.toLong())
+                                if (response.isSuccessful) {
+                                    // 성공적으로 응답을 받았을 때 처리
+                                    val data = response.body()
+                                    Log.d("success!!",data.toString())
+                                    // data를 사용하여 필요한 작업을 수행
+                                } else {
+                                    Log.e("Failure", "Response failed with code: ${response.code()}")
+                                }
+                            } catch (e: Exception) {
+                                // 네트워크 오류 등 예외 발생 시 처리
+                                e.printStackTrace()
+                                Log.d("패치!!","실패")
+                            }
+                        }
+                    }
+                }
+
         }
         fun bind(item: MultiProfileData) {
-            binding.multiProfileCharIv.setImageResource(item.profileImageResId)
+            if(item.profileImageResId.startsWith("http")) {
+                Glide.with(itemView.context)
+                    .load(item.profileImageResId)
+                    .into(binding.multiProfileCharIv)
+            } else {
+                binding.multiProfileCharIv.setImageResource(item.profileImageResId.toInt())
+            }
+            //binding.multiProfileCharIv.setImageResource(item.profileImageResId.toInt())
             binding.multiProfileNameTv.text = item.name
             binding.multiProfileNumberTv.text = item.phoneNumber
         }
@@ -177,5 +227,54 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
     }
 
 
+    private fun profilePosion(positionId: Int, callback: (Int) -> Unit) {
+        var realProfileId = -1 // 기본값 설정
+        RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
+            // 서버 통신 실패 시의 작업
+            override fun onFailure(call: Call<MainProfileData>, t: Throwable) {
+                Log.e("실패", t.toString())
+                callback(realProfileId) // 실패 시에도 콜백 호출
+            }
+
+            override fun onResponse(
+                call: Call<MainProfileData>,
+                response: Response<MainProfileData>
+            ) {
+                val repos: MainProfileData? = response.body()
+                if (repos != null) {
+                    val totalMyProfile = repos.getTotalMyProfile()
+                    Log.d("get!!", "응답 데이터: $repos")
+
+                    if (totalMyProfile == 1) {
+                        realProfileId = repos.result.myprofiles[0].profileId
+                    }
+                    if (totalMyProfile == 2) {
+                        val minProfileId = repos.result.myprofiles[0].profileId
+                        val maxProfileId = repos.result.myprofiles[1].profileId
+
+                        realProfileId = if (positionId == 0) {
+                            minProfileId
+                        } else {
+                            maxProfileId
+                        }
+                    }
+                    if (totalMyProfile == 3) {
+                        val minProfileId = repos.result.myprofiles[0].profileId
+                        val mediumProfileId = repos.result.myprofiles[1].profileId
+                        val maxProfileId = repos.result.myprofiles[2].profileId
+
+                        realProfileId = when {
+                            positionId == 0 -> minProfileId
+                            positionId == 1 -> mediumProfileId
+                            else -> maxProfileId
+                        }
+                    }
+                } else {
+                    Log.e("실패", "서버 응답 실패: ${response.code()}")
+                }
+                callback(realProfileId) // 응답 처리 후에 콜백 호출
+            }
+        })
+    }
 
 }
