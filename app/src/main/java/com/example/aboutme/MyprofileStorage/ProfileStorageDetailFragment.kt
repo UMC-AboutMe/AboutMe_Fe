@@ -93,6 +93,11 @@ class ProfileStorageDetailFragment : Fragment() {
                         }
                     }
                 }
+                val errorBody = response.errorBody()?.string() ?: "No error body"
+                Log.e(
+                    "Retrofit_Get_Failed",
+                    "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                )
             }
             override fun onFailure(
                 call: Call<ProfStorageResponse.ResponseDeleteProf>,
@@ -133,7 +138,12 @@ class ProfileStorageDetailFragment : Fragment() {
                         }
                     }
                 } else {
-                    Log.d("Retrofit_Get_Failed", response.toString())
+                    //Log.d("Retrofit_Get_Failed", response.toString())
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e(
+                        "Retrofit_Get_Failed",
+                        "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                    )
                 }
             }
             override fun onFailure(

@@ -115,6 +115,11 @@ class ProfileRVAdapter(val items: MutableList<ProfileData>) :
                         }
                     }
                 }
+                val errorBody = response.errorBody()?.string() ?: "No error body"
+                Log.e(
+                    "Retrofit_Get_Failed",
+                    "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                )
             }
             override fun onFailure(
                 call: Call<ProfStorageResponse.ResponseFavProf>,
