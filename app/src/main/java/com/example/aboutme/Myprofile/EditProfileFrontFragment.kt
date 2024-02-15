@@ -512,5 +512,4 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
         })
     }
 
-
 }
