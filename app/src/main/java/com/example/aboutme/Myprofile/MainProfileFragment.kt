@@ -1,22 +1,38 @@
 package com.example.aboutme.Myprofile
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
 import com.example.aboutme.RetrofitMyprofile.RetrofitClient
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyprofileData.FrontFeature
 import com.example.aboutme.RetrofitMyprofileData.MainProfileData
 import com.example.aboutme.databinding.FragmentMainprofileBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Url
+import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.URL
 
 class MainProfileFragment : Fragment() {
 
@@ -42,21 +58,10 @@ class MainProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
-
         initViewPager()
 
         binding.mainProfileVp.offscreenPageLimit=3
 
-        /*var transform = CompositePageTransformer()
-        transform.addTransformer(MarginPageTransformer(8))
-
-        transform.addTransformer(ViewPager2.PageTransformer{ view: View, fl: Float ->
-            var v = 1-Math.abs(fl)
-            view.scaleY = 0.8f + v * 0.2f
-        })
-
-        binding.mainProfileVp.setPageTransformer(transform)*/
 
     }
 
@@ -93,22 +98,29 @@ class MainProfileFragment : Fragment() {
 
                                     if (profile.profileImage.type == "USER_IMAGE"){
                                         if (profile.profileImage.profileImageUrl != null) {
-                                            multiList.add(MultiProfileData(
-                                                R.drawable.prof_avater1,
-                                                frontFeatures[0].value,
-                                                frontFeatures[1].value
-                                            ))
-                                        }
+
+
+                                            //getBitmapFromURL(profile.profileImage.profileImageUrl) { galleryImage ->
+
+                                                multiList.add(
+                                                    MultiProfileData(
+                                                        R.drawable.prof_avater2.toString(),
+                                                        frontFeatures[0].value,
+                                                        frontFeatures[1].value
+                                                    )
+                                                )
+                                            }
+                                        //}
                                     } else if(profile.profileImage.type == "DEFAULT"){
                                         multiList.add(MultiProfileData(
-                                            R.drawable.profiledefault,
+                                            R.drawable.profiledefault.toString(),
                                             frontFeatures[0].value,
                                             frontFeatures[1].value
 
                                         ))} else if (profile.profileImage.type == "CHARACTER"){
                                         if (profile.profileImage.characterType == "1") {
                                             multiList.add(MultiProfileData(
-                                                R.drawable.prof_avater1,
+                                                R.drawable.prof_avater1.toString(),
                                                 frontFeatures[0].value,
                                                 frontFeatures[1].value
 
@@ -116,7 +128,7 @@ class MainProfileFragment : Fragment() {
                                         }
                                         if (profile.profileImage.characterType == "2") {
                                             multiList.add(MultiProfileData(
-                                                R.drawable.prof_avater2,
+                                                R.drawable.prof_avater2.toString(),
                                                 frontFeatures[0].value,
                                                 frontFeatures[1].value
 
@@ -124,7 +136,7 @@ class MainProfileFragment : Fragment() {
                                         }
                                         if (profile.profileImage.characterType == "3") {
                                             multiList.add(MultiProfileData(
-                                                R.drawable.prof_avater3,
+                                                R.drawable.prof_avater3.toString(),
                                                 frontFeatures[0].value,
                                                 frontFeatures[1].value
 
@@ -132,7 +144,7 @@ class MainProfileFragment : Fragment() {
                                         }
                                         if (profile.profileImage.characterType == "4") {
                                             multiList.add(MultiProfileData(
-                                                R.drawable.prof_avater4,
+                                                R.drawable.prof_avater4.toString(),
                                                 frontFeatures[0].value,
                                                 frontFeatures[1].value
 
@@ -140,7 +152,7 @@ class MainProfileFragment : Fragment() {
                                         }
                                         if (profile.profileImage.characterType == "5") {
                                             multiList.add(MultiProfileData(
-                                                R.drawable.prof_avater5,
+                                                R.drawable.prof_avater5.toString(),
                                                 frontFeatures[0].value,
                                                 frontFeatures[1].value
 
@@ -148,7 +160,7 @@ class MainProfileFragment : Fragment() {
                                         }
                                         if (profile.profileImage.characterType == "6") {
                                             multiList.add(MultiProfileData(
-                                                R.drawable.prof_avater6,
+                                                R.drawable.prof_avater6.toString(),
                                                 frontFeatures[0].value,
                                                 frontFeatures[1].value
 
@@ -156,7 +168,7 @@ class MainProfileFragment : Fragment() {
                                         }
                                         if (profile.profileImage.characterType == "7") {
                                             multiList.add(MultiProfileData(
-                                                R.drawable.prof_avater7,
+                                                R.drawable.prof_avater7.toString(),
                                                 frontFeatures[0].value,
                                                 frontFeatures[1].value
 
@@ -164,7 +176,7 @@ class MainProfileFragment : Fragment() {
                                         }
                                         if (profile.profileImage.characterType == "8") {
                                             multiList.add(MultiProfileData(
-                                                R.drawable.prof_avater8,
+                                                R.drawable.prof_avater8.toString(),
                                                 frontFeatures[0].value,
                                                 frontFeatures[1].value
 
@@ -172,7 +184,7 @@ class MainProfileFragment : Fragment() {
                                         }
                                         if (profile.profileImage.characterType == "9") {
                                             multiList.add(MultiProfileData(
-                                                R.drawable.prof_avater9,
+                                                R.drawable.prof_avater9.toString(),
                                                 frontFeatures[0].value,
                                                 frontFeatures[1].value
 
@@ -180,7 +192,7 @@ class MainProfileFragment : Fragment() {
                                         }
                                     }else{
                                     multiList.add(MultiProfileData(
-                                            R.drawable.frontprofile_basic,
+                                            R.drawable.frontprofile_basic.toString(),
                                             frontFeatures[0].value,
                                             frontFeatures[1].value
 
@@ -190,18 +202,22 @@ class MainProfileFragment : Fragment() {
 
                                     if (profile.profileImage.type == "USER_IMAGE") {
                                         if (profile.profileImage.profileImageUrl != null) {
-                                            multiList.add(
-                                                MultiProfileData(
-                                                    R.drawable.prof_avater1,
-                                                    frontFeatures[0].value,
-                                                    ""
+
+                                            //getBitmapFromURL(profile.profileImage.profileImageUrl) { galleryImage ->
+
+                                                multiList.add(
+                                                    MultiProfileData(
+                                                       R.drawable.prof_avater2.toString(),
+                                                        frontFeatures[0].value,
+                                                        ""
+                                                    )
                                                 )
-                                            )
-                                        }
+                                            }
+                                        //}
                                     } else if (profile.profileImage.type == "DEFAULT") {
                                         multiList.add(
                                             MultiProfileData(
-                                                R.drawable.profiledefault,
+                                                R.drawable.profiledefault.toString(),
                                                 frontFeatures[0].value,
                                                 ""
 
@@ -211,7 +227,7 @@ class MainProfileFragment : Fragment() {
                                         if (profile.profileImage.characterType == "1") {
                                             multiList.add(
                                                 MultiProfileData(
-                                                    R.drawable.prof_avater1,
+                                                    R.drawable.prof_avater1.toString(),
                                                     frontFeatures[0].value,
                                                     ""
                                                 )
@@ -220,7 +236,7 @@ class MainProfileFragment : Fragment() {
                                         if (profile.profileImage.characterType == "2") {
                                             multiList.add(
                                                 MultiProfileData(
-                                                    R.drawable.prof_avater2,
+                                                    R.drawable.prof_avater2.toString(),
                                                     frontFeatures[0].value,
                                                     ""
 
@@ -230,7 +246,7 @@ class MainProfileFragment : Fragment() {
                                         if (profile.profileImage.characterType == "3") {
                                             multiList.add(
                                                 MultiProfileData(
-                                                    R.drawable.prof_avater3,
+                                                    R.drawable.prof_avater3.toString(),
                                                     frontFeatures[0].value,
                                                     ""
 
@@ -240,7 +256,7 @@ class MainProfileFragment : Fragment() {
                                         if (profile.profileImage.characterType == "4") {
                                             multiList.add(
                                                 MultiProfileData(
-                                                    R.drawable.prof_avater4,
+                                                    R.drawable.prof_avater4.toString(),
                                                     frontFeatures[0].value,
                                                     ""
 
@@ -250,7 +266,7 @@ class MainProfileFragment : Fragment() {
                                         if (profile.profileImage.characterType == "5") {
                                             multiList.add(
                                                 MultiProfileData(
-                                                    R.drawable.prof_avater5,
+                                                    R.drawable.prof_avater5.toString(),
                                                     frontFeatures[0].value,
                                                     ""
 
@@ -260,7 +276,7 @@ class MainProfileFragment : Fragment() {
                                         if (profile.profileImage.characterType == "6") {
                                             multiList.add(
                                                 MultiProfileData(
-                                                    R.drawable.prof_avater6,
+                                                    R.drawable.prof_avater6.toString(),
                                                     frontFeatures[0].value,
                                                     ""
 
@@ -270,7 +286,7 @@ class MainProfileFragment : Fragment() {
                                         if (profile.profileImage.characterType == "7") {
                                             multiList.add(
                                                 MultiProfileData(
-                                                    R.drawable.prof_avater7,
+                                                    R.drawable.prof_avater7.toString(),
                                                     frontFeatures[0].value,
                                                     ""
 
@@ -280,7 +296,7 @@ class MainProfileFragment : Fragment() {
                                         if (profile.profileImage.characterType == "8") {
                                             multiList.add(
                                                 MultiProfileData(
-                                                    R.drawable.prof_avater8,
+                                                    R.drawable.prof_avater8.toString(),
                                                     frontFeatures[0].value,
                                                     ""
 
@@ -290,7 +306,7 @@ class MainProfileFragment : Fragment() {
                                         if (profile.profileImage.characterType == "9") {
                                             multiList.add(
                                                 MultiProfileData(
-                                                    R.drawable.prof_avater9,
+                                                    R.drawable.prof_avater9.toString(),
                                                     frontFeatures[0].value,
                                                     ""
 
@@ -300,7 +316,7 @@ class MainProfileFragment : Fragment() {
                                     } else {
                                         multiList.add(
                                             MultiProfileData(
-                                                R.drawable.frontprofile_basic,
+                                                R.drawable.frontprofile_basic.toString(),
                                                 frontFeatures[0].value,
                                                 ""
 
@@ -330,6 +346,21 @@ class MainProfileFragment : Fragment() {
 
     }
 
-
-
+    private fun getBitmapFromURL(urlString: String, callback: (Bitmap) -> Unit) {
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                val url = URL(urlString)
+                val connection = url.openConnection() as HttpURLConnection
+                connection.doInput = true
+                connection.connect()
+                val input = connection.inputStream
+                val bitmap = BitmapFactory.decodeStream(input)
+                withContext(Dispatchers.Main) {
+                    callback(bitmap)
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+    }
 }

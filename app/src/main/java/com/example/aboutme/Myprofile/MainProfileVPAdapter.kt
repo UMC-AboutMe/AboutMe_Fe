@@ -171,7 +171,7 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
 
         }
         fun bind(item: MultiProfileData) {
-            binding.multiProfileCharIv.setImageResource(item.profileImageResId)
+            binding.multiProfileCharIv.setImageResource(item.profileImageResId.toInt())
             binding.multiProfileNameTv.text = item.name
             binding.multiProfileNumberTv.text = item.phoneNumber
         }
