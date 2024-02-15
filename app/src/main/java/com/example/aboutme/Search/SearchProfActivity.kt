@@ -87,6 +87,11 @@ class SearchProfActivity : AppCompatActivity() {
                         }
                     }
                 }
+                val errorBody = response.errorBody()?.string() ?: "No error body"
+                Log.e(
+                    "Retrofit_Get_Failed",
+                    "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                )
             }
             override fun onFailure(call:Call<SearchResponse.ResponseStoreProf>, t:Throwable) {
                 val errorMessage = "Call Failed:  ${t.message}"
@@ -148,7 +153,6 @@ class SearchProfActivity : AppCompatActivity() {
                                 else
                                     binding.profNum.text = profile.value
                             }
-
                             //Dialog
                             binding.addBtn.setOnClickListener {
                                 Toast.makeText(this@SearchProfActivity, "보관함에 저장되었습니다.", Toast.LENGTH_SHORT).show()
@@ -166,7 +170,12 @@ class SearchProfActivity : AppCompatActivity() {
                         }
                     }
                 } else {
-                    Log.d("Retrofit_Search_Failed", response.toString())
+                    //Log.d("Retrofit_Search_Failed", response.toString())
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e(
+                        "Retrofit_Get_Failed",
+                        "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                    )
                     Toast.makeText(this@SearchProfActivity, "존재하지 않는 프로필입니다.", Toast.LENGTH_SHORT).show()
                     binding.profView.visibility = View.GONE
                 }

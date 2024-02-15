@@ -111,7 +111,12 @@ class SearchSpaceActivity : AppCompatActivity() {
                     }
                 }
                 else {
-                    Log.d("Retrofit_Search_Failed", response.toString())
+                    //Log.d("Retrofit_Search_Failed", response.toString())
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e(
+                        "Retrofit_Get_Failed",
+                        "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                    )
                     Toast.makeText(this@SearchSpaceActivity, "존재하지 않는 스페이스입니다.", Toast.LENGTH_SHORT).show()
                     binding.spaceView.visibility = View.GONE
                 }
