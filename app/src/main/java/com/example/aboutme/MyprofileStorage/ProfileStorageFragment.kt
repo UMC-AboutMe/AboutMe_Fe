@@ -1,11 +1,15 @@
 package com.example.aboutme.MyprofileStorage
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -54,6 +58,12 @@ class ProfileStorageFragment : Fragment() {
                 isLoading(false)
                 swipeRefreshLayout.isRefreshing = false // 새로고침 완료 시 리프레시 아이콘 감춤
             }
+            // 새로고침할 때 검색창의 텍스트 초기화
+            binding.searchTv.text.clear()
+
+            // 새로고침할 때 키보드 숨기기
+            val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(binding.searchTv.windowToken, 0)
         }
 
         // 초기 화면은 항상 최신화 상태 유지
@@ -82,10 +92,10 @@ class ProfileStorageFragment : Fragment() {
         initRecycler()
         getProfiles()
 
-        binding.searchBtn.setOnClickListener {
-            //getSearchProfiles()
-            getSearchProfiles(binding.searchTv.toString())
-        }
+//        binding.searchBtn.setOnClickListener {
+//            //getSearchProfiles()
+//            getSearchProfiles(binding.searchTv.toString())
+//        }
 
         rvAdapter.setOnItemClickListener(object : ProfileRVAdapter.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
@@ -101,7 +111,23 @@ class ProfileStorageFragment : Fragment() {
                 fragmentTransaction.commit()
             }
         })
+        // 검색창 EditText에 텍스트가 입력될 때마다 호출되는 TextWatcher 설정
+        binding.searchTv.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // 입력 전
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // 텍스트가 바뀔 때마다 호출되는 메서드
+                getSearchProfiles(binding.searchTv.text.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // 입력 후
+            }
+        })
     }
+
     private fun initRecycler() {
         rvAdapter = ProfileRVAdapter(itemList) // rvAdapter 초기화
         binding.profileStorageRv.adapter = rvAdapter
@@ -178,8 +204,8 @@ class ProfileStorageFragment : Fragment() {
     //프로필 보관함 검색 api
     private fun getSearchProfiles(Name : String){
     //private fun getSearchProfiles(){
-        //val call = ProfStorageObj.getRetrofitService.getSearchProf(Name,6)
-        val call = ProfStorageObj.getRetrofitService.getSearchProf("아",1)
+        val call = ProfStorageObj.getRetrofitService.getSearchProf(Name,6)
+        //val call = ProfStorageObj.getRetrofitService.getSearchProf("아",1)
         Log.d("Retrofit_Get_Success", "검색 실행 $Name")
 
         call.enqueue(object : Callback<ProfStorageResponse.ResponseSearchProf> {

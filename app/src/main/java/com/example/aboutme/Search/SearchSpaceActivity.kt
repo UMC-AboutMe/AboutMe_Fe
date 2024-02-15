@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.aboutme.R
 import com.example.aboutme.Search.api.SearchObj
@@ -38,6 +40,31 @@ class SearchSpaceActivity : AppCompatActivity() {
         binding.searchBtn.setOnClickListener {
             //스페이스 검색 api
             getSearchSpace()
+        }
+        // 검색창 edittext에서 키보드상으로 완료 버튼을 누를 경우 검색버튼을 누른 것과 같은 효과
+        binding.searchTv.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                // 검색버튼을 누를 경우 발동되는 검색 효과
+                // 사실상 검색 효과에 해당하는 필터링이 텍스트를 입력할 때마다 발동되므로 적을 필요가 없음
+                // 키보드 숨기기
+                val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(binding.searchTv.windowToken, 0)
+
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+        // 검색창 검색 버튼 클릭시 키보드 숨김처리
+        binding.searchBtn.setOnClickListener {
+            // 키보드 숨기기
+            val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(binding.searchBtn.windowToken, 0)
+        }
+
+        // 화면 내 빈 공간 클릭시 키보드 숨김처리
+        binding.searchProf.setOnClickListener {
+            val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(binding.root.windowToken, 0)
         }
     }
 
