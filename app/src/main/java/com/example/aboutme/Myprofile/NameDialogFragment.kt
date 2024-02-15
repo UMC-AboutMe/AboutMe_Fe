@@ -30,7 +30,6 @@ class NameDialogFragment():DialogFragment(){
 
     lateinit var binding: ActivityNameDialogBinding
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

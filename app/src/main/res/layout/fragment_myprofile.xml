@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:background="@color/white">
 
         <ImageView
@@ -20,15 +19,13 @@
 
         <ImageButton
             android:id="@+id/myprofile_share_btn"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/myprofile_share"
-            android:background="@color/white"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/sharebtn"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="25dp"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="300dp"/>
-
 
 
         <androidx.fragment.app.FragmentContainerView
@@ -45,13 +42,14 @@
             android:id="@+id/delete_button_iv"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:text="완료"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="180dp"
             android:layout_marginTop="-20dp"
+            android:background="@drawable/trash_img"
             android:fontFamily="@font/gmarketsansmedium"
-            app:layout_constraintTop_toBottomOf="@id/profile_frame"
-            android:background="@drawable/trash_img"/>
+            android:text="완료"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_frame" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
