@@ -174,7 +174,7 @@ class ProfileStorageFragment : Fragment() {
                                             else -> R.drawable.prof_avater9.toString()
                                         }
                                     }
-                                    profile.image.type == "USER_IMAGE" -> R.drawable.prof_avater1.toString()
+                                    profile.image.type == "USER_IMAGE" -> profile.image.profile_image_url ?: ""
                                     else -> R.drawable.avatar_basic.toString()
                                 }
                                 val profileId = profile.profileId.toLong() // favorite 값 가져오기
