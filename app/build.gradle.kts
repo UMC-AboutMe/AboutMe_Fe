@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId = "com.example.aboutme"
         minSdk = 29
-        targetSdk = 33
+        targetSdk = 32
         versionCode = 1
         versionName = "1.0"
 
@@ -35,17 +35,16 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     dataBinding{
         enable = true
     }
-
     viewBinding{
         enable = true
     }
     buildFeatures {
         viewBinding = true
     }
-
 }
 
 dependencies {
@@ -123,6 +122,8 @@ dependencies {
 
     // swipe refresh
     implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
+    implementation ("com.squareup.okhttp3:okhttp:4.9.3")
 
     // lottie 애니메이션
     implementation ("com.airbnb.android:lottie:6.3.0")

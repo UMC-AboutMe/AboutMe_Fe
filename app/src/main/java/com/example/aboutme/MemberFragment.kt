@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.aboutme.Myprofile.SharedViewModel
@@ -49,16 +50,70 @@ class MemberFragment : Fragment() {
         }
 
         val AvTv = when(position) {
-            0-> "유태연"
-            1-> "정서연"
-            2-> "오유은"
-            3-> "최가나"
-            4-> "변성호"
-            5-> "송혜음"
-            6-> "조희수"
-            7-> "차현정"
-            8-> "정승원"
-            else-> "유태연"
+            0-> "테디 | 유태연's\n스페이스"
+            1-> "파스텔 | 정서연's\n스페이스"
+            2-> "윤 | 오유은's\n스페이스"
+            3-> "하나 | 최가나's\n스페이스"
+            4-> "렉스 | 변성호's\n스페이스"
+            5-> "혬 | 송혜음's\n스페이스"
+            6-> "모아 | 조희수's\n스페이스"
+            7-> "쩡 | 차현정's\n스페이스"
+            else-> "다에몬 | 정승원's\n스페이스"
+        }
+        val Feeling = when(position) {
+            0-> "Feeling테디 | 유태연's\n스페이스"
+            1-> "Feeling파스텔 | 정서연's\n스페이스"
+            2-> "Feeling윤 | 오유은's\n스페이스"
+            3-> "Feeling하나 | 최가나's\n스페이스"
+            4-> "Feeling렉스 | 변성호's\n스페이스"
+            5-> "Feeling혬 | 송혜음's\n스페이스"
+            6-> "Feeling모아 | 조희수's\n스페이스"
+            7-> "Feeling쩡 | 차현정's\n스페이스"
+            else-> "Feeling다에몬 | 정승원's\n스페이스"
+        }
+        val Comment = when(position) {
+            0-> "Comment테디 | 유태연's\n스페이스"
+            1-> "Comment파스텔 | 정서연's\n스페이스"
+            2-> "Comment윤 | 오유은's\n스페이스"
+            3-> "Comment하나 | 최가나's\n스페이스"
+            4-> "Comment렉스 | 변성호's\n스페이스"
+            5-> "Comment혬 | 송혜음's\n스페이스"
+            6-> "Comment모아 | 조희수's\n스페이스"
+            7-> "Comment쩡 | 차현정's\n스페이스"
+            else-> "Comment다에몬 | 정승원's\n스페이스"
+        }
+        val Music = when(position) {
+            0-> "Music테디 | 유태연's\n스페이스"
+            1-> "Music파스텔 | 정서연's\n스페이스"
+            2-> "Music윤 | 오유은's\n스페이스"
+            3-> "Music하나 | 최가나's\n스페이스"
+            4-> "Music렉스 | 변성호's\n스페이스"
+            5-> "Music혬 | 송혜음's\n스페이스"
+            6-> "Music모아 | 조희수's\n스페이스"
+            7-> "Music쩡 | 차현정's\n스페이스"
+            else-> "Music다에몬 | 정승원's\n스페이스"
+        }
+        val Schedule = when(position) {
+            0-> "Schedule테디 | 유태연's\n스페이스"
+            1-> "Schedule파스텔 | 정서연's\n스페이스"
+            2-> "Schedule윤 | 오유은's\n스페이스"
+            3-> "Schedule하나 | 최가나's\n스페이스"
+            4-> "Schedule렉스 | 변성호's\n스페이스"
+            5-> "Schedule혬 | 송혜음's\n스페이스"
+            6-> "Schedule모아 | 조희수's\n스페이스"
+            7-> "Schedule쩡 | 차현정's\n스페이스"
+            else-> "Schedule다에몬 | 정승원's\n스페이스"
+        }
+        val Story = when(position) {
+            0-> "Story테디 | 유태연's\n스페이스"
+            1-> "Story파스텔 | 정서연's\n스페이스"
+            2-> "Story윤 | 오유은's\n스페이스"
+            3-> "Story하나 | 최가나's\n스페이스"
+            4-> "Story렉스 | 변성호's\n스페이스"
+            5-> "Story혬 | 송혜음's\n스페이스"
+            6-> "Story모아 | 조희수's\n스페이스"
+            7-> "Story쩡 | 차현정's\n스페이스"
+            else-> "Story다에몬 | 정승원's\n스페이스"
         }
         // 이미지뷰에 이미지 설정
         binding2.memberStep3SelectedRoom.setImageResource(drawableResId)
@@ -66,5 +121,32 @@ class MemberFragment : Fragment() {
         binding2.memberStep3SelectedAvatar.setImageResource(drawableAvId)
         // 텍스트뷰에 텍스트 설정
         binding2.memberMyspaceTitle.text = AvTv
+
+        //아이콘 클릭 이벤트
+        binding2.memberStep3Feeling.setOnClickListener {
+            binding2.memberText.text = Feeling
+            binding2.memberStep3FeelingLayout.visibility = View.VISIBLE
+        }
+        binding2.memberStep3Comment.setOnClickListener {
+            binding2.memberText.text = Comment
+            binding2.memberStep3FeelingLayout.visibility = View.VISIBLE
+        }
+        binding2.memberStep3Music.setOnClickListener {
+            binding2.memberText.text = Music
+            binding2.memberStep3FeelingLayout.visibility = View.VISIBLE
+        }
+        binding2.memberStep3Schedule.setOnClickListener {
+            binding2.memberText.text = Schedule
+            binding2.memberStep3FeelingLayout.visibility = View.VISIBLE
+        }
+        binding2.memberStep3Story.setOnClickListener {
+            binding2.memberText.text = Story
+            binding2.memberStep3FeelingLayout.visibility = View.VISIBLE
+        }
+        binding2.memberStep3Photo.setOnClickListener {
+            binding2.memberText.text = ""
+            binding2.memberStep3FeelingLayout.visibility = View.VISIBLE
+        }
     }
+
 }

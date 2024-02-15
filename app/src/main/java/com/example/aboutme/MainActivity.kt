@@ -8,6 +8,8 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.aboutme.Search.api.SearchObj
+import com.example.aboutme.Search.api.SearchResponse
 import com.example.aboutme.Tutorial.TutorialActivity1
 import com.example.aboutme.databinding.ActivityMainBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -17,6 +19,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.kakao.sdk.user.UserApiClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 private const val TAG = "MainActivity"
@@ -39,11 +44,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 //        }).setDeniedMessage("알림을 거부한다면 앱 사용에 지장이 있을 수 있습니다.").setPermissions(android.Manifest.permission.POST_NOTIFICATIONS).check()
 
 
-//    //구글 로그인
-//    // Google Sign In API와 호출할 구글 로그인 클라이언트
-//    var mGoogleSignInClient: GoogleSignInClient? = null
-//    private val RC_SIGN_IN = 123
-//    var signBt: ImageView? = null
+    //구글 로그인
+    // Google Sign In API와 호출할 구글 로그인 클라이언트
+    var mGoogleSignInClient: GoogleSignInClient? = null
+    private val RC_SIGN_IN = 123
+    var signBt: ImageView? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,27 +80,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         //구글 로그인
-        //signBt = findViewById(R.id.google_iv)
-        //signBt?.setOnClickListener(this)
+        signBt = findViewById(R.id.google_iv)
+        signBt?.setOnClickListener(this)
 
         // 앱에 필요한 사용자 데이터를 요청하도록 로그인 옵션을 설정한다.
         // DEFAULT_SIGN_IN parameter는 유저의 ID와 기본적인 프로필 정보를 요청하는데 사용된다.
-        //val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-        //    .requestEmail() // email addresses도 요청함
-        //    .build()
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail() // email addresses도 요청함
+            .build()
 
         // 위에서 만든 GoogleSignInOptions을 사용해 GoogleSignInClient 객체를 만듬
-        //mGoogleSignInClient = GoogleSignIn.getClient(this@MainActivity, gso)
+        mGoogleSignInClient = GoogleSignIn.getClient(this@MainActivity, gso)
 
         // 기존에 로그인 했던 계정을 확인한다.
-        //val gsa = GoogleSignIn.getLastSignedInAccount(this@MainActivity)
+        val gsa = GoogleSignIn.getLastSignedInAccount(this@MainActivity)
 
         // 로그인 되있는 경우 (토큰으로 로그인 처리)
-        //if (gsa != null && gsa.id != null) {
-        //}
-
-
-        updateLoginInfo();
+        if (gsa != null && gsa.id != null) {
+        }
     }
 
     private fun updateLoginInfo() {
@@ -118,37 +120,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             val acct = completedTask.getResult(ApiException::class.java)
             //로그인 성공시
             if (acct != null) {
-                val personName = acct.displayName
-                val personGivenName = acct.givenName
-                val personFamilyName = acct.familyName
                 val personEmail = acct.email
-                val personId = acct.id
-                val personPhoto = acct.photoUrl
-                Log.d(
-                    TAG,
-                    "handleSignInResult:personName $personName"
-                )
-                Log.d(
-                    TAG,
-                    "handleSignInResult:personGivenName $personGivenName"
-                )
                 Log.d(
                     TAG,
                     "handleSignInResult:personEmail $personEmail"
                 )
-                Log.d(
-                    TAG,
-                    "handleSignInResult:personId $personId"
-                )
-                Log.d(
-                    TAG,
-                    "handleSignInResult:personFamilyName $personFamilyName"
-                )
-                Log.d(
-                    TAG,
-                    "handleSignInResult:personPhoto $personPhoto"
-                )
-
+                Login("google","$personEmail")
+                val intent = Intent(this, TutorialActivity1::class.java)
+                startActivity(intent)
+/**
                 //최초 실행 여부 (최초 실행일시,튜토리얼 화면으로 전환 아닐시 메인화면으로 전환된다.)
                 // SharedPreferences 객체 생성
                 val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
@@ -168,6 +148,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     val intent = Intent(this, bottomNavigationView::class.java)
                     startActivity(intent)
                 }
+                */
             }
         } catch (e: ApiException) {
             Log.e(TAG, "signInResult:failed code=" + e.statusCode)
@@ -175,8 +156,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-//        when (v.id) {
-//            R.id.google_iv -> signIn()
+        when (v.id) {
+            R.id.google_iv -> signIn()
     //R.id.logoutBt -> mGoogleSignInClient!!.signOut()
     //    .addOnCompleteListener(this) { task: Task<Void?>? ->
     //        Log.d(TAG, "onClick:logout success ")
@@ -190,21 +171,60 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     //                )
     //            }
     //    }
-//        }
+        }
     }
 
-//    private fun signIn() {
-//        val signInIntent = mGoogleSignInClient!!.signInIntent
-//        startActivityForResult(signInIntent, RC_SIGN_IN)
-//    }
-//
-//        public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//
-//        if (requestCode == RC_SIGN_IN) {
-//            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-//            handleSignInResult(task)
-//        }
-//    }
+    private fun signIn() {
+        val signInIntent = mGoogleSignInClient!!.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+        public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+        }
+    }
+    //로그인 - 이메일
+    private fun Login(type: String, email: String) {
+        Log.d("Retrofit_Login", "로그인 실행")
+        val request = LoginResponse.RequestLogin(email)
+        val call = LoginObj.getRetrofitService.postLogin(type, request)
+
+        call.enqueue(object : Callback<LoginResponse.ResponseLogin> {
+            override fun onResponse(
+                call: Call<LoginResponse.ResponseLogin>,
+                response: Response<LoginResponse.ResponseLogin>
+            ) {
+                Log.d("Retrofit_Login", response.toString())
+                if (response.isSuccessful) {
+                    val response = response.body()
+                    Log.d("Retrofit_Login", response.toString())
+                    if (response != null) {
+                        if (response.isSuccess) {
+                            // 성공했을 때 - 토큰 sharedpreference로 저장
+                            val token = response.result.jwtToken
+                            val pref = getSharedPreferences("pref", 0)
+                            val edit = pref.edit()
+                            // 1번째 인자는 키, 2번째 인자는 실제 담아둘 값
+                            edit.putString("token", token)
+                            edit.apply() // 저장완료
+                            // 토큰 값 로그에 출력
+                            Log.d("token", token)
+                        } else {
+                            // 실패했을 때
+                            Log.d("Retrofit_Login", response.message)
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call: Call<LoginResponse.ResponseLogin>, t: Throwable) {
+                val errorMessage = "Call Failed:  ${t.message}"
+                Log.d("Retrofit_Login", errorMessage)
+            }
+        })
+    }
 
 }

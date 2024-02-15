@@ -35,4 +35,10 @@ interface ProfStorageItf {
         @Query("keyword") keyword : String? ,
         @Header("member-id") memberId: Int
     ) : Call <ProfStorageResponse.ResponseSearchProf>
+
+    //마이프로필 조회 - 단건
+    @GET("/myprofiles/{profile-id}")
+    fun getProfList(
+        @Path("profile-id") profileId: Long,
+        ) : Call <ProfStorageResponse.ResponseProf>
 }

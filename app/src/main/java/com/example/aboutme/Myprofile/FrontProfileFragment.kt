@@ -46,8 +46,7 @@ import java.util.Date
 
 
 
-class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
-    BottomSheet.OnBasicImageSelectedListener, BottomSheet.OnCharImageSelectedListener {
+class FrontProfileFragment : Fragment() {
 
     companion object {
         fun newInstance(positionId: Int): FrontProfileFragment {
@@ -95,18 +94,6 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
         }
 
 
-        //다이얼로그에서 버튼 클릭->프로필사진변경
-        binding.profileIv.setOnClickListener {
-
-            val bottomSheet = BottomSheet()
-
-            bottomSheet.setOnImageSelectedListener(this@FrontProfileFragment)
-            bottomSheet.setOnBasicImageSelectedListener(this@FrontProfileFragment)
-            bottomSheet.setOnCharImageSelectedListener(this@FrontProfileFragment)
-
-            bottomSheet.show(childFragmentManager, bottomSheet.tag)
-
-        }
         val positionId = arguments?.getInt("positionId", -1)
         Log.d("FrontProfileFragment!", "Profile ID: $positionId")
 
@@ -218,8 +205,44 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
     private fun applyUpdatedDataToUI(updatedData: GetAllProfile) {
         // 변경된 데이터를 UI의 각 요소에 적용
-        binding.profileNameEt.setText(updatedData.result.frontFeatures[0].value)
-        binding.profileNumEt.setText(updatedData.result.frontFeatures[1].value)
+            binding.profileNameEt.setText(updatedData.result.frontFeatures[0].value.toString())
+            binding.profileNumEt.setText(updatedData.result.frontFeatures[1].value.toString())
+
+            if (updatedData.result.profileImage.type == "USER_IMAGE"){
+                if (updatedData.result.profileImage.profileImageUrl != null) {
+                    Glide.with(this)
+                        .load(updatedData.result.profileImage.profileImageUrl)
+                        .into(binding.profileIv)
+                }
+            } else if(updatedData.result.profileImage.type == "DEFAULT"){
+                Glide.with(requireContext()).load(R.drawable.profiledefault).into(binding.profileIv)
+            } else if (updatedData.result.profileImage.type == "CHARACTER"){
+                if (updatedData.result.profileImage.characterType == "2") {
+                    Glide.with(requireContext()).load(R.drawable.prof_avater2).into(binding.profileIv)
+                }
+                if (updatedData.result.profileImage.characterType == "3") {
+                    Glide.with(requireContext()).load(R.drawable.prof_avater3).into(binding.profileIv)
+                }
+                if (updatedData.result.profileImage.characterType == "4") {
+                    Glide.with(requireContext()).load(R.drawable.prof_avater4).into(binding.profileIv)
+                }
+                if (updatedData.result.profileImage.characterType == "5") {
+                    Glide.with(requireContext()).load(R.drawable.prof_avater5).into(binding.profileIv)
+                }
+                if (updatedData.result.profileImage.characterType == "6") {
+                    Glide.with(requireContext()).load(R.drawable.prof_avater6).into(binding.profileIv)
+                }
+                if (updatedData.result.profileImage.characterType == "7") {
+                    Glide.with(requireContext()).load(R.drawable.prof_avater7).into(binding.profileIv)
+                }
+                if (updatedData.result.profileImage.characterType == "8") {
+                    Glide.with(requireContext()).load(R.drawable.prof_avater8).into(binding.profileIv)
+                }
+                if (updatedData.result.profileImage.characterType == "9") {
+                    Glide.with(requireContext()).load(R.drawable.prof_avater9).into(binding.profileIv)
+                }
+            }
+
 
 
         // 예시: 변경된 데이터가 로그에 출력되도록 함
@@ -278,25 +301,6 @@ class FrontProfileFragment : Fragment(), BottomSheet.OnImageSelectedListener,
 
 
 
-    override fun onBasicImageSelected() {
-        // drawable에 있는 이미지를 사용하여 프로필 이미지뷰 업데이트
-        Glide.with(requireContext()).load(R.drawable.frontprofile_basic).into(binding.profileIv)
-    }
-
-    override fun onImageSelected(imageUri: Uri) {
-        Glide.with(requireContext()).load(imageUri).into(binding.profileIv)
-    }
-
-    override fun onCharImageSelected() {
-        Glide.with(requireContext()).load(R.drawable.myprofile_character).into(binding.profileIv)
-    }
-
-    private fun saveName(name: String) {
-        val sharedPreferences = requireContext().getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putString("name", name)
-        editor.commit()
-    }
 
 
 }

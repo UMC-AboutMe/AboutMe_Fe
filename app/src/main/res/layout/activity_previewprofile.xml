@@ -10,12 +10,11 @@
 
         <ImageButton
             android:id="@+id/editProfileBack_btn"
-            android:layout_width="50dp"
+            android:layout_width="60dp"
             android:layout_height="50dp"
             android:background="@drawable/back"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="10dp"/>
-
 
 
         <androidx.fragment.app.FragmentContainerView
