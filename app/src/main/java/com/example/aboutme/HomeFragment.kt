@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,10 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token: String? = pref.getString("token", null)
+        Log.d("token", token ?: "null")
+
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         binding.mypageBtn.setOnClickListener{

@@ -202,14 +202,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 if (response.isSuccessful) {
                     val response = response.body()
                     Log.d("Retrofit_Login", response.toString())
-
                     if (response != null) {
                         if (response.isSuccess) {
-                            // 성공했을 때
+                            // 성공했을 때 - 토큰 sharedpreference로 저장
+                            val token = response.result.jwtToken
+                            val pref = getSharedPreferences("pref", 0)
+                            val edit = pref.edit()
+                            // 1번째 인자는 키, 2번째 인자는 실제 담아둘 값
+                            edit.putString("token", token)
+                            edit.apply() // 저장완료
+                            // 토큰 값 로그에 출력
+                            Log.d("token", token)
                         } else {
                             // 실패했을 때
                             Log.d("Retrofit_Login", response.message)
-
                         }
                     }
                 }
