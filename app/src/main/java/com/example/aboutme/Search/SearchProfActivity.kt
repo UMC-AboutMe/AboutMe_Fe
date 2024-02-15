@@ -34,30 +34,27 @@ class SearchProfActivity : AppCompatActivity() {
             finish()
         }
         //제약 조건
-//        binding.searchBtn.setOnClickListener {
-//            //val number = binding.searchTv.text.toString().toInt()
-//            getSearchProf(12026)
-//        }
-        // 검색창 edittext에서 키보드상으로 완료 버튼을 누를 경우 검색버튼을 누른 것과 같은 효과
-        binding.searchTv.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                // 검색버튼을 누를 경우 발동되는 검색 효과
-                // 사실상 검색 효과에 해당하는 필터링이 텍스트를 입력할 때마다 발동되므로 적을 필요가 없음
-                // 키보드 숨기기
-                val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMethodManager.hideSoftInputFromWindow(binding.searchTv.windowToken, 0)
-
-                return@setOnEditorActionListener true
-            }
-            false
-        }
-        // 검색창 검색 버튼 클릭시 키보드 숨김처리
-        binding.searchBtn.setOnClickListener {
+        binding.searchBtn2.setOnClickListener {
+            val number = binding.searchTv2.text.toString().toInt()
+            getSearchProf(number)
+            Log.d("Retro","$number")
             // 키보드 숨기기
             val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(binding.searchBtn.windowToken, 0)
+            inputMethodManager.hideSoftInputFromWindow(binding.searchBtn2.windowToken, 0)
         }
-
+//        // 검색창 edittext에서 키보드상으로 완료 버튼을 누를 경우 검색버튼을 누른 것과 같은 효과
+//        binding.searchTv2.setOnEditorActionListener { _, actionId, _ ->
+//            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                // 검색버튼을 누를 경우 발동되는 검색 효과
+//                // 사실상 검색 효과에 해당하는 필터링이 텍스트를 입력할 때마다 발동되므로 적을 필요가 없음
+//                // 키보드 숨기기
+//                val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+//                inputMethodManager.hideSoftInputFromWindow(binding.searchTv2.windowToken, 0)
+//
+//                return@setOnEditorActionListener true
+//            }
+//            false
+//        }
         // 화면 내 빈 공간 클릭시 키보드 숨김처리
         binding.searchProf.setOnClickListener {
             val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
@@ -99,6 +96,8 @@ class SearchProfActivity : AppCompatActivity() {
     }
     //마이프로필 검색
     private fun getSearchProf(Number : Int ) {
+        Log.d("Retro","프로필 검색 실행")
+        //val call = SearchObj.getRetrofitService.getSearchProf(697951)
         val call = SearchObj.getRetrofitService.getSearchProf(Number)
         call.enqueue(object : Callback<SearchResponse.ResponseSearchProf> {
             override fun onResponse(
@@ -106,6 +105,7 @@ class SearchProfActivity : AppCompatActivity() {
                 response: Response<SearchResponse.ResponseSearchProf>
             ) {
                 if (response.isSuccessful) {
+                    Log.d("Retrofit_Search", response.toString())
                     val response = response.body()
                     Log.d("Retrofit_Search", response.toString())
                     if (response != null) {
