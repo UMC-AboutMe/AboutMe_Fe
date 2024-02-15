@@ -54,6 +54,10 @@ class MySpaceMainFragment : Fragment() {
             changeWeather()
         }
 
+        binding.myspaceTitleName.setOnClickListener {
+            cancelWeather()
+        }
+
         return binding.root
     }
 
@@ -104,6 +108,19 @@ class MySpaceMainFragment : Fragment() {
             // 특정 이미지뷰의 텍스트 색상 변경
             binding.myspaceTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             binding.myspaceTitleName.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        }
+    }
+
+    private fun cancelWeather() {
+        binding.weatherView.visibility = View.GONE
+
+        binding.fragmentMyspacemain.apply {
+            // 배경색 변경
+            binding.fragmentMyspacemain.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
+
+            // 특정 이미지뷰의 텍스트 색상 변경
+            binding.myspaceTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            binding.myspaceTitleName.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         }
     }
 
