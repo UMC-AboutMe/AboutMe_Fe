@@ -50,7 +50,9 @@ class MySpaceMainFragment : Fragment() {
             requireActivity().startActivity(intent, options.toBundle())
         }
 
-        changeWeather()
+        binding.myspaceTitle.setOnClickListener {
+            changeWeather()
+        }
 
         return binding.root
     }
@@ -59,6 +61,13 @@ class MySpaceMainFragment : Fragment() {
 
         var weatherSpeed = 0
         var weatherParticles = 0f
+
+        // 사이클 돌리기
+        if (number < 2) {
+            ++number
+        } else {
+            number = 0
+        }
 
         // number 상수값으로 날씨 결정
         when (number) {
