@@ -15,7 +15,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ProfileRVAdapter(val items: MutableList<ProfileData>) :
+class ProfileRVAdapter(private val items: MutableList<ProfileData>) :
     RecyclerView.Adapter<ProfileRVAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
@@ -115,6 +115,11 @@ class ProfileRVAdapter(val items: MutableList<ProfileData>) :
                         }
                     }
                 }
+                val errorBody = response.errorBody()?.string() ?: "No error body"
+                Log.e(
+                    "Retrofit_Get_Failed",
+                    "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                )
             }
             override fun onFailure(
                 call: Call<ProfStorageResponse.ResponseFavProf>,

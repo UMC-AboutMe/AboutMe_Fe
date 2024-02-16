@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.aboutme.Myprofile.BackProfileFragment
 import com.example.aboutme.MyprofileStorage.api.ProfStorageObj
 import com.example.aboutme.MyprofileStorage.api.ProfStorageResponse
@@ -58,19 +59,19 @@ class ProfileStorageFrontFragment : Fragment(){
                             val imageResId = when {
                                 image.type == "CHARACTER" && image.charcterType in 1..8 -> {
                                     when (image.charcterType) {
-                                        1 -> R.drawable.prof_avater1
-                                        2 -> R.drawable.prof_avater2
-                                        3 -> R.drawable.prof_avater3
-                                        4 -> R.drawable.prof_avater4
-                                        5 -> R.drawable.prof_avater5
-                                        6 -> R.drawable.prof_avater6
-                                        7 -> R.drawable.prof_avater7
-                                        8 -> R.drawable.prof_avater8
-                                        else -> R.drawable.prof_avater9
+                                        1 -> R.drawable.prof_avater1.toString()
+                                        2 -> R.drawable.prof_avater2.toString()
+                                        3 -> R.drawable.prof_avater3.toString()
+                                        4 -> R.drawable.prof_avater4.toString()
+                                        5 -> R.drawable.prof_avater5.toString()
+                                        6 -> R.drawable.prof_avater6.toString()
+                                        7 -> R.drawable.prof_avater7.toString()
+                                        8 -> R.drawable.prof_avater8.toString()
+                                        else -> R.drawable.prof_avater9.toString()
                                     }
                                 }
-                                image.type == "USER_IMAGE" -> R.drawable.prof_avater1
-                                else -> R.drawable.avatar_basic
+                                image.type == "USER_IMAGE" -> image.profile_image_url ?: ""
+                                else -> R.drawable.avatar_basic.toString()
                             }
                             response.result.front_features.forEach { feature ->
                                 if (feature.key == "name") {
@@ -79,14 +80,30 @@ class ProfileStorageFrontFragment : Fragment(){
                                     binding.profileNumEt.text = feature.value ?: ""
                                 }
                             }
-                            binding.profileIv.setImageResource(imageResId)
+                            //binding.profileIv.setImageResource(imageResId)
+                            if (imageResId.startsWith("http")) {
+                                // URL인 경우 Glide를 사용하여 이미지 로드 및 표시
+                                Glide.with(requireContext())
+                                    .load(imageResId)
+                                    .into(binding.profileIv)
+                            } else {
+                                // 리소스 아이디인 경우 setImageResource() 메서드를 사용하여 이미지 설정
+                                binding.profileIv.setImageResource(imageResId.toInt())
+                            }
+
+
                             }
                         } else {
                             // 실패했을 때
                             Log.d("Retrofit_Get_Failed", response.toString())
                         }
                 } else {
-                    Log.d("Retrofit_Get_Failed", response.toString())
+                    //Log.d("Retrofit_Get_Failed", response.toString())
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e(
+                        "Retrofit_Get_Failed",
+                        "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                    )
                 }
             }
             override fun onFailure(
