@@ -3,6 +3,7 @@ package com.example.aboutme.Myspace
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -278,11 +280,22 @@ class MySpaceMainFragment : Fragment() {
                     }
                 }
 
-                // *문자를 입력하지 않는 아이콘들에 대한 정의*
+                // *문자를 입력해야하는 음악 아이콘에 대한 정의*
+                // Edittext 위의 가이드 문구 클릭시(임시)
+                binding.step3MusicGuide.setOnClickListener {
+                    // EditText에서 텍스트 가져오기
+                    val youtubeLink = binding.step3MusicEt.text.toString()
+
+                    // 기기에 설치되어있는 유튜브로 리다이렉트
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).setPackage("com.google.android.youtube")
+                    startActivity(intent)
+                }
+
+                // *문자를 입력하지 않는 feeling 아이콘에 대한 정의*
                 // 클릭한 이미지뷰를 저장할 변수 선언
                 var selectedImageView: ImageView? = null
 
-                // *문자를 입력하지 않는 아이콘들에 대한 정의*
+                // *문자를 입력하지 않는 feeling 아이콘에 대한 정의*
                 // feeling 아이콘 주소 매핑
                 val feelingIcons = listOf(
                     binding.feeling1,
@@ -292,6 +305,7 @@ class MySpaceMainFragment : Fragment() {
                     binding.feeling5,
                 )
 
+                // *문자를 입력하지 않는 feeling 아이콘에 대한 정의*
                 // Ok 버튼에 대한 클릭 이벤트 처리
                 feelingIcons.forEach { imageView ->
                     imageView.setOnClickListener {
