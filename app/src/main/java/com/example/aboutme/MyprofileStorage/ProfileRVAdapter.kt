@@ -15,7 +15,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ProfileRVAdapter(val items: MutableList<ProfileData>) :
+class ProfileRVAdapter(private val items: MutableList<ProfileData>) :
     RecyclerView.Adapter<ProfileRVAdapter.ViewHolder>() {
 
     interface OnItemClickListener {

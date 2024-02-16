@@ -13,6 +13,7 @@ import com.example.aboutme.Search.api.SearchObj
 import com.example.aboutme.Search.api.SearchResponse
 import com.example.aboutme.databinding.ActivitySearchSpaceBinding
 import org.checkerframework.checker.units.qual.Length
+import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,8 +43,16 @@ class SearchSpaceActivity : AppCompatActivity() {
         //제약 조건
         binding.searchBtn.setOnClickListener {
             //스페이스 검색 api
+            //val keyword = binding.searchTv.text.toString()
+            //getSearchSpace(keyword)
+            val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(binding.searchTv.windowToken, 0)
             val keyword = binding.searchTv.text.toString()
-            getSearchSpace(keyword)
+            if (keyword.isNotEmpty()) {
+                getSearchSpace(keyword)
+            } else {
+                Toast.makeText(this@SearchSpaceActivity, "검색어를 입력하세요.", Toast.LENGTH_SHORT).show()
+            }
         }
         // 검색창 edittext에서 키보드상으로 완료 버튼을 누를 경우 검색버튼을 누른 것과 같은 효과
         binding.searchTv.setOnEditorActionListener { _, actionId, _ ->
@@ -102,10 +111,16 @@ class SearchSpaceActivity : AppCompatActivity() {
                     //Log.d("Retrofit_Search_Failed", response.toString())
                     val errorBody = response.errorBody()?.string() ?: "No error body"
                     Log.e(
-                        "Retrofit_Get_Failed",
+                        "Retrofit_Storage_Failed",
                         "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
                     )
-                    Toast.makeText(this@SearchSpaceActivity, "존재하지 않는 스페이스입니다.", Toast.LENGTH_SHORT).show()
+                    try {
+                        val jsonObject = JSONObject(errorBody)
+                        val errorMessage = jsonObject.getString("message")
+                        Toast.makeText(this@SearchSpaceActivity, errorMessage, Toast.LENGTH_SHORT).show()
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
                     binding.spaceView.visibility = View.GONE
                 }
             }
@@ -172,8 +187,13 @@ class SearchSpaceActivity : AppCompatActivity() {
                         "Retrofit_Storage_Failed",
                         "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
                     )
-                    val errorMessage = JSONObject(errorBody).getString("message")
-                    Toast.makeText(this@SearchSpaceActivity, errorMessage, Toast.LENGTH_SHORT).show()
+                    try {
+                        val jsonObject = JSONObject(errorBody)
+                        val errorMessage = jsonObject.getString("message")
+                        Toast.makeText(this@SearchSpaceActivity, errorMessage, Toast.LENGTH_SHORT).show()
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
                 }
             }
             override fun onFailure(call: Call<SearchResponse.ResponseSpaceStorage>, t: Throwable) {
