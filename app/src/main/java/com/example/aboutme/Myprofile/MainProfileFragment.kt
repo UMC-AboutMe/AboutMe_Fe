@@ -16,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
@@ -45,6 +46,7 @@ class MainProfileFragment : Fragment() {
     private val multiList = mutableListOf<MultiProfileData>() // 전역 변수로 multiList 선언
     private lateinit var vpadapter : MainProfileVPAdapter
 
+    private var vpCount = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,13 +80,17 @@ class MainProfileFragment : Fragment() {
         val offsetPx = screenWidth - pageMarginPx - pagerWidth
 
 
+            /*binding.mainProfileVp.setPageTransformer { page, position ->
+                page.setTranslationX(position * -offsetPx)
+            }*/
 
+
+        /*if(vpCount != 1){
             binding.mainProfileVp.setPageTransformer { page, position ->
                 page.setTranslationX(position * -offsetPx)
             }
-
-
-
+            Log.d("실행","!!")
+        }*/
 
 
             binding.mainProfileVp.registerOnPageChangeCallback(object :
@@ -120,8 +126,11 @@ class MainProfileFragment : Fragment() {
 
             binding.mainProfileVp.adapter = vpadapter
 
-
-            //binding.mainProfileVp.setPageTransformer(MarginPageTransformer(resources.getDimensionPixelOffset(R.dimen.viewpager_page_margin)))
+            val pageMarginPx =
+                resources.getDimensionPixelOffset(R.dimen.viewpager_page_margin) // dimen 파일 안에 크기를 정의해두었다.
+            val pagerWidth = resources.getDimensionPixelOffset(R.dimen.pageWidth) // dimen 파일이 없으면 생성해야함
+            val screenWidth = resources.displayMetrics.widthPixels // 스마트폰의 너비 길이를 가져옴
+            val offsetPx = screenWidth - pageMarginPx - pagerWidth
 
 
             RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
@@ -142,6 +151,10 @@ class MainProfileFragment : Fragment() {
                                 profile.frontFeatures
                             }
                         val totalMyProfile = repos.getTotalMyProfile()
+
+                        if (totalMyProfile == 1){
+                            vpCount = 1
+                        }
 
                         if (frontFeatures != null) {
                             multiList.clear()
@@ -405,6 +418,16 @@ class MainProfileFragment : Fragment() {
 
                             // 어댑터에 업데이트된 multiList를 제출합니다.
                             vpadapter.submitList(multiList)
+
+                            if (vpCount == 1){
+                                Log.d("실행", vpCount.toString())
+                            } else{
+                                binding.mainProfileVp.setPageTransformer { page, position ->
+                                    page.setTranslationX(position * -offsetPx)
+                                }
+                                Log.d("실행2",vpCount.toString())
+                            }
+
                             Log.d("성공티비", "success")
                             Log.d("FrontFeature List", multiList.toString())
                         } else {
@@ -419,6 +442,7 @@ class MainProfileFragment : Fragment() {
                     }, 50)
                 }
             })
+
 
         }
 
