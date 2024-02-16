@@ -5,6 +5,7 @@ import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -30,14 +31,27 @@ class DialogProfAdapter(private val context: Context) :
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val profImg: ImageView = itemView.findViewById(R.id.select_profile_iv)
         private val profName: TextView = itemView.findViewById(R.id.select_profile_name_et)
-        private val profName2: TextView = itemView.findViewById(R.id.select_checkBox)
+        private val checkBox: CheckBox = itemView.findViewById(R.id.select_checkBox)
         private val profNum: TextView = itemView.findViewById(R.id.select_profile_num_et)
+        private val textView8: TextView = itemView.findViewById(R.id.textView8)
+
+        init {
+            // 체크박스의 상태가 변경될 때마다 해당 상태를 업데이트하고 이벤트를 처리
+            checkBox.setOnCheckedChangeListener { _, isChecked ->
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = datas[position]
+                    item.isChecked = isChecked  // 체크 상태를 업데이트
+                }
+            }
+        }
 
         fun bind(item: DialogProfData) {
             Glide.with(itemView).load(item.profile_img).into(profImg)
             profName.text = item.profile_name
-            profName2.text = item.profile_name
+            textView8.text = item.profile_name
             profNum.text = item.profile_num
+            checkBox.isChecked = item.isChecked  // 체크 상태를 설정
         }
     }
 }
