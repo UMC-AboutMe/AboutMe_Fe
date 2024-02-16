@@ -12,6 +12,8 @@ import com.example.aboutme.R
 import com.example.aboutme.Search.api.SearchObj
 import com.example.aboutme.Search.api.SearchResponse
 import com.example.aboutme.databinding.ActivitySearchSpaceBinding
+import org.checkerframework.checker.units.qual.Length
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -85,16 +87,9 @@ class SearchSpaceActivity : AppCompatActivity() {
                             binding.spaceName.text = "${response.result.nickname}'s 스페이스"
                             roomType(response.result.roomType)
                             avatarType(response.result.characterType)
-
                             //Dialog
                             binding.addBtn.setOnClickListener {
-                                Toast.makeText(this@SearchSpaceActivity, "스페이스가 아지트에 추가되었습니다.", Toast.LENGTH_SHORT).show()
                                 storeSpace(response.result.spaceId)
-                                //서버로부터 멤버아이디를 받아와야함.
-                                //CustomDialogSpace("내 스페이스도 공유 하시겠습니까?",memberId)
-                                //일단 임의값 1로 설정
-                                CustomDialogSpace("내 스페이스도 공유 하시겠습니까?",1)
-                                    .show(supportFragmentManager, "SpaceDialog")
                             }
                         } else {
                             //실패했을 때
@@ -161,6 +156,10 @@ class SearchSpaceActivity : AppCompatActivity() {
                         if (response.isSuccess) {
                             //성공했을 때
                             Log.d("Retrofit_Storage_Success", response.toString())
+                            //서버로부터 멤버아이디를 받아와야함.
+                            //일단 임의값 1로 설정
+                            CustomDialogSpace("내 스페이스도 공유 하시겠습니까?",1)
+                            .show(supportFragmentManager, "SpaceDialog")
                         } else {
                             //실패했을 때
                             Log.d("Retrofit_Storage_Failed", response.message)
@@ -168,7 +167,13 @@ class SearchSpaceActivity : AppCompatActivity() {
                     }
                 }
                 else {
-                    Log.d("Retrofit_Storage_Failed", response.toString())
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e(
+                        "Retrofit_Storage_Failed",
+                        "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                    )
+                    val errorMessage = JSONObject(errorBody).getString("message")
+                    Toast.makeText(this@SearchSpaceActivity, errorMessage, Toast.LENGTH_SHORT).show()
                 }
             }
             override fun onFailure(call: Call<SearchResponse.ResponseSpaceStorage>, t: Throwable) {
