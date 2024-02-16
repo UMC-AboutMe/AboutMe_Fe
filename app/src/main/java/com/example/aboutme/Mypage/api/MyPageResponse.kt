@@ -20,4 +20,14 @@ class MyPageResponse {
         var profile_shared_num : Int,
         var space_shared_num : Int
             )
+
+    data class ResponseDeleteUser (
+        var isSuccess : Boolean,
+        var code : String,
+        var result : Delete
+            )
+    data class Delete (
+        var memberId : Long,
+        var msg : String
+            )
 }

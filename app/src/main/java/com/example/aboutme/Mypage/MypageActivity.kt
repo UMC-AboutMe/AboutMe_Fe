@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import com.example.aboutme.MainActivity
 import com.example.aboutme.Mypage.api.MyPageObj
 import com.example.aboutme.Mypage.api.MyPageResponse
 import com.example.aboutme.MyprofileStorage.api.ProfStorageObj
@@ -24,6 +26,11 @@ class MypageActivity : AppCompatActivity() {
         getMypage(6)
         binding.backBtn.setOnClickListener {
             finish()
+        }
+        binding.button.setOnClickListener {
+
+            //아직 토큰 연결이 안되서 일단 주석처리
+            //deleteUser(token)
         }
     }
 
@@ -69,6 +76,49 @@ class MypageActivity : AppCompatActivity() {
             ) {
                 val errorMessage = "Call Failed:  ${t.message}"
                 Log.d("Retrofit_Get_Error", errorMessage)
+            }
+        })
+    }
+    //회원 탈퇴 api
+    private fun deleteUser(memberId: Long) {
+        val call = MyPageObj.getRetrofitService.deleteUser(memberId)
+
+        call.enqueue(object : Callback<MyPageResponse.ResponseDeleteUser> {
+            override fun onResponse(
+                call: Call<MyPageResponse.ResponseDeleteUser>,
+                response: Response<MyPageResponse.ResponseDeleteUser>
+            ) {
+                if (response.isSuccessful) {
+                    val response = response.body()
+                    if (response != null) {
+                        if (response.isSuccess) {
+                            // 성공했을 때
+                            Log.d("Retrofit_Delete_Success", response.toString())
+
+                            Toast.makeText(this@MypageActivity, "탈퇴가 정상적으로 처리되었습니다.", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this@MypageActivity, MainActivity::class.java)
+                            startActivity(intent)
+                        }
+                    }else {
+                        // 실패했을 때
+                        Log.d("Retrofit_Delete_Failed", response.toString())
+                    }
+                } else {
+                    //Log.d("Retrofit_Get_Failed", response.toString())
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e(
+                        "Retrofit_Delete_Failed",
+                        "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                    )
+                }
+            }
+
+            override fun onFailure(
+                call: Call<MyPageResponse.ResponseDeleteUser>,
+                t: Throwable
+            ) {
+                val errorMessage = "Call Failed:  ${t.message}"
+                Log.d("Retrofit_Delete_Error", errorMessage)
             }
         })
     }
