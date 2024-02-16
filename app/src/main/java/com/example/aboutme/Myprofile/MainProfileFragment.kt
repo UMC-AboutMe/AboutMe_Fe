@@ -72,8 +72,10 @@ class MainProfileFragment : Fragment() {
         binding.mainProfileVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
 
+        binding.vpRealIndicator.setViewPager2(binding.mainProfileVp) // DotsIndicator와 ViewPager2를 연결
 
-            binding.mainProfileVp.registerOnPageChangeCallback(object :
+
+        binding.mainProfileVp.registerOnPageChangeCallback(object :
                 ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
