@@ -62,7 +62,20 @@ class MainProfileFragment : Fragment() {
 
         initViewPager()
 
-        binding.mainProfileVp.offscreenPageLimit=3
+        //binding.mainProfileVp.offscreenPageLimit=1
+
+        val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.viewpager_page_margin) // dimen 파일 안에 크기를 정의해두었다.
+        val pagerWidth = resources.getDimensionPixelOffset(R.dimen.pageWidth) // dimen 파일이 없으면 생성해야함
+        val screenWidth = resources.displayMetrics.widthPixels // 스마트폰의 너비 길이를 가져옴
+        val offsetPx = screenWidth - pageMarginPx - pagerWidth
+
+        binding.mainProfileVp.setPageTransformer { page, position ->
+            page.translationX = position * -offsetPx
+        }
+
+        binding.mainProfileVp.offscreenPageLimit = 1 // 몇 개의 페이지를 미리 로드 해둘것인지
+        binding.mainProfileVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
 
 
     }
@@ -347,21 +360,4 @@ class MainProfileFragment : Fragment() {
 
     }
 
-    private fun getBitmapFromURL(urlString: String, callback: (Bitmap) -> Unit) {
-        GlobalScope.launch(Dispatchers.IO) {
-            try {
-                val url = URL(urlString)
-                val connection = url.openConnection() as HttpURLConnection
-                connection.doInput = true
-                connection.connect()
-                val input = connection.inputStream
-                val bitmap = BitmapFactory.decodeStream(input)
-                withContext(Dispatchers.Main) {
-                    callback(bitmap)
-                }
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }
-    }
 }
