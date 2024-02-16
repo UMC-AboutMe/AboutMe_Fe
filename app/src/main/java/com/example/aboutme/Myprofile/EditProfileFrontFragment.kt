@@ -49,6 +49,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -404,7 +405,7 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
 // 읽기 권한과 쓰기 권한에 대해서 설정이 되어있지 않다면
         if (writePermission == PackageManager.PERMISSION_DENIED || readPermission == PackageManager.PERMISSION_DENIED) {
             // 읽기, 쓰기 권한을 요청합니다.
-            Log.d("go", "su")
+            Log.d("go!!", "su")
             ActivityCompat.requestPermissions(
                 requireActivity(),
                 arrayOf(
@@ -499,9 +500,19 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
                         Log.d("서버 응답 본문", responseBody.toString()) // 응답 본문 출력
                     } else {
                         Log.d("서버 응답 본문", "응답 본문이 비어있습니다.")
+                        Log.d("서버", response.message())
                     }
                 } else {
-                    Log.d("서버 응답 오류", "서버 응답이 실패했습니다.")
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    //Log.d("서버 응답 오류", "서버 응답이 실패했습니다.")
+                    Log.d("서버 응답 오류", "서버 응답이 실패했습니다. 오류 메시지: $errorBody")
+                    try {
+                        val errorMessage = JSONObject(errorBody).getString("message")
+                        Log.d("오류 메시지", errorMessage)
+                        Toast.makeText(requireContext(),errorMessage,Toast.LENGTH_SHORT).show()
+                    } catch (e: JSONException) {
+                        Log.e("JSON 파싱 오류", "오류 메시지를 추출하는 데 실패했습니다: ${e.message}")
+                    }
                 }
             }
 
