@@ -1,11 +1,13 @@
 package com.example.aboutme
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.aboutme.Search.api.SearchObj
@@ -18,6 +20,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.normal.TedPermission
 import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,6 +35,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityMainBinding
 
 
+    // 앱 처음 시작시 앱 전체 알림 허용 메시지
 //    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 //    private val permissionResult =
 //        TedPermission.create().setPermissionListener(object: PermissionListener {
@@ -56,27 +61,28 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        // 구글 로그인 버튼 클릭시
         binding.googleIv.setOnClickListener {
             Toast.makeText(this, "googleclick", Toast.LENGTH_SHORT).show()
         }
 
+        // 카카오 로그인 버튼 클릭시
         binding.kakaoIv.setOnClickListener {
+            // 기기에 카카오톡이 설치되어있는 경우
             if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
                 UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
                     Log.i(TAG, "loginWithKakaoTalk $token $error")
                     updateLoginInfo()
                 }
-            } else {
+            }
+            // 기기에 카카오톡이 설치되어있지 않은 경우
+            else {
                 UserApiClient.instance.loginWithKakaoAccount(this) { token, error ->
                     Log.i(TAG, "loginWithKakaoAccount $token $error")
                     updateLoginInfo()
                     Toast.makeText(this, "kakaoclick", Toast.LENGTH_SHORT).show()
-
-                    val intent = Intent(this, TutorialActivity1::class.java)
-                    startActivity(intent)
                 }
             }
-
         }
 
         //구글 로그인
@@ -107,6 +113,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     TAG,
                     "updateLoginInfo: ${user.id} ${user.kakaoAccount?.email} ${user.kakaoAccount?.profile?.nickname} ${user.kakaoAccount?.profile?.thumbnailImageUrl}"
                 )
+                val intent = Intent(this, KakaoLoginProfileActivity::class.java)
+                intent.putExtra("email", "${user.kakaoAccount?.email}")
+                intent.putExtra("name", "${user.kakaoAccount?.profile?.nickname}")
+                intent.putExtra("profile", "${user.kakaoAccount?.profile?.thumbnailImageUrl}")
+                startActivity(intent)
             }
             error?.let {
 
