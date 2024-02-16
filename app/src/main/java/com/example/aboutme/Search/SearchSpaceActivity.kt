@@ -40,7 +40,8 @@ class SearchSpaceActivity : AppCompatActivity() {
         //제약 조건
         binding.searchBtn.setOnClickListener {
             //스페이스 검색 api
-            getSearchSpace()
+            val keyword = binding.searchTv.text.toString()
+            getSearchSpace(keyword)
         }
         // 검색창 edittext에서 키보드상으로 완료 버튼을 누를 경우 검색버튼을 누른 것과 같은 효과
         binding.searchTv.setOnEditorActionListener { _, actionId, _ ->
@@ -55,13 +56,6 @@ class SearchSpaceActivity : AppCompatActivity() {
             }
             false
         }
-        // 검색창 검색 버튼 클릭시 키보드 숨김처리
-        binding.searchBtn.setOnClickListener {
-            // 키보드 숨기기
-            val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(binding.searchBtn.windowToken, 0)
-        }
-
         // 화면 내 빈 공간 클릭시 키보드 숨김처리
         binding.searchProf.setOnClickListener {
             val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
@@ -69,10 +63,9 @@ class SearchSpaceActivity : AppCompatActivity() {
         }
     }
 
-    private fun getSearchSpace() {
+    private fun getSearchSpace(keyword:String) {
         Log.d("Retrofit_Search", "스페이스 검색 실행")
-        val spaceName = binding.searchTv.text.toString()
-        val call = SearchObj.getRetrofitService.getSearchSpace(spaceName)
+        val call = SearchObj.getRetrofitService.getSearchSpace(keyword)
 
         //짱구는 임시값
         //val call = SearchObj.getRetrofitService.getSearchSpace("짱구")
