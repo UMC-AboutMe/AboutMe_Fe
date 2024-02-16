@@ -85,6 +85,7 @@ class SearchProfActivity : AppCompatActivity() {
                         if (response.isSuccess) {
                             //성공했을 때
                             //상대방 마이프로필 내 보관함에 추가하기
+                            Toast.makeText(this@SearchProfActivity, "프로필 보관함에 저장되었습니다.", Toast.LENGTH_SHORT).show()
                             CustomDialog("내 프로필도 공유 하시겠습니까?",list)
                                 .show(supportFragmentManager, "ProfDialog")
                         } else {
