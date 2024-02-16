@@ -15,6 +15,8 @@ import com.example.aboutme.Search.api.SearchItf
 import com.example.aboutme.Search.api.SearchObj
 import com.example.aboutme.Search.api.SearchResponse
 import com.example.aboutme.databinding.ActivitySearchProfBinding
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,26 +37,27 @@ class SearchProfActivity : AppCompatActivity() {
         }
         //제약 조건
         binding.searchBtn2.setOnClickListener {
-            val number = binding.searchTv2.text.toString().toInt()
-            getSearchProf(number)
+            //val number = binding.searchTv2.text.toString().toInt()
+            //getSearchProf(number)
+            val number = binding.searchTv2.text.toString().trim()
+            if (number.isNotEmpty()) {
+                try {
+                    val number = number.toInt()
+                    // 여기에서 number를 사용하여 작업 수행
+                    getSearchProf(number)
+                } catch (e: NumberFormatException) {
+                    // 정수로 변환할 수 없는 경우
+                    Toast.makeText(this@SearchProfActivity, "올바른 숫자를 입력하세요.", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                // 입력란이 비어있는 경우
+                Toast.makeText(this@SearchProfActivity, "검색어를 입력하세요.", Toast.LENGTH_SHORT).show()
+            }
             Log.d("Retro","$number")
             // 키보드 숨기기
             val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(binding.searchBtn2.windowToken, 0)
         }
-//        // 검색창 edittext에서 키보드상으로 완료 버튼을 누를 경우 검색버튼을 누른 것과 같은 효과
-//        binding.searchTv2.setOnEditorActionListener { _, actionId, _ ->
-//            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                // 검색버튼을 누를 경우 발동되는 검색 효과
-//                // 사실상 검색 효과에 해당하는 필터링이 텍스트를 입력할 때마다 발동되므로 적을 필요가 없음
-//                // 키보드 숨기기
-//                val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-//                inputMethodManager.hideSoftInputFromWindow(binding.searchTv2.windowToken, 0)
-//
-//                return@setOnEditorActionListener true
-//            }
-//            false
-//        }
         // 화면 내 빈 공간 클릭시 키보드 숨김처리
         binding.searchProf.setOnClickListener {
             val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
@@ -81,17 +84,30 @@ class SearchProfActivity : AppCompatActivity() {
                     if (response != null) {
                         if (response.isSuccess) {
                             //성공했을 때
+                            //상대방 마이프로필 내 보관함에 추가하기
+                            CustomDialog("내 프로필도 공유 하시겠습니까?",list)
+                                .show(supportFragmentManager, "ProfDialog")
                         } else {
                             //실패했을 때
                             Log.d("Retrofit_Add", response.message)
                         }
                     }
+                }else {
+                    //Log.d("Retrofit_Search_Failed", response.toString())
+
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e(
+                        "Retrofit_Storage_Failed",
+                        "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                    )
+                    try {
+                        val jsonObject = JSONObject(errorBody)
+                        val errorMessage = jsonObject.getString("message")
+                        Toast.makeText(this@SearchProfActivity, errorMessage, Toast.LENGTH_SHORT).show()
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
                 }
-                val errorBody = response.errorBody()?.string() ?: "No error body"
-                Log.e(
-                    "Retrofit_Get_Failed",
-                    "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
-                )
             }
             override fun onFailure(call:Call<SearchResponse.ResponseStoreProf>, t:Throwable) {
                 val errorMessage = "Call Failed:  ${t.message}"
@@ -155,13 +171,8 @@ class SearchProfActivity : AppCompatActivity() {
                             }
                             //Dialog
                             binding.addBtn.setOnClickListener {
-                                Toast.makeText(this@SearchProfActivity, "보관함에 저장되었습니다.", Toast.LENGTH_SHORT).show()
-
                                 //보관함 추가하기 api
                                 postProfStorage(Number)
-                                //상대방 마이프로필 내 보관함에 추가하기
-                                CustomDialog("내 프로필도 공유 하시겠습니까?",Number)
-                                    .show(supportFragmentManager, "ProfDialog")
                             }
                         } else {
                             //실패했을 때
@@ -171,12 +182,19 @@ class SearchProfActivity : AppCompatActivity() {
                     }
                 } else {
                     //Log.d("Retrofit_Search_Failed", response.toString())
+
                     val errorBody = response.errorBody()?.string() ?: "No error body"
                     Log.e(
-                        "Retrofit_Get_Failed",
+                        "Retrofit_Storage_Failed",
                         "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
                     )
-                    Toast.makeText(this@SearchProfActivity, "존재하지 않는 프로필입니다.", Toast.LENGTH_SHORT).show()
+                    try {
+                        val jsonObject = JSONObject(errorBody)
+                        val errorMessage = jsonObject.getString("message")
+                        Toast.makeText(this@SearchProfActivity, errorMessage, Toast.LENGTH_SHORT).show()
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
                     binding.profView.visibility = View.GONE
                 }
             }
