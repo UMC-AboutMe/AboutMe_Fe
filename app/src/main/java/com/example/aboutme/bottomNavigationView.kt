@@ -28,21 +28,27 @@ class bottomNavigationView : AppCompatActivity() {
     private val bottomNagivationView: BottomNavigationView by lazy { // 하단 네비게이션 바
         findViewById(R.id.bottomNavigationView)
     }
-    private val congratulationAnimation: LottieAnimationView by lazy { // 축하 애니메이션 뷰
-        findViewById(R.id.congratulation_animation)
-    }
-    private val congratulationTextView: TextView by lazy { // 축하 애니메이션 뷰
-        findViewById(R.id.congratulation_tv)
-    }
 
     private val sharedViewModel: MyspaceViewModel by viewModels()
+
+    // 프래그먼트 인덱싱을 위한 선언
+    private val fragments = listOf(
+        MainProfileFragment(),
+        ProfileStorageFragment(),
+        HomeFragment(),
+        MySpaceMainFragment(),
+        AgitFragment()
+    )
+
+    // animation 방향 계산을 위해 가장 마지막 위치 값 저장
+    private var recentPosition = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bottom_navigation_view)
 
         // 애플리케이션 실행 후 첫 화면 설정
-        supportFragmentManager.beginTransaction().add(frame.id, HomeFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(frame.id, fragments[2]).commit()
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         val initialItemId = R.id.nav_home
         bottomNavigationView.selectedItemId = initialItemId
@@ -55,48 +61,102 @@ class bottomNavigationView : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_myprof -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(frame.id, MainProfileFragment())
+                        .setCustomAnimations(R.anim.bottomnavigationview_anim_left, R.anim.bottomnavigationview_fadeout)
+                        .replace(frame.id, fragments[0])
                         .commit()
+                    recentPosition = 0
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.nav_saveprof -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(frame.id, ProfileStorageFragment())
-                        .commit()
+                    // 두번째 보다 작은 왼쪽에서 이동해 올 경우 오른쪽에서 화면이 나타남
+                    // 반대의 경우 왼쪽에서 나타남
+                    if (recentPosition < 1) {
+                        supportFragmentManager.beginTransaction()
+                            .setCustomAnimations(R.anim.bottomnavigationview_anim_right, R.anim.bottomnavigationview_fadeout)
+                            .replace(frame.id, fragments[1])
+                            .commit()
+                    } else {
+                        supportFragmentManager.beginTransaction()
+                            .setCustomAnimations(R.anim.bottomnavigationview_anim_left, R.anim.bottomnavigationview_fadeout)
+                            .replace(frame.id, fragments[1])
+                            .commit()
+                    }
+                    recentPosition = 1
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.nav_home -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(frame.id, HomeFragment())
-                        .commit()
+                    // 세번째 보다 작은 왼쪽에서 이동해 올 경우 오른쪽에서 화면이 나타남
+                    // 반대의 경우 왼쪽에서 나타남
+                    if (recentPosition < 2) {
+                        supportFragmentManager.beginTransaction()
+                            .setCustomAnimations(R.anim.bottomnavigationview_anim_right, R.anim.bottomnavigationview_fadeout)
+                            .replace(frame.id, fragments[2])
+                            .commit()
+                    } else {
+                        supportFragmentManager.beginTransaction()
+                            .setCustomAnimations(R.anim.bottomnavigationview_anim_left, R.anim.bottomnavigationview_fadeout)
+                            .replace(frame.id, fragments[2])
+                            .commit()
+                    }
+                    recentPosition = 2
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.nav_myspace -> {
-                    // 뷰모델의 isCreated로 사용자의 스페이스 생성 여부 판단
-                    sharedViewModel.isCreated.observe(this) {isCreated ->
-                        if (isCreated) {
-                            supportFragmentManager.beginTransaction()
-                                .replace(frame.id, MySpaceMainFragment())
-                                .commit()
-                        } else {
-                            Log.d("isCreated", "${sharedViewModel.isCreated}")
-                            val intent = Intent(this, MySpaceStep1Activity::class.java)
-                            startActivity(intent)
+                    // 네번째 보다 작은 왼쪽에서 이동해 올 경우 오른쪽에서 화면이 나타남
+                    // 반대의 경우 왼쪽에서 나타남
+                    if (recentPosition < 3) {
+                        // 뷰모델의 isCreated로 사용자의 스페이스 생성 여부 판단
+                        sharedViewModel.isCreated.observe(this) {isCreated ->
+                            if (isCreated) {
+                                supportFragmentManager.beginTransaction()
+                                    .setCustomAnimations(R.anim.bottomnavigationview_anim_right, R.anim.bottomnavigationview_fadeout)
+                                    .replace(frame.id, MySpaceMainFragment())
+                                    .commit()
+                            } else {
+                                Log.d("isCreated", "${sharedViewModel.isCreated}")
+                                val intent = Intent(this, MySpaceStep1Activity::class.java)
+                                startActivity(intent)
+                            }
+                        }
+                    } else {
+                        // 뷰모델의 isCreated로 사용자의 스페이스 생성 여부 판단
+                        sharedViewModel.isCreated.observe(this) {isCreated ->
+                            if (isCreated) {
+                                supportFragmentManager.beginTransaction()
+                                    .setCustomAnimations(R.anim.bottomnavigationview_anim_left, R.anim.bottomnavigationview_fadeout)
+                                    .replace(frame.id, MySpaceMainFragment())
+                                    .commit()
+                            } else {
+                                Log.d("isCreated", "${sharedViewModel.isCreated}")
+                                val intent = Intent(this, MySpaceStep1Activity::class.java)
+                                startActivity(intent)
+                            }
                         }
                     }
+                    recentPosition = 3
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.nav_agit -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(frame.id, AgitFragment())
-                        .commit()
+                    // 다섯번째 보다 작은 왼쪽에서 이동해 올 경우 오른쪽에서 화면이 나타남
+                    // 반대의 경우 왼쪽에서 나타남
+                    if (recentPosition < 4) {
+                        supportFragmentManager.beginTransaction()
+                            .setCustomAnimations(R.anim.bottomnavigationview_anim_right, R.anim.bottomnavigationview_fadeout)
+                            .replace(frame.id, fragments[4])
+                            .commit()
+                    } else {
+                        supportFragmentManager.beginTransaction()
+                            .setCustomAnimations(R.anim.bottomnavigationview_anim_left, R.anim.bottomnavigationview_fadeout)
+                            .replace(frame.id, fragments[4])
+                            .commit()
+                    }
+                    recentPosition = 4
                     return@setOnItemSelectedListener true
                 }
-
                 else -> false
             }
         }
