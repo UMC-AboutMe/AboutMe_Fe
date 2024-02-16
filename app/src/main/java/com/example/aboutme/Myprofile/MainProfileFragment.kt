@@ -68,29 +68,9 @@ class MainProfileFragment : Fragment() {
 
         initViewPager()
 
-        //binding.mainProfileVp.offscreenPageLimit=1
-
         binding.mainProfileVp.offscreenPageLimit = 1 // 몇 개의 페이지를 미리 로드 해둘것인지
         binding.mainProfileVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
-        val pageMarginPx =
-            resources.getDimensionPixelOffset(R.dimen.viewpager_page_margin) // dimen 파일 안에 크기를 정의해두었다.
-        val pagerWidth = resources.getDimensionPixelOffset(R.dimen.pageWidth) // dimen 파일이 없으면 생성해야함
-        val screenWidth = resources.displayMetrics.widthPixels // 스마트폰의 너비 길이를 가져옴
-        val offsetPx = screenWidth - pageMarginPx - pagerWidth
-
-
-            /*binding.mainProfileVp.setPageTransformer { page, position ->
-                page.setTranslationX(position * -offsetPx)
-            }*/
-
-
-        /*if(vpCount != 1){
-            binding.mainProfileVp.setPageTransformer { page, position ->
-                page.setTranslationX(position * -offsetPx)
-            }
-            Log.d("실행","!!")
-        }*/
 
 
             binding.mainProfileVp.registerOnPageChangeCallback(object :
@@ -420,6 +400,9 @@ class MainProfileFragment : Fragment() {
                             vpadapter.submitList(multiList)
 
                             if (vpCount == 1){
+                                binding.mainProfileVp.setPageTransformer { page, position ->
+                                    page.setTranslationX(position * -offsetPx)
+                                }
                                 Log.d("실행", vpCount.toString())
                             } else{
                                 binding.mainProfileVp.setPageTransformer { page, position ->
