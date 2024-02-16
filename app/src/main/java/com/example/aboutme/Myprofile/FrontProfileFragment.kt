@@ -206,7 +206,12 @@ class FrontProfileFragment : Fragment() {
     private fun applyUpdatedDataToUI(updatedData: GetAllProfile) {
         // 변경된 데이터를 UI의 각 요소에 적용
             binding.profileNameEt.setText(updatedData.result.frontFeatures[0].value.toString())
+
+        if (updatedData.result.frontFeatures[1].value != null) {
             binding.profileNumEt.setText(updatedData.result.frontFeatures[1].value.toString())
+        } else{
+            binding.profileNumEt.setText("")
+        }
 
             if (updatedData.result.profileImage.type == "USER_IMAGE"){
                 if (updatedData.result.profileImage.profileImageUrl != null) {
@@ -297,11 +302,6 @@ class FrontProfileFragment : Fragment() {
             e.printStackTrace()
         }
     }
-
-
-
-
-
 
 }
 
