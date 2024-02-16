@@ -175,6 +175,8 @@ class SearchSpaceActivity : AppCompatActivity() {
                             //일단 임의값 1로 설정
                             CustomDialogSpace("내 스페이스도 공유 하시겠습니까?",1)
                             .show(supportFragmentManager, "SpaceDialog")
+                        //스페이스 저장 후 내 마이스페이스 조회
+                        //getMySpace(memberId)
                         } else {
                             //실패했을 때
                             Log.d("Retrofit_Storage_Failed", response.message)
@@ -197,6 +199,53 @@ class SearchSpaceActivity : AppCompatActivity() {
                 }
             }
             override fun onFailure(call: Call<SearchResponse.ResponseSpaceStorage>, t: Throwable) {
+                val errorMessage = "Call Failed:  ${t.message}"
+                Log.d("Retrofit_Storage_Error", errorMessage)
+            }
+        })
+    }
+    //마이 스페이스 조회 api
+    private fun getMySpace(memberId : Long ) {
+        Log.d("Retrofit_Search", "스페이스 저장 실행")
+
+        //memberID는 임시값
+        val call = SearchObj.getRetrofitService.getMySpace(6)
+
+        call.enqueue(object : Callback<SearchResponse.ResponseMySpace> {
+            override fun onResponse(
+                call: Call<SearchResponse.ResponseMySpace>,
+                response: Response<SearchResponse.ResponseMySpace>
+            ) {
+                if (response.isSuccessful) { // HTTP 응답 코드가 200에서 300 사이인지 확인
+                    val response = response.body()
+                    if (response != null) {
+                        if (response.isSuccess) {
+                            //성공했을 때
+                            Log.d("Retrofit_Storage_Success", response.toString())
+
+                            //마이스페이스
+                        } else {
+                            //실패했을 때
+                            Log.d("Retrofit_Storage_Failed", response.message)
+                        }
+                    }
+                }
+                else {
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e(
+                        "Retrofit_Storage_Failed",
+                        "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                    )
+                    try {
+                        val jsonObject = JSONObject(errorBody)
+                        val errorMessage = jsonObject.getString("message")
+                        Toast.makeText(this@SearchSpaceActivity, errorMessage, Toast.LENGTH_SHORT).show()
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+            override fun onFailure(call: Call<SearchResponse.ResponseMySpace>, t: Throwable) {
                 val errorMessage = "Call Failed:  ${t.message}"
                 Log.d("Retrofit_Storage_Error", errorMessage)
             }

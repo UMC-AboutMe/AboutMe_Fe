@@ -110,4 +110,22 @@ class SearchResponse {
     data class RequestShareSpace (
         var member_id : Long
             )
+
+    //마이스페이스 조회
+    data class ResponseMySpace (
+        var isSuccess: Boolean,
+        var code: String,
+        var message: String,
+        var result : MySpace
+            )
+    data class MySpace (
+        var nickname : String,
+        var characterType : Int,
+        var roomType : Int,
+        var mood : String?,
+        var musicUrl : String?,
+        var statusMessage : String?,
+        var spaceImageList : List<Int>?,
+        var planList : List<String>?,
+        )
 }

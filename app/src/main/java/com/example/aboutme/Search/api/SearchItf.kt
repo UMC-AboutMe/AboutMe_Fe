@@ -65,4 +65,11 @@ interface SearchItf {
         @Header("Authorization") Authorization:String,
         @Body requestShareSpace : SearchResponse.RequestShareSpace
     ) : Call<SearchResponse.ResponseShareSpace>
+
+    //마이스페이스 조회
+    @GET ("/myspaces/")
+    fun getMySpace (
+        @Header ("member-id") memberID : Long
+    ) : Call<SearchResponse.ResponseMySpace>
+
 }
