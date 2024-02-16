@@ -12,12 +12,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 
-
     <uses-permission android:name="android.permission.CAMERA" />
-
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -121,11 +116,6 @@
             android:name=".bottomNavigationView"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Tutorial.TutorialActivity1"
@@ -135,8 +125,17 @@
             android:exported="true">
         </activity>
         <activity
+            android:name=".KakaoLoginProfileActivity"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <!-- 카카오 소셜 로그인 api key 연결 -->
