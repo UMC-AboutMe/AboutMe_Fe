@@ -56,10 +56,6 @@ class ProfileStorageBackFragment : Fragment() {
                             binding.backProfileEt3.text = response.result.back_features[2].key
                             binding.backProfileEt4.text = response.result.back_features[3].key
                             binding.backProfileEt5.text = response.result.back_features[4].key
-
-                        } else {
-                            // 실패했을 때
-                            Log.d("Retrofit_Get_Failed", response.toString())
                         }
                     }
                 } else {

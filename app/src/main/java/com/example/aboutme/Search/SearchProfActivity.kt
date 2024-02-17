@@ -24,9 +24,15 @@ import retrofit2.Response
 class SearchProfActivity : AppCompatActivity() {
 
     lateinit var binding : ActivitySearchProfBinding
+    lateinit var token: String // token 변수를 추가
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // token을 SharedPreferences에서 가져와서 초기화
+        val pref = this.getSharedPreferences("pref", 0)
+        token = pref.getString("Gtoken", null) ?: ""
+        Log.d("token", token)
 
         binding = ActivitySearchProfBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -69,7 +75,7 @@ class SearchProfActivity : AppCompatActivity() {
     private fun postProfStorage(list : Int){
         Log.d("Retrofit_Add","보관함 추가 실행")
         val requestStoreProf = SearchResponse.RequestStoreProf(listOf(list))
-        val call = SearchObj.getRetrofitService.postProfStorage(6, requestStoreProf)
+        val call = SearchObj.getRetrofitService.postProfStorage(token, requestStoreProf)
 
         call.enqueue(object : Callback<SearchResponse.ResponseStoreProf> {
             override fun onResponse(
@@ -88,14 +94,9 @@ class SearchProfActivity : AppCompatActivity() {
                             Toast.makeText(this@SearchProfActivity, "프로필 보관함에 저장되었습니다.", Toast.LENGTH_SHORT).show()
                             CustomDialog("내 프로필도 공유 하시겠습니까?",list)
                                 .show(supportFragmentManager, "ProfDialog")
-                        } else {
-                            //실패했을 때
-                            Log.d("Retrofit_Add", response.message)
                         }
                     }
                 }else {
-                    //Log.d("Retrofit_Search_Failed", response.toString())
-
                     val errorBody = response.errorBody()?.string() ?: "No error body"
                     Log.e(
                         "Retrofit_Storage_Failed",
@@ -175,15 +176,9 @@ class SearchProfActivity : AppCompatActivity() {
                                 //보관함 추가하기 api
                                 postProfStorage(Number)
                             }
-                        } else {
-                            //실패했을 때
-                            Log.d("Retrofit_Search", response.message)
-                            binding.profView.visibility = View.GONE
                         }
                     }
                 } else {
-                    //Log.d("Retrofit_Search_Failed", response.toString())
-
                     val errorBody = response.errorBody()?.string() ?: "No error body"
                     Log.e(
                         "Retrofit_Storage_Failed",

@@ -22,11 +22,17 @@ import retrofit2.Response
 
 class AlarmActivity : AppCompatActivity() {
     lateinit var binding : ActivityAlarmBinding
+    lateinit var token: String // token 변수를 추가
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //알림 데이터 조회 임의값 설정
-        getAlarms(6)
+
+        // token을 SharedPreferences에서 가져와서 초기화
+        val pref = this.getSharedPreferences("pref", 0)
+        token = pref.getString("Gtoken", null) ?: ""
+        Log.d("token", token)
+
+        getAlarms(token)
         binding = ActivityAlarmBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -63,8 +69,8 @@ class AlarmActivity : AppCompatActivity() {
     }
 
     //알람 데이터 조회 api
-    private fun getAlarms(memberId : Long ) {
-        val call = AlarmObj.getRetrofitService.getAlarms(memberId)
+    private fun getAlarms(token : String ) {
+        val call = AlarmObj.getRetrofitService.getAlarms(token)
 
         call.enqueue(object : Callback<AlarmResponse.ResponseAlarm> {
             override fun onResponse(
@@ -96,9 +102,6 @@ class AlarmActivity : AppCompatActivity() {
                             binding.day7Rc.adapter = AlarmDay7Adapter
                             binding.day7Rc.layoutManager = LinearLayoutManager(this@AlarmActivity, LinearLayoutManager.VERTICAL, false)
                         }
-                    } else {
-                        // 실패했을 때
-                        Log.d("Retrofit_Alarm_Failed", response.toString())
                     }
                 } else {
                     //Log.d("Retrofit_Get_Failed", response.toString())
@@ -142,9 +145,6 @@ class AlarmActivity : AppCompatActivity() {
                         if (response.isSuccess) {
                             //성공했을 때
                             Log.d("Retrofit_Storage", response.message)
-                        } else {
-                            //실패했을 때
-                            Log.d("Retrofit_Storage", response.message)
                         }
                     }
                 }else {
@@ -170,8 +170,8 @@ class AlarmActivity : AppCompatActivity() {
         })
     }
     //스페이스 아지트에 저장하기
-    private fun postStorageSpace(memberId : Int,spaceId:Long ) {
-        val call = AlarmObj.getRetrofitService.postStorageSpace(memberId,spaceId)
+    private fun postStorageSpace(token: String,spaceId:Long ) {
+        val call = AlarmObj.getRetrofitService.postStorageSpace(token,spaceId)
 
         call.enqueue(object : Callback<AlarmResponse.ResponseAlarm> {
             override fun onResponse(
@@ -185,9 +185,6 @@ class AlarmActivity : AppCompatActivity() {
                             // 성공했을 때
                             Log.d("Retrofit_Storage_Success", response.toString())
                         }
-                    } else {
-                        // 실패했을 때
-                        Log.d("Retrofit_Storage_Failed", response.toString())
                     }
                 } else {
                     val errorBody = response.errorBody()?.string() ?: "No error body"

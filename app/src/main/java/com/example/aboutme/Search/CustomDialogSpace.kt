@@ -83,14 +83,10 @@ class CustomDialogSpace(val content: String,val memberId : Long) : DialogFragmen
                         if (response.isSuccess) {
                             //성공했을 때
                             Log.d("Retrofit_Share_Success", response.toString())
-                        } else {
-                            //실패했을 때
-                            Log.d("Retrofit_Share_Failed", response.toString())
                         }
                     }
                 }
                 else {
-                    //Log.d("Retrofit_Share_Failed", response.toString())
                     val errorBody = response.errorBody()?.string() ?: "No error body"
                     Log.e(
                         "Retrofit_Share_Failed",

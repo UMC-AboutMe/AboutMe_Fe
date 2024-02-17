@@ -26,8 +26,15 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
     private val binding get() = _binding!!
     lateinit var profileAdapter: DialogProfAdapter
     private val datas = mutableListOf<DialogProfData>()
+    lateinit var token: String // token 변수를 추가
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = ActivityCustomDialogProfBinding.inflate(inflater, container, false)
+        // token을 SharedPreferences에서 가져와서 초기화
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        token = pref.getString("Gtoken", null) ?: ""
+        Log.d("token", token)
+
         val view = binding.root
         // 레이아웃 배경을 투명하게
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -62,7 +69,7 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
     //마이프로필 목록 조회
     private fun getProfiles() {
         Log.d("Retrofit_Add", "프로필 공유 실행")
-        val call = SearchObj.getRetrofitService.getProfileList(6)
+        val call = SearchObj.getRetrofitService.getProfileList(token)
 
         call.enqueue(object : Callback<SearchResponse.ResponseGetProfiles> {
             override fun onResponse(
@@ -119,10 +126,6 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
                                 postShareProf()
                                 dismiss()
                             }
-                        } else {
-                            //실패했을 때
-                            Log.d("Retrofit_Add", response.message)
-
                         }
                     }
                 }
@@ -143,7 +146,7 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
         Log.d("Retrofit_Add", "프로필 공유 실행")
         //상대방의 마이프로필 시리얼 번호 , 공유한 마이프로필 시리얼 번호
         val requestShareProf = SearchResponse.RequestShareProf(listOf(serial), listOf(467900))
-        val call = SearchObj.getRetrofitService.postShareProf(6, requestShareProf)
+        val call = SearchObj.getRetrofitService.postShareProf(token, requestShareProf)
 
         call.enqueue(object : Callback<SearchResponse.ResponseShareProf> {
             override fun onResponse(
@@ -161,9 +164,6 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
                             Log.d("Retrofit_Share","내 프로필 공유 성공")
                             Log.d("Retrofit_Share", response.message)
                             //Toast.makeText(requireContext(), "선택한 마이프로필이 공유되었습니다.", Toast.LENGTH_SHORT).show()
-                        } else {
-                            //실패했을 때
-                            Log.d("Retrofit_Share", response.message)
                         }
                     }
                 }

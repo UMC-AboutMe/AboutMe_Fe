@@ -15,7 +15,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ProfileRVAdapter(private val items: MutableList<ProfileData>) :
+class ProfileRVAdapter(private val items: MutableList<ProfileData>,private val token:String) :
     RecyclerView.Adapter<ProfileRVAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
@@ -76,12 +76,12 @@ class ProfileRVAdapter(private val items: MutableList<ProfileData>) :
             profBasic.setOnClickListener {
                 profBasic.visibility = View.GONE
                 profFav.visibility = View.VISIBLE
-                favProfiles(profileData.profile_id, 6)
+                favProfiles(profileData.profile_id, token)
             }
             profFav.setOnClickListener {
                 profFav.visibility = View.GONE
                 profBasic.visibility = View.VISIBLE
-                favProfiles(profileData.profile_id, 6)
+                favProfiles(profileData.profile_id, token)
             }
         }
 
@@ -94,9 +94,9 @@ class ProfileRVAdapter(private val items: MutableList<ProfileData>) :
         }
     }
     //보관함 즐겨찾기
-    private fun favProfiles(profId: Long, memberId: Int) {
+    private fun favProfiles(profId: Long, token : String) {
         Log.d("Retrofit_Fav", "patch 함수 호출됨")
-        val call = ProfStorageObj.getRetrofitService.patchProfStorage(profId, memberId)
+        val call = ProfStorageObj.getRetrofitService.patchProfStorage(profId, token)
 
         call.enqueue(object : Callback<ProfStorageResponse.ResponseFavProf> {
             override fun onResponse(
@@ -109,9 +109,6 @@ class ProfileRVAdapter(private val items: MutableList<ProfileData>) :
                         if (responseBody.isSuccess) {
                             //성공했을 때
                             Log.d("Retrofit_Fav", responseBody.toString())
-                        } else {
-                            //실패했을 때
-                            Log.d("Retrofit_Fav", "처리에 실패함")
                         }
                     }
                 }

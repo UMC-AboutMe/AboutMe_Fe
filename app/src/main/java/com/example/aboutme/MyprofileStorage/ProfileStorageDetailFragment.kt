@@ -22,12 +22,18 @@ class ProfileStorageDetailFragment : Fragment() {
     lateinit var binding: FragmentProfileStorageDetailBinding
     private var items: MutableList<ProfileData>? = null
     lateinit var bindingFront : FragmentProfileStorageFrontBinding
+    lateinit var token: String // token 변수를 추가
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //새로 추가
+        // token을 SharedPreferences에서 가져와서 초기화
+        val pref = requireActivity().getSharedPreferences("pref", 0)
+        token = pref.getString("Gtoken", null) ?: ""
+        Log.d("token", token)
+
         val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
 
@@ -39,42 +45,38 @@ class ProfileStorageDetailFragment : Fragment() {
         setFrag(0,profileId)
 
         binding.trashButton.setOnClickListener {
-            //Log.d("retro", "$profileId")
-            deleteProfiles(profileId!!.toLong(), 6)
+            deleteProfiles(profileId, token)
             parentFragmentManager.popBackStack()
         }
+
         return binding.root
     }
     private fun setFrag(fragNum: Int, profId: Long) {
         val ft = childFragmentManager.beginTransaction()
         when (fragNum) {
             0 -> {
-                //Log.d("MyProfileFragment", "FrontProfileFragment로 교체 중")
                 val fragment = ProfileStorageFrontFragment()
                 val bundle = Bundle()
                 bundle.putLong("profId", profId)
                 getProfile(profId)
                 fragment.arguments = bundle
                 ft.replace(R.id.profileStorage_frame, fragment).commit()
-                //Log.d("ProfileStorageDetail2", "Received profId: $profId")
             }
 
             1 -> {
-                //Log.d("MyProfileFragment", "BackProfileFragment로 교체 중")
                 val fragment = ProfileStorageBackFragment()
                 val bundle = Bundle()
                 bundle.putLong("profId", profId)
                 getProfile(profId)
                 fragment.arguments = bundle
                 ft.replace(R.id.profileStorage_frame, fragment).commit()
-                //Log.d("ProfileStorageDetail3", "Received profId: $profId")
             }
         }
     }
     //프로필 보관함 삭제 api
-    private fun deleteProfiles(profId: Long, memberId: Int) {
+    private fun deleteProfiles(profId: Long, token :String) {
         Log.d("Retrofit", "delete 함수 호출됨")
-        val call = ProfStorageObj.getRetrofitService.deleteProfStorage(profId, 6)
+        val call = ProfStorageObj.getRetrofitService.deleteProfStorage(profId, token)
 
         call.enqueue(object : Callback<ProfStorageResponse.ResponseDeleteProf> {
             override fun onResponse(
@@ -87,9 +89,6 @@ class ProfileStorageDetailFragment : Fragment() {
                         if (response.isSuccess) {
                             //성공했을 때
                             Log.d("Retrofit_Delete", "처리에 성공함")
-                        } else {
-                            //실패했을 때
-                            Log.d("Retrofit_Delete", "처리에 실패함")
                         }
                     }
                 }
@@ -132,9 +131,6 @@ class ProfileStorageDetailFragment : Fragment() {
                                    //Log.d("Retrofit_Get_Success", feature.value.toString())
                                 }
                             }
-                        } else {
-                            // 실패했을 때
-                            Log.d("Retrofit_Get_Failed", response.toString())
                         }
                     }
                 } else {

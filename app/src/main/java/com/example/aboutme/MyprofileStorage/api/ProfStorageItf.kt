@@ -18,7 +18,7 @@ interface ProfStorageItf {
     //프로필 보관함에서 특정 마이프로필 삭제
     @DELETE("/myprofiles/storage/{profile-id}")
     fun deleteProfStorage(
-        @Path("profileId") profileId : Long,
+        @Path("profile-id") profileId : Long,
         @Header("token") token:String
     ) : Call<ProfStorageResponse.ResponseDeleteProf>
 
