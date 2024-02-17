@@ -3,6 +3,7 @@ package com.example.aboutme.Alarm.api
 import com.example.aboutme.Search.api.SearchResponse
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -28,5 +29,12 @@ interface AlarmItf {
         @Header("token") token:String,
         @Path("space-id") spaceId : Long
     ) : Call<AlarmResponse.ResponseAlarm>
+
+    //알림 데이터 삭제
+    @DELETE("/alarms/{alarm-id}")
+    fun deleteAlarm (
+        @Path("alarm-id")alarmId : Long,
+        @Header("token")token:String
+    ) : Call<AlarmResponse.ResponseDeleteAlarm>
 }
 

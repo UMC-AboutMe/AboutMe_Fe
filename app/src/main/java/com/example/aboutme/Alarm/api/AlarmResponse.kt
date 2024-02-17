@@ -38,4 +38,10 @@ class AlarmResponse {
     data class Result2 (
         var spaceId : Int
             )
+    //알림 데이터 삭제
+    data class ResponseDeleteAlarm (
+        var isSuccess: Boolean,
+        var code : String,
+        var message: String
+            )
 }

@@ -202,4 +202,38 @@ class AlarmActivity : AppCompatActivity() {
             }
         })
     }
+    //알림 데이터 삭제
+    private fun delteAlarm(alarmId:Long ) {
+        val call = AlarmObj.getRetrofitService.deleteAlarm(alarmId,token)
+
+        call.enqueue(object : Callback<AlarmResponse.ResponseDeleteAlarm> {
+            override fun onResponse(
+                call: Call<AlarmResponse.ResponseDeleteAlarm>,
+                response: Response<AlarmResponse.ResponseDeleteAlarm>
+            ) {
+                if (response.isSuccessful) {
+                    val response = response.body()
+                    if (response != null) {
+                        if (response.isSuccess) {
+                            // 성공했을 때
+                            Log.d("Retrofit_Storage_Success", response.toString())
+                        }
+                    }
+                } else {
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e(
+                        "Retrofit_Storage_Failed",
+                        "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                    )
+                }
+            }
+            override fun onFailure(
+                call: Call<AlarmResponse.ResponseDeleteAlarm>,
+                t: Throwable
+            ) {
+                val errorMessage = "Call Failed:  ${t.message}"
+                Log.d("Retrofit_Storage_Error", errorMessage)
+            }
+        })
+    }
 }
