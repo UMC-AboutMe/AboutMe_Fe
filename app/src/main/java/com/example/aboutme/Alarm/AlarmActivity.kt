@@ -95,6 +95,7 @@ class AlarmActivity : AppCompatActivity() {
                                     else -> R.drawable.nav_myprof2
                                 }
                                 val serialNum = alarm.profile_serial_number
+                                val spaceId = alarm.space_id
                                 itemList.add(Alarm_day7(imageResource, content,serialNum))
                                 getStorageProf(serialNum)
                             }
@@ -106,7 +107,6 @@ class AlarmActivity : AppCompatActivity() {
                         }
                     }
                 } else {
-                    //Log.d("Retrofit_Get_Failed", response.toString())
                     val errorBody = response.errorBody()?.string() ?: "No error body"
                     Log.e(
                         "Retrofit_Alarm_Failed",
@@ -127,11 +127,6 @@ class AlarmActivity : AppCompatActivity() {
     private fun getStorageProf( profileSerial : Int ) {
         Log.d("Retrofit_Add","보관함 추가 실행")
 
-//        val requestStoreProf = if (spaceId != null) {
-//            AlarmResponse.RequestStorageProf(listOf(spaceId.toInt()))
-//        } else {
-//            AlarmResponse.RequestStorageProf(listOfNotNull(profileSerial))
-//        }
         val requestStoreProf = AlarmResponse.RequestStorageProf(listOf(profileSerial))
         val call = AlarmObj.getRetrofitService.postStorageProf(token, requestStoreProf)
         call.enqueue(object : Callback<AlarmResponse.ResponseStorageProf> {
