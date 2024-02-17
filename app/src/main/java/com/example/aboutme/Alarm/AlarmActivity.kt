@@ -96,8 +96,9 @@ class AlarmActivity : AppCompatActivity() {
                                 }
                                 val serialNum = alarm.profile_serial_number
                                 val spaceId = alarm.space_id
-                                itemList.add(Alarm_day7(imageResource, content,serialNum))
-                                getStorageProf(serialNum)
+                                itemList.add(Alarm_day7(imageResource, content,serialNum,spaceId))
+                            //보관함에 추가하기 api -> 자동 보관되서 일단 막아놓음
+                            //getStorageProf(serialNum)
                             }
                             val AlarmDay7Adapter = AlarmDay7Adapter(itemList)
                             AlarmDay7Adapter.notifyDataSetChanged()
