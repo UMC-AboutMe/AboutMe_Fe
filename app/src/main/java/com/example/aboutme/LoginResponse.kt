@@ -14,5 +14,9 @@ class LoginResponse {
     )
     data class RequestLogin (
         var email : String
-            )
+    )
+
+    data class RequestLoginAT (
+        var token : String
+    )
 }
