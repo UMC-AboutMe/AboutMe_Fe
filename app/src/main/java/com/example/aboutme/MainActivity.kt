@@ -80,8 +80,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
                     if (token != null) {
                         Log.i(TAG, "loginWithKakaoTalk ${token.accessToken} $error")
+
+                        // 뷰모델에 액세스토큰을 저장
                         sharedViewModel.accesstoken = token.accessToken
                         Log.d("accesstoken", "${sharedViewModel.accesstoken}")
+
+                        // 발급받은 액세스토큰을 헤더값에 넣어서 서버로 전송한 다음에 jwttoken 발급받기
                         loginKakao("kakao", "${sharedViewModel.accesstoken}")
                     }
                     updateLoginInfo()
@@ -90,9 +94,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             // 기기에 카카오톡이 설치되어있지 않은 경우
             else {
                 UserApiClient.instance.loginWithKakaoAccount(this) { token, error ->
-                    Log.i(TAG, "loginWithKakaoAccount $token $error")
+                    if (token != null) {
+                        Log.i(TAG, "loginWithKakaoTalk ${token.accessToken} $error")
+
+                        // 뷰모델에 액세스토큰을 저장
+                        sharedViewModel.accesstoken = token.accessToken
+                        Log.d("accesstoken", "${sharedViewModel.accesstoken}")
+
+                        // 발급받은 액세스토큰을 헤더값에 넣어서 서버로 전송한 다음에 jwttoken 발급받기
+                        loginKakao("kakao", "${sharedViewModel.accesstoken}")
+                    }
                     updateLoginInfo()
-                    Toast.makeText(this, "kakaoclick", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -118,6 +130,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    // 카카오 로그인 유저 이메일, 이름, 사진 정보 불러오기
     private fun updateLoginInfo() {
         UserApiClient.instance.me { user, error ->
             user?.let {
@@ -210,7 +223,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             handleSignInResult(task)
         }
     }
-    //로그인 - 이메일
+
+    //로그인 - 이메일 방식(구글)
     private fun Login(type: String, email: String) {
         Log.d("Retrofit_Login", "로그인 실행")
         val request = LoginResponse.RequestLogin(email)
@@ -231,9 +245,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                             val token = response.result.jwtToken
                             val pref = getSharedPreferences("pref", 0)
                             val edit = pref.edit()
+
                             // 1번째 인자는 키, 2번째 인자는 실제 담아둘 값
                             edit.putString("token", token)
                             edit.apply() // 저장완료
+
                             // 토큰 값 로그에 출력
                             Log.d("token", token)
                         } else {
@@ -250,7 +266,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         })
     }
 
-    // 로그인 - 액세스 토큰
+    // 로그인 - 액세스 토큰 방식(카카오)
     private fun loginKakao(type: String, token: String) {
         Log.d("Retrofit_Login", "로그인 실행")
         val request = LoginResponse.RequestLoginAT(token)
@@ -267,7 +283,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     Log.d("Retrofit_Login", response.toString())
                     if (response != null) {
                         if (response.isSuccess) {
-                            // 성공했을 때 - 토큰 sharedpreference로 저장
+                            // 성공했을 때 - jwttoken을 sharedpreference로 저장
                             val token = response.result.jwtToken
                             val pref = getSharedPreferences("pref", 0)
                             val edit = pref.edit()
