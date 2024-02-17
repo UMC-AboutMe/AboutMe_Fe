@@ -112,7 +112,7 @@ class SearchResponse {
         var read : Boolean
             )
     data class RequestShareSpace (
-        var member_id : Long
+        var destination : Long
             )
 
     //마이스페이스 조회
