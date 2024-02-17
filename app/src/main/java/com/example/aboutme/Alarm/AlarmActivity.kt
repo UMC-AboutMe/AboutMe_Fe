@@ -94,7 +94,9 @@ class AlarmActivity : AppCompatActivity() {
                                     "스페이스" in content -> R.drawable.nav_myspace2
                                     else -> R.drawable.nav_myprof2
                                 }
-                                itemList.add(Alarm_day7(imageResource, content))
+                                val serialNum = alarm.profile_serial_number
+                                itemList.add(Alarm_day7(imageResource, content,serialNum))
+                                getStorageProf(serialNum)
                             }
                             val AlarmDay7Adapter = AlarmDay7Adapter(itemList)
                             AlarmDay7Adapter.notifyDataSetChanged()
@@ -122,17 +124,15 @@ class AlarmActivity : AppCompatActivity() {
         })
     }
     //마이프로필 보관함에 저장하기
-    private fun getStorageProf( token : String,spaceId:Long? , profileSerial : Int? ) {
+    private fun getStorageProf( profileSerial : Int ) {
         Log.d("Retrofit_Add","보관함 추가 실행")
-        //토큰 임의값 : 멤버아이디6의 토큰
-        val token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyMDIyMTE1OUBzdW5nc2hpbi5hYy5rciJ9.I3xzSrIY0GGv4b75e-6nwSnD-uedAaEm1B5bwon4QHiSicYMtGH5zJNgRDnn9bMvmsqHqo2NqoYynHdLSsr_1g"
 
 //        val requestStoreProf = if (spaceId != null) {
 //            AlarmResponse.RequestStorageProf(listOf(spaceId.toInt()))
 //        } else {
 //            AlarmResponse.RequestStorageProf(listOfNotNull(profileSerial))
 //        }
-        val requestStoreProf = AlarmResponse.RequestStorageProf(listOf(12026))
+        val requestStoreProf = AlarmResponse.RequestStorageProf(listOf(profileSerial))
         val call = AlarmObj.getRetrofitService.postStorageProf(token, requestStoreProf)
         call.enqueue(object : Callback<AlarmResponse.ResponseStorageProf> {
             override fun onResponse(
@@ -148,7 +148,6 @@ class AlarmActivity : AppCompatActivity() {
                         }
                     }
                 }else {
-                    //Log.d("Retrofit_Search_Failed", response.toString())
                     val errorBody = response.errorBody()?.string() ?: "No error body"
                     Log.e(
                         "Retrofit_Storage_Failed",
