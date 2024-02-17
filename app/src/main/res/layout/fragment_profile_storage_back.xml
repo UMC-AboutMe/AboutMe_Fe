@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/storage_back" />
+        app:srcCompat="@drawable/proff_bg" />
 
 
     <ImageButton
@@ -31,7 +31,7 @@
         android:id="@+id/backProfile_et1"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="70dp"
         android:background="@color/transparent"
         android:ems="12"
         android:fontFamily="@font/gmarketsansmedium"
@@ -48,7 +48,7 @@
         android:id="@+id/backProfile_et2"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:background="@color/transparent"
         android:ems="12"
         android:fontFamily="@font/gmarketsansmedium"
@@ -63,7 +63,7 @@
         android:id="@+id/backProfile_et3"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:background="@color/transparent"
         android:ems="12"
         android:fontFamily="@font/gmarketsansmedium"
@@ -78,7 +78,7 @@
         android:id="@+id/backProfile_et4"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:background="@color/transparent"
         android:ems="12"
         android:fontFamily="@font/gmarketsansmedium"
@@ -93,7 +93,7 @@
         android:id="@+id/backProfile_et5"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:background="@color/transparent"
         android:ems="12"
         android:fontFamily="@font/gmarketsansmedium"
