@@ -96,7 +96,8 @@ class AlarmActivity : AppCompatActivity() {
                                 }
                                 val serialNum = alarm.profile_serial_number
                                 val spaceId = alarm.space_id
-                                itemList.add(Alarm_day7(imageResource, content, serialNum, spaceId))
+                                val alarmId  = alarm.alarm_id
+                                itemList.add(Alarm_day7(imageResource, content, alarmId ,serialNum, spaceId))
                                 //보관함에 추가하기 api -> 자동 보관되서 일단 막아놓음
                                 //getStorageProf(serialNum)
                             }
@@ -106,7 +107,7 @@ class AlarmActivity : AppCompatActivity() {
                                     "ImageResource: ${item.img}, Content: ${item.name}, SerialNum: ${item.serialNumber}, SpaceId: ${item.spaceId}"
                                 )
                             }
-                            val AlarmDay7Adapter = AlarmDay7Adapter(itemList)
+                            val AlarmDay7Adapter = AlarmDay7Adapter(this@AlarmActivity,itemList)
                             AlarmDay7Adapter.notifyDataSetChanged()
 
                             binding.day7Rc.adapter = AlarmDay7Adapter
@@ -135,7 +136,7 @@ class AlarmActivity : AppCompatActivity() {
             }
         })
     }
-
+/**
     //마이프로필 보관함에 저장하기
     private fun getStorageProf(profileSerial: Int) {
         Log.d("Retrofit_Add", "보관함 추가 실행")
@@ -239,7 +240,6 @@ class AlarmActivity : AppCompatActivity() {
                     )
                 }
             }
-
             override fun onFailure(
                 call: Call<AlarmResponse.ResponseDeleteAlarm>,
                 t: Throwable
@@ -248,5 +248,5 @@ class AlarmActivity : AppCompatActivity() {
                 Log.d("Retrofit_Storage_Error", errorMessage)
             }
         })
-    }
+    } */
 }
