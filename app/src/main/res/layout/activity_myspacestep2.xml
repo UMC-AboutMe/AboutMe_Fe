@@ -47,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
         android:fontFamily="@font/gmarketsansmedium"
         android:text="@string/myspace_step2_main"
         android:textSize="25sp"
@@ -61,6 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
+        android:layout_marginStart="20dp"
         android:fontFamily="@font/gmarketsansmedium"
         android:text="@string/myspace_step2_sub"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,7 +78,7 @@
         android:fontFamily="@font/gmarketsanslight"
         android:text="@string/myspace_step2_sub2"
         app:layout_constraintEnd_toEndOf="@+id/myspace_step2_sub"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.019"
         app:layout_constraintStart_toStartOf="@+id/myspace_step2_sub"
         app:layout_constraintTop_toBottomOf="@+id/myspace_step2_sub" />
 
@@ -313,13 +315,12 @@
         android:id="@+id/avatar_6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
         android:src="@drawable/step2_avatar_6"
-        app:layout_constraintBottom_toBottomOf="@+id/myspace_step2_avatar_6"
         app:layout_constraintEnd_toEndOf="@+id/myspace_step2_avatar_6"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="@+id/myspace_step2_avatar_6"
-        app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_6"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_6" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -445,12 +446,12 @@
         android:id="@+id/avatar_9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:src="@drawable/step2_avatar_9"
-        app:layout_constraintBottom_toBottomOf="@+id/myspace_step2_avatar_9"
         app:layout_constraintEnd_toEndOf="@+id/myspace_step2_avatar_9"
+        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="@+id/myspace_step2_avatar_9"
-        app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_9"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_9" />
 
     <RelativeLayout
         android:layout_width="wrap_content"

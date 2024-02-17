@@ -52,7 +52,6 @@
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toEndOf="@+id/back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
@@ -63,9 +62,8 @@
         android:layout_marginTop="28dp"
         android:fontFamily="@font/gmarketsansmedium"
         android:text="@string/myspace_step3_sub"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.398"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/myspace_step3_main"
         app:layout_constraintTop_toBottomOf="@+id/myspace_step3_main" />
 
     <TextView
@@ -75,7 +73,6 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/gmarketsanslight"
         android:text="@string/myspace_step3_sub2"
-        app:layout_constraintEnd_toEndOf="@+id/myspace_step3_sub"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/myspace_step3_sub"
         app:layout_constraintTop_toBottomOf="@+id/myspace_step3_sub" />

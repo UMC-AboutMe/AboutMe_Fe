@@ -84,17 +84,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
+        android:background="@drawable/step1_nickname_new"
         android:fontFamily="@font/gmarketsansmedium"
         android:hint="@string/nickname"
         android:imeOptions="actionNext"
         android:inputType="text"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.447"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myspace_step1_sub2"
-        android:background="@drawable/step1_nickname_new" />
+        app:layout_constraintTop_toBottomOf="@+id/myspace_step1_sub2" />
 
     <ImageButton
         android:id="@+id/next_ib_step1"
