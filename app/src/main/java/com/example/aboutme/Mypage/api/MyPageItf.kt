@@ -8,11 +8,11 @@ import retrofit2.http.Header
 interface MyPageItf {
     @GET("/mypages")
     fun getMypage (
-        @Header ("member-id") memberId : Long
+        @Header("token") token:String
     ) : Call<MyPageResponse.ResponseMypage>
 
     @DELETE("/members/unregister")
     fun deleteUser (
-        @Header ("member-id") memberId : Long
+        @Header("token") token:String
     ): Call<MyPageResponse.ResponseDeleteUser>
 }

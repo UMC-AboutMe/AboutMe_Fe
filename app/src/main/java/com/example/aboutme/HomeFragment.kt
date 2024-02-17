@@ -31,9 +31,9 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //val pref = requireContext().getSharedPreferences("pref", 0)
-        //val token: String? = pref.getString("token", null)
-        //Log.d("token", token ?: "null")
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token: String? = pref.getString("Gtoken", null)
+        Log.d("token", token ?: "null")
 
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 

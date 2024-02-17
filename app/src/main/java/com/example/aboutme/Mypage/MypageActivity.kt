@@ -18,12 +18,19 @@ import retrofit2.Response
 
 class MypageActivity : AppCompatActivity() {
     lateinit var binding : ActivityMypageBinding
+    lateinit var token: String // token 변수를 추가
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMypageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //일단 임의값
-        getMypage(6)
+
+        // token을 SharedPreferences에서 가져와서 초기화
+        val pref = this.getSharedPreferences("pref", 0)
+        token = pref.getString("Gtoken", null) ?: ""
+        Log.d("token", token)
+
+        getMypage(token)
         binding.backBtn.setOnClickListener {
             finish()
         }
@@ -35,8 +42,8 @@ class MypageActivity : AppCompatActivity() {
     }
 
     //마이페이지 api
-    private fun getMypage(memberId : Long ) {
-        val call = MyPageObj.getRetrofitService.getMypage(memberId)
+    private fun getMypage(token : String ) {
+        val call = MyPageObj.getRetrofitService.getMypage(token)
 
         call.enqueue(object : Callback<MyPageResponse.ResponseMypage> {
             override fun onResponse(
@@ -51,18 +58,16 @@ class MypageActivity : AppCompatActivity() {
                             Log.d("Retrofit_Get_Success", response.toString())
                             binding.profNameTv.text = response.result.my_info.profile_name
                             //binding.spaceNameTv.text = response.result.my_info.space_name
-                            binding.profInsight.text = response.result.insight.profile_shared_num.toString()
+                            binding.profInsight.text =
+                                response.result.insight.profile_shared_num.toString()
                             binding.spaceNameTv.text = response.result.my_info.space_name
-                            binding.spaceInsight.text = response.result.insight.space_shared_num.toString()
+                            binding.spaceInsight.text =
+                                response.result.insight.space_shared_num.toString()
 
                         }
-                        //} else {
-                            // 실패했을 때
-                            Log.d("Retrofit_Get_Failed", response.toString())
-                        }
                     }
+                }
                 else {
-                    //Log.d("Retrofit_Get_Failed", response.toString())
                     val errorBody = response.errorBody()?.string() ?: "No error body"
                     Log.e(
                         "Retrofit_Get_Failed",
@@ -80,8 +85,8 @@ class MypageActivity : AppCompatActivity() {
         })
     }
     //회원 탈퇴 api
-    private fun deleteUser(memberId: Long) {
-        val call = MyPageObj.getRetrofitService.deleteUser(memberId)
+    private fun deleteUser(token : String) {
+        val call = MyPageObj.getRetrofitService.deleteUser(token)
 
         call.enqueue(object : Callback<MyPageResponse.ResponseDeleteUser> {
             override fun onResponse(
@@ -99,12 +104,8 @@ class MypageActivity : AppCompatActivity() {
                             val intent = Intent(this@MypageActivity, MainActivity::class.java)
                             startActivity(intent)
                         }
-                    }else {
-                        // 실패했을 때
-                        Log.d("Retrofit_Delete_Failed", response.toString())
                     }
                 } else {
-                    //Log.d("Retrofit_Get_Failed", response.toString())
                     val errorBody = response.errorBody()?.string() ?: "No error body"
                     Log.e(
                         "Retrofit_Delete_Failed",
@@ -112,7 +113,6 @@ class MypageActivity : AppCompatActivity() {
                     )
                 }
             }
-
             override fun onFailure(
                 call: Call<MyPageResponse.ResponseDeleteUser>,
                 t: Throwable

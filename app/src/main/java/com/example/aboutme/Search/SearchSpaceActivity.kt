@@ -22,10 +22,15 @@ import retrofit2.Response
 class SearchSpaceActivity : AppCompatActivity() {
 
     lateinit var binding : ActivitySearchSpaceBinding
+    lateinit var token: String // token 변수를 추가
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_space)
+        // token을 SharedPreferences에서 가져와서 초기화
+        val pref = this.getSharedPreferences("pref", 0)
+        token = pref.getString("Gtoken", null) ?: ""
+        Log.d("token", token)
 
         binding = ActivitySearchSpaceBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -100,10 +105,6 @@ class SearchSpaceActivity : AppCompatActivity() {
                             binding.addBtn.setOnClickListener {
                                 storeSpace(response.result.spaceId)
                             }
-                        } else {
-                            //실패했을 때
-                            Log.d("Retrofit_Search_Failed", response.message)
-                            binding.spaceView.visibility = View.GONE
                         }
                     }
                 }
@@ -154,11 +155,11 @@ class SearchSpaceActivity : AppCompatActivity() {
         }
     }
     //스페이스 저장 api
-    private fun storeSpace(spaceId : Long ) {
+    private fun storeSpace(spaceId : Long  ) {
         Log.d("Retrofit_Search", "스페이스 저장 실행")
 
         //memberID는 임시값
-        val call = SearchObj.getRetrofitService.postSpaceStorage(spaceId,6)
+        val call = SearchObj.getRetrofitService.postSpaceStorage(spaceId,token)
 
         call.enqueue(object : Callback<SearchResponse.ResponseSpaceStorage> {
             override fun onResponse(
@@ -177,9 +178,6 @@ class SearchSpaceActivity : AppCompatActivity() {
                             .show(supportFragmentManager, "SpaceDialog")
                         //스페이스 저장 후 내 마이스페이스 조회
                         //getMySpace(memberId)
-                        } else {
-                            //실패했을 때
-                            Log.d("Retrofit_Storage_Failed", response.message)
                         }
                     }
                 }
@@ -205,11 +203,11 @@ class SearchSpaceActivity : AppCompatActivity() {
         })
     }
     //마이 스페이스 조회 api
-    private fun getMySpace(memberId : Long ) {
+    private fun getMySpace( ) {
         Log.d("Retrofit_Search", "스페이스 저장 실행")
 
         //memberID는 임시값
-        val call = SearchObj.getRetrofitService.getMySpace(6)
+        val call = SearchObj.getRetrofitService.getMySpace(token)
 
         call.enqueue(object : Callback<SearchResponse.ResponseMySpace> {
             override fun onResponse(
@@ -224,9 +222,6 @@ class SearchSpaceActivity : AppCompatActivity() {
                             Log.d("Retrofit_Storage_Success", response.toString())
 
                             //마이스페이스
-                        } else {
-                            //실패했을 때
-                            Log.d("Retrofit_Storage_Failed", response.message)
                         }
                     }
                 }

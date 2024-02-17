@@ -9,11 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.aboutme.R
 import com.example.aboutme.Search.api.SearchObj
 import com.example.aboutme.Search.api.SearchResponse
 import com.example.aboutme.databinding.ActivityCustomDialogProfBinding
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,8 +26,15 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
     private val binding get() = _binding!!
     lateinit var profileAdapter: DialogProfAdapter
     private val datas = mutableListOf<DialogProfData>()
+    lateinit var token: String // token 변수를 추가
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = ActivityCustomDialogProfBinding.inflate(inflater, container, false)
+        // token을 SharedPreferences에서 가져와서 초기화
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        token = pref.getString("Gtoken", null) ?: ""
+        Log.d("token", token)
+
         val view = binding.root
         // 레이아웃 배경을 투명하게
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -59,7 +69,7 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
     //마이프로필 목록 조회
     private fun getProfiles() {
         Log.d("Retrofit_Add", "프로필 공유 실행")
-        val call = SearchObj.getRetrofitService.getProfileList(6)
+        val call = SearchObj.getRetrofitService.getProfileList(token)
 
         call.enqueue(object : Callback<SearchResponse.ResponseGetProfiles> {
             override fun onResponse(
@@ -102,8 +112,7 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
                                     DialogProfData(
                                         profile_img = imageResId,
                                         profile_name = profileName,
-                                        profile_num = "IU(아이유)", //일단 임의값 - 전화번호 부분
-                                        member_id = 1, //임의값 - 내 프로필을 보낼 멤버의 아이디
+                                        profile_num = " ", //일단 임의값 - 전화번호 부분
                                         serial_number = profile.serial_number,
                                         isChecked = false
                                     )
@@ -112,14 +121,24 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
                             // 어댑터의 데이터가 변경되었음을 알리고 화면을 업데이트합니다.
                             profileAdapter.notifyDataSetChanged()
                             // 확인 버튼
+//                            binding.yesBtn.setOnClickListener {
+//                                postShareProf()
+//                                dismiss()
+                            // 확인 버튼 클릭 시
                             binding.yesBtn.setOnClickListener {
-                                postShareProf()
-                                dismiss()
+                                // 선택된 아이템의 serial_number 목록 가져오기
+                                val selectedSerials = profileAdapter.checkedSerials
+                                // 선택된 아이템이 없는 경우
+                                if (selectedSerials.isEmpty()) {
+                                    // 처리할 로직 작성 (예: Toast 메시지 출력 등)
+                                    Toast.makeText(requireContext(), "선택된 프로필이 없습니다.", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    // 선택된 아이템이 있는 경우 postShareProf() 호출
+                                    postShareProf(selectedSerials)
+                                    Log.d("retro","$selectedSerials")
+                                    dismiss()
+                                }
                             }
-                        } else {
-                            //실패했을 때
-                            Log.d("Retrofit_Add", response.message)
-
                         }
                     }
                 }
@@ -136,10 +155,11 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
         })
     }
     //마이프로필 상대방에게 공유
-    private fun postShareProf() {
+    private fun postShareProf(selectedSerials: List<Int>) {
         Log.d("Retrofit_Add", "프로필 공유 실행")
-        val requestShareProf = SearchResponse.RequestShareProf(listOf(serial), listOf(109349))
-        val call = SearchObj.getRetrofitService.postShareProf(6, requestShareProf)
+        //상대방의 마이프로필 시리얼 번호(이전 화면에서 가져옴) , 공유할 마이프로필 시리얼 번호
+        val requestShareProf = SearchResponse.RequestShareProf(listOf(serial), selectedSerials)
+        val call = SearchObj.getRetrofitService.postShareProf(token, requestShareProf)
 
         call.enqueue(object : Callback<SearchResponse.ResponseShareProf> {
             override fun onResponse(
@@ -154,23 +174,30 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
                     if (response != null) {
                         if (response.isSuccess) {
                             //성공했을 때
-                            Log.d("Retrofit_Add","내 프로필 공유 성공")
-                        } else {
-                            //실패했을 때
-                            Log.d("Retrofit_Add", response.message)
-
+                            Log.d("Retrofit_Share","내 프로필 공유 성공")
+                            Log.d("Retrofit_Share", response.message)
+                            Toast.makeText(requireContext(), "선택한 마이프로필이 공유되었습니다.", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
-                val errorBody = response.errorBody()?.string() ?: "No error body"
-                Log.e(
-                    "Retrofit_Get_Failed",
-                    "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
-                )
+                else {
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e(
+                        "Retrofit_Storage_Failed",
+                        "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                    )
+                    try {
+                        val jsonObject = JSONObject(errorBody)
+                        val errorMessage = jsonObject.getString("message")
+                        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                }
             }
             override fun onFailure(call: Call<SearchResponse.ResponseShareProf>, t: Throwable) {
                 val errorMessage = "Call Failed:  ${t.message}"
-                Log.d("Retrofit_Add", errorMessage)
+                Log.d("Retrofit_Share", errorMessage)
             }
         })
     }

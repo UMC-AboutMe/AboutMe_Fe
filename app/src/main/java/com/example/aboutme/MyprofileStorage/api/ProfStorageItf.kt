@@ -12,28 +12,28 @@ interface ProfStorageItf {
     //프로필 보관함 조회
     @GET("/myprofiles/storage")
     fun getProfStorage(
-        @Header("member-id") memberId:Long
+        @Header("token") token:String
     ) : Call<ProfStorageResponse.ResponeProfStorage>
 
     //프로필 보관함에서 특정 마이프로필 삭제
     @DELETE("/myprofiles/storage/{profile-id}")
     fun deleteProfStorage(
         @Path("profile-id") profileId : Long,
-        @Header("member-id") memberId: Long
+        @Header("token") token:String
     ) : Call<ProfStorageResponse.ResponseDeleteProf>
 
     //프로필 보관함 즐겨찾기 등록
     @PATCH("/myprofiles/storage/{profile-id}/favorite")
     fun patchProfStorage(
         @Path("profile-id") profileId: Long,
-        @Header("member-id") memberId: Int
+        @Header("token") token:String
     ) : Call<ProfStorageResponse.ResponseFavProf>
 
     //프로필 보관함 검색
     @GET("/myprofiles/storage/search")
     fun getSearchProf(
         @Query("keyword") keyword : String? ,
-        @Header("member-id") memberId: Int
+        @Header("token") token:String
     ) : Call <ProfStorageResponse.ResponseSearchProf>
 
     //마이프로필 조회 - 단건

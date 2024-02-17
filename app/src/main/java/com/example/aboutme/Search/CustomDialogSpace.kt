@@ -66,7 +66,7 @@ class CustomDialogSpace(val content: String,val memberId : Long) : DialogFragmen
     }
     //스페이스 공유 api
     private fun shareSpace(memberId : Long ) {
-        Log.d("Retrofit_Search", "스페이스 저장 실행")
+        Log.d("Retrofit_Share", "스페이스 공유 실행")
 
         val memberId = SearchResponse.RequestShareSpace(memberId)
         val token = getToken(requireContext())
@@ -83,17 +83,13 @@ class CustomDialogSpace(val content: String,val memberId : Long) : DialogFragmen
                         if (response.isSuccess) {
                             //성공했을 때
                             Log.d("Retrofit_Share_Success", response.toString())
-                        } else {
-                            //실패했을 때
-                            Log.d("Retrofit_Share_Failed", response.toString())
                         }
                     }
                 }
                 else {
-                    //Log.d("Retrofit_Share_Failed", response.toString())
                     val errorBody = response.errorBody()?.string() ?: "No error body"
                     Log.e(
-                        "Retrofit_Get_Failed",
+                        "Retrofit_Share_Failed",
                         "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
                     )
                 }

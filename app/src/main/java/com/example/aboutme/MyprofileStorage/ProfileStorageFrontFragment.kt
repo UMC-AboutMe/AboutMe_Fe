@@ -70,6 +70,7 @@ class ProfileStorageFrontFragment : Fragment(){
                                         else -> R.drawable.prof_avater9.toString()
                                     }
                                 }
+
                                 image.type == "USER_IMAGE" -> image.profile_image_url ?: ""
                                 else -> R.drawable.avatar_basic.toString()
                             }
@@ -90,13 +91,8 @@ class ProfileStorageFrontFragment : Fragment(){
                                 // 리소스 아이디인 경우 setImageResource() 메서드를 사용하여 이미지 설정
                                 binding.profileIv.setImageResource(imageResId.toInt())
                             }
-
-
-                            }
-                        } else {
-                            // 실패했을 때
-                            Log.d("Retrofit_Get_Failed", response.toString())
                         }
+                    }
                 } else {
                     //Log.d("Retrofit_Get_Failed", response.toString())
                     val errorBody = response.errorBody()?.string() ?: "No error body"
