@@ -7,9 +7,11 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.aboutme.Myspace.MyspaceViewModel
 import com.example.aboutme.Search.api.SearchObj
 import com.example.aboutme.Search.api.SearchResponse
 import com.example.aboutme.Tutorial.TutorialActivity1
@@ -22,6 +24,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
+import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,6 +36,8 @@ private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityMainBinding
+
+    private val sharedViewModel: LoginViewModel by viewModels()
 
 
     // 앱 처음 시작시 앱 전체 알림 허용 메시지
@@ -55,6 +60,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val RC_SIGN_IN = 123
     var signBt: ImageView? = null
 
+    var kakaotoken: OAuthToken? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +78,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             // 기기에 카카오톡이 설치되어있는 경우
             if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
                 UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
-                    Log.i(TAG, "loginWithKakaoTalk $token $error")
+                    if (token != null) {
+                        Log.i(TAG, "loginWithKakaoTalk ${token.accessToken} $error")
+                        sharedViewModel.accesstoken = token.accessToken
+                        Log.d("accesstoken", "${sharedViewModel.accesstoken}")
+                        loginKakao("kakao", "${sharedViewModel.accesstoken}")
+                    }
                     updateLoginInfo()
                 }
             }
@@ -222,6 +234,48 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                             // 1번째 인자는 키, 2번째 인자는 실제 담아둘 값
                             edit.putString("token", token)
                             edit.apply() // 저장완료
+                            // 토큰 값 로그에 출력
+                            Log.d("token", token)
+                        } else {
+                            // 실패했을 때
+                            Log.d("Retrofit_Login", response.message)
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call: Call<LoginResponse.ResponseLogin>, t: Throwable) {
+                val errorMessage = "Call Failed:  ${t.message}"
+                Log.d("Retrofit_Login", errorMessage)
+            }
+        })
+    }
+
+    // 로그인 - 액세스 토큰
+    private fun loginKakao(type: String, token: String) {
+        Log.d("Retrofit_Login", "로그인 실행")
+        val request = LoginResponse.RequestLoginAT(token)
+        val call = LoginObj.getRetrofitService.postLoginKakao(type, request)
+
+        call.enqueue(object : Callback<LoginResponse.ResponseLogin> {
+            override fun onResponse(
+                call: Call<LoginResponse.ResponseLogin>,
+                response: Response<LoginResponse.ResponseLogin>
+            ) {
+                Log.d("Retrofit_Login", response.toString())
+                if (response.isSuccessful) {
+                    val response = response.body()
+                    Log.d("Retrofit_Login", response.toString())
+                    if (response != null) {
+                        if (response.isSuccess) {
+                            // 성공했을 때 - 토큰 sharedpreference로 저장
+                            val token = response.result.jwtToken
+                            val pref = getSharedPreferences("pref", 0)
+                            val edit = pref.edit()
+
+                            // 1번째 인자는 키, 2번째 인자는 실제 담아둘 값
+                            edit.putString("token", token)
+                            edit.apply() // 저장완료
+
                             // 토큰 값 로그에 출력
                             Log.d("token", token)
                         } else {
