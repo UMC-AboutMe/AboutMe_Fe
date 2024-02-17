@@ -72,7 +72,8 @@
         android:src="@drawable/home_alarm"
         app:layout_constraintEnd_toStartOf="@+id/mypage_btn"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+        android:foreground="?attr/selectableItemBackground" />
 
     <ImageButton
         android:id="@+id/mypage_btn"
@@ -85,7 +86,9 @@
         android:src="@drawable/home_user"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+        android:foreground="?attr/selectableItemBackground" />
+
 
     <TextView
         android:id="@+id/textView2"
@@ -135,7 +138,8 @@
             android:scaleType="centerCrop"
             android:src="@drawable/nav_myprof2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:foreground="?selectableItemBackgroundBorderless" />
 
         <TextView
             android:id="@+id/myspace_tv2"
@@ -159,7 +163,8 @@
             android:src="@drawable/nav_myspace2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/myprof_iv"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:foreground="?selectableItemBackgroundBorderless" />
 
         <TextView
             android:id="@+id/myspace_tv"

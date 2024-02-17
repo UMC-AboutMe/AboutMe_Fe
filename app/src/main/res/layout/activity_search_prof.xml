@@ -96,7 +96,8 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toBottomOf="@+id/myspace_iv"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+        android:foreground="?attr/selectableItemBackground" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/profView"
@@ -130,7 +131,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/space_bg"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            android:foreground="?attr/selectableItemBackground" />
 
         <ImageView
             android:id="@+id/space_bg"

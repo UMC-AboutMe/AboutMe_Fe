@@ -49,7 +49,8 @@
             android:fontFamily="@font/gmarketsansmedium"
             android:text="허용 안 함"
             android:textColor="#939292"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:foreground="?attr/selectableItemBackground" />
 
         <Button
             android:id="@+id/yes_btn"
@@ -59,7 +60,8 @@
             android:fontFamily="@font/gmarketsansmedium"
             android:text="허용"
             android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:foreground="?attr/selectableItemBackground" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
