@@ -102,6 +102,7 @@
         android:id="@+id/profView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -145,12 +146,12 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_marginTop="32dp"
+            android:src="@drawable/frontprofile"
             app:civ_border_color="@color/transparent"
             app:civ_border_width="0dp"
             app:layout_constraintEnd_toEndOf="@+id/space_bg"
             app:layout_constraintStart_toStartOf="@+id/space_bg"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/frontprofile" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView3"
