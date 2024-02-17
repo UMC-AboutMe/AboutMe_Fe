@@ -12,7 +12,7 @@ interface AlarmItf {
     //알람 조회하기
     @GET("/alarms")
     fun getAlarms(
-        @Header("member-id") memberId:Long
+        @Header("token") token:String
     ) : Call<AlarmResponse.ResponseAlarm>
 
     //마이프로필 내 보관함에 저장하기
@@ -25,7 +25,7 @@ interface AlarmItf {
     //스페이스 아지트에 저장하기
     @POST ("/myspaces/storage/{space-id}")
     fun postStorageSpace (
-        @Header("member-id") memberId : Int,
+        @Header("token") token:String,
         @Path("space-id") spaceId : Long
     ) : Call<AlarmResponse.ResponseAlarm>
 }
