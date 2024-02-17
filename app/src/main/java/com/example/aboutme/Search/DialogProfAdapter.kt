@@ -16,6 +16,9 @@ class DialogProfAdapter(private val context: Context) :
     RecyclerView.Adapter<DialogProfAdapter.ViewHolder> () {
 
     var datas = mutableListOf<DialogProfData>()
+    // 선택된 아이템의 시리얼 번호 목록
+    val checkedSerials: List<Int>
+        get() = datas.filter { it.isChecked }.map { it.serial_number }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_profile, parent, false)
@@ -54,4 +57,14 @@ class DialogProfAdapter(private val context: Context) :
             checkBox.isChecked = item.isChecked  // 체크 상태를 설정
         }
     }
+    // 체크 여부 확인하는 함수
+    fun isItemChecked(position: Int): Boolean {
+        return datas[position].isChecked
+    }
+
+    // 선택된 아이템의 serial_number 반환하는 함수
+    fun getSelectedSerialNumber(position: Int): Int {
+        return datas[position].serial_number
+    }
+
 }

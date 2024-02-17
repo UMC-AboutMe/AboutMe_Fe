@@ -112,8 +112,7 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
                                     DialogProfData(
                                         profile_img = imageResId,
                                         profile_name = profileName,
-                                        profile_num = "IU(아이유)", //일단 임의값 - 전화번호 부분
-                                        member_id = 1, //임의값 - 내 프로필을 보낼 멤버의 아이디
+                                        profile_num = " ", //일단 임의값 - 전화번호 부분
                                         serial_number = profile.serial_number,
                                         isChecked = false
                                     )
@@ -122,9 +121,23 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
                             // 어댑터의 데이터가 변경되었음을 알리고 화면을 업데이트합니다.
                             profileAdapter.notifyDataSetChanged()
                             // 확인 버튼
+//                            binding.yesBtn.setOnClickListener {
+//                                postShareProf()
+//                                dismiss()
+                            // 확인 버튼 클릭 시
                             binding.yesBtn.setOnClickListener {
-                                postShareProf()
-                                dismiss()
+                                // 선택된 아이템의 serial_number 목록 가져오기
+                                val selectedSerials = profileAdapter.checkedSerials
+                                // 선택된 아이템이 없는 경우
+                                if (selectedSerials.isEmpty()) {
+                                    // 처리할 로직 작성 (예: Toast 메시지 출력 등)
+                                    Toast.makeText(requireContext(), "선택된 프로필이 없습니다.", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    // 선택된 아이템이 있는 경우 postShareProf() 호출
+                                    postShareProf(selectedSerials)
+                                    Log.d("retro","$selectedSerials")
+                                    dismiss()
+                                }
                             }
                         }
                     }
@@ -142,10 +155,10 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
         })
     }
     //마이프로필 상대방에게 공유
-    private fun postShareProf() {
+    private fun postShareProf(selectedSerials: List<Int>) {
         Log.d("Retrofit_Add", "프로필 공유 실행")
-        //상대방의 마이프로필 시리얼 번호 , 공유한 마이프로필 시리얼 번호
-        val requestShareProf = SearchResponse.RequestShareProf(listOf(serial), listOf(467900))
+        //상대방의 마이프로필 시리얼 번호(이전 화면에서 가져옴) , 공유할 마이프로필 시리얼 번호
+        val requestShareProf = SearchResponse.RequestShareProf(listOf(serial), selectedSerials)
         val call = SearchObj.getRetrofitService.postShareProf(token, requestShareProf)
 
         call.enqueue(object : Callback<SearchResponse.ResponseShareProf> {
