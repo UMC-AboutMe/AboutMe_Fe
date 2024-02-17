@@ -21,7 +21,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class AlarmActivity : AppCompatActivity() {
-    lateinit var binding : ActivityAlarmBinding
+    lateinit var binding: ActivityAlarmBinding
     lateinit var token: String // token 변수를 추가
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,7 +69,7 @@ class AlarmActivity : AppCompatActivity() {
     }
 
     //알람 데이터 조회 api
-    private fun getAlarms(token : String ) {
+    private fun getAlarms(token: String) {
         val call = AlarmObj.getRetrofitService.getAlarms(token)
 
         call.enqueue(object : Callback<AlarmResponse.ResponseAlarm> {
@@ -96,15 +96,25 @@ class AlarmActivity : AppCompatActivity() {
                                 }
                                 val serialNum = alarm.profile_serial_number
                                 val spaceId = alarm.space_id
-                                itemList.add(Alarm_day7(imageResource, content,serialNum,spaceId))
-                            //보관함에 추가하기 api -> 자동 보관되서 일단 막아놓음
-                            //getStorageProf(serialNum)
+                                itemList.add(Alarm_day7(imageResource, content, serialNum, spaceId))
+                                //보관함에 추가하기 api -> 자동 보관되서 일단 막아놓음
+                                //getStorageProf(serialNum)
+                            }
+                            for (item in itemList) {
+                                Log.d(
+                                    "AlarmDay7Data",
+                                    "ImageResource: ${item.img}, Content: ${item.name}, SerialNum: ${item.serialNumber}, SpaceId: ${item.spaceId}"
+                                )
                             }
                             val AlarmDay7Adapter = AlarmDay7Adapter(itemList)
                             AlarmDay7Adapter.notifyDataSetChanged()
 
                             binding.day7Rc.adapter = AlarmDay7Adapter
-                            binding.day7Rc.layoutManager = LinearLayoutManager(this@AlarmActivity, LinearLayoutManager.VERTICAL, false)
+                            binding.day7Rc.layoutManager = LinearLayoutManager(
+                                this@AlarmActivity,
+                                LinearLayoutManager.VERTICAL,
+                                false
+                            )
                         }
                     }
                 } else {
@@ -115,6 +125,7 @@ class AlarmActivity : AppCompatActivity() {
                     )
                 }
             }
+
             override fun onFailure(
                 call: Call<AlarmResponse.ResponseAlarm>,
                 t: Throwable
@@ -124,9 +135,10 @@ class AlarmActivity : AppCompatActivity() {
             }
         })
     }
+
     //마이프로필 보관함에 저장하기
-    private fun getStorageProf( profileSerial : Int ) {
-        Log.d("Retrofit_Add","보관함 추가 실행")
+    private fun getStorageProf(profileSerial: Int) {
+        Log.d("Retrofit_Add", "보관함 추가 실행")
 
         val requestStoreProf = AlarmResponse.RequestStorageProf(listOf(profileSerial))
         val call = AlarmObj.getRetrofitService.postStorageProf(token, requestStoreProf)
@@ -143,7 +155,7 @@ class AlarmActivity : AppCompatActivity() {
                             Log.d("Retrofit_Storage", response.message)
                         }
                     }
-                }else {
+                } else {
                     val errorBody = response.errorBody()?.string() ?: "No error body"
                     Log.e(
                         "Retrofit_Storage_Failed",
@@ -158,15 +170,17 @@ class AlarmActivity : AppCompatActivity() {
                     }
                 }
             }
-            override fun onFailure(call:Call<AlarmResponse.ResponseStorageProf>, t:Throwable) {
+
+            override fun onFailure(call: Call<AlarmResponse.ResponseStorageProf>, t: Throwable) {
                 val errorMessage = "Call Failed:  ${t.message}"
-                Log.d("Retrofit_Storage",errorMessage)
+                Log.d("Retrofit_Storage", errorMessage)
             }
         })
     }
+
     //스페이스 아지트에 저장하기
-    private fun postStorageSpace(token: String,spaceId:Long ) {
-        val call = AlarmObj.getRetrofitService.postStorageSpace(token,spaceId)
+    private fun postStorageSpace(token: String, spaceId: Long) {
+        val call = AlarmObj.getRetrofitService.postStorageSpace(token, spaceId)
 
         call.enqueue(object : Callback<AlarmResponse.ResponseAlarm> {
             override fun onResponse(
@@ -189,6 +203,7 @@ class AlarmActivity : AppCompatActivity() {
                     )
                 }
             }
+
             override fun onFailure(
                 call: Call<AlarmResponse.ResponseAlarm>,
                 t: Throwable
@@ -198,9 +213,10 @@ class AlarmActivity : AppCompatActivity() {
             }
         })
     }
+
     //알림 데이터 삭제
-    private fun delteAlarm(alarmId:Long ) {
-        val call = AlarmObj.getRetrofitService.deleteAlarm(alarmId,token)
+    private fun delteAlarm(alarmId: Long) {
+        val call = AlarmObj.getRetrofitService.deleteAlarm(alarmId, token)
 
         call.enqueue(object : Callback<AlarmResponse.ResponseDeleteAlarm> {
             override fun onResponse(
@@ -223,6 +239,7 @@ class AlarmActivity : AppCompatActivity() {
                     )
                 }
             }
+
             override fun onFailure(
                 call: Call<AlarmResponse.ResponseDeleteAlarm>,
                 t: Throwable
