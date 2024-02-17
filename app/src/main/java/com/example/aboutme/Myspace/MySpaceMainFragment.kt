@@ -5,10 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -38,6 +41,8 @@ class MySpaceMainFragment : Fragment() {
 
     private lateinit var weather: PrecipType
     private var number = 1
+
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -218,6 +223,10 @@ class MySpaceMainFragment : Fragment() {
                 // 아이콘 클릭시 등장하는 입력란 표시
                 buttons.forEachIndexed { index, button ->
                     button.setOnClickListener {
+                        // 키보드 숨기기
+                        val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        inputMethodManager.hideSoftInputFromWindow(button.windowToken, 0)
+
                         // 기존에 선택된 레이아웃들을 모두 숨김
                         layouts.forEach { layout -> layout.visibility = View.GONE }
 
@@ -257,6 +266,9 @@ class MySpaceMainFragment : Fragment() {
                         val editText = layoutsWithEditTextAndOkButton[index].first
                         val inputText = editText.text.toString()
 
+                        // 확인버튼 누를시 edittext는 읽기 전용으로 바뀌고 다시 수정을 하려면 연필버튼을 누르도록 유도
+                        editText.isEnabled = false
+
                         // ViewModel에 저장
                         val variableName = editTextToVariableMap[editText.id]
                         variableName?.let {
@@ -266,10 +278,37 @@ class MySpaceMainFragment : Fragment() {
                         // Ok 버튼 숨기기
                         okButton.visibility = View.GONE
 
+                        // 음악 아이콘의 경우 ok버튼을 눌러서 링크를 저장한 후에 하단에 안내메시지 등장
+                        if (index == 1) {
+                            // 이미지뷰를 나타나게 하는 애니메이션을 적용합니다.
+                            val fadeInAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in)
+                            binding.youtubeLinkTv.startAnimation(fadeInAnimation)
+                            binding.youtubeLinkTv.visibility = View.VISIBLE
+
+                            // 2초 뒤에 이미지뷰를 숨기는 작업을 수행합니다.
+                            handler.postDelayed({
+                                val fadeOutAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
+                                binding.youtubeLinkTv.startAnimation(fadeOutAnimation)
+                                binding.youtubeLinkTv.visibility = View.INVISIBLE
+                            }, 2000)
+
+                            binding.step3MusicPencil.visibility = View.VISIBLE
+                            binding.step3MusicTrash.visibility = View.VISIBLE
+                        }
+
                         // 키보드 숨기기
                         val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                         inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
                     }
+                }
+
+                binding.step3MusicGuide.setOnClickListener {
+                    // EditText에서 텍스트 가져오기
+                    val youtubeLink = binding.step3MusicEt.text.toString()
+
+                    // 기기에 설치되어있는 유튜브로 리다이렉트
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).setPackage("com.google.android.youtube")
+                    startActivity(intent)
                 }
 
                 // *문자를 입력해야하는 아이콘들에 대한 정의*
@@ -278,17 +317,6 @@ class MySpaceMainFragment : Fragment() {
                     editText.setOnClickListener {
                         okButton.visibility = View.VISIBLE
                     }
-                }
-
-                // *문자를 입력해야하는 음악 아이콘에 대한 정의*
-                // Edittext 위의 가이드 문구 클릭시(임시)
-                binding.step3MusicGuide.setOnClickListener {
-                    // EditText에서 텍스트 가져오기
-                    val youtubeLink = binding.step3MusicEt.text.toString()
-
-                    // 기기에 설치되어있는 유튜브로 리다이렉트
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).setPackage("com.google.android.youtube")
-                    startActivity(intent)
                 }
 
                 // *문자를 입력하지 않는 feeling 아이콘에 대한 정의*
