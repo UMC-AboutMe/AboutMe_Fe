@@ -176,20 +176,20 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
                             //성공했을 때
                             Log.d("Retrofit_Share","내 프로필 공유 성공")
                             Log.d("Retrofit_Share", response.message)
-                            //Toast.makeText(requireContext(), "선택한 마이프로필이 공유되었습니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "선택한 마이프로필이 공유되었습니다.", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
                 else {
                     val errorBody = response.errorBody()?.string() ?: "No error body"
                     Log.e(
-                        "Retrofit_Share_Failed",
+                        "Retrofit_Storage_Failed",
                         "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
                     )
                     try {
                         val jsonObject = JSONObject(errorBody)
                         val errorMessage = jsonObject.getString("message")
-                        //Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
