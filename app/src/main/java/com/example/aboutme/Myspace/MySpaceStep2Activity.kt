@@ -124,7 +124,7 @@ class MySpaceStep2Activity : AppCompatActivity() {
                 }
             }
 
-            binding.nextIbStep2.setOnClickListener {
+            binding.nextIbStep2ClickArea.setOnClickListener {
                 // 선택된 체크박스의 인덱스 정보를 ViewModel에 저장
                 selectedCheckBoxIndex?.let {
                     sharedViewModel.setSelectedAvatarIndex(it)

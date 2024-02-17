@@ -114,7 +114,7 @@ class MySpaceStep1Activity : AppCompatActivity() {
         }
 
         // 다음 버튼 클릭시
-        binding.nextIbStep1.setOnClickListener {
+        binding.nextIbStep1ClickArea.setOnClickListener {
             // EditText에서 텍스트 가져오기
             val inputText = binding.nickname.text.toString()
 
