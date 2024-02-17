@@ -40,7 +40,7 @@ interface SearchItf {
         @Header("member-id") memberId:Int
     ) : Call<SearchResponse.ResponseSpaceStorage>
 
-    //내 프로필 상대방에게 공유
+    //마이프로필 공유 → 알림 데이터 생성
     @POST ("/myprofiles/send")
     fun postShareProf(
     @Header("member-id") memberId:Long,

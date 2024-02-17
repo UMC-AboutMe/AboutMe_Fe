@@ -9,11 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.aboutme.R
 import com.example.aboutme.Search.api.SearchObj
 import com.example.aboutme.Search.api.SearchResponse
 import com.example.aboutme.databinding.ActivityCustomDialogProfBinding
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -138,7 +141,8 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
     //마이프로필 상대방에게 공유
     private fun postShareProf() {
         Log.d("Retrofit_Add", "프로필 공유 실행")
-        val requestShareProf = SearchResponse.RequestShareProf(listOf(serial), listOf(109349))
+        //상대방의 마이프로필 시리얼 번호 , 공유한 마이프로필 시리얼 번호
+        val requestShareProf = SearchResponse.RequestShareProf(listOf(serial), listOf(467900))
         val call = SearchObj.getRetrofitService.postShareProf(6, requestShareProf)
 
         call.enqueue(object : Callback<SearchResponse.ResponseShareProf> {
@@ -154,23 +158,33 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
                     if (response != null) {
                         if (response.isSuccess) {
                             //성공했을 때
-                            Log.d("Retrofit_Add","내 프로필 공유 성공")
+                            Log.d("Retrofit_Share","내 프로필 공유 성공")
+                            Log.d("Retrofit_Share", response.message)
+                            //Toast.makeText(requireContext(), "선택한 마이프로필이 공유되었습니다.", Toast.LENGTH_SHORT).show()
                         } else {
                             //실패했을 때
-                            Log.d("Retrofit_Add", response.message)
-
+                            Log.d("Retrofit_Share", response.message)
                         }
                     }
                 }
-                val errorBody = response.errorBody()?.string() ?: "No error body"
-                Log.e(
-                    "Retrofit_Get_Failed",
-                    "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
-                )
+                else {
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e(
+                        "Retrofit_Share_Failed",
+                        "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                    )
+                    try {
+                        val jsonObject = JSONObject(errorBody)
+                        val errorMessage = jsonObject.getString("message")
+                        //Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                }
             }
             override fun onFailure(call: Call<SearchResponse.ResponseShareProf>, t: Throwable) {
                 val errorMessage = "Call Failed:  ${t.message}"
-                Log.d("Retrofit_Add", errorMessage)
+                Log.d("Retrofit_Share", errorMessage)
             }
         })
     }
