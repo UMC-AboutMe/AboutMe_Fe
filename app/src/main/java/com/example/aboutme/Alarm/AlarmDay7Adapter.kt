@@ -65,8 +65,11 @@ class AlarmDay7Adapter (private val context: Context, private val itemList: Arra
                     // 프로필
                     postStorageProf(serialNumber!!.toInt()) // postStorageProf 함수 호출
                 }
+                val alarmId = item.alarmId // 아이템의 시리얼 넘버 가져오기
                 // 저장 후에 새로고침
                 removeItem(adapterPosition)
+                delteAlarm(alarmId) // getStorageProf 함수 호출
+
             }
         }
         init {
