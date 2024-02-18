@@ -7,12 +7,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aboutme.Alarm.api.AlarmResponse
 import com.example.aboutme.Mypage.api.AlarmObj
-import com.example.aboutme.Mypage.api.MyPageObj
-import com.example.aboutme.Mypage.api.MyPageResponse
 import com.example.aboutme.R
-import com.example.aboutme.Search.CustomDialog
-import com.example.aboutme.Search.api.SearchObj
-import com.example.aboutme.Search.api.SearchResponse
 import com.example.aboutme.databinding.ActivityAlarmBinding
 import org.json.JSONException
 import org.json.JSONObject
@@ -107,7 +102,7 @@ class AlarmActivity : AppCompatActivity() {
                                     "ImageResource: ${item.img}, Content: ${item.name}, SerialNum: ${item.serialNumber}, SpaceId: ${item.spaceId}"
                                 )
                             }
-                            val AlarmDay7Adapter = AlarmDay7Adapter(itemList)
+                            val AlarmDay7Adapter = AlarmDay7Adapter(this@AlarmActivity,itemList)
                             AlarmDay7Adapter.notifyDataSetChanged()
 
                             binding.day7Rc.adapter = AlarmDay7Adapter
@@ -136,7 +131,7 @@ class AlarmActivity : AppCompatActivity() {
             }
         })
     }
-
+/**
     //마이프로필 보관함에 저장하기
     private fun getStorageProf(profileSerial: Int) {
         Log.d("Retrofit_Add", "보관함 추가 실행")
@@ -250,4 +245,5 @@ class AlarmActivity : AppCompatActivity() {
             }
         })
     }
+    */
 }
