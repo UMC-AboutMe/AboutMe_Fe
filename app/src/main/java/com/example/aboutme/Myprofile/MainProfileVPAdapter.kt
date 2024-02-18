@@ -194,7 +194,7 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
                                     patchDefault(realProfileId)
                                     binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
                                 }else{
-                                    patchDefault(realProfileId)
+                                    defaultNoProfile(realProfileId)
                                     binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
                                 }
                                 val errorBody = response.errorBody()?.string() ?: "No error body"
