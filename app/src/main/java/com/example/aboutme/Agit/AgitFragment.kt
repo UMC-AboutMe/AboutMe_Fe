@@ -60,7 +60,7 @@ class AgitFragment : Fragment() {
         binding.homeLogo.setOnClickListener {
             // 홈화면 이동시 애니메이션 효과
             val intent = Intent(activity, bottomNavigationView::class.java)
-            val options = ActivityOptions.makeCustomAnimation(requireContext(), R.anim.fade_in, R.anim.fade_out)
+            val options = ActivityOptions.makeCustomAnimation(requireContext(), R.anim.zoom_in, R.anim.zoom_out)
             requireActivity().startActivity(intent, options.toBundle())
         }
 

@@ -53,14 +53,11 @@ object RetrofitClientMyspace {
 object RetrofitClient2 {
     private const val BASE_URL = "https://aboutmeteam.shop"
 
-    private const val MEMBER_ID_VALUE = "1"
-
     val apitest: ApitestInterface by lazy<ApitestInterface> {
         val okHttpClientBuilder = OkHttpClient.Builder()
 
         okHttpClientBuilder.addInterceptor { chain ->
             val newRequest = chain.request().newBuilder()
-                .addHeader("member-id", MEMBER_ID_VALUE)
                 .build()
             chain.proceed(newRequest)
         }
