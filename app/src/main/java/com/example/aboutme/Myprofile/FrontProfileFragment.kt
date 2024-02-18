@@ -193,6 +193,7 @@ class FrontProfileFragment : Fragment() {
     private fun refreshData(profileId: String?) {
         val pref = requireContext().getSharedPreferences("pref", 0)
         val token = pref.getString("Gtoken", null) ?: ""
+        Log.d("딜리트 토큰2",token)
 
         lifecycleScope.launch {
             try {

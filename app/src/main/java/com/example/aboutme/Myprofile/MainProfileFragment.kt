@@ -62,6 +62,7 @@ class MainProfileFragment : Fragment() {
 
         val pref = requireContext().getSharedPreferences("pref", 0)
         val token = pref.getString("Gtoken", null) ?: ""
+        Log.d("딜리트 토큰",token)
         //RetrofitClient.initialize(token)
 
 
