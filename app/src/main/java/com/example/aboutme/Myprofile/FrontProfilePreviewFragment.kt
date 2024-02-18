@@ -59,10 +59,10 @@ class FrontProfilePreviewFragment : Fragment(){
                 .commit()
         }
 
-        /*viewLifecycleOwner.lifecycleScope.launch {
-            delay(700) // 0.5초 지연
-            refreshData(profileId1)
-        }*/
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+        //RetrofitClient.initialize(token)
+
 
         return binding.root
     }
@@ -83,10 +83,13 @@ class FrontProfilePreviewFragment : Fragment(){
     }
 
     private fun refreshData(profileId: String?) {
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+
         lifecycleScope.launch {
             try {
                 val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.getDataAll(profileId!!.toLong())
+                    RetrofitClient.mainProfile.getDataAll(token,profileId!!.toLong())
                 }
 
                 if (response.isSuccessful) {

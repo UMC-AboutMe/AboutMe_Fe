@@ -58,13 +58,11 @@ class EditProfileBackFragment : Fragment(), EditProfileActivity.TabSelectedListe
             val profileId1 = arguments?.getString("profilId1")
             Log.d("profileId_to_back", profileId1.toString())
 
-           /* viewModel.feature1.observe(this, { feature1 ->
-                feature1?.let {
-                    binding.feature1SchoolEt.setText(feature1)
-                    Log.d("이전",feature1.toString())
+            val pref = requireContext().getSharedPreferences("pref", 0)
+            val token = pref.getString("Gtoken", null) ?: ""
 
-                }
-            })*/
+            // RetrofitClient 초기화
+            //RetrofitClient.initialize(token)
 
             return binding.root
         }
@@ -74,6 +72,10 @@ class EditProfileBackFragment : Fragment(), EditProfileActivity.TabSelectedListe
 
             val profileId1 = arguments?.getString("profilId1")
             Log.d("profileId1", profileId1.toString())
+
+            val pref = requireContext().getSharedPreferences("pref", 0)
+            val token = pref.getString("Gtoken", null) ?: ""
+
 
             //viewModel.cancelCoroutine()
 
@@ -107,7 +109,7 @@ class EditProfileBackFragment : Fragment(), EditProfileActivity.TabSelectedListe
                 lifecycleScope.launch {
                     try {
                         val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
-                            retrofitClient.getDataAll(profileId1!!.toLong())
+                            retrofitClient.getDataAll(token, profileId1!!.toLong())
                         }
 
                         if (response.isSuccessful) {
@@ -172,6 +174,9 @@ class EditProfileBackFragment : Fragment(), EditProfileActivity.TabSelectedListe
             val profileId1 = arguments?.getString("profilId1")
             Log.d("profileId1", profileId1.toString())
 
+            val pref = requireContext().getSharedPreferences("pref", 0)
+            val token = pref.getString("Gtoken", null) ?: ""
+
             val schoolEt = binding.feature1SchoolEt.text.toString()
             val companyEt = binding.feature2CompanyEt.text.toString()
             val mbtiEt = binding.feature3MbtiEt.text.toString()
@@ -199,25 +204,25 @@ class EditProfileBackFragment : Fragment(), EditProfileActivity.TabSelectedListe
             try {
                 Log.d("patchData", "patchData1 호출 전")
                 val response1: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchData1)
+                    RetrofitClient.mainProfile.patchProfile(token, profileId1!!.toLong(), patchData1)
                 }
                 val response2: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchData2)
+                    RetrofitClient.mainProfile.patchProfile(token, profileId1!!.toLong(), patchData2)
                 }
                 val response3: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchData3)
+                    RetrofitClient.mainProfile.patchProfile(token, profileId1!!.toLong(), patchData3)
                 }
                 val response4: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchData4)
+                    RetrofitClient.mainProfile.patchProfile(token, profileId1!!.toLong(), patchData4)
                 }
                 val response5: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchData5)
+                    RetrofitClient.mainProfile.patchProfile(token, profileId1!!.toLong(), patchData5)
                 }
                 val response6: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchFrontData6)
+                    RetrofitClient.mainProfile.patchProfile(token, profileId1!!.toLong(), patchFrontData6)
                 }
                 val response7: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchFrontData7)
+                    RetrofitClient.mainProfile.patchProfile(token, profileId1!!.toLong(), patchFrontData7)
                 }
 
                 if (response1.isSuccessful && response2.isSuccessful && response3.isSuccessful && response4.isSuccessful && response5.isSuccessful
@@ -238,7 +243,7 @@ class EditProfileBackFragment : Fragment(), EditProfileActivity.TabSelectedListe
 
                     // PATCH 요청이 성공한 후에 GET 요청을 보내어 최신 데이터를 받아옴
                     val updatedResponse: Response<GetAllProfile> = withContext(Dispatchers.IO) {
-                        RetrofitClient.mainProfile.getDataAll(profileId1!!.toLong())
+                        RetrofitClient.mainProfile.getDataAll(token, profileId1!!.toLong())
                     }
 
                     if (updatedResponse.isSuccessful) {

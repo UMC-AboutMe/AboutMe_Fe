@@ -12,15 +12,12 @@ import java.io.File
 object RetrofitClient {
     private const val BASE_URL = "http://aboutme-prod-env.eba-3cw2pgyk.ap-northeast-2.elasticbeanstalk.com/"
 
-    private const val MEMBER_ID_HEADER = "member-id"
-    private const val TEMP_MEMBER_ID = "5"
 
     private val retrofit: Retrofit by lazy {
         val client = OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val originalRequest: Request = chain.request()
                 val requestWithHeaders: Request = originalRequest.newBuilder()
-                    .header(MEMBER_ID_HEADER, TEMP_MEMBER_ID)
                     .build()
                 chain.proceed(requestWithHeaders)
             }

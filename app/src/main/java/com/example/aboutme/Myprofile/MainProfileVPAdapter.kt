@@ -1,11 +1,13 @@
 package com.example.aboutme.Myprofile
 
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -27,10 +29,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHolder>(
+class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProfileData, RecyclerView.ViewHolder>(
     MainListDiffCallback()
 ) {
 
+    val pref = context.getSharedPreferences("pref", 0)
+    val token = pref.getString("Gtoken", null) ?: ""
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
@@ -41,11 +45,12 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
+        Log.d("token3", token)
+
 
         return if (viewType == VIEW_TYPE_ITEM) {
             val binding =
                 ItemMultiprofileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
 
             MainItemViewHolder(binding)
         } else {
@@ -54,7 +59,9 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
 
             binding.profileAddBtn.setOnClickListener {
 
-                RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
+                RetrofitClient.mainProfile.getData(token).enqueue(object : Callback<MainProfileData> {
+
+
                     // 서버 통신 실패 시의 작업
                     override fun onFailure(call: Call<MainProfileData>, t: Throwable) {
                         Log.e("실패", t.toString())
@@ -65,23 +72,26 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
                         call: Call<MainProfileData>,
                         response: Response<MainProfileData>
                     ) {
-                        val repos: MainProfileData? = response.body()
-                        if (repos != null) {
-                            val totalMyProfile = repos.getTotalMyProfile()
+                        if (response.isSuccessful) {
+                            val repos: MainProfileData? = response.body()
+                            if (repos != null) {
+                                val totalMyProfile = repos.getTotalMyProfile()
 
-                            if (totalMyProfile > 2) {
-                                val nameLimitDialog = NameLimitDialog()
-
-                                nameLimitDialog.show((parent.context as AppCompatActivity).supportFragmentManager, nameLimitDialog.tag)
-                            }
-                            else{
-                                val nameDialog = NameDialogFragment()
-
-                                Log.d("!!!!","success")
-                                nameDialog.show((parent.context as AppCompatActivity).supportFragmentManager, nameDialog.tag)
+                                if (totalMyProfile > 2) {
+                                    Log.d("MainProfileVPAdapter", "Total profiles count: $totalMyProfile")
+                                    val nameLimitDialog = NameLimitDialog()
+                                    nameLimitDialog.show((parent.context as AppCompatActivity).supportFragmentManager, nameLimitDialog.tag)
+                                } else {
+                                    Log.d("MainProfileVPAdapter", "Total profiles count: $totalMyProfile")
+                                    val nameDialog = NameDialogFragment()
+                                    Log.d("MainProfileVPAdapter", "Showing name dialog")
+                                    nameDialog.show((parent.context as AppCompatActivity).supportFragmentManager, nameDialog.tag)
+                                }
+                            } else {
+                                Log.e("MainProfileVPAdapter", "Response body is null")
                             }
                         } else {
-                            Log.e("실패", "front_features 데이터가 null입니다.")
+                            Log.e("MainProfileVPAdapter", "Unsuccessful response: ${response.code()}")
                         }
                     }
                 })
@@ -98,6 +108,12 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
                 val item = getItem(position)
                 Log.d("MainProfileVPAdapter", "Binding item at position $position: $item")
                 holder.bind(item)
+
+                /*if (item.isDefault) {
+                    holder.binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+                } else {
+                    holder.binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                }*/
             }
             is MainAddItemViewHolder -> holder.bind()
         }
@@ -116,8 +132,6 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
 
     inner class MainItemViewHolder(private val binding: ItemMultiprofileBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-
 
         init {
             itemView.setOnClickListener {
@@ -146,44 +160,56 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
                 }
             }
 
-
-            profilePosion(position) { realProfileId ->
-                Log.d("realprofileID!", realProfileId.toString())
-
-                binding.defaultNoProfileBtn.setOnClickListener {
-                    Log.d("click!!","success")
-                        coroutineScope.launch {
-                            try {
-                                val response = RetrofitClient.mainProfile.patchDefaultProfile(realProfileId.toLong())
-                                if (response.isSuccessful) {
-                                    // 성공적으로 응답을 받았을 때 처리
-                                    val data = response.body()
-                                    Log.d("success!!",data.toString())
-                                    // data를 사용하여 필요한 작업을 수행
-                                } else {
-                                    Log.e("Failure", "Response failed with code: ${response.code()}")
-                                }
-                            } catch (e: Exception) {
-                                // 네트워크 오류 등 예외 발생 시 처리
-                                e.printStackTrace()
-                                Log.d("패치!!","실패")
-                            }
-                        }
-                    }
-                }
-
         }
         fun bind(item: MultiProfileData) {
-            if(item.profileImageResId.startsWith("http")) {
+            if (item.profileImageResId.startsWith("http")) {
                 Glide.with(itemView.context)
                     .load(item.profileImageResId)
                     .into(binding.multiProfileCharIv)
             } else {
                 binding.multiProfileCharIv.setImageResource(item.profileImageResId.toInt())
             }
-            //binding.multiProfileCharIv.setImageResource(item.profileImageResId.toInt())
             binding.multiProfileNameTv.text = item.name
             binding.multiProfileNumberTv.text = item.phoneNumber
+
+
+            profilePosion(position) { realProfileId ->
+                Log.d("realprofileID!", realProfileId.toString())
+
+                binding.defaultNoProfileBtn.setOnClickListener {
+                    Log.d("click!!", "success")
+
+
+                    coroutineScope.launch {
+                        try {
+                            val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
+                                RetrofitClient.mainProfile.getDataAll(token, realProfileId.toLong())
+                            }
+
+                            if (response.isSuccessful) {
+                                val responseData: GetAllProfile? = response.body()
+                                Log.d("즐겨찾기 취소!!", "응답 데이터: $responseData")
+
+                                if (responseData?.result?.isDefault == false) {
+                                    patchDefault(realProfileId)
+                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+                                }else{
+                                    patchDefault(realProfileId)
+                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                                }
+                                val errorBody = response.errorBody()?.string() ?: "No error body"
+                                Log.e(
+                                    "GETALL 요청 실패",
+                                    "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                                )
+                            }
+                        } catch (e: Exception) {
+                            Log.e("GETALL 요청 실패", "에러: ${e.message}")
+                        }
+                    }
+                }
+            }
+
         }
     }
 
@@ -229,7 +255,10 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
 
     private fun profilePosion(positionId: Int, callback: (Int) -> Unit) {
         var realProfileId = -1 // 기본값 설정
-        RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
+
+        Log.d("token2", token)
+
+        RetrofitClient.mainProfile.getData(token).enqueue(object : Callback<MainProfileData> {
             // 서버 통신 실패 시의 작업
             override fun onFailure(call: Call<MainProfileData>, t: Throwable) {
                 Log.e("실패", t.toString())
@@ -277,4 +306,46 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
         })
     }
 
+    private fun patchDefault(realProfileId : Int){
+        coroutineScope.launch {
+            try {
+                val response = RetrofitClient.mainProfile.patchDefaultProfile(token,realProfileId.toLong())
+                if (response.isSuccessful) {
+                    // 성공적으로 응답을 받았을 때 처리
+                    val data = response.body()
+                    Log.d("즐겨찾기 취소!",data.toString())
+                //binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+                // data를 사용하여 필요한 작업을 수행
+                } else {
+
+                    Log.e("Failure", "Response failed with code: ${response.code()}")
+                }
+            } catch (e: Exception) {
+                // 네트워크 오류 등 예외 발생 시 처리
+                e.printStackTrace()
+                Log.d("패치!!","실패")
+            }
+        }
+    }
+
+
+    private fun defaultNoProfile(realProfileId: Int){
+        coroutineScope.launch {
+            try {
+                val response = RetrofitClient.mainProfile.patchNoDefaultProfile(token, realProfileId.toLong())
+                if (response.isSuccessful){
+                    val data = response.body()
+                    Log.d("즐겨찾기 취소", data.toString())
+                    //binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+
+                } else{
+                    Log.e("Failure~!", "Response failed with code: ${response.code()}")
+                }
+            }catch (e: Exception) {
+                // 네트워크 오류 등 예외 발생 시 처리
+                e.printStackTrace()
+                Log.d("패치!!","실패")
+            }
+        }
+    }
 }

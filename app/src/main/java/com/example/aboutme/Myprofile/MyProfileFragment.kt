@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -74,6 +75,9 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
 
             bottomSheet2.show(childFragmentManager, bottomSheet2.tag)
         }
+
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
 
 
         return binding.root
@@ -158,7 +162,10 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
 
     private fun profilePosion(positionId: Int, callback: (Int) -> Unit) {
         var realProfileId = -1 // 기본값 설정
-        RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+
+        RetrofitClient.mainProfile.getData(token).enqueue(object : Callback<MainProfileData> {
             // 서버 통신 실패 시의 작업
             override fun onFailure(call: Call<MainProfileData>, t: Throwable) {
                 Log.e("실패", t.toString())
@@ -207,18 +214,21 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
     }
 
     private fun deleteProfile(profileId : Int){
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
 
 // Coroutine을 사용하여 비동기 호출 수행
         lifecycleScope.launch {
             try {
                 // withContext를 사용하여 백그라운드 스레드에서 실행하도록 함
                 val response: Response<DeleteMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.deleteData(profileId.toLong())
+                    RetrofitClient.mainProfile.deleteData(token,profileId.toLong())
                 }
 
                 if (response.isSuccessful) {
                     val responseData: DeleteMyprofile? = response.body()
                     Log.d("Delete 성공", "응답 데이터: $responseData")
+                    Toast.makeText(requireContext(),"프로필이 삭제되었습니다.",Toast.LENGTH_SHORT).show()
                     // responseData를 처리하는 로직 작성
                 } else {
                     val errorBody = response.errorBody()?.string() ?: "No error body"

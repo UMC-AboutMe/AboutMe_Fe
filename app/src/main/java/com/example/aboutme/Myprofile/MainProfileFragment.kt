@@ -58,6 +58,12 @@ class MainProfileFragment : Fragment() {
 
         binding2 = ItemMultiprofileBinding.inflate(inflater, container, false)
 
+        vpadapter = MainProfileVPAdapter(requireContext())
+
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+        //RetrofitClient.initialize(token)
+
 
         return binding.root
     }
@@ -104,7 +110,7 @@ class MainProfileFragment : Fragment() {
 
         private fun initViewPager() {
 
-            vpadapter = MainProfileVPAdapter()
+            //vpadapter = MainProfileVPAdapter()
 
             binding.mainProfileVp.adapter = vpadapter
 
@@ -114,13 +120,15 @@ class MainProfileFragment : Fragment() {
             val screenWidth = resources.displayMetrics.widthPixels // 스마트폰의 너비 길이를 가져옴
             val offsetPx = screenWidth - pageMarginPx - pagerWidth
 
+            val pref = requireContext().getSharedPreferences("pref", 0)
+            val token = pref.getString("Gtoken", null) ?: ""
 
-            RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
+
+            RetrofitClient.mainProfile.getData(token).enqueue(object : Callback<MainProfileData> {
                 // 서버 통신 실패 시의 작업
                 override fun onFailure(call: Call<MainProfileData>, t: Throwable) {
                     Log.e("실패", t.toString())
                 }
-
 
                 override fun onResponse(
                     call: Call<MainProfileData>,
@@ -402,9 +410,6 @@ class MainProfileFragment : Fragment() {
                             vpadapter.submitList(multiList)
 
                             if (vpCount == 1){
-                                binding.mainProfileVp.setPageTransformer { page, position ->
-                                    page.setTranslationX(position * -offsetPx)
-                                }
                                 Log.d("실행", vpCount.toString())
                             } else{
                                 binding.mainProfileVp.setPageTransformer { page, position ->
@@ -430,6 +435,4 @@ class MainProfileFragment : Fragment() {
 
 
         }
-
-
 }

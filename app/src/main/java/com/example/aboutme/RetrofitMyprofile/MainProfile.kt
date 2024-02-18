@@ -5,6 +5,7 @@ import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
 import com.example.aboutme.RetrofitMyprofileData.MainProfileData
 import com.example.aboutme.RetrofitMyprofileData.PatchDefaultProfile
 import com.example.aboutme.RetrofitMyprofileData.PatchMyprofile
+import com.example.aboutme.RetrofitMyprofileData.PatchNoDefaultProfile
 import com.example.aboutme.RetrofitMyprofileData.PatchProfileImage
 import com.example.aboutme.RetrofitMyprofileData.PostProfile
 import com.example.aboutme.RetrofitMyprofileData.RequestPatchProfile
@@ -19,6 +20,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
@@ -28,27 +30,35 @@ import retrofit2.http.Path
 
 interface MainProfile {
     @GET("/myprofiles")
-    //@Headers("member-id: 4")
-    fun getData(): Call<MainProfileData>
+    fun getData(@Header("token") token:String,
+    ): Call<MainProfileData>
 
     @GET("/myprofiles/{profile-id}")
-    //@Headers("member-id: 4")
-    suspend fun getDataAll(@Path(value = "profile-id") profileId : Long) : Response<GetAllProfile>
+    suspend fun getDataAll(@Header("token") token:String,
+        @Path(value = "profile-id") profileId : Long) : Response<GetAllProfile>
 
     @POST("/myprofiles")
-    //@Headers("member-id: 4")
-    fun submitData(@Body postData : PostProfile): Call<ResponsePostProfile>
+    fun submitData(@Header("token") token:String,
+        @Body postData : PostProfile): Call<ResponsePostProfile>
 
     @DELETE("/myprofiles/{profile-id}")
-    suspend fun deleteData(@Path(value = "profile-id") profileId: Long) : Response<DeleteMyprofile>
+    suspend fun deleteData(@Header("token") token:String,
+        @Path(value = "profile-id") profileId: Long) : Response<DeleteMyprofile>
 
     @PATCH("/myprofiles/{profile-id}")
-    suspend fun patchProfile(@Path(value = "profile-id") profile_id : Long, @Body patchData: RequestPatchProfile) : Response<PatchMyprofile>
+    suspend fun patchProfile(@Header("token") token:String,
+        @Path(value = "profile-id") profile_id : Long, @Body patchData: RequestPatchProfile) : Response<PatchMyprofile>
 
     @PATCH("/myprofiles/default/{profile-id}")
-    suspend fun patchDefaultProfile(@Path(value = "profile-id") profileId : Long) : Response<PatchDefaultProfile>
+    suspend fun patchDefaultProfile(@Header("token") token:String,
+        @Path(value = "profile-id") profileId : Long) : Response<PatchDefaultProfile>
+
+    @PATCH("/myprofiles/defaultToFalse/{profile-id}")
+    suspend fun patchNoDefaultProfile(@Header("token") token: String,
+                                      @Path(value = "profile-id") profileId: Long) : Response<PatchNoDefaultProfile>
 
     @Multipart
     @PATCH("/myprofiles/{profile-id}/image")
-    fun patchProfileImage(@Path(value = "profile-id") profileId: Long, @Part("body") body: RequestBody, @Part image :MultipartBody.Part?):Call<PatchProfileImage>
+    fun patchProfileImage(@Header("token") token:String,
+        @Path(value = "profile-id") profileId: Long, @Part("body") body: RequestBody, @Part image :MultipartBody.Part?):Call<PatchProfileImage>
 }

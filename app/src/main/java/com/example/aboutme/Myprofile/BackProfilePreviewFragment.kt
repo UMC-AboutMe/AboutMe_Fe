@@ -45,6 +45,12 @@ class BackProfilePreviewFragment: Fragment() {
 
         binding = FragmentBackprofileBinding.inflate(inflater, container, false)
 
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+
+        // RetrofitClient 초기화
+        //RetrofitClient.initialize(token)
+
 
         binding.turnBtn2.setOnClickListener {
             // 프로필 ID 가져오기
@@ -82,10 +88,13 @@ class BackProfilePreviewFragment: Fragment() {
     }
 
     private fun refreshData(profileId: String?) {
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+
         lifecycleScope.launch {
             try {
                 val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.getDataAll(profileId!!.toLong())
+                    RetrofitClient.mainProfile.getDataAll(token, profileId!!.toLong())
                 }
 
                 if (response.isSuccessful) {

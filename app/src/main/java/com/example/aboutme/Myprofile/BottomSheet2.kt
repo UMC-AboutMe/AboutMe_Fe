@@ -153,8 +153,6 @@ class BottomSheet2 : DialogFragment() {
         dialog?.window?.setBackgroundDrawableResource(R.drawable.bottomsheetbox)
         dialog?.window?.setGravity(Gravity.TOP)
 
-
-
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -474,12 +472,15 @@ class BottomSheet2 : DialogFragment() {
 
 
     private val defaultFeed: FeedTemplate by lazy {
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+
         lifecycleScope.launch {
 
             val realProfileId = arguments?.getInt("realProfileId", -1)
             try {
                 val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.getDataAll(realProfileId!!.toLong())
+                    RetrofitClient.mainProfile.getDataAll(token,realProfileId!!.toLong())
                 }
 
                 if (response.isSuccessful) {
@@ -534,11 +535,14 @@ class BottomSheet2 : DialogFragment() {
 
 
     private fun initDefaultFeed() {
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+
         lifecycleScope.launch {
             val realProfileId = arguments?.getInt("realProfileId", -1)
             try {
                 val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.getDataAll(realProfileId!!.toLong())
+                    RetrofitClient.mainProfile.getDataAll(token,realProfileId!!.toLong())
                 }
 
                 if (response.isSuccessful) {
@@ -561,5 +565,4 @@ class BottomSheet2 : DialogFragment() {
             }
         }
     }
-
 }

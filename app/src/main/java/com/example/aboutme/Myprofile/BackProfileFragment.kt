@@ -52,6 +52,13 @@ class BackProfileFragment : Fragment()
         Log.d("FrontProfileFragment!!", "Profile ID: $positionId")
 
 
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+
+        // RetrofitClient 초기화
+        //RetrofitClient.initialize(token)
+
+
 
         binding.turnBtn2.setOnClickListener {
             // 프로필 ID 가져오기
@@ -89,7 +96,10 @@ class BackProfileFragment : Fragment()
 
     private fun profilePosion(positionId: Int, callback: (Int) -> Unit) {
         var realProfileId = -1 // 기본값 설정
-        RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+
+        RetrofitClient.mainProfile.getData(token).enqueue(object : Callback<MainProfileData> {
             // 서버 통신 실패 시의 작업
             override fun onFailure(call: Call<MainProfileData>, t: Throwable) {
                 Log.e("실패", t.toString())
@@ -141,10 +151,13 @@ class BackProfileFragment : Fragment()
 
 
     private fun refreshData(profileId: String?) {
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+
         lifecycleScope.launch {
             try {
                 val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.getDataAll(profileId!!.toLong())
+                    RetrofitClient.mainProfile.getDataAll(token, profileId!!.toLong())
                 }
 
                 if (response.isSuccessful) {

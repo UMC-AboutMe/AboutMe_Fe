@@ -62,10 +62,17 @@ class EditProfileActivity : AppCompatActivity() {
             profileId = profileId2
         }
         Log.d("이것만",profileId.toString())
+
+        val pref = getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+
+        // RetrofitClient 초기화
+        //RetrofitClient.initialize(token)
+
         lifecycleScope.launch {
             try {
                 val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.getDataAll(profileId!!.toLong())
+                    RetrofitClient.mainProfile.getDataAll(token,profileId!!.toLong())
                 }
 
                 if (response.isSuccessful) {
