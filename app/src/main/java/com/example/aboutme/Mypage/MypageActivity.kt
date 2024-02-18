@@ -1,6 +1,7 @@
 package com.example.aboutme.Mypage
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -39,6 +40,12 @@ class MypageActivity : AppCompatActivity() {
             //아직 토큰 연결이 안되서 일단 주석처리
             //deleteUser(token)
         }
+        binding.mypageTv4.setOnClickListener {
+            val url = "https://makeus-challenge.notion.site/AboutMe-217e7ae9a9bc452abe480f8d2feec879"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        }
+
     }
 
     //마이페이지 api
