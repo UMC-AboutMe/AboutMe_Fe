@@ -45,7 +45,11 @@ class MypageActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         }
-
+        binding.mypageTv5.setOnClickListener {
+            val url = "https://makeus-challenge.notion.site/AboutMe-217e7ae9a9bc452abe480f8d2feec879"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        }
     }
 
     //마이페이지 api
