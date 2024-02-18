@@ -11,6 +11,7 @@ class AlarmResponse {
         var alarms : List<Alarms>
             )
     data class Alarms (
+        var alarm_id : Long,
         var content : String,
         var profile_serial_number : Int,
         var space_id : Long
