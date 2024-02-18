@@ -93,8 +93,8 @@
 
     <ImageView
         android:id="@+id/avatar_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="67dp"
+        android:layout_height="86dp"
         android:src="@drawable/step2_avatar_1"
         app:layout_constraintBottom_toBottomOf="@+id/myspace_step2_avatar_1"
         app:layout_constraintEnd_toEndOf="@+id/myspace_step2_avatar_1"
@@ -137,8 +137,8 @@
 
     <ImageView
         android:id="@+id/avatar_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="67dp"
+        android:layout_height="86dp"
         android:src="@drawable/step2_avatar_2"
         app:layout_constraintStart_toStartOf="@+id/myspace_step2_avatar_2"
         app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_2"
@@ -181,8 +181,8 @@
 
     <ImageView
         android:id="@+id/avatar_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="81dp"
         android:src="@drawable/step2_avatar_3"
         app:layout_constraintBottom_toBottomOf="@+id/myspace_step2_avatar_3"
         app:layout_constraintEnd_toEndOf="@+id/myspace_step2_avatar_3"
@@ -225,8 +225,8 @@
 
     <ImageView
         android:id="@+id/avatar_4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="74dp"
+        android:layout_height="82dp"
         android:src="@drawable/step2_avatar_4"
         app:layout_constraintStart_toStartOf="@+id/myspace_step2_avatar_4"
         app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_4"
@@ -269,8 +269,8 @@
 
     <ImageView
         android:id="@+id/avatar_5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="63dp"
+        android:layout_height="80dp"
         android:src="@drawable/step2_avatar_5"
         app:layout_constraintStart_toStartOf="@+id/myspace_step2_avatar_5"
         app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_5"
@@ -313,14 +313,15 @@
 
     <ImageView
         android:id="@+id/avatar_6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
+        android:layout_width="71dp"
+        android:layout_height="81dp"
         android:src="@drawable/step2_avatar_6"
+        app:layout_constraintBottom_toBottomOf="@+id/myspace_step2_avatar_6"
         app:layout_constraintEnd_toEndOf="@+id/myspace_step2_avatar_6"
-        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/myspace_step2_avatar_6"
-        app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_6" />
+        app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_6"
+        app:layout_constraintVertical_bias="1.0" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -356,8 +357,8 @@
 
     <ImageView
         android:id="@+id/avatar_7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="66dp"
+        android:layout_height="77dp"
         android:src="@drawable/step2_avatar_7"
         app:layout_constraintStart_toStartOf="@+id/myspace_step2_avatar_7"
         app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_7"
@@ -400,8 +401,8 @@
 
     <ImageView
         android:id="@+id/avatar_8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="76dp"
+        android:layout_height="81dp"
         android:src="@drawable/step2_avatar_8"
         app:layout_constraintStart_toStartOf="@+id/myspace_step2_avatar_8"
         app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_8"
@@ -444,14 +445,14 @@
 
     <ImageView
         android:id="@+id/avatar_9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_width="63dp"
+        android:layout_height="84dp"
         android:src="@drawable/step2_avatar_9"
+        app:layout_constraintBottom_toBottomOf="@+id/myspace_step2_avatar_9"
         app:layout_constraintEnd_toEndOf="@+id/myspace_step2_avatar_9"
-        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="@+id/myspace_step2_avatar_9"
-        app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_9" />
+        app:layout_constraintTop_toTopOf="@+id/myspace_step2_avatar_9"
+        app:layout_constraintVertical_bias="1.0" />
 
     <RelativeLayout
         android:layout_width="wrap_content"

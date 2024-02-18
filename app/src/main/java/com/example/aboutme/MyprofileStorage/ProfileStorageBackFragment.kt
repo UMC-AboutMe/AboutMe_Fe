@@ -25,7 +25,7 @@ class ProfileStorageBackFragment : Fragment() {
         //Log.d("ProfileStorageDetail", "Back Received profId: $profileId")
         getProfile(profileId)
         binding = FragmentProfileStorageBackBinding.inflate(inflater, container, false)
-        binding.turnBtn2.setOnClickListener {
+        binding.turnBtn.setOnClickListener {
             val ft = parentFragmentManager.beginTransaction()
             val fragment = ProfileStorageFrontFragment()
             val bundle = Bundle()
@@ -56,14 +56,15 @@ class ProfileStorageBackFragment : Fragment() {
                             binding.backProfileEt3.text = response.result.back_features[2].key
                             binding.backProfileEt4.text = response.result.back_features[3].key
                             binding.backProfileEt5.text = response.result.back_features[4].key
-
-                        } else {
-                            // 실패했을 때
-                            Log.d("Retrofit_Get_Failed", response.toString())
                         }
                     }
                 } else {
-                    Log.d("Retrofit_Get_Failed", response.toString())
+                    //Log.d("Retrofit_Get_Failed", response.toString())
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e(
+                        "Retrofit_Get_Failed",
+                        "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                    )
                 }
             }
             override fun onFailure(

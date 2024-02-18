@@ -63,22 +63,32 @@
         app:layout_constraintStart_toStartOf="@+id/select_imageView"
         app:layout_constraintTop_toBottomOf="@+id/select_profile_name_et" />
 
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_profile_num_et" />
+
     <CheckBox
         android:id="@+id/select_checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="12dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:button="@drawable/selector_checkbox"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/selector_checkbox"
+        android:button="@color/transparent"
         android:buttonTint="@drawable/selector_checkbox"
         android:fontFamily="@font/gmarketsansmedium"
-        android:text="CheckBox"
-        android:textAlignment="viewStart"
-        android:textColor="#000000"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView8" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

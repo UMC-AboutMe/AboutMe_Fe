@@ -30,7 +30,8 @@ class CustomDialogAlarm() : DialogFragment() {
         val view = binding.root
         // 레이아웃 배경을 투명하게
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
+        // 다이얼로그가 나타날 때의 애니메이션 설정
+        dialog?.window?.attributes?.windowAnimations = R.style.AnimationPopupStyle
         // 취소 버튼
         binding.noBtn.setOnClickListener {
             dismiss()
@@ -52,6 +53,7 @@ class CustomDialogAlarm() : DialogFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        dialog?.window?.attributes?.windowAnimations = R.style.AnimationPopupStyle
         _binding = null
     }
 

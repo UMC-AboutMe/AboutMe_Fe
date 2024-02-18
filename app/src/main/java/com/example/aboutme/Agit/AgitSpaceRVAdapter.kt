@@ -1,6 +1,8 @@
 package com.example.aboutme.Agit
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,11 +15,12 @@ import com.example.aboutme.RetrofitMyspaceAgit.AgitSpaceData
 import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyspaceAgit.AgitFavoriteResponse
 import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClient
+import com.gun0912.tedpermission.provider.TedPermissionProvider.context
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AgitSpaceRVAdapter(val items: MutableList<AgitSpaceData>) :
+class AgitSpaceRVAdapter(private val resources: Resources, val items: MutableList<AgitSpaceData>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -38,8 +41,9 @@ class AgitSpaceRVAdapter(val items: MutableList<AgitSpaceData>) :
 
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val contentLayout: ConstraintLayout = itemView.findViewById(R.id.item_agit)
-        private val spaceImage: ImageView = itemView.findViewById(R.id.space_iv)
         private val spaceName: TextView = itemView.findViewById(R.id.spaceName_tv)
+        private val avatar: ImageView = itemView.findViewById(R.id.avatar_iv)
+        private val room: ImageView = itemView.findViewById(R.id.space_iv)
         private val agitFavorite: ImageView = itemView.findViewById(R.id.agit_bookmark)
         private val bookmarkButton: ImageView = itemView.findViewById(R.id.agit_bookmark)
 
@@ -65,14 +69,30 @@ class AgitSpaceRVAdapter(val items: MutableList<AgitSpaceData>) :
         fun bindItems(item: AgitSpaceData) {
             contentLayout.visibility = View.VISIBLE
 
-            // 유저별 스페이스 이미지, 이름, 북마크 여부 설정
-            spaceImage.setImageResource(item.spaceImg)
+            // 유저별 이름, 아바타, 룸, 북마크 여부 설정
+            // 룸, 아바타
+            val selectedAvatarIndex = item.characterType
+            val selectedRoomIndex = item.roomType
+
+            val imageNameavatar = "agit_thumbnail_avatar_${selectedAvatarIndex}"
+            val imageNameroom = "agit_thumbnail_room_${selectedRoomIndex}"
+
+            val resourceIdAvatar = resources.getIdentifier(imageNameavatar, "drawable", context.packageName)
+            val resourceIdRoom = resources.getIdentifier(imageNameroom, "drawable", context.packageName)
+
+            avatar.setImageResource(resourceIdAvatar)
+            room.setImageResource(resourceIdRoom)
+
+            // 썸네일 이름
             spaceName.text = item.spaceName
+
+            // 북마크
             if (item.isBookmarked) {
                 agitFavorite.setImageResource(R.drawable.agit_bookmarked)
             } else {
                 agitFavorite.setImageResource(R.drawable.agit_unbookmarked)
             }
+
             val spaceId = item.spaceId
             Log.d("spaceId", "$spaceId")
 

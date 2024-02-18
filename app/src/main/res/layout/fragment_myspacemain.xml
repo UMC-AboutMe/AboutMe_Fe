@@ -29,9 +29,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/myprofile_share"
-        android:layout_marginTop="25dp"
-        android:layout_marginStart="240dp"
-        app:layout_constraintStart_toEndOf="@+id/logo"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@+id/step3_photo"
         app:layout_constraintTop_toTopOf="@+id/logo" />
 
     <ImageView
@@ -437,8 +437,8 @@
 
         <ImageView
             android:id="@+id/step3_music_ok"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/myspacemain_ok"
             android:layout_centerVertical="true"
             android:layout_alignEnd="@id/step3_music_et"

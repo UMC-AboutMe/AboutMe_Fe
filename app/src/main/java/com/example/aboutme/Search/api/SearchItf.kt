@@ -23,7 +23,7 @@ interface SearchItf {
     //상대방 마이프로필 내 보관함에 추가하기
     @POST("/myprofiles/share")
     fun postProfStorage(
-        @Header("member-id") memberId:Long,
+        @Header("token") token:String,
         @Body request : SearchResponse.RequestStoreProf
     ) : Call<SearchResponse.ResponseStoreProf>
 
@@ -37,20 +37,20 @@ interface SearchItf {
     @POST("/myspaces/storage/{space-id}")
     fun postSpaceStorage (
         @Path ("space-id") spaceId:Long,
-        @Header("member-id") memberId:Int
+        @Header("token") token:String
     ) : Call<SearchResponse.ResponseSpaceStorage>
 
-    //내 프로필 상대방에게 공유
+    //마이프로필 공유 → 알림 데이터 생성
     @POST ("/myprofiles/send")
     fun postShareProf(
-    @Header("member-id") memberId:Long,
+    @Header("token") token:String,
     @Body requestShareProf : SearchResponse.RequestShareProf
     ) : Call<SearchResponse.ResponseShareProf>
 
     //내 마이프로필 조회
     @GET ("/myprofiles")
     fun getProfileList (
-        @Header ("member-id") memberId: Long
+        @Header ("token") token:String
     ) : Call<SearchResponse.ResponseGetProfiles>
 
     //마이프로필 검색
@@ -58,4 +58,18 @@ interface SearchItf {
     fun getSearchProf (
         @Query("q") q:Int
     ) : Call<SearchResponse.ResponseSearchProf>
+
+    //마이스페이스 공유 - 알림 데이터 생성
+    @POST ("/myspaces/share")
+    fun postShareSpace (
+        @Header("Authorization") Authorization:String,
+        @Body requestShareSpace : SearchResponse.RequestShareSpace
+    ) : Call<SearchResponse.ResponseShareSpace>
+
+    //마이스페이스 조회
+    @GET ("/myspaces/")
+    fun getMySpace (
+        @Header("token") token:String
+    ) : Call<SearchResponse.ResponseMySpace>
+
 }

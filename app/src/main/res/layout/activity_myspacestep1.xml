@@ -81,8 +81,8 @@
 
     <EditText
         android:id="@+id/nickname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="290dp"
+        android:layout_height="60dp"
         android:layout_marginTop="60dp"
         android:background="@drawable/step1_nickname_new"
         android:fontFamily="@font/gmarketsansmedium"

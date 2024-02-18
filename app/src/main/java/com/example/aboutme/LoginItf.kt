@@ -11,4 +11,10 @@ interface LoginItf {
         @Path("socialType") type:String,
         @Body request : LoginResponse.RequestLogin
     ) : Call<LoginResponse.ResponseLogin>
+
+    @POST("/members/{socialType}/login")
+    fun postLoginKakao (
+        @Path("socialType") type:String,
+        @Body request : LoginResponse.RequestLoginAT
+    ) : Call<LoginResponse.ResponseLogin>
 }

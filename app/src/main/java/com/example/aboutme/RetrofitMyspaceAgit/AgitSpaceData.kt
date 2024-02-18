@@ -1,7 +1,6 @@
 package com.example.aboutme.RetrofitMyspaceAgit
 
 data class AgitSpaceData(
-    val spaceImg : Int,
     val spaceName : String,
     var isBookmarked : Boolean,
     val spaceId: Long,

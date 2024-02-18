@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val pref = requireContext().getSharedPreferences("pref", 0)
-        val token: String? = pref.getString("token", null)
+        val token: String? = pref.getString("Gtoken", null)
         Log.d("token", token ?: "null")
 
         binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -101,19 +101,20 @@ class HomeFragment : Fragment() {
             override fun run() {
                 activity?.runOnUiThread {
                     val nextPosition = (currentPosition + 1) % datas.size
-                    val smoothScroller = object : LinearSmoothScroller(activity) {
-                        override fun getVerticalSnapPreference(): Int {
-                            return SNAP_TO_START
+                    activity?.let { activity ->
+                        val smoothScroller = object : LinearSmoothScroller(activity) {
+                            override fun getVerticalSnapPreference(): Int {
+                                return SNAP_TO_START
+                            }
                         }
+                        smoothScroller.targetPosition = nextPosition
+                        binding.homeitemRc.layoutManager?.startSmoothScroll(smoothScroller)
                     }
-                    smoothScroller.targetPosition = nextPosition
-                    binding.homeitemRc.layoutManager?.startSmoothScroll(smoothScroller)
                     currentPosition = nextPosition
                 }
             }
         }, DELAY_MS, PERIOD_MS)
     }
-
     companion object {
         private const val DELAY_MS = 0L // 시작 딜레이
         private const val PERIOD_MS = 2000L // 스크롤 간격

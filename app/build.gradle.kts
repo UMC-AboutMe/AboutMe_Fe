@@ -130,4 +130,7 @@ dependencies {
 
     // 날씨 애니메이션
     implementation ("com.github.MatteoBattilana:WeatherView:3.0.0")
+
+    implementation("com.tbuonomo:dotsindicator:5.0")
+
 }

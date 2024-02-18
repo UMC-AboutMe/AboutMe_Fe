@@ -69,7 +69,7 @@
         app:layout_constraintTop_toTopOf="@+id/myspace_iv" />
 
     <EditText
-        android:id="@+id/search_tv"
+        android:id="@+id/search_tv2"
         android:layout_width="0dp"
         android:layout_height="38dp"
         android:layout_marginTop="12dp"
@@ -86,7 +86,7 @@
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ImageButton
-        android:id="@+id/search_btn"
+        android:id="@+id/search_btn2"
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_marginTop="12dp"
@@ -96,16 +96,18 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toBottomOf="@+id/myspace_iv"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+        android:foreground="?attr/selectableItemBackground" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/profView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/search_tv"
+        app:layout_constraintTop_toBottomOf="@+id/search_tv2"
         tools:visibility="visible">
 
         <ImageView
@@ -129,7 +131,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/space_bg"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            android:foreground="?attr/selectableItemBackground" />
 
         <ImageView
             android:id="@+id/space_bg"
@@ -145,12 +148,12 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_marginTop="32dp"
+            android:src="@drawable/frontprofile"
             app:civ_border_color="@color/transparent"
             app:civ_border_width="0dp"
             app:layout_constraintEnd_toEndOf="@+id/space_bg"
             app:layout_constraintStart_toStartOf="@+id/space_bg"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/frontprofile" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView3"

@@ -88,8 +88,8 @@
 
     <ImageView
         android:id="@+id/room_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="110dp"
+        android:layout_height="105dp"
         android:src="@drawable/step3_smallroom_1"
         app:layout_constraintBottom_toBottomOf="@+id/myspace_step2_room_1"
         app:layout_constraintEnd_toEndOf="@+id/myspace_step2_room_1"
@@ -132,8 +132,8 @@
 
     <ImageView
         android:id="@+id/room_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="110dp"
+        android:layout_height="113dp"
         android:src="@drawable/step3_smallroom_2"
         app:layout_constraintBottom_toBottomOf="@+id/myspace_step2_room_2"
         app:layout_constraintEnd_toEndOf="@+id/myspace_step2_room_2"
@@ -176,8 +176,8 @@
 
     <ImageView
         android:id="@+id/room_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="110dp"
+        android:layout_height="105dp"
         android:src="@drawable/step3_smallroom_3"
         app:layout_constraintBottom_toBottomOf="@+id/myspace_step2_room_3"
         app:layout_constraintEnd_toEndOf="@+id/myspace_step2_room_3"
@@ -219,8 +219,8 @@
 
     <ImageView
         android:id="@+id/room_4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="106dp"
+        android:layout_height="101dp"
         android:src="@drawable/step3_smallroom_4"
         app:layout_constraintBottom_toBottomOf="@+id/myspace_step2_room_4"
         app:layout_constraintEnd_toEndOf="@+id/myspace_step2_room_4"

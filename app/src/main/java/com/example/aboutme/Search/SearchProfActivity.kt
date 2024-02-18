@@ -2,8 +2,12 @@ package com.example.aboutme.Search
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.aboutme.R
@@ -11,6 +15,8 @@ import com.example.aboutme.Search.api.SearchItf
 import com.example.aboutme.Search.api.SearchObj
 import com.example.aboutme.Search.api.SearchResponse
 import com.example.aboutme.databinding.ActivitySearchProfBinding
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,9 +24,15 @@ import retrofit2.Response
 class SearchProfActivity : AppCompatActivity() {
 
     lateinit var binding : ActivitySearchProfBinding
+    lateinit var token: String // token 변수를 추가
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // token을 SharedPreferences에서 가져와서 초기화
+        val pref = this.getSharedPreferences("pref", 0)
+        token = pref.getString("Gtoken", null) ?: ""
+        Log.d("token", token)
 
         binding = ActivitySearchProfBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -30,9 +42,32 @@ class SearchProfActivity : AppCompatActivity() {
             finish()
         }
         //제약 조건
-        binding.searchBtn.setOnClickListener {
-            //val number = binding.searchTv.text.toString().toInt()
-            getSearchProf(12026)
+        binding.searchBtn2.setOnClickListener {
+            //val number = binding.searchTv2.text.toString().toInt()
+            //getSearchProf(number)
+            val number = binding.searchTv2.text.toString().trim()
+            if (number.isNotEmpty()) {
+                try {
+                    val number = number.toInt()
+                    // 여기에서 number를 사용하여 작업 수행
+                    getSearchProf(number)
+                } catch (e: NumberFormatException) {
+                    // 정수로 변환할 수 없는 경우
+                    Toast.makeText(this@SearchProfActivity, "올바른 숫자를 입력하세요.", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                // 입력란이 비어있는 경우
+                Toast.makeText(this@SearchProfActivity, "검색어를 입력하세요.", Toast.LENGTH_SHORT).show()
+            }
+            Log.d("Retro","$number")
+            // 키보드 숨기기
+            val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(binding.searchBtn2.windowToken, 0)
+        }
+        // 화면 내 빈 공간 클릭시 키보드 숨김처리
+        binding.searchProf.setOnClickListener {
+            val inputMethodManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(binding.root.windowToken, 0)
         }
     }
 
@@ -40,7 +75,7 @@ class SearchProfActivity : AppCompatActivity() {
     private fun postProfStorage(list : Int){
         Log.d("Retrofit_Add","보관함 추가 실행")
         val requestStoreProf = SearchResponse.RequestStoreProf(listOf(list))
-        val call = SearchObj.getRetrofitService.postProfStorage(6, requestStoreProf)
+        val call = SearchObj.getRetrofitService.postProfStorage(token, requestStoreProf)
 
         call.enqueue(object : Callback<SearchResponse.ResponseStoreProf> {
             override fun onResponse(
@@ -55,10 +90,24 @@ class SearchProfActivity : AppCompatActivity() {
                     if (response != null) {
                         if (response.isSuccess) {
                             //성공했을 때
-                        } else {
-                            //실패했을 때
-                            Log.d("Retrofit_Add", response.message)
+                            //상대방 마이프로필 내 보관함에 추가하기
+                            Toast.makeText(this@SearchProfActivity, "프로필 보관함에 저장되었습니다.", Toast.LENGTH_SHORT).show()
+                            CustomDialog("내 프로필도 공유 하시겠습니까?",list)
+                                .show(supportFragmentManager, "ProfDialog")
                         }
+                    }
+                }else {
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e(
+                        "Retrofit_Storage_Failed",
+                        "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                    )
+                    try {
+                        val jsonObject = JSONObject(errorBody)
+                        val errorMessage = jsonObject.getString("message")
+                        Toast.makeText(this@SearchProfActivity, errorMessage, Toast.LENGTH_SHORT).show()
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
                     }
                 }
             }
@@ -70,6 +119,8 @@ class SearchProfActivity : AppCompatActivity() {
     }
     //마이프로필 검색
     private fun getSearchProf(Number : Int ) {
+        Log.d("Retro","프로필 검색 실행")
+        //val call = SearchObj.getRetrofitService.getSearchProf(697951)
         val call = SearchObj.getRetrofitService.getSearchProf(Number)
         call.enqueue(object : Callback<SearchResponse.ResponseSearchProf> {
             override fun onResponse(
@@ -77,6 +128,7 @@ class SearchProfActivity : AppCompatActivity() {
                 response: Response<SearchResponse.ResponseSearchProf>
             ) {
                 if (response.isSuccessful) {
+                    Log.d("Retrofit_Search", response.toString())
                     val response = response.body()
                     Log.d("Retrofit_Search", response.toString())
                     if (response != null) {
@@ -119,26 +171,26 @@ class SearchProfActivity : AppCompatActivity() {
                                 else
                                     binding.profNum.text = profile.value
                             }
-
                             //Dialog
                             binding.addBtn.setOnClickListener {
-                                Toast.makeText(this@SearchProfActivity, "보관함에 저장되었습니다.", Toast.LENGTH_SHORT).show()
-
                                 //보관함 추가하기 api
                                 postProfStorage(Number)
-                                //상대방 마이프로필 내 보관함에 추가하기
-                                CustomDialog("내 프로필도 공유 하시겠습니까?",Number)
-                                    .show(supportFragmentManager, "ProfDialog")
                             }
-                        } else {
-                            //실패했을 때
-                            Log.d("Retrofit_Search", response.message)
-                            binding.profView.visibility = View.GONE
                         }
                     }
                 } else {
-                    Log.d("Retrofit_Search_Failed", response.toString())
-                    Toast.makeText(this@SearchProfActivity, "존재하지 않는 프로필입니다.", Toast.LENGTH_SHORT).show()
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e(
+                        "Retrofit_Storage_Failed",
+                        "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                    )
+                    try {
+                        val jsonObject = JSONObject(errorBody)
+                        val errorMessage = jsonObject.getString("message")
+                        Toast.makeText(this@SearchProfActivity, errorMessage, Toast.LENGTH_SHORT).show()
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
                     binding.profView.visibility = View.GONE
                 }
             }

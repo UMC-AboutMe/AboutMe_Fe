@@ -57,11 +57,15 @@ class SearchResponse {
         var value : String,
         var feature_id : Long
             )
-    //내 마이프로필 상대방에게 공유
+    //마이프로필 공유 → 알림 데이터 생성
     data class ResponseShareProf (
         var isSuccess: Boolean,
         val code: String,
-        val message: String
+        val message: String,
+        val result : ShareProfResult?
+            )
+    data class ShareProfResult (
+        var profileSerialNumberList : String
             )
     data class RequestShareProf (
         var others_profile_serial_numbers : List<Int>,
@@ -95,4 +99,37 @@ class SearchResponse {
         var value: String,
         var feature_id: Int
     )
+
+    //마이스페이스 공유 - 알림 데이터 생성
+    data class ResponseShareSpace (
+        var isSuccess: Boolean,
+        var code: String,
+        var result : ShareSpace
+            )
+    data class ShareSpace (
+        var content : String,
+        var subscriberNickname : String,
+        var read : Boolean
+            )
+    data class RequestShareSpace (
+        var destination : Long
+            )
+
+    //마이스페이스 조회
+    data class ResponseMySpace (
+        var isSuccess: Boolean,
+        var code: String,
+        var message: String,
+        var result : MySpace
+            )
+    data class MySpace (
+        var nickname : String,
+        var characterType : Int,
+        var roomType : Int,
+        var mood : String?,
+        var musicUrl : String?,
+        var statusMessage : String?,
+        var spaceImageList : List<Int>?,
+        var planList : List<String>?,
+        )
 }
