@@ -1,5 +1,6 @@
 package com.example.aboutme
 
+import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -139,12 +140,25 @@ class HomeFragment : Fragment() {
     }
 
     //상단바 알림
+//    private fun showNotification(title: String, message: String) {
+//        val nb: NotificationCompat.Builder =
+//            notificationHelper.getChannelNotification(title, message)
+//
+//        notificationHelper.getManager().notify(1, nb.build())
+//    }
+    // 상단바 알림
     private fun showNotification(title: String, message: String) {
+        val intent = Intent(requireContext(), AlarmActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(requireContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE) // FLAG_IMMUTABLE 사용
+
         val nb: NotificationCompat.Builder =
             notificationHelper.getChannelNotification(title, message)
+                .setContentIntent(pendingIntent) // 클릭 시 PendingIntent 실행
 
         notificationHelper.getManager().notify(1, nb.build())
     }
+
+
 
     //알람 데이터 조회 api
     private fun getAlarms(token: String) {
