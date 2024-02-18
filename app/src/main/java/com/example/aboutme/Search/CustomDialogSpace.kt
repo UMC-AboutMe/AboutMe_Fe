@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
+import com.example.aboutme.R
 import com.example.aboutme.Search.api.SearchObj
 import com.example.aboutme.Search.api.SearchResponse
 import com.example.aboutme.databinding.ActivityCustomDialogSpaceBinding
@@ -28,6 +29,7 @@ class CustomDialogSpace(val content: String,val memberId : Long) : DialogFragmen
         val view = binding.root
         // 레이아웃 배경을 투명하게
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.attributes?.windowAnimations = R.style.AnimationPopupStyle
 
         // 제목, 내용 설정
         binding.dialogTv.text = content
@@ -51,6 +53,7 @@ class CustomDialogSpace(val content: String,val memberId : Long) : DialogFragmen
 
     override fun onDestroyView() {
         super.onDestroyView()
+        dialog?.window?.attributes?.windowAnimations = R.style.AnimationPopupStyle
         _binding = null
     }
     override fun onResume() {

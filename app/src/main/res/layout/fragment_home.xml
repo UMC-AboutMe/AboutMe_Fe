@@ -32,12 +32,12 @@
         android:id="@+id/imageView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:scaleType="fitXY"
         android:src="@drawable/home_bg1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView8"
@@ -66,31 +66,35 @@
         android:id="@+id/alarm_btn"
         android:layout_width="42dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="15dp"
         android:background="@android:color/transparent"
         android:scaleType="centerCrop"
         android:src="@drawable/home_alarm"
         app:layout_constraintEnd_toStartOf="@+id/mypage_btn"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+        android:foreground="?attr/selectableItemBackground" />
 
     <ImageButton
         android:id="@+id/mypage_btn"
         android:layout_width="26dp"
         android:layout_height="34dp"
         android:layout_marginTop="2dp"
+        android:layout_marginEnd="5dp"
         android:background="@android:color/transparent"
         android:scaleType="centerCrop"
         android:src="@drawable/home_user"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+        android:foreground="?attr/selectableItemBackground" />
+
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/gmarketsansbold"
         android:text="ABOUT US"
         android:textColor="#000000"
@@ -129,19 +133,21 @@
 
         <ImageView
             android:id="@+id/myprof_iv"
-            android:layout_width="70dp"
-            android:layout_height="61dp"
+            android:layout_width="80dp"
+            android:layout_height="71dp"
             android:scaleType="centerCrop"
             android:src="@drawable/nav_myprof2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:foreground="?selectableItemBackgroundBorderless" />
 
         <TextView
             android:id="@+id/myspace_tv2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
             android:fontFamily="@font/gmarketsanslight"
-            android:text="스페이스 찾기"
+            android:text="프로필 찾기"
             android:textColor="#000000"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@+id/myprof_iv"
@@ -150,19 +156,21 @@
 
         <ImageView
             android:id="@+id/myspace_iv"
-            android:layout_width="70dp"
-            android:layout_height="61dp"
-            android:layout_marginStart="50dp"
+            android:layout_width="80dp"
+            android:layout_height="71dp"
+            android:layout_marginStart="80dp"
             android:scaleType="centerCrop"
             android:src="@drawable/nav_myspace2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/myprof_iv"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:foreground="?selectableItemBackgroundBorderless" />
 
         <TextView
             android:id="@+id/myspace_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
             android:fontFamily="@font/gmarketsanslight"
             android:text="스페이스 찾기"
             android:textColor="#000000"
@@ -176,7 +184,7 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/gmarketsansbold"
         android:text="친구찾기"
         android:textColor="#000000"
