@@ -160,39 +160,6 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
                 }
             }
 
-
-/*
-            profilePosion(position) { realProfileId ->
-                Log.d("realprofileID!", realProfileId.toString())
-
-                binding.defaultNoProfileBtn.setOnClickListener {
-                    Log.d("click!!","success")
-
-
-                   coroutineScope.launch {
-                        try {
-                            val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
-                                RetrofitClient.mainProfile.getDataAll(token,realProfileId.toLong())
-                            }
-
-                            if (response.isSuccessful) {
-                                val responseData: GetAllProfile? = response.body()
-                                Log.d("즐겨찾기 취소!!", "응답 데이터: $responseData")
-
-                                if (responseData?.result?.isDefault == false){
-
-                                    }
-                                val errorBody = response.errorBody()?.string() ?: "No error body"
-                                Log.e("GETALL 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
-                            }
-                        } catch (e: Exception) {
-                            Log.e("GETALL 요청 실패", "에러: ${e.message}")
-                        }
-                    }
-                    }
-                }
-*/
-
         }
         fun bind(item: MultiProfileData) {
             if (item.profileImageResId.startsWith("http")) {

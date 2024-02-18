@@ -130,7 +130,6 @@ class MainProfileFragment : Fragment() {
                     Log.e("실패", t.toString())
                 }
 
-
                 override fun onResponse(
                     call: Call<MainProfileData>,
                     response: Response<MainProfileData>
@@ -436,6 +435,4 @@ class MainProfileFragment : Fragment() {
 
 
         }
-
-
 }

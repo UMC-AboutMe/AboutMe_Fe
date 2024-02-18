@@ -22,25 +22,39 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/checkbox10"/>
+
             <ImageButton
                 android:id="@+id/image_logo_btn"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginLeft="10dp"
                 android:background="@drawable/logo"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/checkbox10"/>
 
             <ImageButton
                 android:id="@+id/image_image_btn"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginLeft="60dp"
                 android:background="@drawable/myprofile_image"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="40dp"
+                android:src="@drawable/checkbox10"/>
 
             <ImageButton
                 android:id="@+id/image_char_btn"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginLeft="60dp"
                 android:background="@drawable/profilepreview2"/>
 
         </LinearLayout>
