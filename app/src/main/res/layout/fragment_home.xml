@@ -75,6 +75,18 @@
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
         android:foreground="?attr/selectableItemBackground" />
 
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="10dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/alarm_pink"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/alarm_btn"
+        app:layout_constraintEnd_toEndOf="@+id/alarm_btn" />
+
     <ImageButton
         android:id="@+id/mypage_btn"
         android:layout_width="26dp"
