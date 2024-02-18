@@ -94,50 +94,50 @@ class BottomSheetSpace : DialogFragment() {
         binding.shareBottomSheet2KakaoBtn.setOnClickListener {
             listener?.onBottomSheetAction()
 
-            context?.let { nonNullContext ->
-                // 카카오톡 설치여부 확인
-                if (isAdded) { // Fragment가 Activity에 추가되었는지 확인
-                    ShareClient.instance.shareDefault(
-                        nonNullContext,
-                        defaultFeed
-                    ) { sharingResult, error ->
-                        if (error != null) {
-                            Toast.makeText(
-                                nonNullContext,
-                                "카카오톡이 설치되어있지 않습니다",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            val sharerUrl = WebSharerClient.instance.makeDefaultUrl(defaultFeed)
-                            Log.e(TAG, "카카오톡 공유 실패", error)
-                            // 카카오톡 공유 실패 시 웹으로 공유 시도
-                            try {
-                                KakaoCustomTabsClient.openWithDefault(nonNullContext, sharerUrl)
-                            } catch (e: UnsupportedOperationException) {
-                                // CustomTabsServiceConnection 지원 브라우저가 없을 때 예외처리
-                            }
-
-                            // 디바이스에 설치된 인터넷 브라우저가 없을 때 예외처리
-                            try {
-                                KakaoCustomTabsClient.open(nonNullContext, sharerUrl)
-                            } catch (e: ActivityNotFoundException) {
-                                // 디바이스에 설치된 인터넷 브라우저가 없을 때 예외처리
-                            }
-
-                            dismiss()
-
-                        } else if (sharingResult != null) {
-                            Log.d(TAG, "카카오톡 공유 성공 ${sharingResult.intent}")
-                            startActivity(sharingResult.intent)
-
-                            // 카카오톡 공유에 성공했지만 아래 경고 메시지가 존재할 경우 일부 컨텐츠가 정상 동작하지 않을 수 있습니다.
-                            Log.w(TAG, "Warning Msg: ${sharingResult.warningMsg}")
-                            Log.w(TAG, "Argument Msg: ${sharingResult.argumentMsg}")
-
-                            dismiss()
-                        }
-                    }
-                }
-            }
+//            context?.let { nonNullContext ->
+//                // 카카오톡 설치여부 확인
+//                if (isAdded) { // Fragment가 Activity에 추가되었는지 확인
+//                    ShareClient.instance.shareDefault(
+//                        nonNullContext,
+//                        defaultFeed
+//                    ) { sharingResult, error ->
+//                        if (error != null) {
+//                            Toast.makeText(
+//                                nonNullContext,
+//                                "카카오톡이 설치되어있지 않습니다",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                            val sharerUrl = WebSharerClient.instance.makeDefaultUrl(defaultFeed)
+//                            Log.e(TAG, "카카오톡 공유 실패", error)
+//                            // 카카오톡 공유 실패 시 웹으로 공유 시도
+//                            try {
+//                                KakaoCustomTabsClient.openWithDefault(nonNullContext, sharerUrl)
+//                            } catch (e: UnsupportedOperationException) {
+//                                // CustomTabsServiceConnection 지원 브라우저가 없을 때 예외처리
+//                            }
+//
+//                            // 디바이스에 설치된 인터넷 브라우저가 없을 때 예외처리
+//                            try {
+//                                KakaoCustomTabsClient.open(nonNullContext, sharerUrl)
+//                            } catch (e: ActivityNotFoundException) {
+//                                // 디바이스에 설치된 인터넷 브라우저가 없을 때 예외처리
+//                            }
+//
+//                            dismiss()
+//
+//                        } else if (sharingResult != null) {
+//                            Log.d(TAG, "카카오톡 공유 성공 ${sharingResult.intent}")
+//                            startActivity(sharingResult.intent)
+//
+//                            // 카카오톡 공유에 성공했지만 아래 경고 메시지가 존재할 경우 일부 컨텐츠가 정상 동작하지 않을 수 있습니다.
+//                            Log.w(TAG, "Warning Msg: ${sharingResult.warningMsg}")
+//                            Log.w(TAG, "Argument Msg: ${sharingResult.argumentMsg}")
+//
+//                            dismiss()
+//                        }
+//                    }
+//                }
+//            }
         }
 
     }
@@ -161,7 +161,7 @@ class BottomSheetSpace : DialogFragment() {
 
         sharedViewModel = ViewModelProvider(requireActivity()).get(MyspaceViewModel::class.java)
 
-        initDefaultFeed()
+//        initDefaultFeed()
 
         val realProfileId = arguments?.getInt("realProfileId", -1)
         Log.d("다이얼로그id",realProfileId.toString())
@@ -459,93 +459,93 @@ class BottomSheetSpace : DialogFragment() {
     }
 
 
-    private val defaultFeed: FeedTemplate by lazy {
-        lifecycleScope.launch {
-
-            val realProfileId = arguments?.getInt("realProfileId", -1)
-            try {
-                val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.getDataAll(realProfileId!!.toLong())
-                }
-
-                if (response.isSuccessful) {
-                    val responseData: GetAllProfile? = response.body()
-                    Log.d("GETALL 성공~~", "응답 데이터: $responseData")
-                    // API 응답에서 serialNumber 값을 받아와서 초기화합니다.
-                    serialNumber = responseData?.result?.serialNumber
-                    Log.d("씨리얼", serialNumber.toString())
-                } else {
-                    val errorBody = response.errorBody()?.string() ?: "No error body"
-                    Log.e("GETALL 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
-                }
-            } catch (e: Exception) {
-                Log.e("GETALL 요청 실패", "에러: ${e.message}")
-            }
-        }
-
-        // serialNumber 값을 사용하여 defaultFeed를 초기화합니다.
-        FeedTemplate(
-            content = Content(
-                title = "$profileName 님의 AboutMe 프로필을 확인해보세요.",
-                description = "홈 화면에 있는 프로필 찾기에 일련번호를 입력하면 프로필을 찾을 수 있어요.",
-                imageUrl = "https://i.imgur.com/PsidRUL.jpg",
-                link = Link(
-                    webUrl = "https://play.google.com",
-                    mobileWebUrl = "https://play.google.com"
-                )
-            ),
-            itemContent = ItemContent(
-                profileText = "일련번호: $serialNumber" // serialNumber 값을 사용합니다.
-            ),
-            buttons = listOf(
-                Button(
-                    "앱 다운로드",
-                    Link(
-                        webUrl = "https://play.google.com",
-                        mobileWebUrl = "https://play.google.com"
-                    )
-                ),
-                Button(
-                    "앱으로 이동",
-                    Link(
-                        //이 부분을 사용해서 어떤 상세페이지를 띄울지 결정
-                        androidExecutionParams = mapOf("key1" to "value1")
-                    )
-                )
-            )
-        )
-    }
-
-
-
-
-    private fun initDefaultFeed() {
-        lifecycleScope.launch {
-            val realProfileId = arguments?.getInt("realProfileId", -1)
-            try {
-                val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.getDataAll(realProfileId!!.toLong())
-                }
-
-                if (response.isSuccessful) {
-                    val responseData: GetAllProfile? = response.body()
-                    Log.d("GETALL 성공~~", "응답 데이터: $responseData")
-                    // API 응답에서 serialNumber 값을 받아와서 초기화합니다.
-                    serialNumber = responseData?.result?.serialNumber
-                    profileName = responseData!!.result.frontFeatures[0]!!.value
-                    Log.d("이름~",profileName.toString())
-                    Log.d("씨리얼", serialNumber.toString())
-                } else {
-                    val errorBody = response.errorBody()?.string() ?: "No error body"
-                    Log.e(
-                        "GETALL 요청 실패",
-                        "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
-                    )
-                }
-            } catch (e: Exception) {
-                Log.e("GETALL 요청 실패", "에러: ${e.message}")
-            }
-        }
-    }
+//    private val defaultFeed: FeedTemplate by lazy {
+//        lifecycleScope.launch {
+//
+//            val realProfileId = arguments?.getInt("realProfileId", -1)
+//            try {
+//                val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
+//                    RetrofitClient.mainProfile.getDataAll(realProfileId!!.toLong())
+//                }
+//
+//                if (response.isSuccessful) {
+//                    val responseData: GetAllProfile? = response.body()
+//                    Log.d("GETALL 성공~~", "응답 데이터: $responseData")
+//                    // API 응답에서 serialNumber 값을 받아와서 초기화합니다.
+//                    serialNumber = responseData?.result?.serialNumber
+//                    Log.d("씨리얼", serialNumber.toString())
+//                } else {
+//                    val errorBody = response.errorBody()?.string() ?: "No error body"
+//                    Log.e("GETALL 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
+//                }
+//            } catch (e: Exception) {
+//                Log.e("GETALL 요청 실패", "에러: ${e.message}")
+//            }
+//        }
+//
+//        // serialNumber 값을 사용하여 defaultFeed를 초기화합니다.
+//        FeedTemplate(
+//            content = Content(
+//                title = "$profileName 님의 AboutMe 프로필을 확인해보세요.",
+//                description = "홈 화면에 있는 프로필 찾기에 일련번호를 입력하면 프로필을 찾을 수 있어요.",
+//                imageUrl = "https://i.imgur.com/PsidRUL.jpg",
+//                link = Link(
+//                    webUrl = "https://play.google.com",
+//                    mobileWebUrl = "https://play.google.com"
+//                )
+//            ),
+//            itemContent = ItemContent(
+//                profileText = "일련번호: $serialNumber" // serialNumber 값을 사용합니다.
+//            ),
+//            buttons = listOf(
+//                Button(
+//                    "앱 다운로드",
+//                    Link(
+//                        webUrl = "https://play.google.com",
+//                        mobileWebUrl = "https://play.google.com"
+//                    )
+//                ),
+//                Button(
+//                    "앱으로 이동",
+//                    Link(
+//                        //이 부분을 사용해서 어떤 상세페이지를 띄울지 결정
+//                        androidExecutionParams = mapOf("key1" to "value1")
+//                    )
+//                )
+//            )
+//        )
+//    }
+//
+//
+//
+//
+//    private fun initDefaultFeed() {
+//        lifecycleScope.launch {
+//            val realProfileId = arguments?.getInt("realProfileId", -1)
+//            try {
+//                val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
+//                    RetrofitClient.mainProfile.getDataAll(realProfileId!!.toLong())
+//                }
+//
+//                if (response.isSuccessful) {
+//                    val responseData: GetAllProfile? = response.body()
+//                    Log.d("GETALL 성공~~", "응답 데이터: $responseData")
+//                    // API 응답에서 serialNumber 값을 받아와서 초기화합니다.
+//                    serialNumber = responseData?.result?.serialNumber
+//                    profileName = responseData!!.result.frontFeatures[0]!!.value
+//                    Log.d("이름~",profileName.toString())
+//                    Log.d("씨리얼", serialNumber.toString())
+//                } else {
+//                    val errorBody = response.errorBody()?.string() ?: "No error body"
+//                    Log.e(
+//                        "GETALL 요청 실패",
+//                        "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+//                    )
+//                }
+//            } catch (e: Exception) {
+//                Log.e("GETALL 요청 실패", "에러: ${e.message}")
+//            }
+//        }
+//    }
 
 }
