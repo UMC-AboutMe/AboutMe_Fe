@@ -1,6 +1,7 @@
 package com.example.aboutme.Agit
 
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.os.Bundle
@@ -30,6 +31,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDate
 
 class AgitFragment : Fragment() {
 
@@ -39,12 +41,21 @@ class AgitFragment : Fragment() {
     private val itemList = mutableListOf<AgitSpaceData>()
     private val filteredItemList = mutableListOf<AgitSpaceData>()
 
+    lateinit var token: String // token 변수를 추가
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAgitBinding.inflate(inflater, container, false)
+
+        fun getToken(context: Context): String? {
+            val pref = context.getSharedPreferences("pref", 0)
+            return pref.getString("Gtoken", null)
+        }
+
+        token = context?.let { getToken(it) }.toString() // SharedPreferences에서 토큰을 가져오는 함수를 호출하여 토큰 값을 가져옵니다.
 
         binding.homeLogo.setOnClickListener {
             // 홈화면 이동시 애니메이션 효과
@@ -82,6 +93,11 @@ class AgitFragment : Fragment() {
 
         // 초기 화면은 항상 최신화 상태 유지
         CoroutineScope(Dispatchers.Main).launch {
+//            itemList.add(AgitSpaceData("다에몬's 스페이스", false, 1, 3, 2))
+//            itemList.add(AgitSpaceData("모아's 스페이스", false, 2, 8, 1))
+//            itemList.add(AgitSpaceData("혬's 스페이스", false, 3, 9, 3))
+//            itemList.add(AgitSpaceData("쩡's 스페이스", false, 4, 7, 4))
+//            itemList.add(AgitSpaceData("윤's 스페이스", false, 5, 1, 2))
             fetchData()
         }
 
@@ -106,7 +122,9 @@ class AgitFragment : Fragment() {
     // API 호출
     private fun fetchData() {
         // retrofitclient에서 통신 방법 설정(GET, POST, DELETE, PATCH)
-        val call = RetrofitClient.apitest.getMySpaces("4")
+        // SharedPreferences에서 토큰을 가져오는 함수
+        val call = token.let { RetrofitClient.apitest.getMySpaces(it) }
+        Log.d("토큰아지트", token)
 //        val call_favorite = RetrofitClient.apitest.agitFavorite()
 
         call.enqueue(object : Callback<YourResponseType> { // API 호출(call, response 데이터 클래스 명시)
@@ -116,6 +134,7 @@ class AgitFragment : Fragment() {
                     result?.let {
                         updateUI(it)
                     }
+                    Log.d("성공?", "$result")
                 } else { // API 호출 실패시
                     handleApiError(response)
                 }
@@ -126,12 +145,15 @@ class AgitFragment : Fragment() {
                 handleApiFailure(t)
             }
         })
+        Log.d("콜하니", "$call")
     }
 
     // API 호출 후 가져온 결과값을 바탕으로 UI를 최신화
     private fun updateUI(result: ResultModel) {
         // 서버에서 memberSpaceList 추출
         val dataList = result.memberSpaceList
+
+        Log.d("업데이트", "$dataList")
 
         // 업데이트를 위해 기존 데이터 제거
         itemList.clear()

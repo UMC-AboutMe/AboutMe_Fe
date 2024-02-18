@@ -11,13 +11,16 @@ import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,6 +31,7 @@ import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyspaceAgit.MyspaceCheckResponse
 import com.example.aboutme.RetrofitMyspaceAgit.MyspaceCheckResult
 import com.example.aboutme.RetrofitMyspaceAgit.ResultModelmsc
+import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClient
 import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClient2
 import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClientMyspace
 import com.example.aboutme.bottomNavigationView
@@ -281,6 +285,24 @@ class MySpaceMainFragment : Fragment() {
             if (isCreated) {
                 fetchData()
 
+                // 이전 step 데이터들을 서버에 저장하고 로컬 뷰모델에 저장되어있는 정보 추출
+                val nickname = sharedViewModel.nickname
+                val selectedAvatarIndex = sharedViewModel.selectedAvatarIndex
+                val selectedRoomIndex = sharedViewModel.selectedRoomIndex
+
+                val imageNameavatar = "step2_avatar_${selectedAvatarIndex?.plus(1)}"
+                val imageNameroom = "step3_room_${selectedRoomIndex?.plus(1)}"
+
+                // 리소스 아이디 가져오기
+                val resourceIdavatar = requireContext().resources.getIdentifier(imageNameavatar, "drawable", requireContext().packageName)
+                val resourceIdroom = requireContext().resources.getIdentifier(imageNameroom, "drawable", requireContext().packageName)
+
+                binding.step3SelectedAvatar.setImageResource(resourceIdavatar)
+                binding.step3SelectedRoom.setImageResource(resourceIdroom)
+                binding.myspaceTitle.text = buildString {
+                    append("$nickname's")
+                }
+
                 // 아이콘 클릭시 등장하는 edittext 및 각종 기능을 하는 버튼들 전체를 감싸고 있는 레이아웃
                 val layouts = listOf(
                     binding.step3FeelingLayout,
@@ -379,14 +401,34 @@ class MySpaceMainFragment : Fragment() {
                     val inputText = editText.text.toString()
 
                     pencil.setOnClickListener {
-                        editText.isClickable = true
-                        editText.isFocusable = true
-                        editText.isLongClickable = true
+                        editText.clearFocus()
+                        editText.setText("")
+
+                        // EditText를 편집 가능한 상태로 전환
+                        editText.isFocusableInTouchMode = true
                         editText.requestFocus()
+
+                        // 키보드를 자동으로 표시
+                        val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        inputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
                     }
 
                     trash.setOnClickListener {
                         editText.setText("")
+                    }
+
+                    editText.setOnEditorActionListener { _, actionId, _ ->
+                        if (actionId == EditorInfo.IME_ACTION_DONE) {
+                            // 버튼을 누르는 효과
+                            okButton.performClick()
+
+                            // 키보드 숨기기
+                            val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                            inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
+
+                            return@setOnEditorActionListener true
+                        }
+                        false
                     }
 
                     okButton.setOnClickListener {
@@ -426,13 +468,19 @@ class MySpaceMainFragment : Fragment() {
 
                 // *문자를 입력해야하는 아이콘들에 대한 정의*
                 // 유튜브 음악 재생
-                binding.step3MusicGuide.setOnClickListener {
+                binding.step3MusicEt.setOnClickListener {
                     // EditText에서 텍스트 가져오기
                     val youtubeLink = binding.step3MusicEt.text.toString()
 
-                    // 기기에 설치되어있는 유튜브로 리다이렉트
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).setPackage("com.google.android.youtube")
-                    startActivity(intent)
+                    // URI 유효성 검사
+                    if (Patterns.WEB_URL.matcher(youtubeLink).matches()) {
+                        // 기기에 설치되어있는 유튜브로 리다이렉트
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).setPackage("com.google.android.youtube")
+                        startActivity(intent)
+                    } else {
+                        // 유효하지 않은 URI에 대한 처리
+                        Toast.makeText(requireContext(), "유효하지 않은 링크입니다.", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
                 // *문자를 입력하지 않는 feeling 아이콘에 대한 정의*
@@ -449,32 +497,38 @@ class MySpaceMainFragment : Fragment() {
                     binding.feeling5,
                 )
 
-                fun Int.dpToPx(): Int {
-                    val density = resources.displayMetrics.density
-                    return (this * density).toInt()
-                }
-
                 // *문자를 입력하지 않는 feeling 아이콘에 대한 정의*
                 // Ok 버튼에 대한 클릭 이벤트 처리
-                feelingIcons.forEach { imageView ->
+                // 초기 위치를 저장할 맵 선언
+                val initialPositions = mutableMapOf<View, Pair<Float, Float>>()
+
+                // feelingIcons를 순회하면서 초기 위치를 저장
+                feelingIcons.forEachIndexed { index, imageView ->
+                    initialPositions[imageView] = Pair(imageView.x, imageView.y)
+
                     imageView.setOnClickListener {
+                        val initialX = feelingIcons[index].x
+                        val initialY = feelingIcons[index].y
+
                         // 클릭한 이미지뷰를 제외한 나머지 이미지뷰들을 숨김
-                        feelingIcons.filter { it != imageView }.forEach { it.visibility = View.GONE }
+                        feelingIcons.filter { it != imageView }.forEach { it.visibility = View.INVISIBLE }
 
-                        // 클릭한 이미지뷰를 feeling_3 아이콘 자리로 이동
-                        val layoutParams = imageView.layoutParams as RelativeLayout.LayoutParams
-                        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL)
-                        layoutParams.addRule(RelativeLayout.BELOW, R.id.step3_feeling_guide)
-
-                        // 아래로 10dp 떨어뜨리기
-                        layoutParams.bottomMargin = 10.dpToPx() // dpToPx()는 dp를 픽셀로 변환하는 확장 함수일 수 있습니다.
-                        imageView.layoutParams = layoutParams
+                        imageView.animate().x(binding.feeling3.x).y(binding.feeling3.y).start()
 
                         // 클릭한 이미지뷰를 selectedImageView에 저장
                         selectedImageView = imageView
 
                         // 클릭한 이미지뷰를 뷰모델에 저장
                         sharedViewModel.setSelectedFeeling(imageView.id)
+
+                        binding.step3FeelingTrash.visibility = View.VISIBLE
+
+                        binding.step3FeelingTrash.setOnClickListener {
+                            imageView.animate().x(initialX).y(initialY).start()
+                            feelingIcons.forEach {
+                                it.visibility = View.VISIBLE
+                            }
+                        }
                     }
                 }
             } else {
@@ -483,11 +537,21 @@ class MySpaceMainFragment : Fragment() {
                 val selectedAvatarIndex = sharedViewModel.selectedAvatarIndex
                 val selectedRoomIndex = sharedViewModel.selectedRoomIndex
 
+                // SharedPreferences에서 토큰을 가져오는 함수
+                fun getToken(context: Context): String? {
+                    val pref = context.getSharedPreferences("pref", 0)
+                    return pref.getString("token", null)
+                }
+                val token =
+                    context?.let { getToken(it) } // SharedPreferences에서 토큰을 가져오는 함수를 호출하여 토큰 값을 가져옵니다.
+//                val call = token?.let { RetrofitClient.apitest.getMySpaces(it) }
+                Log.d("토큰", "$token")
+
                 // Retrofit을 사용하여 API 호출
-                val call = RetrofitClient2.apitest.createMySpaces(memberId = "1", MySpaceCreateRequest(nickname = "$nickname", characterType = selectedAvatarIndex!!, roomType = selectedRoomIndex!!))
+                val call = token?.let { RetrofitClient2.apitest.createMySpaces(token = it, MySpaceCreateRequest(nickname = "$nickname", characterType = selectedAvatarIndex!!, roomType = selectedRoomIndex!!)) }
 
                 // API 호출로 서버에 저장되어있는 사용자들의 스페이스 정보 추출
-                call.enqueue(object : Callback<MySpaceCreate> {
+                call?.enqueue(object : Callback<MySpaceCreate> {
                     override fun onResponse(call: Call<MySpaceCreate>, response: Response<MySpaceCreate>) {
                         if (response.isSuccessful) {
                             val result = response.body()?.result
@@ -510,8 +574,8 @@ class MySpaceMainFragment : Fragment() {
                             Log.d("MySpaceMainFragment", "API 호출 성공: $it")
                             Log.d("API TEST", "Result: $result")
 
-                            val imageNameavatar = "step2_avatar_${selectedAvatarIndex.plus(1)}"
-                            val imageNameroom = "step3_room_${selectedRoomIndex.plus(1)}"
+                            val imageNameavatar = "step2_avatar_${selectedAvatarIndex?.plus(1)}"
+                            val imageNameroom = "step3_room_${selectedRoomIndex?.plus(1)}"
 
                             // 리소스 아이디 가져오기
                             val resourceIdavatar = requireContext().resources.getIdentifier(imageNameavatar, "drawable", requireContext().packageName)

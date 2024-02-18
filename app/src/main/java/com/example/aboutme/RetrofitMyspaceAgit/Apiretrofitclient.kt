@@ -4,16 +4,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "http://aboutme-prod-env.eba-wbmipxyp.ap-northeast-2.elasticbeanstalk.com"
-
-    private const val MEMBER_ID_VALUE = "1"
+    private const val BASE_URL = "https://aboutmeteam.shop"
 
     val apitest: ApitestInterface by lazy<ApitestInterface> {
         val okHttpClientBuilder = OkHttpClient.Builder()
 
         okHttpClientBuilder.addInterceptor { chain ->
             val newRequest = chain.request().newBuilder()
-                .addHeader("member-id", MEMBER_ID_VALUE)
                 .build()
             chain.proceed(newRequest)
         }
@@ -29,7 +26,7 @@ object RetrofitClient {
 }
 
 object RetrofitClientMyspace {
-    private const val BASE_URL = "http://aboutme-prod-env.eba-3cw2pgyk.ap-northeast-2.elasticbeanstalk.com"
+    private const val BASE_URL = "https://aboutmeteam.shop"
 
     private const val MEMBER_ID_VALUE = "1"
 
@@ -54,7 +51,7 @@ object RetrofitClientMyspace {
 }
 
 object RetrofitClient2 {
-    private const val BASE_URL = "http://aboutme-prod-env.eba-3cw2pgyk.ap-northeast-2.elasticbeanstalk.com"
+    private const val BASE_URL = "https://aboutmeteam.shop"
 
     private const val MEMBER_ID_VALUE = "1"
 
