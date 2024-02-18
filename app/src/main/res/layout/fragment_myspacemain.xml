@@ -29,9 +29,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/myprofile_share"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
-        app:layout_constraintStart_toEndOf="@+id/step3_photo"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="240dp"
+        app:layout_constraintStart_toEndOf="@+id/logo"
         app:layout_constraintTop_toTopOf="@+id/logo" />
 
     <ImageView
@@ -69,88 +69,98 @@
         app:layout_constraintStart_toStartOf="@+id/myspace_title" />
 
 
-    <ImageView
-        android:id="@+id/step3_selected_room"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/myspace_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:foregroundGravity="center"
-        android:src="@drawable/step3_room_1"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myspace_title_line" />
+        app:layout_constraintTop_toBottomOf="@+id/myspace_title_line">
 
-    <ImageButton
-        android:id="@+id/step3_feeling"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="12dp"
-        android:background="@color/transparent"
-        android:src="@drawable/step3_feeling"
-        app:layout_constraintBottom_toTopOf="@+id/step3_selected_avatar"
-        app:layout_constraintStart_toStartOf="@+id/step3_selected_avatar" />
+        <ImageView
+            android:id="@+id/step3_selected_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="center"
+            android:src="@drawable/step3_room_1"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageButton
-        android:id="@+id/step3_music"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="20dp"
-        android:background="@color/transparent"
-        android:src="@drawable/step3_music"
-        app:layout_constraintBottom_toTopOf="@+id/step3_selected_avatar"
-        app:layout_constraintStart_toEndOf="@+id/step3_feeling" />
+        <ImageButton
+            android:id="@+id/step3_feeling"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="12dp"
+            android:background="@color/transparent"
+            android:src="@drawable/step3_feeling"
+            app:layout_constraintBottom_toTopOf="@+id/step3_selected_avatar"
+            app:layout_constraintStart_toStartOf="@+id/step3_selected_avatar" />
 
-    <ImageButton
-        android:id="@+id/step3_photo"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:background="@color/transparent"
-        android:src="@drawable/step3_photo"
-        app:layout_constraintStart_toStartOf="@id/step3_story"
-        app:layout_constraintBottom_toTopOf="@id/step3_feeling"/>
+        <ImageButton
+            android:id="@+id/step3_music"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="20dp"
+            android:background="@color/transparent"
+            android:src="@drawable/step3_music"
+            app:layout_constraintBottom_toTopOf="@+id/step3_selected_avatar"
+            app:layout_constraintStart_toEndOf="@+id/step3_feeling" />
 
-    <ImageButton
-        android:id="@+id/step3_story"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="12dp"
-        android:background="@color/transparent"
-        android:src="@drawable/step3_story"
-        app:layout_constraintStart_toEndOf="@+id/step3_selected_avatar"
-        app:layout_constraintTop_toTopOf="@+id/step3_selected_avatar" />
+        <ImageButton
+            android:id="@+id/step3_photo"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@color/transparent"
+            android:src="@drawable/step3_photo"
+            app:layout_constraintStart_toStartOf="@id/step3_story"
+            app:layout_constraintBottom_toTopOf="@id/step3_feeling"/>
 
-    <ImageButton
-        android:id="@+id/step3_schedule"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="0dp"
-        android:background="@color/transparent"
-        android:src="@drawable/step3_schedule"
-        app:layout_constraintBottom_toTopOf="@+id/step3_comment"
-        app:layout_constraintEnd_toStartOf="@+id/step3_comment"/>
+        <ImageButton
+            android:id="@+id/step3_story"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/transparent"
+            android:src="@drawable/step3_story"
+            app:layout_constraintStart_toEndOf="@+id/step3_selected_avatar"
+            app:layout_constraintTop_toTopOf="@+id/step3_selected_avatar" />
 
-    <ImageButton
-        android:id="@+id/step3_comment"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="36dp"
-        android:background="@color/transparent"
-        android:src="@drawable/step3_comment"
-        app:layout_constraintTop_toBottomOf="@+id/step3_feeling"
-        app:layout_constraintEnd_toStartOf="@+id/step3_feeling" />
+        <ImageButton
+            android:id="@+id/step3_schedule"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="0dp"
+            android:background="@color/transparent"
+            android:src="@drawable/step3_schedule"
+            app:layout_constraintBottom_toTopOf="@+id/step3_comment"
+            app:layout_constraintEnd_toStartOf="@+id/step3_comment"/>
 
-    <ImageView
-        android:id="@+id/step3_selected_avatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/step2_avatar_1"
-        app:layout_constraintBottom_toBottomOf="@+id/step3_selected_room"
-        app:layout_constraintEnd_toEndOf="@+id/step3_selected_room"
-        app:layout_constraintStart_toStartOf="@+id/step3_selected_room"
-        app:layout_constraintTop_toTopOf="@+id/step3_selected_room"
-        app:layout_constraintVertical_bias="0.782" />
+        <ImageButton
+            android:id="@+id/step3_comment"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="36dp"
+            android:background="@color/transparent"
+            android:src="@drawable/step3_comment"
+            app:layout_constraintTop_toBottomOf="@+id/step3_feeling"
+            app:layout_constraintEnd_toStartOf="@+id/step3_feeling" />
+
+        <ImageView
+            android:id="@+id/step3_selected_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step2_avatar_1"
+            app:layout_constraintBottom_toBottomOf="@+id/step3_selected_room"
+            app:layout_constraintEnd_toEndOf="@+id/step3_selected_room"
+            app:layout_constraintStart_toStartOf="@+id/step3_selected_room"
+            app:layout_constraintTop_toTopOf="@+id/step3_selected_room"
+            app:layout_constraintVertical_bias="0.782" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
         android:id="@+id/step3_feeling_layout"
@@ -159,8 +169,8 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="20dp"
         android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@+id/step3_selected_room"
-        app:layout_constraintStart_toStartOf="@+id/step3_selected_room">
+        app:layout_constraintTop_toBottomOf="@+id/myspace_view"
+        app:layout_constraintStart_toStartOf="@+id/myspace_view">
 
         <TextView
             android:id="@+id/step3_feeling_guide"
@@ -241,8 +251,8 @@
         android:layout_marginStart="40dp"
         android:visibility="invisible"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/step3_selected_room"
-        app:layout_constraintStart_toStartOf="@+id/step3_selected_room">
+        app:layout_constraintTop_toBottomOf="@+id/myspace_view"
+        app:layout_constraintStart_toStartOf="@+id/myspace_view">
 
         <TextView
             android:id="@+id/step3_comment_guide"
@@ -267,6 +277,9 @@
             android:scrollHorizontally="false"
             android:inputType="textMultiLine"
             android:gravity="center|start"
+            android:clickable="true"
+            android:focusable="true"
+            android:longClickable="true"
             android:layout_below="@+id/step3_comment_guide"
             android:layout_centerHorizontal="true"/>
 
@@ -281,6 +294,28 @@
             android:layout_alignTop="@+id/step3_comment_et"
             android:layout_marginEnd="20dp"/>
 
+        <ImageView
+            android:id="@+id/step3_comment_pencil"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="15dp"
+            android:visibility="invisible"
+            android:src="@drawable/step2_room_pencil"
+            android:layout_alignEnd="@+id/step3_comment_et"
+            android:layout_alignTop="@+id/step3_comment_et"/>
+
+        <ImageView
+            android:id="@+id/step3_comment_trash"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="15dp"
+            android:visibility="invisible"
+            android:src="@drawable/step2_room_trashcan"
+            android:layout_alignEnd="@+id/step3_comment_et"
+            android:layout_alignBottom="@+id/step3_comment_et"/>
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -290,8 +325,8 @@
         android:layout_marginStart="40dp"
         android:visibility="invisible"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/step3_selected_room"
-        app:layout_constraintStart_toStartOf="@+id/step3_selected_room">
+        app:layout_constraintTop_toBottomOf="@+id/myspace_view"
+        app:layout_constraintStart_toStartOf="@+id/myspace_view">
 
         <TextView
             android:id="@+id/step3_schedule_guide"
@@ -313,11 +348,48 @@
             android:paddingEnd="20dp"
             android:maxLines="3"
             android:maxLength="50"
+            android:hint="일정을 입력하세요."
             android:scrollHorizontally="false"
             android:inputType="textMultiLine"
             android:gravity="center|start"
+            android:clickable="true"
+            android:focusable="true"
+            android:longClickable="true"
             android:layout_below="@+id/step3_schedule_guide"
             android:layout_centerHorizontal="true"/>
+
+        <ImageView
+            android:id="@+id/step3_schedule_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/myspacemain_ok"
+            android:layout_centerVertical="true"
+            android:layout_alignEnd="@id/step3_schedule_et"
+            android:layout_alignBottom="@id/step3_schedule_et"
+            android:layout_alignTop="@+id/step3_schedule_et"
+            android:layout_marginEnd="20dp"/>
+
+        <ImageView
+            android:id="@+id/step3_schedule_pencil"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="15dp"
+            android:visibility="invisible"
+            android:src="@drawable/step2_room_pencil"
+            android:layout_alignEnd="@+id/step3_schedule_et"
+            android:layout_alignTop="@+id/step3_schedule_et"/>
+
+        <ImageView
+            android:id="@+id/step3_schedule_trash"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="15dp"
+            android:visibility="invisible"
+            android:src="@drawable/step2_room_trashcan"
+            android:layout_alignEnd="@+id/step3_schedule_et"
+            android:layout_alignBottom="@+id/step3_schedule_et"/>
 
     </RelativeLayout>
 
@@ -326,10 +398,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/step3_selected_room"
-        app:layout_constraintStart_toStartOf="@+id/step3_selected_room">
+        app:layout_constraintTop_toBottomOf="@+id/myspace_view"
+        app:layout_constraintStart_toStartOf="@+id/myspace_view">
 
         <TextView
             android:id="@+id/step3_music_guide"
@@ -357,6 +429,9 @@
             android:enabled="true"
             android:gravity="center"
             android:hint="링크를 입력해주세요"
+            android:clickable="true"
+            android:focusable="true"
+            android:longClickable="true"
             android:layout_below="@+id/step3_music_guide"
             android:layout_centerHorizontal="true"/>
 
@@ -415,8 +490,8 @@
         android:layout_marginStart="40dp"
         android:visibility="invisible"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/step3_selected_room"
-        app:layout_constraintStart_toStartOf="@+id/step3_selected_room">
+        app:layout_constraintTop_toBottomOf="@+id/myspace_view"
+        app:layout_constraintStart_toStartOf="@+id/myspace_view">
 
         <TextView
             android:id="@+id/step3_story_guide"
@@ -438,9 +513,13 @@
             android:paddingEnd="20dp"
             android:maxLines="3"
             android:maxLength="50"
+            android:hint="내용을 입력해주세요."
             android:scrollHorizontally="false"
             android:inputType="textMultiLine"
             android:gravity="center|start"
+            android:clickable="true"
+            android:focusable="true"
+            android:longClickable="true"
             android:layout_below="@+id/step3_story_guide"
             android:layout_centerHorizontal="true"/>
 
@@ -455,6 +534,28 @@
             android:layout_alignTop="@+id/step3_story_et"
             android:layout_marginEnd="20dp"/>
 
+        <ImageView
+            android:id="@+id/step3_story_pencil"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="15dp"
+            android:visibility="invisible"
+            android:src="@drawable/step2_room_pencil"
+            android:layout_alignEnd="@+id/step3_story_et"
+            android:layout_alignTop="@+id/step3_story_et"/>
+
+        <ImageView
+            android:id="@+id/step3_story_trash"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="15dp"
+            android:visibility="invisible"
+            android:src="@drawable/step2_room_trashcan"
+            android:layout_alignEnd="@+id/step3_story_et"
+            android:layout_alignBottom="@+id/step3_story_et"/>
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -464,8 +565,8 @@
         android:layout_marginStart="40dp"
         android:visibility="invisible"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/step3_selected_room"
-        app:layout_constraintStart_toStartOf="@+id/step3_selected_room">
+        app:layout_constraintTop_toBottomOf="@+id/myspace_view"
+        app:layout_constraintStart_toStartOf="@+id/myspace_view">
 
         <TextView
             android:id="@+id/step3_photo_guide"

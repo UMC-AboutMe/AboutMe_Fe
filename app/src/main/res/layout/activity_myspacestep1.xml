@@ -95,6 +95,27 @@
         app:layout_constraintHorizontal_bias="0.447"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myspace_step1_sub2" />
+    
+    <ImageView
+        android:id="@+id/step1_exmark"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/step1_exmark"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/nickname"
+        app:layout_constraintStart_toStartOf="@+id/nickname" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="#000000"
+        android:alpha="0.4"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:textSize="10sp"
+        android:text="닉네임은 특수문자와 숫자를 포함할 수 없으며, \n최소 두 글자 이상이어야 합니다."
+        app:layout_constraintTop_toBottomOf="@+id/nickname"
+        app:layout_constraintStart_toEndOf="@+id/step1_exmark" />
 
     <ImageButton
         android:id="@+id/next_ib_step1"
