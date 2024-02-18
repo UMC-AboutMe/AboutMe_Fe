@@ -38,6 +38,7 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
         val view = binding.root
         // 레이아웃 배경을 투명하게
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.attributes?.windowAnimations = R.style.AnimationPopupStyle
         // 다이얼로그를 하단으로 조정
         dialog?.window?.setGravity(Gravity.BOTTOM)
 
@@ -50,6 +51,7 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        dialog?.window?.attributes?.windowAnimations = R.style.AnimationPopupStyle
         _binding = null
     }
 

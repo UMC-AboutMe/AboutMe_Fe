@@ -10,7 +10,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -53,7 +55,11 @@ class ProfileStorageFragment : Fragment() {
             ContextCompat.getColor(requireContext(), R.color.black),
             ContextCompat.getColor(requireContext(), R.color.white)
         )
-
+        // 화면 빈공간 클릭시 키보드 숨기기
+        binding.profstoragelayout.setOnClickListener {
+            val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(binding.profstoragelayout.windowToken, 0)
+        }
         // 스와이프 리프레쉬 동작
         swipeRefreshLayout.setOnRefreshListener {
             // Coroutine을 사용하여 지연 작업 수행(UI 응답없음 방지를 위한 순차적 실행)

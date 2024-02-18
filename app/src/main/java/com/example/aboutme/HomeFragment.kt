@@ -71,7 +71,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRecycler()
-        //startAutoScroll()
+        startAutoScroll()
 
     }
     override fun onResume() {
@@ -112,27 +112,27 @@ class HomeFragment : Fragment() {
     }
 
     //리싸이클러뷰 자동 스크롤
-//    private fun startAutoScroll() {
-//        var currentPosition = 0
-//        val timer = Timer()
-//        timer?.scheduleAtFixedRate(object : TimerTask() {
-//            override fun run() {
-//                activity?.runOnUiThread {
-//                    val nextPosition = (currentPosition + 1) % datas.size
-//                    activity?.let { activity ->
-//                        val smoothScroller = object : LinearSmoothScroller(activity) {
-//                            override fun getVerticalSnapPreference(): Int {
-//                                return SNAP_TO_START
-//                            }
-//                        }
-//                        smoothScroller.targetPosition = nextPosition
-//                        binding.homeitemRc.layoutManager?.startSmoothScroll(smoothScroller)
-//                    }
-//                    currentPosition = nextPosition
-//                }
-//            }
-//        }, DELAY_MS, PERIOD_MS)
-//    }
+    private fun startAutoScroll() {
+        var currentPosition = 0
+        val timer = Timer()
+        timer?.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                activity?.runOnUiThread {
+                    val nextPosition = (currentPosition + 1) % datas.size
+                    activity?.let { activity ->
+                        val smoothScroller = object : LinearSmoothScroller(activity) {
+                            override fun getVerticalSnapPreference(): Int {
+                                return SNAP_TO_START
+                            }
+                        }
+                        smoothScroller.targetPosition = nextPosition
+                        binding.homeitemRc.layoutManager?.startSmoothScroll(smoothScroller)
+                    }
+                    currentPosition = nextPosition
+                }
+            }
+        }, DELAY_MS, PERIOD_MS)
+    }
     companion object {
         private const val DELAY_MS = 0L // 시작 딜레이
         private const val PERIOD_MS = 2000L // 스크롤 간격
