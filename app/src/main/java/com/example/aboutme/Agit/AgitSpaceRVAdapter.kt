@@ -23,6 +23,13 @@ import retrofit2.Response
 class AgitSpaceRVAdapter(private val resources: Resources, val items: MutableList<AgitSpaceData>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private lateinit var token: String // token 변수를 추가
+
+    private fun getToken(context: Context): String? {
+        val pref = context.getSharedPreferences("pref", 0)
+        return pref.getString("Gtoken", null)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val itemView = layoutInflater.inflate(R.layout.item_agit, parent, false)
@@ -48,6 +55,7 @@ class AgitSpaceRVAdapter(private val resources: Resources, val items: MutableLis
         private val bookmarkButton: ImageView = itemView.findViewById(R.id.agit_bookmark)
 
         init {
+            token = getToken(context).toString()
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
@@ -98,7 +106,7 @@ class AgitSpaceRVAdapter(private val resources: Resources, val items: MutableLis
 
             // 북마크 버튼 클릭시 로직
             bookmarkButton.setOnClickListener {
-                val call = RetrofitClient.apitest.agitFavorite(spaceId, "4")
+                val call = RetrofitClient.apitest.agitFavorite(spaceId, token)
                 Log.d("spaceId", spaceId.toString())
 
                 // 북마크된 이미지와 북마크 해제된 이미지를 번갈아가면서 설정

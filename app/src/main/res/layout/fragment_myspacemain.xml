@@ -221,7 +221,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/myspace_main_feeling_2"
             android:layout_toEndOf="@+id/feeling_1"
-            android:layout_marginStart="13dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="45dp" />
 
         <ImageView
@@ -231,7 +231,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/myspace_main_feeling_3"
             android:layout_toEndOf="@+id/feeling_2"
-            android:layout_marginStart="13dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="45dp" />
 
         <ImageView
@@ -241,7 +241,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/myspace_main_feeling_4"
             android:layout_toEndOf="@+id/feeling_3"
-            android:layout_marginStart="13dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="45dp" />
 
         <ImageView
@@ -251,19 +251,19 @@
             android:scaleType="fitCenter"
             android:src="@drawable/myspace_main_feeling_5"
             android:layout_toEndOf="@+id/feeling_4"
-            android:layout_marginStart="13dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="45dp" />
 
         <ImageView
             android:id="@+id/step3_feeling_trash"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginEnd="125dp"
+            android:layout_marginTop="90dp"
             android:visibility="invisible"
             android:src="@drawable/myspace_main_trash"
             android:layout_alignEnd="@+id/step3_feeling_et"
-            android:layout_alignBottom="@+id/step3_feeling_et"/>
+            android:layout_alignTop="@+id/step3_feeling_et"/>
 
     </RelativeLayout>
 
@@ -325,20 +325,20 @@
             android:layout_marginEnd="40dp"
             android:layout_marginTop="15dp"
             android:visibility="invisible"
-            android:src="@drawable/step2_room_pencil"
+            android:src="@drawable/myspace_main_pencil"
             android:layout_alignEnd="@+id/step3_comment_et"
             android:layout_alignTop="@+id/step3_comment_et"/>
 
         <ImageView
             android:id="@+id/step3_comment_trash"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="15dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="125dp"
+            android:layout_marginTop="90dp"
             android:visibility="invisible"
-            android:src="@drawable/step2_room_trashcan"
+            android:src="@drawable/myspace_main_trash"
             android:layout_alignEnd="@+id/step3_comment_et"
-            android:layout_alignBottom="@+id/step3_comment_et"/>
+            android:layout_alignTop="@+id/step3_comment_et"/>
 
     </RelativeLayout>
 
@@ -401,20 +401,20 @@
             android:layout_marginEnd="40dp"
             android:layout_marginTop="15dp"
             android:visibility="invisible"
-            android:src="@drawable/step2_room_pencil"
+            android:src="@drawable/myspace_main_pencil"
             android:layout_alignEnd="@+id/step3_schedule_et"
             android:layout_alignTop="@+id/step3_schedule_et"/>
 
         <ImageView
             android:id="@+id/step3_schedule_trash"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="15dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="125dp"
+            android:layout_marginTop="90dp"
             android:visibility="invisible"
-            android:src="@drawable/step2_room_trashcan"
+            android:src="@drawable/myspace_main_trash"
             android:layout_alignEnd="@+id/step3_schedule_et"
-            android:layout_alignBottom="@+id/step3_schedule_et"/>
+            android:layout_alignTop="@+id/step3_schedule_et"/>
 
     </RelativeLayout>
 
@@ -480,21 +480,21 @@
             android:layout_marginEnd="40dp"
             android:layout_marginTop="15dp"
             android:visibility="invisible"
-            android:src="@drawable/step2_room_pencil"
+            android:src="@drawable/myspace_main_pencil"
             android:clickable="false"
             android:layout_alignEnd="@+id/step3_music_et"
             android:layout_alignTop="@+id/step3_music_et"/>
 
         <ImageView
             android:id="@+id/step3_music_trash"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="15dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="125dp"
+            android:layout_marginTop="90dp"
             android:visibility="invisible"
-            android:src="@drawable/step2_room_trashcan"
+            android:src="@drawable/myspace_main_trash"
             android:layout_alignEnd="@+id/step3_music_et"
-            android:layout_alignBottom="@+id/step3_music_et"/>
+            android:layout_alignTop="@+id/step3_music_et"/>
 
         <TextView
             android:id="@+id/youtube_link_tv"
@@ -570,20 +570,20 @@
             android:layout_marginEnd="40dp"
             android:layout_marginTop="15dp"
             android:visibility="invisible"
-            android:src="@drawable/step2_room_pencil"
+            android:src="@drawable/myspace_main_pencil"
             android:layout_alignEnd="@+id/step3_story_et"
             android:layout_alignTop="@+id/step3_story_et"/>
 
         <ImageView
             android:id="@+id/step3_story_trash"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="15dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="125dp"
+            android:layout_marginTop="90dp"
             android:visibility="invisible"
-            android:src="@drawable/step2_room_trashcan"
+            android:src="@drawable/myspace_main_trash"
             android:layout_alignEnd="@+id/step3_story_et"
-            android:layout_alignBottom="@+id/step3_story_et"/>
+            android:layout_alignTop="@+id/step3_story_et"/>
 
     </RelativeLayout>
 
