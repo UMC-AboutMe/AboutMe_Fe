@@ -162,38 +162,118 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
 
                 }
             }
-            profilePosion(position) { realProfileId ->
-                Log.d("realprofileID!", realProfileId.toString())
 
 
-                coroutineScope.launch {
-                    try {
-                        val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
-                            RetrofitClient.mainProfile.getDataAll(token, realProfileId.toLong())
-                        }
+            RetrofitClient.mainProfile.getData(token).enqueue(object : Callback<MainProfileData> {
+                override fun onFailure(call: Call<MainProfileData>, t: Throwable) {
+                    Log.e("실패", t.toString())
+                }
 
-                        if (response.isSuccessful) {
-                            val responseData: GetAllProfile? = response.body()
-                            Log.d("즐겨찾기 취소!!", "응답 데이터: $responseData")
+                override fun onResponse(call: Call<MainProfileData>, response: Response<MainProfileData>) {
+                    if (response.isSuccessful) {
+                        val repos: MainProfileData? = response.body()
+                        if (repos != null) {
+                            // 성공적으로 데이터를 받아온 경우 처리할 로직을 여기에 추가합니다.
+                            if (repos.result.totalMyprofile == 1){
+                                if (repos.result.myprofiles[0].isDefault == false){
+                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                                    Log.d("즐겨찾기#1",repos.result.myprofiles[0].isDefault.toString())
+                                }
+                                if (repos.result.myprofiles[0].isDefault == true){
+                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+                                    Log.d("즐겨찾기#3",repos.result.myprofiles[0].isDefault.toString())
 
-                            if (responseData?.result?.isDefault == false) {
-                                //patchDefault(realProfileId)
-                                binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
-                            } else {
-                                //defaultNoProfile(realProfileId)
-                                binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                                }
+                            }else if (repos.result.totalMyprofile == 2){
+                                if (repos.result.myprofiles[0].isDefault == false){
+                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                                    Log.d("즐겨찾기#1",repos.result.myprofiles[0].isDefault.toString())
+                                }
+                                if (repos.result.myprofiles[1].isDefault == false){
+                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                                    Log.d("즐겨찾기#2",repos.result.myprofiles[1].isDefault.toString())
+
+                                }
+                                if (repos.result.myprofiles[0].isDefault == true){
+                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+                                    Log.d("즐겨찾기#3",repos.result.myprofiles[0].isDefault.toString())
+
+                                }
+                                if (repos.result.myprofiles[1].isDefault == true){
+                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+                                }
+                            } else if (repos.result.totalMyprofile == 3){
+                                if (repos.result.myprofiles[0].isDefault == false){
+                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                                    Log.d("즐겨찾기#1",repos.result.myprofiles[0].isDefault.toString())
+                                }
+                                if (repos.result.myprofiles[1].isDefault == false){
+                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                                    Log.d("즐겨찾기#2",repos.result.myprofiles[1].isDefault.toString())
+
+                                }
+                                if (repos.result.myprofiles[2].isDefault == false){
+                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                                }
+                                if (repos.result.myprofiles[0].isDefault == true){
+                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+                                    Log.d("즐겨찾기#3",repos.result.myprofiles[0].isDefault.toString())
+
+                                }
+                                if (repos.result.myprofiles[1].isDefault == true){
+                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+                                }
+                                if (repos.result.myprofiles[2].isDefault == true){
+                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+                                }
                             }
-                            val errorBody = response.errorBody()?.string() ?: "No error body"
-                            Log.e(
-                                "GETALL 요청 실패",
-                                "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
-                            )
+                        } else {
+                            Log.e("실패", "응답 데이터가 null입니다.")
                         }
-                    } catch (e: Exception) {
-                        Log.e("GETALL 요청 실패", "에러: ${e.message}")
+                    } else {
+                        Log.e("실패", "서버 응답 실패: ${response.code()}")
                     }
                 }
-            }
+            })
+
+
+
+            /*            profilePosion(position) { realProfileId ->
+                            Log.d("realprofileID!", realProfileId.toString())
+
+
+                            coroutineScope.launch {
+                                try {
+                                    val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
+                                        RetrofitClient.mainProfile.getDataAll(token, realProfileId.toLong())
+                                    }
+
+                                    if (response.isSuccessful) {
+                                        val responseData: GetAllProfile? = response.body()
+                                        Log.d("즐겨찾기 취소!!", "응답 데이터: $responseData")
+
+                                        if (responseData?.result?.isDefault == false) {
+                                            //patchDefault(realProfileId)
+                                            Log.d("즐겨찾기#3",responseData?.result?.isDefault.toString())
+
+                                            binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+                                        } else {
+                                            //defaultNoProfile(realProfileId)
+                                            Log.d("즐겨찾기#4",responseData?.result?.isDefault.toString())
+
+                                            binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                                        }
+                                        val errorBody = response.errorBody()?.string() ?: "No error body"
+                                        Log.e(
+                                            "GETALL 요청 실패",
+                                            "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                                        )
+                                    }
+                                } catch (e: Exception) {
+                                    Log.e("GETALL 요청 실패", "에러: ${e.message}")
+                                }
+                            }
+                        }*/
 
         }
         fun bind(item: MultiProfileData) {
@@ -223,14 +303,13 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
 
                             if (response.isSuccessful) {
                                 val responseData: GetAllProfile? = response.body()
-                                Log.d("즐겨찾기 취소!!", "응답 데이터: $responseData")
 
                                 if (responseData?.result?.isDefault == false) {
-                                    patchDefault(realProfileId)
-                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
-                                }else{
                                     defaultNoProfile(realProfileId)
                                     binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                                }else{
+                                    patchDefault(realProfileId)
+                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
                                 }
                                 val errorBody = response.errorBody()?.string() ?: "No error body"
                                 Log.e(
@@ -244,7 +323,82 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
                     }
                 }
 
-                coroutineScope.launch {
+                RetrofitClient.mainProfile.getData(token).enqueue(object : Callback<MainProfileData> {
+                    override fun onFailure(call: Call<MainProfileData>, t: Throwable) {
+                        Log.e("실패", t.toString())
+                    }
+
+                    override fun onResponse(call: Call<MainProfileData>, response: Response<MainProfileData>) {
+                        if (response.isSuccessful) {
+                            val repos: MainProfileData? = response.body()
+                            if (repos != null) {
+                                // 성공적으로 데이터를 받아온 경우 처리할 로직을 여기에 추가합니다.
+                                if (repos.result.totalMyprofile == 1){
+                                    if (repos.result.myprofiles[0].isDefault == false){
+                                        binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                                        Log.d("즐겨찾기#1",repos.result.myprofiles[0].isDefault.toString())
+                                    }
+                                    if (repos.result.myprofiles[0].isDefault == true){
+                                        binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+                                        Log.d("즐겨찾기#3",repos.result.myprofiles[0].isDefault.toString())
+
+                                    }
+                                }else if (repos.result.totalMyprofile == 2){
+                                    if (repos.result.myprofiles[0].isDefault == false){
+                                        binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                                        Log.d("즐겨찾기#1",repos.result.myprofiles[0].isDefault.toString())
+                                    }
+                                    if (repos.result.myprofiles[1].isDefault == false){
+                                        binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                                        Log.d("즐겨찾기#2",repos.result.myprofiles[1].isDefault.toString())
+
+                                    }
+                                    if (repos.result.myprofiles[0].isDefault == true){
+                                        binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+                                        Log.d("즐겨찾기#3",repos.result.myprofiles[0].isDefault.toString())
+
+                                    }
+                                    if (repos.result.myprofiles[1].isDefault == true){
+                                        binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+                                    }
+                                } else if (repos.result.totalMyprofile == 3){
+                                    if (repos.result.myprofiles[0].isDefault == false){
+                                        binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                                        Log.d("즐겨찾기#1",repos.result.myprofiles[0].isDefault.toString())
+                                    }
+                                    if (repos.result.myprofiles[1].isDefault == false){
+                                        binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                                        Log.d("즐겨찾기#2",repos.result.myprofiles[1].isDefault.toString())
+
+                                    }
+                                    if (repos.result.myprofiles[2].isDefault == false){
+                                        binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                                    }
+                                    if (repos.result.myprofiles[0].isDefault == true){
+                                        binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+                                        Log.d("즐겨찾기#3",repos.result.myprofiles[0].isDefault.toString())
+
+                                    }
+                                    if (repos.result.myprofiles[1].isDefault == true){
+                                        binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+                                    }
+                                    if (repos.result.myprofiles[2].isDefault == true){
+                                        binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+                                    }
+                                }
+                            } else {
+                                Log.e("실패", "응답 데이터가 null입니다.")
+                            }
+                        } else {
+                            Log.e("실패", "서버 응답 실패: ${response.code()}")
+                        }
+                    }
+                })
+
+
+
+
+                /*coroutineScope.launch {
                     try {
                         val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
                             RetrofitClient.mainProfile.getDataAll(token, realProfileId.toLong())
@@ -256,9 +410,11 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
 
                             if (responseData?.result?.isDefault == false) {
                                 //patchDefault(realProfileId)
+                                Log.d("즐겨찾기#1",responseData?.result?.isDefault.toString())
                                 binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
                             }else{
                                 //defaultNoProfile(realProfileId)
+                                Log.d("즐겨찾기#2",responseData?.result?.isDefault.toString())
                                 binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
                             }
                             val errorBody = response.errorBody()?.string() ?: "No error body"
@@ -270,7 +426,7 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
                     } catch (e: Exception) {
                         Log.e("GETALL 요청 실패", "에러: ${e.message}")
                     }
-                }
+                }*/
             }
 
         }
