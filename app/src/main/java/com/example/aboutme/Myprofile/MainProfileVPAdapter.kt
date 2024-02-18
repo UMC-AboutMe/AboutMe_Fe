@@ -5,6 +5,7 @@ import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
@@ -37,6 +38,7 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
     val token = pref.getString("Gtoken", null) ?: ""
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
+
 
     companion object {
         private const val VIEW_TYPE_ITEM = 0
@@ -133,6 +135,7 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
     inner class MainItemViewHolder(private val binding: ItemMultiprofileBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+
         init {
             itemView.setOnClickListener {
                 val position = adapterPosition
@@ -157,6 +160,38 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
 
                     }
 
+                }
+            }
+            profilePosion(position) { realProfileId ->
+                Log.d("realprofileID!", realProfileId.toString())
+
+
+                coroutineScope.launch {
+                    try {
+                        val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
+                            RetrofitClient.mainProfile.getDataAll(token, realProfileId.toLong())
+                        }
+
+                        if (response.isSuccessful) {
+                            val responseData: GetAllProfile? = response.body()
+                            Log.d("즐겨찾기 취소!!", "응답 데이터: $responseData")
+
+                            if (responseData?.result?.isDefault == false) {
+                                //patchDefault(realProfileId)
+                                binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+                            } else {
+                                //defaultNoProfile(realProfileId)
+                                binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                            }
+                            val errorBody = response.errorBody()?.string() ?: "No error body"
+                            Log.e(
+                                "GETALL 요청 실패",
+                                "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                            )
+                        }
+                    } catch (e: Exception) {
+                        Log.e("GETALL 요청 실패", "에러: ${e.message}")
+                    }
                 }
             }
 
@@ -206,6 +241,34 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
                         } catch (e: Exception) {
                             Log.e("GETALL 요청 실패", "에러: ${e.message}")
                         }
+                    }
+                }
+
+                coroutineScope.launch {
+                    try {
+                        val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
+                            RetrofitClient.mainProfile.getDataAll(token, realProfileId.toLong())
+                        }
+
+                        if (response.isSuccessful) {
+                            val responseData: GetAllProfile? = response.body()
+                            Log.d("즐겨찾기 취소!!", "응답 데이터: $responseData")
+
+                            if (responseData?.result?.isDefault == false) {
+                                //patchDefault(realProfileId)
+                                binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+                            }else{
+                                //defaultNoProfile(realProfileId)
+                                binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
+                            }
+                            val errorBody = response.errorBody()?.string() ?: "No error body"
+                            Log.e(
+                                "GETALL 요청 실패",
+                                "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                            )
+                        }
+                    } catch (e: Exception) {
+                        Log.e("GETALL 요청 실패", "에러: ${e.message}")
                     }
                 }
             }
