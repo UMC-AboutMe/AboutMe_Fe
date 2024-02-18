@@ -128,15 +128,18 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
 
         binding.imageCharBtn.setOnClickListener {
             patchProfileImage2(profileId1!!.toLong(),"CHARACTER")
+            binding.checkImage3.setImageResource(R.drawable.checkarrow10)
         }
 
         binding.imageLogoBtn.setOnClickListener {
             patchProfileImage2(profileId1!!.toLong(),"DEFAULT")
+            binding.checkImage1.setImageResource(R.drawable.checkarrow10)
         }
 
         binding.imageImageBtn.setOnClickListener {
             goGallery()
         }
+
 
         // Initialize getResult here
         getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -147,6 +150,9 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
                 patchProfileImage(profileId1!!.toLong(), "USER_IMAGE", filePath)
             }
         }
+
+        checkImage(profileId1!!.toLong())
+
         return binding.root
     }
 
@@ -176,11 +182,11 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
             if (updatedData != null) {
                 applyUpdatedDataToUI(updatedData)
                 Log.d("싱행", updatedData.toString())
+
             } else {
                 Log.e("applyUpdatedDataToUI", "Updated data is null")
             }
         })
-
 
 
         binding.profileEditPreviewBtn.setOnClickListener {
@@ -230,6 +236,7 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
             }
         }
 
+        checkImage(profileId1!!.toLong())
 
     }
 
@@ -477,11 +484,23 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
                     val responseBody = response.body() // 응답 본문 가져오기
                     if (responseBody != null) {
                         Log.d("서버 응답 본문", responseBody.toString()) // 응답 본문 출력
+                        binding.checkImage2.setImageResource(R.drawable.checkarrow10)
                     } else {
                         Log.d("서버 응답 본문", "응답 본문이 비어있습니다.")
+                        Log.d("서버", response.message())
+
                     }
                 } else {
-                    Log.d("서버 응답 오류", "서버 응답이 실패했습니다.")
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    //Log.d("서버 응답 오류", "서버 응답이 실패했습니다.")
+                    Log.d("서버 응답 오류", "서버 응답이 실패했습니다. 오류 메시지: $errorBody")
+                    try {
+                        val errorMessage = JSONObject(errorBody).getString("message")
+                        Log.d("오류 메시지", errorMessage)
+                        Toast.makeText(requireContext(),errorMessage,Toast.LENGTH_SHORT).show()
+                    } catch (e: JSONException) {
+                        Log.e("JSON 파싱 오류", "오류 메시지를 추출하는 데 실패했습니다: ${e.message}")
+                    }
                 }
             }
 
@@ -541,6 +560,36 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
                 Log.e("통신 실패", "요청 실패: ${t.message}", t)
             }
         })
+    }
+
+    private fun checkImage(profileId: Long){
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+
+        lifecycleScope.launch {
+            try {
+                val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
+                    RetrofitClient.mainProfile.getDataAll(token,profileId.toLong())
+                }
+
+                if (response.isSuccessful) {
+                    val responseData: GetAllProfile? = response.body()
+                    Log.d("GETALL 성공!!!!", "응답 데이터: $responseData")
+                    if (responseData?.result?.profileImage?.type == "DEFAULT"){
+                        binding.checkImage1.setImageResource(R.drawable.checkarrow10)
+                    } else if (responseData?.result?.profileImage?.type == "CHARACTER") {
+                        binding.checkImage3.setImageResource(R.drawable.checkarrow10)
+                    } else if (responseData?.result?.profileImage?.type == "USER_IMAGE") {
+                        binding.checkImage2.setImageResource(R.drawable.checkarrow10)
+                    }
+                } else {
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e("GETALL 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
+                }
+            } catch (e: Exception) {
+                Log.e("GETALL 요청 실패", "에러: ${e.message}")
+            }
+        }
     }
 
 }
