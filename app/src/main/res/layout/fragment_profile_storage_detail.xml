@@ -50,8 +50,9 @@
 
         <ImageButton
             android:id="@+id/trashButton"
-            android:layout_width="28dp"
-            android:layout_height="37dp"
+            android:layout_width="33dp"
+            android:layout_height="42dp"
+            android:layout_marginEnd="10dp"
             android:background="@color/transparent"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="@+id/logo_iv"
