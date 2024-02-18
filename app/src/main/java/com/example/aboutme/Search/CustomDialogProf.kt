@@ -1,5 +1,6 @@
 package com.example.aboutme.Search
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -136,7 +137,7 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
                                     Toast.makeText(requireContext(), "선택된 프로필이 없습니다.", Toast.LENGTH_SHORT).show()
                                 } else {
                                     // 선택된 아이템이 있는 경우 postShareProf() 호출
-                                    postShareProf(selectedSerials)
+                                    postShareProf(requireContext(),selectedSerials)
                                     Log.d("retro","$selectedSerials")
                                     dismiss()
                                 }
@@ -157,7 +158,7 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
         })
     }
     //마이프로필 상대방에게 공유
-    private fun postShareProf(selectedSerials: List<Int>) {
+    private fun postShareProf(contest: Context, selectedSerials: List<Int>) {
         Log.d("Retrofit_Add", "프로필 공유 실행")
         //상대방의 마이프로필 시리얼 번호(이전 화면에서 가져옴) , 공유할 마이프로필 시리얼 번호
         val requestShareProf = SearchResponse.RequestShareProf(listOf(serial), selectedSerials)
@@ -178,7 +179,7 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
                             //성공했을 때
                             Log.d("Retrofit_Share","내 프로필 공유 성공")
                             Log.d("Retrofit_Share", response.message)
-                            Toast.makeText(requireContext(), "선택한 마이프로필이 공유되었습니다.", Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(requireContext(), "선택한 마이프로필이 공유되었습니다.", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -191,7 +192,7 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
                     try {
                         val jsonObject = JSONObject(errorBody)
                         val errorMessage = jsonObject.getString("message")
-                        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
