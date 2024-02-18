@@ -7,7 +7,7 @@
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="wrap_content"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,35 +36,34 @@
         android:id="@+id/alarm_img_iv"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginStart="20dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="@+id/alarm_iv"
-        app:layout_constraintEnd_toEndOf="@+id/alarm_iv"
         app:layout_constraintStart_toStartOf="@+id/alarm_iv"
-        app:layout_constraintTop_toTopOf="@+id/alarm_iv"
         app:srcCompat="@drawable/nav_myprof2" />
 
     <ImageButton
         android:id="@+id/alarm_yes_btn"
-        android:layout_width="65dp"
-        android:layout_height="23dp"
+        android:layout_width="75dp"
+        android:layout_height="35dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="2dp"
         android:background="@android:color/transparent"
         android:foreground="?attr/selectableItemBackground"
-        android:scaleType="fitCenter"
+        android:scaleType="fitStart"
         app:layout_constraintStart_toEndOf="@+id/alarm_iv"
         app:layout_constraintTop_toBottomOf="@+id/alarm_tv"
         app:srcCompat="@drawable/alarm_yesbtn" />
 
     <ImageButton
         android:id="@+id/alarm_save_btn"
-        android:layout_width="68dp"
-        android:layout_height="25dp"
+        android:layout_width="83dp"
+        android:layout_height="38dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="1dp"
         android:background="@android:color/transparent"
         android:foreground="?attr/selectableItemBackground"
-        android:scaleType="fitCenter"
+        android:scaleType="fitStart"
         app:layout_constraintStart_toEndOf="@+id/alarm_yes_btn"
         app:layout_constraintTop_toBottomOf="@+id/alarm_tv"
         app:srcCompat="@drawable/alarm_savebtn"
