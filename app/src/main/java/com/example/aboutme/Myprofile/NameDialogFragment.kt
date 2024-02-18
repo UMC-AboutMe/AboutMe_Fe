@@ -44,6 +44,10 @@ class NameDialogFragment():DialogFragment(){
         //dialog?.window?.setBackgroundDrawableResource(R.drawable.nameedit_box)
         dialog?.window?.setGravity(Gravity.CENTER)
 
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+        //RetrofitClient.initialize(token)
+
 
         return binding.root
     }
@@ -103,7 +107,10 @@ class NameDialogFragment():DialogFragment(){
     private fun sendDataToServer(name: String, onResponse: (ResponsePostProfile?) -> Unit) {
         // Retrofit을 사용하여 서버에 데이터를 전송
         val postData = PostProfile(name)
-        RetrofitClient.mainProfile.submitData(postData).enqueue(object : Callback<ResponsePostProfile> {
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+
+        RetrofitClient.mainProfile.submitData(token,postData).enqueue(object : Callback<ResponsePostProfile> {
             override fun onResponse(call: Call<ResponsePostProfile>, response: Response<ResponsePostProfile>) {
                 if (response.isSuccessful) {
                     val responseData: ResponsePostProfile? = response.body()

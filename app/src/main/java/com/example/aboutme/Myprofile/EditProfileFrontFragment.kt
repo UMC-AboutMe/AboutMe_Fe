@@ -121,6 +121,11 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
         val editName = arguments?.getString("editname1")
         Log.d("받은 editname", editName.toString())
 
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+        //RetrofitClient.initialize(token)
+
+
         binding.imageCharBtn.setOnClickListener {
             patchProfileImage2(profileId1!!.toLong(),"CHARACTER")
         }
@@ -151,6 +156,9 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
         val profileId1 = arguments?.getString("profilId1")
         Log.d("profileId1", profileId1.toString())
 
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+
 
         val retrofitClient = RetrofitClient.mainProfile
 
@@ -179,7 +187,7 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
             lifecycleScope.launch {
                 try {
                     val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
-                        retrofitClient.getDataAll(profileId1!!.toLong())
+                        retrofitClient.getDataAll(token, profileId1!!.toLong())
                     }
 
                     if (response.isSuccessful) {
@@ -241,6 +249,10 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
         val name = binding.profileNameEt.text.toString()
         val phoneNumber = binding.profileNumberEt.text.toString()
 
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+
+
         viewModel.feature1.observe(viewLifecycleOwner) { viewFeature1 ->
             feature1 = viewFeature1
         }
@@ -277,26 +289,26 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
         lifecycleScope.launch {
             try {
                 val response1: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchData1)
+                    RetrofitClient.mainProfile.patchProfile(token, profileId1!!.toLong(), patchData1)
                 }
 
                 val response2: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchData2)
+                    RetrofitClient.mainProfile.patchProfile(token,profileId1!!.toLong(), patchData2)
                 }
                 val response3: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchBackData1)
+                    RetrofitClient.mainProfile.patchProfile(token,profileId1!!.toLong(), patchBackData1)
                 }
                 val response4: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchBackData2)
+                    RetrofitClient.mainProfile.patchProfile(token,profileId1!!.toLong(), patchBackData2)
                 }
                 val response5: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchBackData3)
+                    RetrofitClient.mainProfile.patchProfile(token,profileId1!!.toLong(), patchBackData3)
                 }
                 val response6: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchBackData4)
+                    RetrofitClient.mainProfile.patchProfile(token,profileId1!!.toLong(), patchBackData4)
                 }
                 val response7: Response<PatchMyprofile> = withContext(Dispatchers.IO) {
-                    RetrofitClient.mainProfile.patchProfile(profileId1!!.toLong(), patchBackData5)
+                    RetrofitClient.mainProfile.patchProfile(token,profileId1!!.toLong(), patchBackData5)
                 }
 
                 if (response1.isSuccessful && response2.isSuccessful && response3.isSuccessful && response4.isSuccessful && response5.isSuccessful
@@ -314,7 +326,7 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
 
                     // 수정된 데이터를 받아옴
                     val updatedResponse: Response<GetAllProfile> = withContext(Dispatchers.IO) {
-                        RetrofitClient.mainProfile.getDataAll(profileId1!!.toLong())
+                        RetrofitClient.mainProfile.getDataAll(token,profileId1!!.toLong())
                     }
                     Log.d("수정", updatedResponse.toString())
 
@@ -430,6 +442,11 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
 
 
     private fun patchProfileImage(profileId: Long, type: String, filPath : String) {
+
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+
+
         val json = JSONObject()
         json.put("profile_image_type", type)
 
@@ -450,7 +467,7 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
 
 
         val call: Call<PatchProfileImage> =
-            RetrofitClient.mainProfile.patchProfileImage(profileId, requestBody, body)
+            RetrofitClient.mainProfile.patchProfileImage(token,profileId, requestBody, body)
         call.enqueue(object : Callback<PatchProfileImage> {
             override fun onResponse(
                 call: Call<PatchProfileImage>,
@@ -476,6 +493,9 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
     }
 
     private fun patchProfileImage2(profileId: Long, type: String) {
+        val pref = requireContext().getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+
         val json = JSONObject()
         json.put("profile_image_type", type)
 
@@ -488,7 +508,7 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
 
 
         val call: Call<PatchProfileImage> =
-            RetrofitClient.mainProfile.patchProfileImage(profileId, requestBody, null)
+            RetrofitClient.mainProfile.patchProfileImage(token,profileId, requestBody, null)
         call.enqueue(object : Callback<PatchProfileImage> {
             override fun onResponse(
                 call: Call<PatchProfileImage>,

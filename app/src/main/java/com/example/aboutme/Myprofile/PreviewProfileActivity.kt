@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.aboutme.R
+import com.example.aboutme.RetrofitMyprofile.RetrofitClient
 import com.example.aboutme.databinding.ActivityPreviewprofileBinding
 
 class PreviewProfileActivity : AppCompatActivity() {
@@ -25,6 +26,10 @@ class PreviewProfileActivity : AppCompatActivity() {
 
 
         setFrag(0)
+
+        val pref = getSharedPreferences("pref", 0)
+        val token = pref.getString("Gtoken", null) ?: ""
+       // RetrofitClient.initialize(token)
 
 
         binding.editProfileBackBtn.setOnClickListener {

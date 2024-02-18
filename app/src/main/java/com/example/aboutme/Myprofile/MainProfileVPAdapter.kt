@@ -1,11 +1,13 @@
 package com.example.aboutme.Myprofile
 
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -27,10 +29,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHolder>(
+class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProfileData, RecyclerView.ViewHolder>(
     MainListDiffCallback()
 ) {
 
+    val pref = context.getSharedPreferences("pref", 0)
+    val token = pref.getString("Gtoken", null) ?: ""
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
@@ -40,6 +44,8 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
+        Log.d("token3", token)
 
 
         return if (viewType == VIEW_TYPE_ITEM) {
@@ -54,7 +60,9 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
 
             binding.profileAddBtn.setOnClickListener {
 
-                RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
+                RetrofitClient.mainProfile.getData(token).enqueue(object : Callback<MainProfileData> {
+
+
                     // 서버 통신 실패 시의 작업
                     override fun onFailure(call: Call<MainProfileData>, t: Throwable) {
                         Log.e("실패", t.toString())
@@ -65,23 +73,26 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
                         call: Call<MainProfileData>,
                         response: Response<MainProfileData>
                     ) {
-                        val repos: MainProfileData? = response.body()
-                        if (repos != null) {
-                            val totalMyProfile = repos.getTotalMyProfile()
+                        if (response.isSuccessful) {
+                            val repos: MainProfileData? = response.body()
+                            if (repos != null) {
+                                val totalMyProfile = repos.getTotalMyProfile()
 
-                            if (totalMyProfile > 2) {
-                                val nameLimitDialog = NameLimitDialog()
-
-                                nameLimitDialog.show((parent.context as AppCompatActivity).supportFragmentManager, nameLimitDialog.tag)
-                            }
-                            else{
-                                val nameDialog = NameDialogFragment()
-
-                                Log.d("!!!!","success")
-                                nameDialog.show((parent.context as AppCompatActivity).supportFragmentManager, nameDialog.tag)
+                                if (totalMyProfile > 2) {
+                                    Log.d("MainProfileVPAdapter", "Total profiles count: $totalMyProfile")
+                                    val nameLimitDialog = NameLimitDialog()
+                                    nameLimitDialog.show((parent.context as AppCompatActivity).supportFragmentManager, nameLimitDialog.tag)
+                                } else {
+                                    Log.d("MainProfileVPAdapter", "Total profiles count: $totalMyProfile")
+                                    val nameDialog = NameDialogFragment()
+                                    Log.d("MainProfileVPAdapter", "Showing name dialog")
+                                    nameDialog.show((parent.context as AppCompatActivity).supportFragmentManager, nameDialog.tag)
+                                }
+                            } else {
+                                Log.e("MainProfileVPAdapter", "Response body is null")
                             }
                         } else {
-                            Log.e("실패", "front_features 데이터가 null입니다.")
+                            Log.e("MainProfileVPAdapter", "Unsuccessful response: ${response.code()}")
                         }
                     }
                 })
@@ -154,7 +165,7 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
                     Log.d("click!!","success")
                         coroutineScope.launch {
                             try {
-                                val response = RetrofitClient.mainProfile.patchDefaultProfile(realProfileId.toLong())
+                                val response = RetrofitClient.mainProfile.patchDefaultProfile(token,realProfileId.toLong())
                                 if (response.isSuccessful) {
                                     // 성공적으로 응답을 받았을 때 처리
                                     val data = response.body()
@@ -229,7 +240,10 @@ class MainProfileVPAdapter : ListAdapter<MultiProfileData, RecyclerView.ViewHold
 
     private fun profilePosion(positionId: Int, callback: (Int) -> Unit) {
         var realProfileId = -1 // 기본값 설정
-        RetrofitClient.mainProfile.getData().enqueue(object : Callback<MainProfileData> {
+
+        Log.d("token2", token)
+
+        RetrofitClient.mainProfile.getData(token).enqueue(object : Callback<MainProfileData> {
             // 서버 통신 실패 시의 작업
             override fun onFailure(call: Call<MainProfileData>, t: Throwable) {
                 Log.e("실패", t.toString())
