@@ -138,10 +138,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     TAG,
                     "updateLoginInfo: ${user.id} ${user.kakaoAccount?.email} ${user.kakaoAccount?.profile?.nickname} ${user.kakaoAccount?.profile?.thumbnailImageUrl}"
                 )
-                val intent = Intent(this, KakaoLoginProfileActivity::class.java)
-                intent.putExtra("email", "${user.kakaoAccount?.email}")
-                intent.putExtra("name", "${user.kakaoAccount?.profile?.nickname}")
-                intent.putExtra("profile", "${user.kakaoAccount?.profile?.thumbnailImageUrl}")
+                val intent = Intent(this, TutorialActivity1::class.java)
                 startActivity(intent)
             }
             error?.let {

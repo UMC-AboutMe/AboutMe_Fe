@@ -97,19 +97,19 @@ class CustomDialogProf(private val serial : Int) : DialogFragment() {
                                 val imageResId = when {
                                     profile.profile_image.type == "CHARACTER" && profile.profile_image.characterType in 1..8 -> {
                                         when (profile.profile_image.characterType) {
-                                            1 -> R.drawable.prof_avater1
-                                            2 -> R.drawable.prof_avater2
-                                            3 -> R.drawable.prof_avater3
-                                            4 -> R.drawable.prof_avater4
-                                            5 -> R.drawable.prof_avater5
-                                            6 -> R.drawable.prof_avater6
-                                            7 -> R.drawable.prof_avater7
-                                            8 -> R.drawable.prof_avater8
-                                            else -> R.drawable.prof_avater9
+                                            1 -> R.drawable.prof_avater1.toString()
+                                            2 -> R.drawable.prof_avater2.toString()
+                                            3 -> R.drawable.prof_avater3.toString()
+                                            4 -> R.drawable.prof_avater4.toString()
+                                            5 -> R.drawable.prof_avater5.toString()
+                                            6 -> R.drawable.prof_avater6.toString()
+                                            7 -> R.drawable.prof_avater7.toString()
+                                            8 -> R.drawable.prof_avater8.toString()
+                                            else -> R.drawable.prof_avater9.toString()
                                         }
                                     }
-                                    profile.profile_image.type == "USER_IMAGE" -> R.drawable.prof_avater1
-                                    else -> R.drawable.avatar_basic
+                                    profile.profile_image.type == "USER_IMAGE" -> profile.profile_image.profile_image_url ?: ""
+                                    else -> R.drawable.avatar_basic.toString()
                                 }
                                 profileAdapter.datas.add(
                                     DialogProfData(

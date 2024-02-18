@@ -2,6 +2,7 @@ package com.example.aboutme.Myspace
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -14,13 +15,21 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.aboutme.R
+import com.example.aboutme.RetrofitMyspaceAgit.MySpaceCreate
+import com.example.aboutme.RetrofitMyspaceAgit.MySpaceCreateRequest
+import com.example.aboutme.RetrofitMyspaceAgit.ResultModelmsc
+import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClient2
 import com.example.aboutme.bottomNavigationView
 import com.example.aboutme.databinding.ActivityMyspacestep3Binding
+import com.gun0912.tedpermission.provider.TedPermissionProvider.context
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MySpaceStep3Activity : AppCompatActivity() {
 
@@ -28,8 +37,7 @@ class MySpaceStep3Activity : AppCompatActivity() {
 
     private val sharedViewModel: MyspaceViewModel by viewModels()
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val animationInterval = 400L
+    private lateinit var token: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,15 +48,17 @@ class MySpaceStep3Activity : AppCompatActivity() {
 
         binding.progressBar.progress = 75
 
+        // SharedPreferences에서 토큰을 가져오는 함수
+        fun getToken(context: Context): String? {
+            val pref = context.getSharedPreferences("pref", 0)
+            return pref.getString("Gtoken", null)
+        }
+
+        token = context?.let { getToken(it) }.toString() // SharedPreferences에서 토큰을 가져오는 함수를 호출하여 토큰 값을 가져옵니다.
+
         // progress bar의 애니메이션 리스너 생성
         val animatorListener = object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {
-                // 애니메이션이 시작될 때 필요한 동작 수행
-                // 캐릭터의 위치를 업데이트
-//                val layoutParams = binding.animationView.layoutParams as ConstraintLayout.LayoutParams
-//                val marginStartInPixels = (180 * resources.displayMetrics.density).toInt() // 20dp를 픽셀 값으로 변환
-//                layoutParams.marginStart = marginStartInPixels
-//                binding.animationView.layoutParams = layoutParams
             }
 
             override fun onAnimationEnd(animation: Animator) {
@@ -70,16 +80,6 @@ class MySpaceStep3Activity : AppCompatActivity() {
         animation.interpolator = AccelerateDecelerateInterpolator() // 가속 및 감속 인터폴레이터 사용
         animation.addListener(animatorListener) // 애니메이션 리스너 추가
         animation.start()
-
-//        handler.postDelayed(object : Runnable {
-//            override fun run() {
-//                // 애니메이션 재생
-//                binding.animationView.playAnimation()
-//
-//                // 다음 애니메이션을 1초 뒤에 실행
-//                handler.postDelayed(this, animationInterval)
-//            }
-//        }, animationInterval) // 1초 뒤에 첫 번째 애니메이션 실행
 
         // 체크박스에 해당하는 이미지뷰들을 리스트에 추가
         val checkBoxList = listOf(
@@ -130,6 +130,43 @@ class MySpaceStep3Activity : AppCompatActivity() {
 
                 // isCreated 값 변경
                 sharedViewModel.setSelectedIsCreated(true)
+
+                // 이전 step 데이터들을 서버에 저장하고 로컬 뷰모델에 저장되어있는 정보 추출
+                val nickname = sharedViewModel.nickname
+                val selectedAvatarIndex = sharedViewModel.selectedAvatarIndex
+                val selectedRoomIndex = sharedViewModel.selectedRoomIndex
+
+                // Retrofit을 사용하여 API 호출
+                val call = token.let { RetrofitClient2.apitest.createMySpaces(token = it, MySpaceCreateRequest(nickname = "$nickname", characterType = selectedAvatarIndex!!, roomType = selectedRoomIndex!!)) }
+
+                // API 호출로 서버에 저장되어있는 사용자들의 스페이스 정보 추출
+                call.enqueue(object : Callback<MySpaceCreate> {
+                    override fun onResponse(call: Call<MySpaceCreate>, response: Response<MySpaceCreate>) {
+                        if (response.isSuccessful) {
+                            val result = response.body()?.result
+
+                            // API 응답 결과를 처리하는 작업 수행
+                            result?.let {
+                            }
+                        } else {
+                            // API 오류 처리
+                            handleApiError(response)
+                        }
+                    }
+
+                    private fun handleApiError(response: Response<MySpaceCreate>) {
+                        Log.e("handleApiError", "API 호출 실패: ${response.code()}")
+                    }
+
+                    override fun onFailure(call: Call<MySpaceCreate>, t: Throwable) {
+                        // API 호출 실패 처리
+                        handleApiFailure(t)
+                    }
+
+                    private fun handleApiFailure(t: Throwable) {
+                        Log.e("handleApiFailure", "API 호출 실패: ${t.message}")
+                    }
+                })
 
                 // step 진행이 모두 완료되었음을 바텀네비게이션뷰에 전달
                 val intent = Intent(this, bottomNavigationView::class.java)
