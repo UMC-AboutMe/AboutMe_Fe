@@ -9,33 +9,48 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.LinearSmoothScroller.SNAP_TO_START
 import com.example.aboutme.Alarm.AlarmActivity
+import com.example.aboutme.Alarm.AlarmDay7Adapter
+import com.example.aboutme.Alarm.Alarm_day7
+import com.example.aboutme.Alarm.api.AlarmResponse
 import com.example.aboutme.Mypage.MypageActivity
+import com.example.aboutme.Mypage.api.AlarmObj
 import com.example.aboutme.Myspace.MemberFragment
 import com.example.aboutme.Search.SearchProfActivity
 import com.example.aboutme.Search.SearchSpaceActivity
+import com.example.aboutme.Tutorial.NotificationHelper
 import com.example.aboutme.databinding.FragmentHomeBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.Timer
 import java.util.TimerTask
 
 class HomeFragment : Fragment() {
     lateinit var binding : FragmentHomeBinding
-
     lateinit var HomeAdapter: HomeFragmentAdapter
     private val datas = mutableListOf<HomeFragmentData>()
+    private lateinit var notificationHelper: NotificationHelper
+    lateinit var token: String // token 변수를 추가
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val pref = requireContext().getSharedPreferences("pref", 0)
-        val token: String? = pref.getString("Gtoken", null)
-        Log.d("token", token ?: "null")
-
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        // notificationHelper 초기화
+        notificationHelper = NotificationHelper(requireContext())
+        // token을 SharedPreferences에서 가져와서 초기화
+        val pref = requireActivity().getSharedPreferences("pref", 0)
+        token = pref.getString("Gtoken", null) ?: ""
+        Log.d("token", token)
+
+        getAlarms(token)
+
 
         binding.mypageBtn.setOnClickListener{
             startActivity(Intent(requireActivity(), MypageActivity::class.java))
@@ -59,7 +74,10 @@ class HomeFragment : Fragment() {
         //startAutoScroll()
 
     }
-
+    override fun onResume() {
+        super.onResume()
+        getAlarms(token)
+    }
     private fun initRecycler() {
         HomeAdapter = HomeFragmentAdapter(requireContext())
         binding.homeitemRc.adapter = HomeAdapter
@@ -118,5 +136,56 @@ class HomeFragment : Fragment() {
     companion object {
         private const val DELAY_MS = 0L // 시작 딜레이
         private const val PERIOD_MS = 2000L // 스크롤 간격
+    }
+
+    //상단바 알림
+    private fun showNotification(title: String, message: String) {
+        val nb: NotificationCompat.Builder =
+            notificationHelper.getChannelNotification(title, message)
+
+        notificationHelper.getManager().notify(1, nb.build())
+    }
+
+    //알람 데이터 조회 api
+    private fun getAlarms(token: String) {
+        val call = AlarmObj.getRetrofitService.getAlarms(token)
+
+        call.enqueue(object : Callback<AlarmResponse.ResponseAlarm> {
+            override fun onResponse(
+                call: Call<AlarmResponse.ResponseAlarm>,
+                response: Response<AlarmResponse.ResponseAlarm>
+            ) {
+                if (response.isSuccessful) {
+                    val response = response.body()
+                    if (response != null) {
+                        if (response.isSuccess) {
+                            // 성공했을 때
+                            Log.d("Retrofit_Alarm_Success", response.toString())
+                            if (response.result.alarms.isNotEmpty()) {
+                                // 서버 응답에서 alarms가 비어있지 않는 경우 푸시 알림을 표시
+                                showNotification("AboutMe", "알람페이지에서 공유 알람을 확인하세요!")
+                            binding.imageView4.visibility = View.VISIBLE
+                            }
+                            else {
+                                binding.imageView4.visibility = View.GONE
+                            }
+                        }
+                    }
+                } else {
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    Log.e(
+                        "Retrofit_Alarm_Failed",
+                        "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
+                    )
+                }
+            }
+            override fun onFailure(
+                call: Call<AlarmResponse.ResponseAlarm>,
+                t: Throwable
+            ) {
+                val errorMessage = "Call Failed:  ${t.message}"
+                Log.d("Retrofit_Alarm_Error", errorMessage)
+            }
+        })
     }
 }

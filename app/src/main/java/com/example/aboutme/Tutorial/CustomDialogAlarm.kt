@@ -19,7 +19,6 @@ import com.example.aboutme.databinding.ActivityCustomDialogBinding
 class CustomDialogAlarm() : DialogFragment() {
     private var _binding: ActivityCustomDialogAlarmBinding? = null
     private val binding get() = _binding!!
-    private lateinit var notificationHelper: NotificationHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,10 +37,6 @@ class CustomDialogAlarm() : DialogFragment() {
         // 확인 버튼
         binding.yesBtn.setOnClickListener {
             dismiss()
-
-            //상단바 알람
-            notificationHelper = NotificationHelper(requireContext())
-            showNotification("AboutMe", "text알람입니다")
         }
         // 다이얼로그를 하단으로 조정
         dialog?.window?.setGravity(Gravity.BOTTOM)
@@ -61,13 +56,5 @@ class CustomDialogAlarm() : DialogFragment() {
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
-    }
-
-    //상단바 알림
-    private fun showNotification(title: String, message: String) {
-        val nb: NotificationCompat.Builder =
-            notificationHelper.getChannelNotification(title, message)
-
-        notificationHelper.getManager().notify(1, nb.build())
     }
 }

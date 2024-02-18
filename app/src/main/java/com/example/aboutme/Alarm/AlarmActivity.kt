@@ -34,20 +34,6 @@ class AlarmActivity : AppCompatActivity() {
         binding.backBtn.setOnClickListener {
             finish()
         }
-//        //최근 7일 알림
-//        val itemList = ArrayList<Alarm_day7>()
-//        itemList.add(Alarm_day7(R.drawable.nav_myprof2,"테디님이 프로필을 공유하였습니다."))
-//        itemList.add(Alarm_day7(R.drawable.nav_myspace2,"테디님이 스페이스를 공유하였습니다."))
-//        itemList.add(Alarm_day7(R.drawable.nav_myprof2,"테디님이 프로필을 공유하였습니다."))
-//        itemList.add(Alarm_day7(R.drawable.nav_myspace2,"테디님이 스페이스를 공유하였습니다."))
-//        itemList.add(Alarm_day7(R.drawable.nav_myprof2,"테디님이 프로필을 공유하였습니다."))
-//        itemList.add(Alarm_day7(R.drawable.nav_myspace2,"테디님이 스페이스를 공유하였습니다."))
-//
-//        val AlarmDay7Adapter = AlarmDay7Adapter(itemList)
-//        AlarmDay7Adapter.notifyDataSetChanged()
-//        binding.day7Rc.adapter = AlarmDay7Adapter
-//        binding.day7Rc.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-//
 //        //예전 알림
 //        val itemListOld = ArrayList<Alarm_old>()
 //        itemListOld.add(Alarm_old(R.drawable.nav_myprof2,"테디님이 프로필을 공유하였습니다."))
