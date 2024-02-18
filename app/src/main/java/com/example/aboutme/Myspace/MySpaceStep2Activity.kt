@@ -37,10 +37,10 @@ class MySpaceStep2Activity : AppCompatActivity() {
             override fun onAnimationStart(animation: Animator) {
                 // 애니메이션이 시작될 때 필요한 동작 수행
                 // 캐릭터의 위치를 업데이트
-                val layoutParams = binding.animationView.layoutParams as ConstraintLayout.LayoutParams
-                val marginStartInPixels = (90 * resources.displayMetrics.density).toInt() // 20dp를 픽셀 값으로 변환
-                layoutParams.marginStart = marginStartInPixels
-                binding.animationView.layoutParams = layoutParams
+//                val layoutParams = binding.animationView.layoutParams as ConstraintLayout.LayoutParams
+//                val marginStartInPixels = (90 * resources.displayMetrics.density).toInt() // 20dp를 픽셀 값으로 변환
+//                layoutParams.marginStart = marginStartInPixels
+//                binding.animationView.layoutParams = layoutParams
             }
 
             override fun onAnimationEnd(animation: Animator) {
@@ -63,15 +63,15 @@ class MySpaceStep2Activity : AppCompatActivity() {
         animation.addListener(animatorListener) // 애니메이션 리스너 추가
         animation.start()
 
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-                // 애니메이션 재생
-                binding.animationView.playAnimation()
-
-                // 다음 애니메이션을 1초 뒤에 실행
-                handler.postDelayed(this, animationInterval)
-            }
-        }, animationInterval) // 1초 뒤에 첫 번째 애니메이션 실행
+//        handler.postDelayed(object : Runnable {
+//            override fun run() {
+//                // 애니메이션 재생
+//                binding.animationView.playAnimation()
+//
+//                // 다음 애니메이션을 1초 뒤에 실행
+//                handler.postDelayed(this, animationInterval)
+//            }
+//        }, animationInterval) // 1초 뒤에 첫 번째 애니메이션 실행
 
         // 체크박스에 해당하는 이미지뷰들을 리스트에 추가
         val checkBoxList = listOf(

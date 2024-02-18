@@ -42,10 +42,10 @@ class MySpaceStep1Activity : AppCompatActivity() {
             override fun onAnimationStart(animation: Animator) {
                 // 애니메이션이 시작될 때 필요한 동작 수행
                 // 캐릭터의 위치를 업데이트
-                val layoutParams = binding.animationView.layoutParams as ConstraintLayout.LayoutParams
-                val marginStartInPixels = (30 * resources.displayMetrics.density).toInt() // 20dp를 픽셀 값으로 변환
-                layoutParams.marginStart = marginStartInPixels
-                binding.animationView.layoutParams = layoutParams
+//                val layoutParams = binding.animationView.layoutParams as ConstraintLayout.LayoutParams
+//                val marginStartInPixels = (30 * resources.displayMetrics.density).toInt() // 20dp를 픽셀 값으로 변환
+//                layoutParams.marginStart = marginStartInPixels
+//                binding.animationView.layoutParams = layoutParams
             }
 
             override fun onAnimationEnd(animation: Animator) {
@@ -69,32 +69,32 @@ class MySpaceStep1Activity : AppCompatActivity() {
         animation.start()
 
         // 이스터에그!!!
-        binding.animationView.setOnClickListener {
-            binding.animationView.playAnimation()
-
-            // 이미지뷰를 나타나게 하는 애니메이션을 적용합니다.
-            val fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
-            binding.easteregg.startAnimation(fadeInAnimation)
-            binding.easteregg.visibility = View.VISIBLE
-
-            // 2초 뒤에 이미지뷰를 숨기는 작업을 수행합니다.
-            handler.postDelayed({
-                val fadeOutAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
-                binding.easteregg.startAnimation(fadeOutAnimation)
-                binding.easteregg.visibility = View.INVISIBLE
-            }, 2000)
-        }
+//        binding.animationView.setOnClickListener {
+//            binding.animationView.playAnimation()
+//
+//            // 이미지뷰를 나타나게 하는 애니메이션을 적용합니다.
+//            val fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+//            binding.easteregg.startAnimation(fadeInAnimation)
+//            binding.easteregg.visibility = View.VISIBLE
+//
+//            // 2초 뒤에 이미지뷰를 숨기는 작업을 수행합니다.
+//            handler.postDelayed({
+//                val fadeOutAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
+//                binding.easteregg.startAnimation(fadeOutAnimation)
+//                binding.easteregg.visibility = View.INVISIBLE
+//            }, 2000)
+//        }
 
         // progress bar 위의 캐릭터 실시간 애니메이션 효과 주기
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-                // 애니메이션 재생
-                binding.animationView.playAnimation()
-
-                // 다음 애니메이션을 1초 뒤에 실행
-                handler.postDelayed(this, animationInterval)
-            }
-        }, animationInterval) // 1초 뒤에 첫 번째 애니메이션 실행
+//        handler.postDelayed(object : Runnable {
+//            override fun run() {
+//                // 애니메이션 재생
+//                binding.animationView.playAnimation()
+//
+//                // 다음 애니메이션을 1초 뒤에 실행
+//                handler.postDelayed(this, animationInterval)
+//            }
+//        }, animationInterval) // 1초 뒤에 첫 번째 애니메이션 실행
 
         // 화면 빈공간 클릭시 키보드 숨기기
         binding.fragmentMyspacestep1.setOnClickListener {

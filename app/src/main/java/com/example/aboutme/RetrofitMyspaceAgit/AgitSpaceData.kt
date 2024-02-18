@@ -47,3 +47,17 @@ data class AgitMemberDelete(
     val code: String,
     val message: String
 )
+
+data class AgitSpaceSearchResponse(
+    val isSuccess: Boolean,
+    val code: String,
+    val message: String,
+    val result: AgitSpaceSearchResult
+)
+
+data class AgitSpaceSearchResult(
+    val spaceId: Int,
+    val nickname: String,
+    val characterType: Int,
+    val roomType: Int,
+)
