@@ -128,12 +128,10 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
 
         binding.imageCharBtn.setOnClickListener {
             patchProfileImage2(profileId1!!.toLong(),"CHARACTER")
-            binding.checkImage3.setImageResource(R.drawable.checkarrow10)
         }
 
         binding.imageLogoBtn.setOnClickListener {
             patchProfileImage2(profileId1!!.toLong(),"DEFAULT")
-            binding.checkImage1.setImageResource(R.drawable.checkarrow10)
         }
 
         binding.imageImageBtn.setOnClickListener {
@@ -537,6 +535,12 @@ class EditProfileFrontFragment : Fragment(), EditProfileActivity.TabSelectedList
                     val responseBody = response.body() // 응답 본문 가져오기
                     if (responseBody != null) {
                         Log.d("서버 응답 본문", responseBody.toString()) // 응답 본문 출력
+                        if(type == "DEFAULT"){
+                            binding.checkImage1.setImageResource(R.drawable.checkarrow10)
+                        }
+                        else if (type == "CHARACTER"){
+                            binding.checkImage1.setImageResource(R.drawable.checkarrow10)
+                        }
                     } else {
                         Log.d("서버 응답 본문", "응답 본문이 비어있습니다.")
                         Log.d("서버", response.message())

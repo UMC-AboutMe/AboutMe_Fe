@@ -231,7 +231,7 @@ class FrontProfileFragment : Fragment() {
                         .into(binding.profileIv)
                 }
             } else if(updatedData.result.profileImage.type == "DEFAULT"){
-                Glide.with(requireContext()).load(R.drawable.profiledefault).into(binding.profileIv)
+                Glide.with(requireContext()).load(R.drawable.defaultimage10).into(binding.profileIv)
             } else if (updatedData.result.profileImage.type == "CHARACTER"){
                 if (updatedData.result.profileImage.characterType == "2") {
                     Glide.with(requireContext()).load(R.drawable.prof_avater2).into(binding.profileIv)
