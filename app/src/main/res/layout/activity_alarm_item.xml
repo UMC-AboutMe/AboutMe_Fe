@@ -7,7 +7,7 @@
 
     <ImageView
         android:id="@+id/alarm_iv"
-        android:layout_width="60dp"
+        android:layout_width="63dp"
         android:layout_height="60dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
@@ -18,7 +18,7 @@
 
     <ImageView
         android:id="@+id/alarm_iv2"
-        android:layout_width="250dp"
+        android:layout_width="300dp"
         android:layout_height="70dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
@@ -69,7 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
         android:fontFamily="@font/gmarketsansmedium"
-        android:text="테디님이 프로필을 공유하였습니다."
+        android:text="테디테디테님이 프로필을 공유하였습니다."
         android:textColor="#000000"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/alarm_iv2"
