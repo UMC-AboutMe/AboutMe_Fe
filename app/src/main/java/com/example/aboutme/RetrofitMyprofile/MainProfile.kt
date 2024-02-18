@@ -5,6 +5,7 @@ import com.example.aboutme.RetrofitMyprofileData.GetAllProfile
 import com.example.aboutme.RetrofitMyprofileData.MainProfileData
 import com.example.aboutme.RetrofitMyprofileData.PatchDefaultProfile
 import com.example.aboutme.RetrofitMyprofileData.PatchMyprofile
+import com.example.aboutme.RetrofitMyprofileData.PatchNoDefaultProfile
 import com.example.aboutme.RetrofitMyprofileData.PatchProfileImage
 import com.example.aboutme.RetrofitMyprofileData.PostProfile
 import com.example.aboutme.RetrofitMyprofileData.RequestPatchProfile

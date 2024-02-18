@@ -13,7 +13,7 @@
 
         <ImageButton
             android:id="@+id/defaultNoProfile_btn"
-            android:layout_width="50dp"
+            android:layout_width="60dp"
             android:layout_height="90dp"
             android:background="@drawable/nodefault"
             android:layout_marginTop="30dp"
@@ -21,17 +21,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="300dp" />
 
-
-        <ImageButton
-            android:id="@+id/defaultProfile_btn"
-            android:layout_width="70dp"
-            android:layout_height="90dp"
-            android:background="@drawable/defaultyes"
-            android:layout_marginTop="30dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="300dp"
-            android:visibility="invisible"/>
 
 
         <LinearLayout
