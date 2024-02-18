@@ -3,17 +3,25 @@ package com.example.aboutme.Myspace
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.aboutme.Myprofile.BottomSheet2
 import com.example.aboutme.RetrofitMyspaceAgit.MySpaceCreate
 import com.example.aboutme.RetrofitMyspaceAgit.MySpaceCreateRequest
 import com.example.aboutme.R
@@ -28,6 +36,11 @@ import com.github.matteobattilana.weather.PrecipType
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class MySpaceMainFragment : Fragment() {
 
@@ -36,6 +49,61 @@ class MySpaceMainFragment : Fragment() {
 
     private lateinit var weather: PrecipType
     private var number = 1
+
+    private val handler = Handler(Looper.getMainLooper())
+
+    private var mListener: BottomSheetSpace.OnBottomSheetListener? = null
+
+    fun setOnBottomSheetListener(listener: BottomSheetSpace.OnBottomSheetListener) {
+        mListener = listener
+    }
+
+    private fun getViewBitmap(view: View): Bitmap {
+        // View의 크기를 측정
+        view.measure(
+            View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(view.height, View.MeasureSpec.EXACTLY)
+        )
+
+        val width = view.measuredWidth
+        val height = view.measuredHeight
+
+
+        // 측정된 폭과 높이가 0일 경우 처리
+        if (width <= 0 || height <= 0) {
+            Log.e("FrontProfileFragment", "Invalid view size: width=$width, height=$height")
+            // 너비와 높이가 0일 경우에 대한 예외 처리를 추가하거나 기본값으로 처리
+            // 예: width = defaultWidth, height = defaultHeight
+            return Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
+        }
+
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        view.draw(canvas)
+
+        Log.d("FrontProfileFragment", "Bitmap created successfully: width=$width, height=$height")
+
+
+        return bitmap
+    }
+
+    private fun getSaveFilePathName() : String{
+        val folder =  Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            .toString()
+        val fileName = SimpleDateFormat("yyyyMMddHHmmss").format(Date())
+        return "$folder/$fileName.jpg"
+    }
+
+    private fun bitmapFileSave(bitmap: Bitmap, path: String) {
+        val fos: FileOutputStream
+        try {
+            fos = FileOutputStream(File(path))
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+            fos.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +114,7 @@ class MySpaceMainFragment : Fragment() {
         binding.logo.setOnClickListener {
             // 홈화면 이동시 애니메이션 효과
             val intent = Intent(activity, bottomNavigationView::class.java)
-            val options = ActivityOptions.makeCustomAnimation(requireContext(), R.anim.fade_in, R.anim.fade_out)
+            val options = ActivityOptions.makeCustomAnimation(requireContext(), R.anim.zoom_in, R.anim.zoom_out)
             requireActivity().startActivity(intent, options.toBundle())
         }
 
@@ -56,6 +124,15 @@ class MySpaceMainFragment : Fragment() {
 
         binding.myspaceTitleName.setOnClickListener {
             cancelWeather()
+        }
+
+        binding.myspaceShare.setOnClickListener {
+            val bottomSheetSpace = BottomSheetSpace()
+            mListener?.let {
+                bottomSheetSpace.setOnBottomSheetListener(it)
+            }
+
+            bottomSheetSpace.show(childFragmentManager, bottomSheetSpace.tag)
         }
 
         return binding.root
@@ -189,11 +266,22 @@ class MySpaceMainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        sharedViewModel.storeProfileLayout(binding.myspaceView) // someView는 실제로 전달해야 할 View입니다.
+        sharedViewModel.profileLayoutLiveData.observe(viewLifecycleOwner) {
+            if (sharedViewModel.storeBitmap.value == true) {
+                // 프로필 레이아웃을 비트맵으로 저장하는 로직 수행
+                val bitmap = getViewBitmap(it)
+                val filePath = getSaveFilePathName()
+                bitmapFileSave(bitmap, filePath)
+                Log.d("bitmap", "success")
+            }
+        }
+
         sharedViewModel.isCreated.observe(this) {isCreated ->
             if (isCreated) {
                 fetchData()
 
-                // 아이콘 클릭시 등장하는 입력란 전체를 감싸고 있는 레이아웃
+                // 아이콘 클릭시 등장하는 edittext 및 각종 기능을 하는 버튼들 전체를 감싸고 있는 레이아웃
                 val layouts = listOf(
                     binding.step3FeelingLayout,
                     binding.step3CommentLayout,
@@ -213,9 +301,25 @@ class MySpaceMainFragment : Fragment() {
                     binding.step3Photo
                 )
 
-                // 아이콘 클릭시 등장하는 입력란 표시
+                // 아이콘 클릭시 등장하는 edittext 표시하는 기능(모든 아이콘에 적용되는 사항)
                 buttons.forEachIndexed { index, button ->
                     button.setOnClickListener {
+                        // 클릭 애니메이션 로드
+                        val scaleUpAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale_up)
+                        val scaleDownAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale_down)
+
+                        // 클릭 애니메이션 시작
+                        it.startAnimation(scaleUpAnimation)
+
+                        // 100밀리초 후에 scale_down 애니메이션 시작
+                        it.postDelayed({
+                            it.startAnimation(scaleDownAnimation)
+                        }, 100)
+
+                        // 키보드 숨기기
+                        val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        inputMethodManager.hideSoftInputFromWindow(button.windowToken, 0)
+
                         // 기존에 선택된 레이아웃들을 모두 숨김
                         layouts.forEach { layout -> layout.visibility = View.GONE }
 
@@ -225,35 +329,70 @@ class MySpaceMainFragment : Fragment() {
                 }
 
                 // *문자를 입력해야하는 아이콘들에 대한 정의*
-                // Edittext와 Ok 버튼이 존재하는 레이아웃에 대한 리스트
+                // edittext와 Ok 버튼이 존재하는 레이아웃에 대한 리스트
                 val layoutsWithEditTextAndOkButton = listOf(
                     Pair(binding.step3CommentEt, binding.step3CommentOk),
                     Pair(binding.step3MusicEt, binding.step3MusicOk),
                     Pair(binding.step3StoryEt, binding.step3StoryOk),
+                    Pair(binding.step3ScheduleEt, binding.step3ScheduleOk)
                 )
 
                 // *문자를 입력해야하는 아이콘들에 대한 정의*
-                // Edittext 주소 매핑
+                // edittext 주소 매핑
                 val editTextToVariableMap = mapOf(
                     R.id.step3_comment_et to "commentText",
                     R.id.step3_music_et to "musicText",
                     R.id.step3_story_et to "storyText",
+                    R.id.step3_schedule_et to "scheduleText"
                 )
 
                 // *문자를 입력해야하는 아이콘들에 대한 정의*
-                // Ok 버튼 주소 매핑
+                // edittext 클릭 후 문자를 입력하려고 할 때 등장하게 되는 Ok 버튼 주소 매핑
                 val okButtons = listOf(
                     binding.step3CommentOk,
                     binding.step3MusicOk,
                     binding.step3StoryOk,
+                    binding.step3ScheduleOk
                 )
+
+                val layoutsWithPencilAndTrash = listOf(
+                    Pair(binding.step3CommentPencil, binding.step3CommentTrash),
+                    Pair(binding.step3MusicPencil, binding.step3MusicTrash),
+                    Pair(binding.step3StoryPencil, binding.step3StoryTrash),
+                    Pair(binding.step3SchedulePencil, binding.step3ScheduleTrash)
+                )
+
+                // *문자를 입력해야하는 아이콘들에 대한 정의*
+                // edittext 클릭할 때 Ok 버튼 보이도록 설정
+                layoutsWithEditTextAndOkButton.forEach { (editText, okButton) ->
+                    editText.setOnClickListener {
+                        okButton.visibility = View.VISIBLE
+                    }
+                }
 
                 // *문자를 입력해야하는 아이콘들에 대한 정의*
                 // Ok 버튼에 대한 클릭 이벤트 처리
                 okButtons.forEachIndexed { index, okButton ->
+                    val editText = layoutsWithEditTextAndOkButton[index].first
+                    val pencil = layoutsWithPencilAndTrash[index].first
+                    val trash = layoutsWithPencilAndTrash[index].second
+                    val inputText = editText.text.toString()
+
+                    pencil.setOnClickListener {
+                        editText.isClickable = true
+                        editText.isFocusable = true
+                        editText.isLongClickable = true
+                        editText.requestFocus()
+                    }
+
+                    trash.setOnClickListener {
+                        editText.setText("")
+                    }
+
                     okButton.setOnClickListener {
-                        val editText = layoutsWithEditTextAndOkButton[index].first
-                        val inputText = editText.text.toString()
+                        // 확인버튼 누를시 edittext는 읽기 전용으로 바뀌고 다시 수정을 하려면 연필버튼을 누르도록 유도
+                        pencil.visibility = View.VISIBLE
+                        trash.visibility = View.VISIBLE
 
                         // ViewModel에 저장
                         val variableName = editTextToVariableMap[editText.id]
@@ -264,6 +403,21 @@ class MySpaceMainFragment : Fragment() {
                         // Ok 버튼 숨기기
                         okButton.visibility = View.GONE
 
+                        // 음악 아이콘의 경우 ok버튼을 눌러서 링크를 저장한 후에 하단에 안내메시지 등장
+                        if (index == 1) {
+                            // 이미지뷰를 나타나게 하는 애니메이션을 적용합니다.
+                            val fadeInAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in)
+                            binding.youtubeLinkTv.startAnimation(fadeInAnimation)
+                            binding.youtubeLinkTv.visibility = View.VISIBLE
+
+                            // 2초 뒤에 이미지뷰를 숨기는 작업을 수행합니다.
+                            handler.postDelayed({
+                                val fadeOutAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out)
+                                binding.youtubeLinkTv.startAnimation(fadeOutAnimation)
+                                binding.youtubeLinkTv.visibility = View.INVISIBLE
+                            }, 2000)
+                        }
+
                         // 키보드 숨기기
                         val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                         inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
@@ -271,18 +425,21 @@ class MySpaceMainFragment : Fragment() {
                 }
 
                 // *문자를 입력해야하는 아이콘들에 대한 정의*
-                // EditText를 클릭할 때 Ok 버튼 보이도록 설정
-                layoutsWithEditTextAndOkButton.forEach { (editText, okButton) ->
-                    editText.setOnClickListener {
-                        okButton.visibility = View.VISIBLE
-                    }
+                // 유튜브 음악 재생
+                binding.step3MusicGuide.setOnClickListener {
+                    // EditText에서 텍스트 가져오기
+                    val youtubeLink = binding.step3MusicEt.text.toString()
+
+                    // 기기에 설치되어있는 유튜브로 리다이렉트
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).setPackage("com.google.android.youtube")
+                    startActivity(intent)
                 }
 
-                // *문자를 입력하지 않는 아이콘들에 대한 정의*
+                // *문자를 입력하지 않는 feeling 아이콘에 대한 정의*
                 // 클릭한 이미지뷰를 저장할 변수 선언
                 var selectedImageView: ImageView? = null
 
-                // *문자를 입력하지 않는 아이콘들에 대한 정의*
+                // *문자를 입력하지 않는 feeling 아이콘에 대한 정의*
                 // feeling 아이콘 주소 매핑
                 val feelingIcons = listOf(
                     binding.feeling1,
@@ -292,6 +449,12 @@ class MySpaceMainFragment : Fragment() {
                     binding.feeling5,
                 )
 
+                fun Int.dpToPx(): Int {
+                    val density = resources.displayMetrics.density
+                    return (this * density).toInt()
+                }
+
+                // *문자를 입력하지 않는 feeling 아이콘에 대한 정의*
                 // Ok 버튼에 대한 클릭 이벤트 처리
                 feelingIcons.forEach { imageView ->
                     imageView.setOnClickListener {
@@ -302,6 +465,9 @@ class MySpaceMainFragment : Fragment() {
                         val layoutParams = imageView.layoutParams as RelativeLayout.LayoutParams
                         layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL)
                         layoutParams.addRule(RelativeLayout.BELOW, R.id.step3_feeling_guide)
+
+                        // 아래로 10dp 떨어뜨리기
+                        layoutParams.bottomMargin = 10.dpToPx() // dpToPx()는 dp를 픽셀로 변환하는 확장 함수일 수 있습니다.
                         imageView.layoutParams = layoutParams
 
                         // 클릭한 이미지뷰를 selectedImageView에 저장
@@ -311,8 +477,6 @@ class MySpaceMainFragment : Fragment() {
                         sharedViewModel.setSelectedFeeling(imageView.id)
                     }
                 }
-
-
             } else {
                 // 이전 step 데이터들을 서버에 저장하고 로컬 뷰모델에 저장되어있는 정보 추출
                 val nickname = sharedViewModel.nickname

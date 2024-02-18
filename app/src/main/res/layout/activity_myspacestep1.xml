@@ -14,6 +14,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/progressBar"
+        app:lottie_rawRes="@raw/myspace_step"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressBar"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_marginStart="80dp"
+        android:max="100"
+        android:progress="25"
+        app:trackColor="@color/gray"
+        app:trackThickness="15dp"
+        app:trackCornerRadius="100dp"
+        app:indicatorColor="@color/icon_aboutme_background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
     <TextView
         android:id="@+id/myspace_step1_main"
         android:layout_width="wrap_content"
@@ -57,17 +84,38 @@
         android:layout_width="290dp"
         android:layout_height="60dp"
         android:layout_marginTop="60dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
+        android:background="@drawable/step1_nickname_new"
         android:fontFamily="@font/gmarketsansmedium"
         android:hint="@string/nickname"
         android:imeOptions="actionNext"
         android:inputType="text"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.447"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myspace_step1_sub2"
-        android:background="@drawable/step1_nickname_new" />
+        app:layout_constraintTop_toBottomOf="@+id/myspace_step1_sub2" />
+    
+    <ImageView
+        android:id="@+id/step1_exmark"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/step1_exmark"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/nickname"
+        app:layout_constraintStart_toStartOf="@+id/nickname" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="#000000"
+        android:alpha="0.4"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:textSize="10sp"
+        android:text="닉네임은 특수문자와 숫자를 포함할 수 없으며, \n최소 두 글자 이상이어야 합니다."
+        app:layout_constraintTop_toBottomOf="@+id/nickname"
+        app:layout_constraintStart_toEndOf="@+id/step1_exmark" />
 
     <ImageButton
         android:id="@+id/next_ib_step1"
@@ -81,31 +129,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nickname" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animationView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/next_ib_step1"
-        app:layout_constraintStart_toStartOf="@+id/progressBar"
-        app:lottie_rawRes="@raw/myspace_step"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true" />
-
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/progressBar"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:max="100"
-        android:progress="25"
-        app:trackColor="@color/gray"
-        app:trackThickness="15dp"
-        app:trackCornerRadius="100dp"
-        app:indicatorColor="@color/icon_aboutme_background"
-        app:layout_constraintTop_toBottomOf="@+id/next_ib_step1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+    <ImageView
+        android:id="@+id/next_ib_step1_click_area"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        app:layout_constraintTop_toTopOf="@+id/next_ib_step1"
+        app:layout_constraintBottom_toBottomOf="@+id/next_ib_step1"
+        app:layout_constraintStart_toStartOf="@+id/next_ib_step1"
+        app:layout_constraintEnd_toEndOf="@+id/next_ib_step1"
+        android:onClick="onClick"/>
 
     <TextView
         android:id="@+id/easteregg"
