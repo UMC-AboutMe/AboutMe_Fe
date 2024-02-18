@@ -13,23 +13,23 @@ import retrofit2.http.Query
 interface ApitestInterface {
     // 아지트 내 스페이스 목록 조회
     @GET("/myspaces/storage")
-    fun getMySpaces(@Header("member-id") memberId: String): Call<YourResponseType>
+    fun getMySpaces(@Header("token") token: String): Call<YourResponseType>
 
     // 마이스페이스 생성
     @POST("/myspaces/")
-    fun createMySpaces(@Header("member-id") memberId: String, @Body request: MySpaceCreateRequest): Call<MySpaceCreate>
+    fun createMySpaces(@Header("token") token: String, @Body request: MySpaceCreateRequest): Call<MySpaceCreate>
 
     // 아지트 내 스페이스 추가
     @POST("/myspaces/storage/3")
-    fun addspace(@Header("member-id") memberId: String): Call<YourResponseType>
+    fun addspace(@Header("token") token: String): Call<YourResponseType>
 
     // 아지트 내 스페이스 즐겨찾기
     @PATCH("/myspaces/storage/{space-id}/favorite")
-    fun agitFavorite(@Path("space-id") spaceId: Long, @Header("member-id") memberId: String): Call<AgitFavoriteResponse>
+    fun agitFavorite(@Path("space-id") spaceId: Long, @Header("token") token: String): Call<AgitFavoriteResponse>
 
     // 아지트 내 스페이스 삭제
     @DELETE("/myspaces/storage/{space-id}")
-    fun deleteAgitMember(@Path("space-id") spaceId: Long, @Header("member-id") memberId: String): Call<AgitMemberDelete>
+    fun deleteAgitMember(@Path("space-id") spaceId: Long, @Header("token") token: String): Call<AgitMemberDelete>
 
     // 스페이스 검색
     @GET("/myspaces/search")

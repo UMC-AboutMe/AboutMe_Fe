@@ -289,7 +289,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                             val edit = pref.edit()
 
                             // 1번째 인자는 키, 2번째 인자는 실제 담아둘 값
-                            edit.putString("token", token)
+                            edit.putString("Gtoken", token)
                             edit.apply() // 저장완료
 
                             // 토큰 값 로그에 출력

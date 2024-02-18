@@ -31,6 +31,7 @@ import com.example.aboutme.R
 import com.example.aboutme.RetrofitMyspaceAgit.MyspaceCheckResponse
 import com.example.aboutme.RetrofitMyspaceAgit.MyspaceCheckResult
 import com.example.aboutme.RetrofitMyspaceAgit.ResultModelmsc
+import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClient
 import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClient2
 import com.example.aboutme.RetrofitMyspaceAgit.RetrofitClientMyspace
 import com.example.aboutme.bottomNavigationView
@@ -536,11 +537,21 @@ class MySpaceMainFragment : Fragment() {
                 val selectedAvatarIndex = sharedViewModel.selectedAvatarIndex
                 val selectedRoomIndex = sharedViewModel.selectedRoomIndex
 
+                // SharedPreferences에서 토큰을 가져오는 함수
+                fun getToken(context: Context): String? {
+                    val pref = context.getSharedPreferences("pref", 0)
+                    return pref.getString("token", null)
+                }
+                val token =
+                    context?.let { getToken(it) } // SharedPreferences에서 토큰을 가져오는 함수를 호출하여 토큰 값을 가져옵니다.
+//                val call = token?.let { RetrofitClient.apitest.getMySpaces(it) }
+                Log.d("토큰", "$token")
+
                 // Retrofit을 사용하여 API 호출
-                val call = RetrofitClient2.apitest.createMySpaces(memberId = "1", MySpaceCreateRequest(nickname = "$nickname", characterType = selectedAvatarIndex!!, roomType = selectedRoomIndex!!))
+                val call = token?.let { RetrofitClient2.apitest.createMySpaces(token = it, MySpaceCreateRequest(nickname = "$nickname", characterType = selectedAvatarIndex!!, roomType = selectedRoomIndex!!)) }
 
                 // API 호출로 서버에 저장되어있는 사용자들의 스페이스 정보 추출
-                call.enqueue(object : Callback<MySpaceCreate> {
+                call?.enqueue(object : Callback<MySpaceCreate> {
                     override fun onResponse(call: Call<MySpaceCreate>, response: Response<MySpaceCreate>) {
                         if (response.isSuccessful) {
                             val result = response.body()?.result
@@ -563,8 +574,8 @@ class MySpaceMainFragment : Fragment() {
                             Log.d("MySpaceMainFragment", "API 호출 성공: $it")
                             Log.d("API TEST", "Result: $result")
 
-                            val imageNameavatar = "step2_avatar_${selectedAvatarIndex.plus(1)}"
-                            val imageNameroom = "step3_room_${selectedRoomIndex.plus(1)}"
+                            val imageNameavatar = "step2_avatar_${selectedAvatarIndex?.plus(1)}"
+                            val imageNameroom = "step3_room_${selectedRoomIndex?.plus(1)}"
 
                             // 리소스 아이디 가져오기
                             val resourceIdavatar = requireContext().resources.getIdentifier(imageNameavatar, "drawable", requireContext().packageName)
