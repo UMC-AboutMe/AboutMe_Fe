@@ -38,11 +38,12 @@
 
     <ImageView
         android:id="@+id/member_logo"
-        android:layout_width="114dp"
-        android:layout_height="65dp"
+        android:layout_width="130dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/home_logo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageView

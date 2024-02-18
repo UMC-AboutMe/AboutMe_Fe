@@ -210,6 +210,7 @@ class ProfileStorageFragment : Fragment() {
     }
     override fun onResume() {
         super.onResume()
+        Log.d("retro","onResume실행됩니다.")
         getProfiles()
     }
 
