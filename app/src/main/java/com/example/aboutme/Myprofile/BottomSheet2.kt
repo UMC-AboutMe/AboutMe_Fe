@@ -153,8 +153,6 @@ class BottomSheet2 : DialogFragment() {
         dialog?.window?.setBackgroundDrawableResource(R.drawable.bottomsheetbox)
         dialog?.window?.setGravity(Gravity.TOP)
 
-
-
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -567,5 +565,4 @@ class BottomSheet2 : DialogFragment() {
             }
         }
     }
-
 }

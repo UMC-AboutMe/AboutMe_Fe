@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -227,6 +228,7 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
                 if (response.isSuccessful) {
                     val responseData: DeleteMyprofile? = response.body()
                     Log.d("Delete 성공", "응답 데이터: $responseData")
+                    Toast.makeText(requireContext(),"프로필이 삭제되었습니다.",Toast.LENGTH_SHORT).show()
                     // responseData를 처리하는 로직 작성
                 } else {
                     val errorBody = response.errorBody()?.string() ?: "No error body"
