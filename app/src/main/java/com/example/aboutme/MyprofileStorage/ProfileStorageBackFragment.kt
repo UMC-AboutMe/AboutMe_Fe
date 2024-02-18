@@ -51,11 +51,11 @@ class ProfileStorageBackFragment : Fragment() {
                             // 성공했을 때
                             Log.d("Retrofit_Get_Success", response.toString())
                             //새로 추가
-                            binding.backProfileEt1.text = response.result.back_features[0].key
-                            binding.backProfileEt2.text = response.result.back_features[1].key
-                            binding.backProfileEt3.text = response.result.back_features[2].key
-                            binding.backProfileEt4.text = response.result.back_features[3].key
-                            binding.backProfileEt5.text = response.result.back_features[4].key
+                            binding.backProfileEt1.text = response.result.back_features[0].value
+                            binding.backProfileEt2.text = response.result.back_features[1].value
+                            binding.backProfileEt3.text = response.result.back_features[2].value
+                            binding.backProfileEt4.text = response.result.back_features[3].value
+                            binding.backProfileEt5.text = response.result.back_features[4].value
                         }
                     }
                 } else {
