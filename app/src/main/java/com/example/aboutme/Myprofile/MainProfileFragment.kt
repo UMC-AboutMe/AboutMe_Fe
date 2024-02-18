@@ -169,7 +169,7 @@ class MainProfileFragment : Fragment() {
                                     } else if (profile.profileImage.type == "DEFAULT") {
                                         multiList.add(
                                             MultiProfileData(
-                                                R.drawable.profiledefault.toString(),
+                                                R.drawable.defaultimage10.toString(),
                                                 frontFeatures[0].value,
                                                 frontFeatures[1].value
 
@@ -296,7 +296,7 @@ class MainProfileFragment : Fragment() {
                                     } else if (profile.profileImage.type == "DEFAULT") {
                                         multiList.add(
                                             MultiProfileData(
-                                                R.drawable.profiledefault.toString(),
+                                                R.drawable.defaultimage10.toString(),
                                                 frontFeatures[0].value,
                                                 ""
 

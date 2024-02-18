@@ -6,7 +6,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object SearchObj {
-    private const val BASE_URL = "https://aboutmeteam.shop/"
+
+    private const val BASE_URL = "https://aboutmeteam.shop"
+
 
     private val getRetrofit by lazy{
 
