@@ -47,7 +47,8 @@
         android:scaleType="fitCenter"
         app:layout_constraintStart_toEndOf="@+id/alarm_iv"
         app:layout_constraintTop_toBottomOf="@+id/alarm_tv"
-        app:srcCompat="@drawable/alarm_yesbtn" />
+        app:srcCompat="@drawable/alarm_yesbtn"
+        android:foreground="?attr/selectableItemBackground" />
 
     <ImageButton
         android:id="@+id/alarm_save_btn"
@@ -59,7 +60,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/alarm_yes_btn"
         app:srcCompat="@drawable/alarm_savebtn"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+        android:foreground="?attr/selectableItemBackground" />
 
     <TextView
         android:id="@+id/alarm_tv"

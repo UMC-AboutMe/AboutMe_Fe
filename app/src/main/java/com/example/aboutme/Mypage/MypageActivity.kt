@@ -37,7 +37,7 @@ class MypageActivity : AppCompatActivity() {
         binding.button.setOnClickListener {
 
             //아직 토큰 연결이 안되서 일단 주석처리
-            //deleteUser(token)
+            deleteUser(token)
         }
     }
 

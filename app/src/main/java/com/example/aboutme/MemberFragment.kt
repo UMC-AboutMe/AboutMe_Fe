@@ -122,31 +122,5 @@ class MemberFragment : Fragment() {
         // 텍스트뷰에 텍스트 설정
         binding2.memberMyspaceTitle.text = AvTv
 
-        //아이콘 클릭 이벤트
-        binding2.memberStep3Feeling.setOnClickListener {
-            binding2.memberText.text = Feeling
-            binding2.memberStep3FeelingLayout.visibility = View.VISIBLE
-        }
-        binding2.memberStep3Comment.setOnClickListener {
-            binding2.memberText.text = Comment
-            binding2.memberStep3FeelingLayout.visibility = View.VISIBLE
-        }
-        binding2.memberStep3Music.setOnClickListener {
-            binding2.memberText.text = Music
-            binding2.memberStep3FeelingLayout.visibility = View.VISIBLE
-        }
-        binding2.memberStep3Schedule.setOnClickListener {
-            binding2.memberText.text = Schedule
-            binding2.memberStep3FeelingLayout.visibility = View.VISIBLE
-        }
-        binding2.memberStep3Story.setOnClickListener {
-            binding2.memberText.text = Story
-            binding2.memberStep3FeelingLayout.visibility = View.VISIBLE
-        }
-        binding2.memberStep3Photo.setOnClickListener {
-            binding2.memberText.text = ""
-            binding2.memberStep3FeelingLayout.visibility = View.VISIBLE
-        }
     }
-
 }
