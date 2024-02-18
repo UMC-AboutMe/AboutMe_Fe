@@ -25,7 +25,7 @@ class ProfileStorageBackFragment : Fragment() {
         //Log.d("ProfileStorageDetail", "Back Received profId: $profileId")
         getProfile(profileId)
         binding = FragmentProfileStorageBackBinding.inflate(inflater, container, false)
-        binding.turnBtn2.setOnClickListener {
+        binding.turnBtn.setOnClickListener {
             val ft = parentFragmentManager.beginTransaction()
             val fragment = ProfileStorageFrontFragment()
             val bundle = Bundle()
