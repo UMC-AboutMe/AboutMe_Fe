@@ -8,6 +8,7 @@ import retrofit2.http.Header
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApitestInterface {
     // 아지트 내 스페이스 목록 조회
@@ -29,4 +30,8 @@ interface ApitestInterface {
     // 아지트 내 스페이스 삭제
     @DELETE("/myspaces/storage/{space-id}")
     fun deleteAgitMember(@Path("space-id") spaceId: Long, @Header("member-id") memberId: String): Call<AgitMemberDelete>
+
+    // 스페이스 검색
+    @GET("/myspaces/search")
+    fun searchAgitMember(@Query("keyword") keyword: String): Call<AgitSpaceSearchResponse>
 }

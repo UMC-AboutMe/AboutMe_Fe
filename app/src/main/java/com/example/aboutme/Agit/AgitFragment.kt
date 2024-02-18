@@ -82,7 +82,23 @@ class AgitFragment : Fragment() {
 
         // 초기 화면은 항상 최신화 상태 유지
         CoroutineScope(Dispatchers.Main).launch {
-            fetchData()
+            itemList.add(AgitSpaceData("다에몬's 스페이스", false, 1, 3, 2))
+            itemList.add(AgitSpaceData("모아's 스페이스", false, 2, 8, 1))
+            itemList.add(AgitSpaceData("혬's 스페이스", false, 3, 9, 3))
+            itemList.add(AgitSpaceData("쩡's 스페이스", false, 4, 7, 4))
+            itemList.add(AgitSpaceData("윤's 스페이스", false, 5, 1, 2))
+
+            // 북마크가 표시되어있는 아이템부터 정렬
+            itemList.sortByDescending { it.isBookmarked }
+
+            // 아이템들이 새롭게 추가된 itemList로 설정
+            rvAdapter = AgitSpaceRVAdapter(requireContext().resources, itemList)
+
+            // 실제 리사이클러뷰에 해당하는 spaceStorageRv에 새롭게 반영한 itemList 어댑터 연결
+            binding.spaceStorageRv.adapter = rvAdapter
+
+            // 리사이클러뷰 표시 형태 설정
+            binding.spaceStorageRv.layoutManager = GridLayoutManager(requireContext(), 2)
         }
 
         return binding.root
@@ -149,6 +165,11 @@ class AgitFragment : Fragment() {
             Log.d("API TEST", "Room Type: ${spaceModel.roomType}")
             Log.d("API TEST", "Favorite: ${spaceModel.favorite}")
         }
+        itemList.add(AgitSpaceData("다에몬's 스페이스", false, 1, 3, 2))
+        itemList.add(AgitSpaceData("모아's 스페이스", false, 2, 8, 1))
+        itemList.add(AgitSpaceData("혬's 스페이스", false, 3, 9, 3))
+        itemList.add(AgitSpaceData("쩡's 스페이스", false, 4, 7, 4))
+        itemList.add(AgitSpaceData("윤's 스페이스", false, 5, 1, 2))
 
         // 북마크가 표시되어있는 아이템부터 정렬
         itemList.sortByDescending { it.isBookmarked }
