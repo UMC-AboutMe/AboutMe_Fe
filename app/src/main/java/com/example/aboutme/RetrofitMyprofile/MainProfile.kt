@@ -52,6 +52,10 @@ interface MainProfile {
     suspend fun patchDefaultProfile(@Header("token") token:String,
         @Path(value = "profile-id") profileId : Long) : Response<PatchDefaultProfile>
 
+    @PATCH("/myprofiles/defaultToFalse/{profile-id}")
+    suspend fun patchNoDefaultProfile(@Header("token") token: String,
+                                      @Path(value = "profile-id") profileId: Long) : Response<PatchNoDefaultProfile>
+
     @Multipart
     @PATCH("/myprofiles/{profile-id}/image")
     fun patchProfileImage(@Header("token") token:String,

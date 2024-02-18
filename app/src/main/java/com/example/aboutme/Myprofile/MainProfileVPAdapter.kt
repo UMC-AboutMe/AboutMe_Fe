@@ -163,7 +163,51 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
 
                 binding.defaultNoProfileBtn.setOnClickListener {
                     Log.d("click!!","success")
-                        coroutineScope.launch {
+
+
+                    coroutineScope.launch {
+                        try {
+                            val response: Response<GetAllProfile> = withContext(Dispatchers.IO) {
+                                RetrofitClient.mainProfile.getDataAll(token,realProfileId.toLong())
+                            }
+
+                            if (response.isSuccessful) {
+                                val responseData: GetAllProfile? = response.body()
+                                Log.d("GETALL 성공!!!!", "응답 데이터: $responseData")
+
+                                if (responseData?.result?.isDefault == false){
+                                    coroutineScope.launch {
+                                        try {
+                                            val response = RetrofitClient.mainProfile.patchDefaultProfile(token,realProfileId.toLong())
+                                            if (response.isSuccessful) {
+                                                // 성공적으로 응답을 받았을 때 처리
+                                                val data = response.body()
+                                                Log.d("success!!",data.toString())
+                                                // data를 사용하여 필요한 작업을 수행
+                                            } else {
+                                                Log.e("Failure", "Response failed with code: ${response.code()}")
+                                            }
+                                        } catch (e: Exception) {
+                                            // 네트워크 오류 등 예외 발생 시 처리
+                                            e.printStackTrace()
+                                            Log.d("패치!!","실패")
+                                        }
+                                    }
+                                } else{
+
+
+                                }
+                            } else {
+                                val errorBody = response.errorBody()?.string() ?: "No error body"
+                                Log.e("GETALL 요청 실패", "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody")
+                            }
+                        } catch (e: Exception) {
+                            Log.e("GETALL 요청 실패", "에러: ${e.message}")
+                        }
+                    }
+
+
+                        /*coroutineScope.launch {
                             try {
                                 val response = RetrofitClient.mainProfile.patchDefaultProfile(token,realProfileId.toLong())
                                 if (response.isSuccessful) {
@@ -179,7 +223,7 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
                                 e.printStackTrace()
                                 Log.d("패치!!","실패")
                             }
-                        }
+                        }*/
                     }
                 }
 
@@ -289,6 +333,10 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
                 callback(realProfileId) // 응답 처리 후에 콜백 호출
             }
         })
+    }
+
+    private fun defaultOrNo(){
+
     }
 
 }
