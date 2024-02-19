@@ -31,7 +31,8 @@
                 android:id="@+id/image_logo_btn"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:background="@drawable/logo"/>
+                android:background="@drawable/logo"
+                android:scaleType="center" />
 
             <ImageView
                 android:id="@+id/checkImage2"
@@ -43,7 +44,8 @@
                 android:id="@+id/image_image_btn"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:background="@drawable/myprofile_image"/>
+                android:background="@drawable/myprofile_image"
+                android:scaleType="fitCenter" />
 
             <ImageView
                 android:id="@+id/checkImage3"
@@ -55,7 +57,8 @@
                 android:id="@+id/image_char_btn"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:background="@drawable/profilepreview2"/>
+                android:background="@drawable/profilepreview2"
+                android:scaleType="fitCenter" />
 
         </LinearLayout>
 
