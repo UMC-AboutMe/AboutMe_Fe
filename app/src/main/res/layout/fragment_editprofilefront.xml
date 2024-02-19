@@ -1,159 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginLeft="20dp">
+    <ImageView
+        android:id="@+id/imageView15"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:src="@drawable/chooseimage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView15">
 
         <ImageView
+            android:id="@+id/checkImage1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/image_logo_btn"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:background="@drawable/home_logo"
+            android:scaleType="centerInside"
+            app:layout_constraintStart_toStartOf="@+id/checkImage1"
+            app:layout_constraintTop_toBottomOf="@+id/checkImage1" />
+
+        <ImageView
+            android:id="@+id/checkImage2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@+id/image_logo_btn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/image_image_btn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/myprofile_image"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toEndOf="@+id/checkImage2"
+            app:layout_constraintTop_toBottomOf="@+id/checkImage2" />
+
+        <ImageView
+            android:id="@+id/checkImage3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintStart_toEndOf="@+id/image_image_btn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/image_char_btn"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:background="@drawable/profilepreview2"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toEndOf="@+id/checkImage3"
+            app:layout_constraintTop_toBottomOf="@+id/checkImage3" />
+
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:src="@drawable/chooseimage"
-            android:layout_marginTop="20dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/checkImage1"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
-
-            <ImageButton
-                android:id="@+id/image_logo_btn"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@drawable/logo"
-                android:scaleType="center" />
-
-            <ImageView
-                android:id="@+id/checkImage2"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="25dp" />
-
-            <ImageButton
-                android:id="@+id/image_image_btn"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@drawable/myprofile_image"
-                android:scaleType="fitCenter" />
-
-            <ImageView
-                android:id="@+id/checkImage3"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="40dp" />
-
-            <ImageButton
-                android:id="@+id/image_char_btn"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/profilepreview2"
-                android:scaleType="fitCenter" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="기본이미지로\n       설정"
-                android:layout_marginLeft="10dp"
-                android:fontFamily="@font/gmarketsansmedium"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="앨범에서\n이미지 추가"
-                android:layout_marginLeft="50dp"
-                android:fontFamily="@font/gmarketsansmedium"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="캐릭터로\n    설정"
-                android:layout_marginLeft="60dp"
-                android:fontFamily="@font/gmarketsansmedium"/>
-        </LinearLayout>
-
-
-
-        <ImageView
-            android:layout_width="300dp"
-            android:layout_height="100dp"
-            android:src="@drawable/nameedit"
-            android:layout_marginTop="30dp"/>
-
-        <ImageView
-            android:layout_width="330dp"
-            android:layout_height="100dp"
-            android:src="@drawable/editprofile_box"
-            android:layout_marginTop="-30dp"/>
-
-        <EditText
-            android:id="@+id/profile_name_et"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:textSize="22sp"
-            android:ems="12"
-            android:hint="    이름"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="-73dp"
-            android:background="@color/transparent"
-            android:fontFamily="@font/gmarketsansmedium"/>
-
-        <ImageView
-            android:layout_width="300dp"
-            android:layout_height="100dp"
-            android:src="@drawable/phonenimberedit"
-            android:layout_marginTop="30dp"/>
-
-        <ImageView
-            android:layout_width="350dp"
-            android:layout_height="100dp"
-            android:src="@drawable/editprofile_box"
-            android:layout_marginTop="-20dp"
-            android:background="@color/white"/>
-
-        <EditText
-            android:id="@+id/profile_number_et"
-            android:layout_width="320dp"
-            android:layout_height="50dp"
-            android:textSize="20sp"
+            android:layout_marginTop="5dp"
             android:fontFamily="@font/gmarketsansmedium"
-            android:ems="12"
-            android:layout_marginLeft="20dp"
-            android:hint="전화번호 / 메일주소 / Instagram"
-            android:layout_marginTop="-73dp"
-            android:background="@color/transparent"/>
+            android:text="기본이미지로\n       설정"
+            app:layout_constraintEnd_toEndOf="@+id/image_logo_btn"
+            app:layout_constraintStart_toStartOf="@+id/image_logo_btn"
+            app:layout_constraintTop_toBottomOf="@+id/image_char_btn" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/profileEditPreview_btn"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="미리보기"
+            android:layout_marginTop="5dp"
             android:fontFamily="@font/gmarketsansmedium"
-            android:background="@color/transparent"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:layout_marginTop="20dp"
-            android:textSize="25sp"/>
+            android:text="앨범에서\n이미지 추가"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@+id/image_image_btn"
+            app:layout_constraintStart_toStartOf="@+id/image_image_btn"
+            app:layout_constraintTop_toBottomOf="@+id/image_char_btn" />
 
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:text="캐릭터로\n    설정"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/image_char_btn"
+            app:layout_constraintTop_toBottomOf="@+id/image_char_btn" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imageView17"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:src="@drawable/editprofile_box"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView16" />
+
+    <EditText
+        android:id="@+id/profile_name_et"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:ems="12"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:hint="이름"
+        android:textAlignment="viewStart"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView17"
+        app:layout_constraintEnd_toEndOf="@+id/imageView17"
+        app:layout_constraintStart_toStartOf="@+id/imageView17"
+        app:layout_constraintTop_toTopOf="@+id/imageView17" />
+
+    <ImageView
+        android:id="@+id/imageView16"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:src="@drawable/nameedit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
+
+    <ImageView
+        android:id="@+id/imageView18"
+        android:layout_width="321dp"
+        android:layout_height="110dp"
+        android:src="@drawable/phonenimberedit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView17" />
+
+    <ImageView
+        android:id="@+id/imageView19"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:background="@color/white"
+        android:src="@drawable/editprofile_box"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView18" />
+
+    <EditText
+        android:id="@+id/profile_number_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:ems="12"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:hint="전화번호 / 메일주소 / Instagram"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView19"
+        app:layout_constraintEnd_toEndOf="@+id/imageView19"
+        app:layout_constraintStart_toStartOf="@+id/imageView19"
+        app:layout_constraintTop_toTopOf="@+id/imageView19" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/profileEditPreview_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:gravity="center"
+        android:text="미리보기"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView19" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
