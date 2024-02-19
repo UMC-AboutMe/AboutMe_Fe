@@ -61,11 +61,11 @@ class AgitMemberSpaceActivity : AppCompatActivity() {
         binding.step3SelectedAvatar.setImageResource(imageCharacterId)
 
         val imageRoomId = when(roomType) {
-            1 -> R.drawable.step3_room_1
-            2 -> R.drawable.step3_room_2
-            3 -> R.drawable.step3_room_3
-            4 -> R.drawable.step3_room_4
-            else -> {R.drawable.step3_room_1}
+            1 -> R.drawable.step3_smallroom_1
+            2 -> R.drawable.step3_smallroom_2
+            3 -> R.drawable.step3_smallroom_3
+            4 -> R.drawable.step3_smallroom_4
+            else -> {R.drawable.step3_smallroom_1}
         }
         binding.step3SelectedRoom.setImageResource(imageRoomId)
 

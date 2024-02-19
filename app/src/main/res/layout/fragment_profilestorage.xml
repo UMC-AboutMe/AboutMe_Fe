@@ -56,7 +56,7 @@
             android:background="@drawable/home_prof_bg"
             android:ems="10"
             android:fontFamily="@font/gmarketsansmedium"
-            android:hint="입력하세요"
+            android:hint="검색어를 입력하세요"
             android:inputType="text"
             android:textAlignment="center"
             android:textSize="16sp"
