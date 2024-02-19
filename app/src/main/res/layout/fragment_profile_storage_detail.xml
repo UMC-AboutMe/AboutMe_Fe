@@ -58,7 +58,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/logo_iv"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="@+id/logo_iv"
-            app:srcCompat="@drawable/mainprofile_trash2" />
+            app:srcCompat="@drawable/mainprofile_trash2"
+            android:foreground="?attr/selectableItemBackground" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/profileStorage_frame"

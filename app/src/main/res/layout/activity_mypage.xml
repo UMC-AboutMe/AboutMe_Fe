@@ -127,8 +127,8 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/mypage_iv3"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/mypage_iv3" />
-
+        app:layout_constraintTop_toTopOf="@+id/mypage_iv3"
+        android:foreground="?attr/selectableItemBackground" />
     <TextView
         android:id="@+id/mypage_tv4"
         android:layout_width="wrap_content"
@@ -140,8 +140,8 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/mypage_iv4"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/mypage_iv4" />
-
+        app:layout_constraintTop_toTopOf="@+id/mypage_iv4"
+        android:foreground="?attr/selectableItemBackground" />
     <TextView
         android:id="@+id/mypage_tv5"
         android:layout_width="wrap_content"
@@ -153,8 +153,8 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/mypage_iv5"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/mypage_iv5" />
-
+        app:layout_constraintTop_toTopOf="@+id/mypage_iv5"
+        android:foreground="?attr/selectableItemBackground" />
     <ImageView
         android:id="@+id/mypage_iv1"
         android:layout_width="20dp"
@@ -187,7 +187,6 @@
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/bgline2"
         app:srcCompat="@drawable/mypage_setting" />
-
     <ImageView
         android:id="@+id/mypage_iv4"
         android:layout_width="26dp"
@@ -197,7 +196,6 @@
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/mypage_iv3"
         app:srcCompat="@drawable/mypage_noti" />
-
     <ImageView
         android:id="@+id/mypage_iv5"
         android:layout_width="23dp"
@@ -410,7 +408,7 @@
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:foreground="?attr/selectableItemBackground" />>
+            android:foreground="?attr/selectableItemBackground" />
 
         <TextView
             android:id="@+id/button2"

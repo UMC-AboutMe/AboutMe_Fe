@@ -77,7 +77,7 @@ class ProfileStorageFrontFragment : Fragment(){
                             response.result.front_features.forEach { feature ->
                                 if (feature.key == "name") {
                                     binding.profileNameEt.text = feature.value
-                                } else if (feature.key == null) {
+                                } else if (feature.key != "name") {
                                     binding.profileNumEt.text = feature.value ?: ""
                                 }
                             }

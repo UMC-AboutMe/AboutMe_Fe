@@ -34,19 +34,6 @@ class AlarmActivity : AppCompatActivity() {
         binding.backBtn.setOnClickListener {
             finish()
         }
-//        //예전 알림
-//        val itemListOld = ArrayList<Alarm_old>()
-//        itemListOld.add(Alarm_old(R.drawable.nav_myprof2,"테디님이 프로필을 공유하였습니다."))
-//        itemListOld.add(Alarm_old(R.drawable.nav_myspace2,"테디님이 스페이스를 공유하였습니다."))
-//        itemListOld.add(Alarm_old(R.drawable.nav_myprof2,"테디님이 프로필을 공유하였습니다."))
-//        itemListOld.add(Alarm_old(R.drawable.nav_myspace2,"테디님이 스페이스를 공유하였습니다."))
-//        itemListOld.add(Alarm_old(R.drawable.nav_myprof2,"테디님이 프로필을 공유하였습니다."))
-//        itemListOld.add(Alarm_old(R.drawable.nav_myspace2,"테디님이 스페이스를 공유하였습니다."))
-//
-//        val AlarmOldAdapter = AlarmDay7Adapter(itemList)
-//        AlarmOldAdapter.notifyDataSetChanged()
-//        binding.oldRc.adapter = AlarmOldAdapter
-//        binding.oldRc.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     }
 
     //알람 데이터 조회 api

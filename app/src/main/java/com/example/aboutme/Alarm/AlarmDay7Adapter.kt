@@ -40,10 +40,9 @@ class AlarmDay7Adapter (private val context: Context, private val itemList: Arra
     override fun getItemCount(): Int = itemList.size
 
     // 새로고침을 위한 함수
-    fun refreshList(newList: List<Alarm_day7>) {
-        itemList.clear()
-        itemList.addAll(newList)
-        notifyDataSetChanged()
+    fun removeItem(position: Int) {
+        itemList.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     inner class AlarmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -66,8 +65,11 @@ class AlarmDay7Adapter (private val context: Context, private val itemList: Arra
                     // 프로필
                     postStorageProf(serialNumber!!.toInt()) // postStorageProf 함수 호출
                 }
+                val alarmId = item.alarmId // 아이템의 시리얼 넘버 가져오기
                 // 저장 후에 새로고침
-                refreshList(itemList)
+                removeItem(adapterPosition)
+                delteAlarm(alarmId) // getStorageProf 함수 호출
+
             }
         }
         init {
@@ -76,7 +78,7 @@ class AlarmDay7Adapter (private val context: Context, private val itemList: Arra
                 val alarmId = item.alarmId // 아이템의 시리얼 넘버 가져오기
                 delteAlarm(alarmId) // getStorageProf 함수 호출
                 // 저장 후에 새로고침
-                refreshList(itemList)
+                removeItem(adapterPosition)
             }
         }
     }
