@@ -92,10 +92,10 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginStart="20dp"
-            android:scaleType="fitCenter"
             android:background="@color/transparent"
+            android:scaleType="fitCenter"
             android:src="@drawable/step3_music"
-            app:layout_constraintBottom_toTopOf="@+id/step3_selected_avatar"
+            app:layout_constraintBottom_toTopOf="@+id/step3_story"
             app:layout_constraintStart_toEndOf="@+id/step3_feeling" />
 
         <ImageButton
@@ -105,8 +105,8 @@
             android:background="@color/transparent"
             android:scaleType="fitCenter"
             android:src="@drawable/step3_photo"
-            app:layout_constraintStart_toStartOf="@id/step3_story"
-            app:layout_constraintBottom_toTopOf="@id/step3_feeling"/>
+            app:layout_constraintBottom_toTopOf="@+id/step3_music"
+            app:layout_constraintStart_toStartOf="@id/step3_story" />
 
         <ImageButton
             android:id="@+id/step3_story"
@@ -139,20 +139,19 @@
             android:background="@color/transparent"
             android:scaleType="fitCenter"
             android:src="@drawable/step3_comment"
-            app:layout_constraintTop_toBottomOf="@+id/step3_feeling"
-            app:layout_constraintEnd_toStartOf="@+id/step3_feeling" />
+            app:layout_constraintBottom_toBottomOf="@+id/step3_selected_avatar"
+            app:layout_constraintEnd_toStartOf="@+id/step3_feeling"
+            app:layout_constraintTop_toBottomOf="@+id/step3_feeling" />
 
         <ImageView
             android:id="@+id/step3_selected_avatar"
             android:layout_width="63dp"
             android:layout_height="72dp"
-            android:layout_marginBottom="50dp"
             android:src="@drawable/step2_avatar_1"
             app:layout_constraintBottom_toBottomOf="@+id/step3_selected_room"
             app:layout_constraintEnd_toEndOf="@+id/step3_selected_room"
             app:layout_constraintStart_toStartOf="@+id/step3_selected_room"
-            app:layout_constraintTop_toTopOf="@+id/step3_selected_room"
-            app:layout_constraintVertical_bias="0.782" />
+            app:layout_constraintTop_toTopOf="@+id/step3_selected_room" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
