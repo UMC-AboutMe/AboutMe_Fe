@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
@@ -135,6 +136,9 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
     inner class MainItemViewHolder(private val binding: ItemMultiprofileBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        private val profBasic: ImageView = itemView.findViewById(R.id.defaultNoProfile_btn)
+        private val profFav: ImageView = itemView.findViewById(R.id.defaultProfile_btn)
+
 
         init {
             itemView.setOnClickListener {
@@ -173,60 +177,7 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
                     if (response.isSuccessful) {
                         val repos: MainProfileData? = response.body()
                         if (repos != null) {
-                            // 성공적으로 데이터를 받아온 경우 처리할 로직을 여기에 추가합니다.
-                            if (repos.result.totalMyprofile == 1){
-                                if (repos.result.myprofiles[0].isDefault == false){
-                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
-                                    Log.d("즐겨찾기#1",repos.result.myprofiles[0].isDefault.toString())
-                                }
-                                if (repos.result.myprofiles[0].isDefault == true){
-                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
-                                    Log.d("즐겨찾기#3",repos.result.myprofiles[0].isDefault.toString())
 
-                                }
-                            }else if (repos.result.totalMyprofile == 2){
-                                if (repos.result.myprofiles[0].isDefault == false){
-                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
-                                    Log.d("즐겨찾기#1",repos.result.myprofiles[0].isDefault.toString())
-                                }
-                                if (repos.result.myprofiles[1].isDefault == false){
-                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
-                                    Log.d("즐겨찾기#2",repos.result.myprofiles[1].isDefault.toString())
-
-                                }
-                                if (repos.result.myprofiles[0].isDefault == true){
-                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
-                                    Log.d("즐겨찾기#3",repos.result.myprofiles[0].isDefault.toString())
-
-                                }
-                                if (repos.result.myprofiles[1].isDefault == true){
-                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
-                                }
-                            } else if (repos.result.totalMyprofile == 3){
-                                if (repos.result.myprofiles[0].isDefault == false){
-                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
-                                    Log.d("즐겨찾기#1",repos.result.myprofiles[0].isDefault.toString())
-                                }
-                                if (repos.result.myprofiles[1].isDefault == false){
-                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
-                                    Log.d("즐겨찾기#2",repos.result.myprofiles[1].isDefault.toString())
-
-                                }
-                                if (repos.result.myprofiles[2].isDefault == false){
-                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
-                                }
-                                if (repos.result.myprofiles[0].isDefault == true){
-                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
-                                    Log.d("즐겨찾기#3",repos.result.myprofiles[0].isDefault.toString())
-
-                                }
-                                if (repos.result.myprofiles[1].isDefault == true){
-                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
-                                }
-                                if (repos.result.myprofiles[2].isDefault == true){
-                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
-                                }
-                            }
                         } else {
                             Log.e("실패", "응답 데이터가 null입니다.")
                         }
@@ -291,8 +242,6 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
             profilePosion(position) { realProfileId ->
                 Log.d("realprofileID!", realProfileId.toString())
 
-                binding.defaultNoProfileBtn.setOnClickListener {
-                    Log.d("click!!", "success")
 
 
                     coroutineScope.launch {
@@ -304,26 +253,34 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
                             if (response.isSuccessful) {
                                 val responseData: GetAllProfile? = response.body()
 
-                                if (responseData?.result?.isDefault == false) {
-                                    defaultNoProfile(realProfileId)
-                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.nodefault)
-                                }else{
-                                    patchDefault(realProfileId)
-                                    binding.defaultNoProfileBtn.setImageResource(R.drawable.default10)
+
+                                if (responseData!!.result.isDefault) {
+                                    profBasic.visibility = View.GONE
+                                    profFav.visibility = View.VISIBLE
+                                } else {
+                                    profBasic.visibility = View.VISIBLE
+                                    profFav.visibility = View.GONE
                                 }
-                                val errorBody = response.errorBody()?.string() ?: "No error body"
-                                Log.e(
-                                    "GETALL 요청 실패",
-                                    "응답코드: ${response.code()}, 응답메시지: ${response.message()}, 오류 내용: $errorBody"
-                                )
+
+                                profBasic.setOnClickListener {
+                                    profBasic.visibility = View.GONE
+                                    profFav.visibility = View.VISIBLE
+                                    patchDefault(realProfileId)
+                                }
+                                profFav.setOnClickListener {
+                                    profFav.visibility = View.GONE
+                                    profBasic.visibility = View.VISIBLE
+                                    defaultNoProfile(realProfileId)
+                                }
+
                             }
                         } catch (e: Exception) {
                             Log.e("GETALL 요청 실패", "에러: ${e.message}")
                         }
                     }
-                }
 
-                RetrofitClient.mainProfile.getData(token).enqueue(object : Callback<MainProfileData> {
+
+                /*RetrofitClient.mainProfile.getData(token).enqueue(object : Callback<MainProfileData> {
                     override fun onFailure(call: Call<MainProfileData>, t: Throwable) {
                         Log.e("실패", t.toString())
                     }
@@ -394,7 +351,7 @@ class MainProfileVPAdapter(private val context: Context) : ListAdapter<MultiProf
                         }
                     }
                 })
-
+*/
 
 
 
