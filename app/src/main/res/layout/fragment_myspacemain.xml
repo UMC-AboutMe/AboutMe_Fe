@@ -4,7 +4,26 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_myspacemain"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="41dp" />
     <com.github.matteobattilana.weather.WeatherView
         android:id="@+id/weather_view"
         android:layout_width="match_parent"
@@ -26,13 +45,14 @@
 
     <ImageView
         android:id="@+id/myspace_share"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/myprofile_share"
-        android:layout_marginTop="25dp"
-        android:layout_marginStart="230dp"
-        app:layout_constraintStart_toEndOf="@+id/logo"
-        app:layout_constraintTop_toTopOf="@+id/logo" />
+        android:layout_width="39dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/sharebtn"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <ImageView
         android:id="@+id/myspace_title_line"
@@ -48,15 +68,13 @@
         android:id="@+id/myspace_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/gmarketsansmedium"
         android:text="@string/agitspacetitle_1"
         android:textSize="30sp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintStart_toEndOf="@+id/myspace_title_line"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/myspace_title_line" />
+        app:layout_constraintTop_toTopOf="@+id/myspace_title_line" />
 
     <TextView
         android:id="@+id/myspace_title_name"
@@ -84,9 +102,10 @@
             android:layout_height="wrap_content"
             android:foregroundGravity="center"
             android:src="@drawable/step3_room_1"
-            android:layout_marginTop="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/step3_feeling"

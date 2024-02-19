@@ -6,26 +6,46 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="41dp" />
 
         <ImageView
             android:id="@+id/back_btn"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/backbtn"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="20dp"/>
+            android:layout_width="40dp"
+            android:layout_height="36dp"
+            android:background="@android:color/transparent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/home_back"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
 
         <ImageButton
             android:id="@+id/myprofile_share_btn"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="39dp"
+            android:layout_height="41dp"
             android:background="@drawable/sharebtn"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="25dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="300dp"/>
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
 
         <androidx.fragment.app.FragmentContainerView
@@ -40,11 +60,12 @@
 
         <ImageButton
             android:id="@+id/delete_button_iv"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="35dp"
+            android:layout_height="42dp"
             android:layout_marginTop="-20dp"
             android:background="@drawable/trash_img"
             android:fontFamily="@font/gmarketsansmedium"
+            android:scaleType="fitCenter"
             android:text="완료"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
