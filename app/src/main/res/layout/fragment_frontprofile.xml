@@ -41,24 +41,25 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/profile_name_et"
-                    android:layout_width="202dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="150dp"
-                    android:layout_marginTop="370dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="380dp"
+                    android:layout_gravity="center"
                     android:fontFamily="@font/gmarketsansmedium"
-                    android:textSize="29sp"
+                    android:textSize="30sp"
                     android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/profile_num_et"
-                    android:layout_width="200dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="420dp"
-                    android:layout_marginLeft="-240dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
                     android:fontFamily="@font/gmarketsansmedium"
                     android:textSize="23sp" />
 
@@ -66,8 +67,7 @@
                         android:layout_width="150dp"
                         android:layout_height="100dp"
                         android:layout_gravity="center"
-                        android:layout_marginTop="200dp"
-                        android:layout_marginLeft="-200dp"
+                        android:layout_marginTop="60dp"
                         android:src="@drawable/myprofile_logo" />
 
 

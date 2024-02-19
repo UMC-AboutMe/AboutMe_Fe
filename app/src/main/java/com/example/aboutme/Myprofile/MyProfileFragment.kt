@@ -216,6 +216,7 @@ class MyProfileFragment : Fragment(), BottomSheet2.OnBottomSheetListener {
     private fun deleteProfile(profileId : Int){
         val pref = requireContext().getSharedPreferences("pref", 0)
         val token = pref.getString("Gtoken", null) ?: ""
+        Log.d("딜리트 토큰",token)
 
 // Coroutine을 사용하여 비동기 호출 수행
         lifecycleScope.launch {

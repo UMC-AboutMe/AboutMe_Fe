@@ -50,7 +50,19 @@ class DialogProfAdapter(private val context: Context) :
         }
 
         fun bind(item: DialogProfData) {
-            Glide.with(itemView).load(item.profile_img).into(profImg)
+//            Glide.with(itemView)
+//                .load(item.profile_img)
+//                .into(profImg)
+            if (item.profile_img.startsWith("http")) {
+                // URL인 경우 Glide를 사용하여 이미지 로드 및 표시
+                Glide.with(itemView.context)
+                    .load(item.profile_img)
+                    .into(profImg)
+            } else {
+                // 리소스 아이디인 경우 setImageResource() 메서드를 사용하여 이미지 설정
+                profImg.setImageResource(item.profile_img.toInt())
+            }
+
             profName.text = item.profile_name
             textView8.text = item.profile_name
             profNum.text = item.profile_num
