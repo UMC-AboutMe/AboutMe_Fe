@@ -61,3 +61,21 @@ data class AgitSpaceSearchResult(
     val characterType: Int,
     val roomType: Int,
 )
+
+data class AgitMemberSpaceCheck(
+    val isSuccess: Boolean,
+    val code: String,
+    val message: String,
+    val result: AgitMemberSpaceResult
+)
+
+data class AgitMemberSpaceResult(
+    val nickname: String,
+    val characterType: Int,
+    val roomType: Int,
+    val mood: String,
+    val musicurl: String,
+    val statusMessage: String,
+    val spaceImageList: ImageList,
+    val planList: PlanList
+)

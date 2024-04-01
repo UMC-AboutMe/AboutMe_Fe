@@ -19,6 +19,10 @@ interface ApitestInterface {
     @POST("/myspaces/")
     fun createMySpaces(@Header("token") token: String, @Body request: MySpaceCreateRequest): Call<MySpaceCreate>
 
+    // 마이스페이스 조회
+    @GET("/myspaces/")
+    fun checkMemberSpace(@Header("token") token: String): Call<AgitMemberSpaceCheck>
+
     // 아지트 내 스페이스 추가
     @POST("/myspaces/storage/{space-id}")
     fun addspace(@Path("space-id") spaceId: Long, @Header("token") token: String): Call<YourResponseType>

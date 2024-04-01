@@ -56,12 +56,14 @@ class AgitSpaceRVAdapter(private val resources: Resources, val items: MutableLis
 
         init {
             token = getToken(context).toString()
+
+            // 리사이클러뷰에 있는 멤버들의 스페이스를 클릭시
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val clickedItem = items[position]
 
-                    // 데이터를 담은 Intent 생성
+                    // 멤버별 스페이스 액티비티로 이동
                     val intent = Intent(itemView.context, AgitMemberSpaceActivity::class.java)
                     intent.putExtra("spaceNameAgit", clickedItem.spaceName)
                     intent.putExtra("characterType", clickedItem.characterType)

@@ -50,6 +50,7 @@ class AgitFragment : Fragment() {
     ): View {
         binding = FragmentAgitBinding.inflate(inflater, container, false)
 
+        // 소셜 로그인 액티비티에서 가져온 jwttoken을 참조한다.
         fun getToken(context: Context): String? {
             val pref = context.getSharedPreferences("pref", 0)
             return pref.getString("Gtoken", null)
@@ -57,9 +58,11 @@ class AgitFragment : Fragment() {
 
         token = context?.let { getToken(it) }.toString() // SharedPreferences에서 토큰을 가져오는 함수를 호출하여 토큰 값을 가져옵니다.
 
+        // 홈로고 클릭시 동작 설정
         binding.homeLogo.setOnClickListener {
-            // 홈화면 이동시 애니메이션 효과
             val intent = Intent(activity, bottomNavigationView::class.java)
+
+            // 홈화면 이동시 애니메이션 효과
             val options = ActivityOptions.makeCustomAnimation(requireContext(), R.anim.zoom_in, R.anim.zoom_out)
             requireActivity().startActivity(intent, options.toBundle())
         }
@@ -72,7 +75,7 @@ class AgitFragment : Fragment() {
             ContextCompat.getColor(requireContext(), R.color.white)
         )
 
-        // 스와이프 리프레쉬 동작
+        // 스와이프 리프레쉬 레이아웃 관련 동작 설정
         swipeRefreshLayout.setOnRefreshListener {
             // Coroutine을 사용하여 지연 작업 수행(UI 응답없음 방지를 위한 순차적 실행)
             CoroutineScope(Dispatchers.Main).launch {
@@ -80,7 +83,7 @@ class AgitFragment : Fragment() {
                 fetchData()
                 delay(1500)
                 isLoading(false)
-                swipeRefreshLayout.isRefreshing = false // 새로고침 완료 시 리프레시 아이콘 감춤
+                swipeRefreshLayout.isRefreshing = false // 새로고침 완료 시 리프레시 아이콘 감추기
             }
 
             // 새로고침할 때 검색창의 텍스트 초기화
@@ -93,19 +96,16 @@ class AgitFragment : Fragment() {
 
         // 초기 화면은 항상 최신화 상태 유지
         CoroutineScope(Dispatchers.Main).launch {
-//            itemList.add(AgitSpaceData("다에몬's 스페이스", false, 1, 3, 2))
-//            itemList.add(AgitSpaceData("모아's 스페이스", false, 2, 8, 1))
-//            itemList.add(AgitSpaceData("혬's 스페이스", false, 3, 9, 3))
-//            itemList.add(AgitSpaceData("쩡's 스페이스", false, 4, 7, 4))
-//            itemList.add(AgitSpaceData("윤's 스페이스", false, 5, 1, 2))
             fetchData()
+             /* 새로고침하는 활동은 회면요소가 다 뜬 이후에 진행하므로 onViewCreated에서 설정해야할 것 같지만 그렇지 않다.
+             바텀네비게이션에서 아지트로 접속하는 순간 최신화가 되어있어야하므로 화면 최신화를 하는 함수인 fetchData를 onCreateView에서 한 번만 선언해둔다. */
         }
 
         return binding.root
     }
 
 
-    // 새로고침 상태 여부에 따른 shimmer effect 나타내기
+    // 새로고침 상태 여부에 따른 shimmer effect 설정(예시 -> isLoading이 true일 경우 shimmerlayout 표시, 리사이클러뷰 표시X)
     private fun isLoading(isLoading: Boolean) {
         if (isLoading) {
             binding.shimmerLayout.startShimmer()
@@ -119,7 +119,7 @@ class AgitFragment : Fragment() {
         }
     }
 
-    // API 호출
+    // 로그인한 계정에 저장되어있는 멤버 리스트를 가져오기 위한 API 호출(onCreateView, onViewCreated에서 모두 사용됨)
     private fun fetchData() {
         // retrofitclient에서 통신 방법 설정(GET, POST, DELETE, PATCH)
         // SharedPreferences에서 토큰을 가져오는 함수
@@ -129,13 +129,13 @@ class AgitFragment : Fragment() {
 
         call.enqueue(object : Callback<YourResponseType> { // API 호출(call, response 데이터 클래스 명시)
             override fun onResponse(call: Call<YourResponseType>, response: Response<YourResponseType>) {
-                if (response.isSuccessful) { // API 호출 성공시
+                if (response.isSuccessful) { // 성공시
                     val result = response.body()?.result
                     result?.let {
                         updateUI(it)
                     }
                     Log.d("성공?", "$result")
-                } else { // API 호출 실패시
+                } else { // 실패시
                     handleApiError(response)
                 }
             }
@@ -145,10 +145,9 @@ class AgitFragment : Fragment() {
                 handleApiFailure(t)
             }
         })
-        Log.d("콜하니", "$call")
     }
 
-    // API 호출 후 가져온 결과값을 바탕으로 UI를 최신화
+    // API 호출 후 가져온 멤버 리스트 정보들을 바탕으로 UI를 최신화
     private fun updateUI(result: ResultModel) {
         // 서버에서 memberSpaceList 추출
         val dataList = result.memberSpaceList
@@ -189,21 +188,19 @@ class AgitFragment : Fragment() {
     private fun handleApiError(response: Response<YourResponseType>) {
         Log.e("handleApiError", "API 호출 실패: ${response.code()}")
     }
-
-    // API ERROR 표시
     private fun handleApiFailure(t: Throwable) {
         Log.e("handleApiFailure", "API 호출 실패: ${t.message}")
     }
 
 
-    // 아지트 최신화가 되어있는 상태에서 검색을 하므로 onViewCreated에서 필터링을 진행하는 함수 설정
+    // onViewCreate에서 아지트 최신화를 이미 했으므로 onViewCreated에서는 각종 검색 관련 기능 구현
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // 기존의 리사이클러뷰 아이템 목록을 복사하여 filteredItemList에 저장
         filteredItemList.addAll(itemList)
 
-        // 검색창 EditText에 텍스트가 입력될 때마다 호출되는 TextWatcher 설정
+        // 검색창 agitSearch에 텍스트가 한 글자씩 입력될 때마다 필터링이 자동으로 되어야 하므로 텍스트 입력을 감지하는 Listener 설정
         binding.agitSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // 입력 전
@@ -220,7 +217,7 @@ class AgitFragment : Fragment() {
             }
         })
         
-        // 검색창 edittext에서 키보드상으로 완료 버튼을 누를 경우 검색버튼을 누른 것과 같은 효과
+        // 검색창 agitSearch에서 키보드상으로 완료 버튼을 누를 경우 실제 검색버튼을 누른 것과 같은 효과
         binding.agitSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 // 검색버튼을 누를 경우 발동되는 검색 효과
@@ -247,8 +244,6 @@ class AgitFragment : Fragment() {
             val inputMethodManager = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
-
-        // 화면 내 빈 공간 클릭시 키보드 숨김처리
         binding.swipeRefreshLayout.setOnClickListener {
             val inputMethodManager = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
